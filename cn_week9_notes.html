@@ -1,0 +1,1610 @@
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: var(--font-sans);
+    }
+
+    .container {
+        max-width: 900px;
+        padding: 1.5rem 1rem;
+    }
+
+    .hero {
+        border-bottom: 0.5px solid var(--color-border-tertiary);
+        padding-bottom: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .hero h1 {
+        font-size: 22px;
+        font-weight: 500;
+        color: var(--color-text-primary);
+        margin-bottom: 4px;
+    }
+
+    .hero p {
+        font-size: 14px;
+        color: var(--color-text-secondary);
+    }
+
+    .tab-bar {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+    }
+
+    .tab {
+        padding: 6px 14px;
+        border: 0.5px solid var(--color-border-secondary);
+        border-radius: var(--border-radius-md);
+        font-size: 13px;
+        cursor: pointer;
+        background: var(--color-background-primary);
+        color: var(--color-text-secondary);
+        transition: all 0.15s;
+    }
+
+    .tab:hover {
+        background: var(--color-background-secondary);
+    }
+
+    .tab.active {
+        background: #E6F1FB;
+        color: #0C447C;
+        border-color: #85B7EB;
+        font-weight: 500;
+    }
+
+    .section {
+        display: none;
+    }
+
+    .section.active {
+        display: block;
+    }
+
+    .topic-title {
+        font-size: 20px;
+        font-weight: 500;
+        color: var(--color-text-primary);
+        margin-bottom: 6px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid #85B7EB;
+    }
+
+    .badge {
+        display: inline-block;
+        font-size: 11px;
+        padding: 2px 8px;
+        border-radius: var(--border-radius-md);
+        margin-left: 8px;
+    }
+
+    .badge-exam {
+        background: #FAEEDA;
+        color: #633806;
+    }
+
+    .badge-imp {
+        background: #E1F5EE;
+        color: #085041;
+    }
+
+    .card {
+        background: var(--color-background-secondary);
+        border-radius: var(--border-radius-lg);
+        padding: 1rem 1.25rem;
+        margin: 1rem 0;
+    }
+
+    .card-blue {
+        background: #E6F1FB;
+        border-left: 3px solid #185FA5;
+    }
+
+    .card-green {
+        background: #EAF3DE;
+        border-left: 3px solid #3B6D11;
+    }
+
+    .card-amber {
+        background: #FAEEDA;
+        border-left: 3px solid #854F0B;
+    }
+
+    .card-red {
+        background: #FCEBEB;
+        border-left: 3px solid #A32D2D;
+    }
+
+    .card-purple {
+        background: #EEEDFE;
+        border-left: 3px solid #534AB7;
+    }
+
+    .card h3 {
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 6px;
+    }
+
+    .card-blue h3 {
+        color: #0C447C;
+    }
+
+    .card-green h3 {
+        color: #27500A;
+    }
+
+    .card-amber h3 {
+        color: #633806;
+    }
+
+    .card-red h3 {
+        color: #791F1F;
+    }
+
+    .card-purple h3 {
+        color: #3C3489;
+    }
+
+    .card p,
+    .card li {
+        font-size: 14px;
+        color: var(--color-text-primary);
+        line-height: 1.7;
+    }
+
+    .card ul {
+        padding-left: 1.2rem;
+    }
+
+    .point {
+        display: flex;
+        gap: 10px;
+        padding: 8px 0;
+        border-bottom: 0.5px solid var(--color-border-tertiary);
+    }
+
+    .point:last-child {
+        border-bottom: none;
+    }
+
+    .point-num {
+        font-size: 13px;
+        font-weight: 500;
+        color: #185FA5;
+        min-width: 22px;
+    }
+
+    .point-text {
+        font-size: 14px;
+        color: var(--color-text-primary);
+        line-height: 1.6;
+    }
+
+    .point-text strong {
+        font-weight: 500;
+        color: var(--color-text-primary);
+    }
+
+    .mcq-block {
+        border: 0.5px solid var(--color-border-tertiary);
+        border-radius: var(--border-radius-lg);
+        padding: 1rem 1.25rem;
+        margin: 1rem 0;
+        background: var(--color-background-primary);
+    }
+
+    .mcq-q {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--color-text-primary);
+        margin-bottom: 10px;
+        line-height: 1.6;
+    }
+
+    .mcq-opts {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 10px;
+    }
+
+    .opt {
+        font-size: 13px;
+        padding: 6px 10px;
+        border-radius: var(--border-radius-md);
+        border: 0.5px solid var(--color-border-tertiary);
+        cursor: pointer;
+        color: var(--color-text-primary);
+        background: var(--color-background-primary);
+        text-align: left;
+        transition: background 0.1s;
+    }
+
+    .opt:hover {
+        background: var(--color-background-secondary);
+    }
+
+    .opt.correct {
+        background: #EAF3DE;
+        border-color: #639922;
+        color: #27500A;
+    }
+
+    .opt.wrong {
+        background: #FCEBEB;
+        border-color: #A32D2D;
+        color: #791F1F;
+    }
+
+    .explanation {
+        display: none;
+        font-size: 13px;
+        color: var(--color-text-secondary);
+        background: var(--color-background-secondary);
+        padding: 8px 12px;
+        border-radius: var(--border-radius-md);
+        margin-top: 6px;
+        line-height: 1.6;
+    }
+
+    .explanation.visible {
+        display: block;
+    }
+
+    .table-wrap {
+        overflow-x: auto;
+        margin: 1rem 0;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+    }
+
+    th {
+        background: #E6F1FB;
+        color: #0C447C;
+        font-weight: 500;
+        padding: 8px 12px;
+        text-align: left;
+        border: 0.5px solid #B5D4F4;
+    }
+
+    td {
+        padding: 8px 12px;
+        border: 0.5px solid var(--color-border-tertiary);
+        color: var(--color-text-primary);
+        vertical-align: top;
+    }
+
+    tr:nth-child(even) td {
+        background: var(--color-background-secondary);
+    }
+
+    .revision-item {
+        display: flex;
+        gap: 8px;
+        padding: 6px 0;
+        border-bottom: 0.5px solid var(--color-border-tertiary);
+        align-items: flex-start;
+    }
+
+    .revision-item:last-child {
+        border-bottom: none;
+    }
+
+    .bullet {
+        font-size: 16px;
+        min-width: 20px;
+    }
+
+    .revision-text {
+        font-size: 13px;
+        color: var(--color-text-primary);
+        line-height: 1.6;
+    }
+
+    h2.section-head {
+        font-size: 18px;
+        font-weight: 500;
+        color: var(--color-text-primary);
+        margin: 1.5rem 0 0.5rem;
+    }
+
+    .tag {
+        display: inline-block;
+        font-size: 11px;
+        padding: 2px 8px;
+        border-radius: 99px;
+        margin: 2px;
+    }
+
+    .tag-blue {
+        background: #E6F1FB;
+        color: #185FA5;
+    }
+
+    .tag-green {
+        background: #EAF3DE;
+        color: #3B6D11;
+    }
+
+    .tag-red {
+        background: #FCEBEB;
+        color: #A32D2D;
+    }
+</style>
+
+<div class="container">
+    <div class="hero">
+        <h1>Computer Networks &amp; Internet Protocols — Week 9</h1>
+        <p>NPTEL Exam-Ready Notes &nbsp;|&nbsp; IIT Kharagpur &nbsp;|&nbsp; IP Router Design, SDN &amp; OpenFlow</p>
+    </div>
+
+    <div class="tab-bar">
+        <button class="tab active" onclick="show('router_design')">Router Design</button>
+        <button class="tab" onclick="show('switching_fabric')">Switching Fabric</button>
+        <button class="tab" onclick="show('queuing')">Queuing &amp; Scheduling</button>
+        <button class="tab" onclick="show('router_hw')">Router Hardware</button>
+        <button class="tab" onclick="show('sdn_openflow')">SDN &amp; OpenFlow</button>
+        <button class="tab" onclick="show('wireshark_mininet')">Wireshark &amp; Mininet</button>
+        <button class="tab" onclick="show('revision9')">Super Revision</button>
+    </div>
+
+    <!-- SECTION 1: Router Design -->
+    <div id="router_design" class="section active">
+        <div class="topic-title">Topic 1: IP Router Design &amp; Lifecycle <span class="badge badge-exam">Exam
+                Favorite</span></div>
+
+        <div class="card card-blue">
+            <h3>What is a Router?</h3>
+            <p>An IP router is a Layer 3 device that forwards packets from one network to another by examining the IP
+                destination address and looking up the routing table. A router sits at the boundary between different
+                networks (subnets or autonomous systems) and makes per-hop forwarding decisions.</p>
+        </div>
+
+        <h2 class="section-head">Router Lifecycle — Key Stages</h2>
+        <div class="card" style="padding: 0.5rem 1.25rem;">
+            <div class="point"><span class="point-num">1</span><span class="point-text"><strong>Packet Arrival:</strong>
+                    Packet arrives on an input port (line card). The header is parsed and the IP destination address is
+                    extracted.</span></div>
+            <div class="point"><span class="point-num">2</span><span class="point-text"><strong>Longest Prefix Match
+                        (LPM):</strong> The routing/forwarding table is looked up to find the best (longest matching
+                    prefix) next-hop for the destination IP address.</span></div>
+            <div class="point"><span class="point-num">3</span><span class="point-text"><strong>Switching
+                        Fabric:</strong> The packet is passed through the internal switching fabric (crossbar, bus, or
+                    shared memory) to the correct output port.</span></div>
+            <div class="point"><span class="point-num">4</span><span class="point-text"><strong>Output Queuing &amp;
+                        Scheduling:</strong> At the output line card, packets are queued and scheduled (FIFO, WFQ, etc.)
+                    before being transmitted on the outgoing link.</span></div>
+            <div class="point"><span class="point-num">5</span><span class="point-text"><strong>TTL Decrement &amp;
+                        Checksum Update:</strong> Each router decrements the TTL (Time-To-Live) field by 1 and
+                    recomputes the IP header checksum before forwarding.</span></div>
+        </div>
+
+        <h2 class="section-head">Major Components of an IP Router</h2>
+        <div class="table-wrap">
+            <table>
+                <tr>
+                    <th>Component</th>
+                    <th>Function</th>
+                    <th>Location</th>
+                </tr>
+                <tr>
+                    <td>Input Line Cards</td>
+                    <td>Receive incoming packets; perform header parsing and LPM lookup</td>
+                    <td>Edge (input)</td>
+                </tr>
+                <tr>
+                    <td>Forwarding Table (FIB)</td>
+                    <td>Stores prefix-to-next-hop mappings for fast lookups (hardware TCAM)</td>
+                    <td>Input line card / central</td>
+                </tr>
+                <tr>
+                    <td>Switching Fabric</td>
+                    <td>Internal interconnect that moves packets from input to output ports</td>
+                    <td>Core</td>
+                </tr>
+                <tr>
+                    <td>Output Line Cards</td>
+                    <td>Queue packets and schedule transmission on output links</td>
+                    <td>Edge (output)</td>
+                </tr>
+                <tr>
+                    <td>Route Processor (RP)</td>
+                    <td>Runs routing protocols (OSPF, BGP), maintains RIB, updates FIB</td>
+                    <td>Control plane</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="card card-green">
+            <h3>Control Plane vs Data Plane</h3>
+            <ul>
+                <li><strong>Control Plane:</strong> Runs routing protocols (OSPF, BGP, RIP). Builds and maintains the
+                    Routing Information Base (RIB). Slow, software-based. Runs on the Route Processor.</li>
+                <li><strong>Data Plane (Forwarding Plane):</strong> Performs actual packet forwarding using the
+                    Forwarding Information Base (FIB). Must be extremely fast — hardware-based (ASIC/TCAM). Runs on line
+                    cards.</li>
+                <li><strong>Key distinction:</strong> Control plane = "where should packets go?" | Data plane = "move
+                    this packet NOW"</li>
+            </ul>
+        </div>
+
+        <div class="card card-amber">
+            <h3>RIB vs FIB — Critical Distinction</h3>
+            <ul>
+                <li><strong>RIB (Routing Information Base):</strong> Complete routing table built by routing protocols.
+                    Contains all routes learned. Managed by control plane. Software-based.</li>
+                <li><strong>FIB (Forwarding Information Base):</strong> Optimized subset of RIB used for actual packet
+                    forwarding. Hardware-based (TCAM). Only best routes per prefix. Consulted per-packet.</li>
+                <li>RIB → (best route selection) → FIB. FIB is derived from RIB but is much smaller and faster to look
+                    up.</li>
+            </ul>
+        </div>
+
+        <h2 class="section-head">5 Generations of Router Evolution</h2>
+        <div class="card card-blue">
+            <h3>Router Technology Timeline</h3>
+            <div class="point"><span class="point-num">Gen 1</span><span class="point-text"><strong>1980s — Standard Computer with Interfaces:</strong> Early routers were simply general-purpose computers (e.g., VAX or Sun workstations) running routing software with multiple network interface cards inserted. No custom hardware; all forwarding done in software by the CPU.</span></div>
+            <div class="point"><span class="point-num">Gen 2</span><span class="point-text"><strong>Early 1990s — Dedicated Interfaces:</strong> Routers gained dedicated interface cards with some hardware offload (DMA, hardware interrupt handling), but the central route processor still did all forwarding decisions. Better throughput, still single CPU bottleneck.</span></div>
+            <div class="point"><span class="point-num">Gen 3</span><span class="point-text"><strong>Late 1990s — Distributed Architecture:</strong> Forwarding moved onto line cards themselves (distributed forwarding). Each line card had its own processor and a local copy of the FIB. The central route processor was only used for control-plane tasks (running OSPF/BGP). Massive throughput improvement.</span></div>
+            <div class="point"><span class="point-num">Gen 4</span><span class="point-text"><strong>Early 2000s — Rack-Based Multi-Chassis:</strong> Router chassis could be expanded across multiple physical racks interconnected by high-speed backplanes. Large ISP-grade routers (e.g., Cisco CRS-1) achieved terabit-per-second forwarding by distributing across many line cards and fabric blades.</span></div>
+            <div class="point"><span class="point-num">Gen 5</span><span class="point-text"><strong>Current — SDN Routers:</strong> The control plane is decoupled from hardware and runs as software on commodity servers (the SDN controller). The router hardware becomes a "dumb" forwarding device controlled by OpenFlow or similar protocols. Enables software-defined, vendor-agnostic network management.</span></div>
+        </div>
+
+        <h2 class="section-head">Static vs Dynamic Routing Entries</h2>
+        <div class="card card-green">
+            <h3>Static Routes</h3>
+            <ul>
+                <li>Manually added by the network administrator using commands like <code>ip route add</code>.</li>
+                <li>Do not change unless the admin manually modifies or removes them.</li>
+                <li>Advantages: simple, predictable, no protocol overhead.</li>
+                <li>Disadvantages: does not adapt to topology changes; not scalable for large networks.</li>
+                <li>Use cases: small networks, stub networks, specific policy overrides (e.g., force traffic for 10.0.0.0/8 through a specific gateway).</li>
+            </ul>
+        </div>
+        <div class="card card-purple">
+            <h3>Dynamic Routes</h3>
+            <ul>
+                <li>Learned automatically by routing protocols: <strong>OSPF</strong> (link-state, IGP), <strong>BGP</strong> (path-vector, EGP), <strong>RIP</strong> (distance-vector, legacy IGP).</li>
+                <li>Routes update automatically when network topology changes (e.g., a link fails).</li>
+                <li>Advantages: adaptive, scalable, no manual intervention needed for topology changes.</li>
+                <li>Disadvantages: protocol overhead, convergence delay, configuration complexity.</li>
+                <li>Use cases: enterprise and ISP networks where topology changes frequently.</li>
+            </ul>
+        </div>
+
+        <h2 class="section-head">Linux Routing and IP Commands</h2>
+        <div class="card card-amber">
+            <h3>Practical Reference — Linux Network Commands</h3>
+            <div class="point"><span class="point-num">1</span><span class="point-text"><strong>ip address show</strong> — Lists all network interfaces with their IP addresses, MAC addresses, and link state (UP/DOWN). Key fields: <em>inet</em> = IPv4 address/prefix, <em>link/ether</em> = MAC address, <em>state UP</em> = interface active.</span></div>
+            <div class="point"><span class="point-num">2</span><span class="point-text"><strong>ip link show</strong> — Shows link-layer properties for all interfaces: MTU value, queueing discipline (qdisc), link state. Example: <em>mtu 1500 qdisc pfifo_fast state UP</em>.</span></div>
+            <div class="point"><span class="point-num">3</span><span class="point-text"><strong>route -n</strong> — Displays the kernel routing table in numeric form. Columns: <em>Destination</em>, <em>Gateway</em> (0.0.0.0 = directly connected), <em>Genmask</em> (subnet mask), <em>Flags</em> (U=up, G=gateway, H=host), <em>Iface</em> (output interface).</span></div>
+            <div class="point"><span class="point-num">4</span><span class="point-text"><strong>ip route add &lt;dest&gt; via &lt;gateway&gt; dev &lt;iface&gt;</strong> — Adds a static route entry. Example: <em>ip route add 192.168.2.0/24 via 10.0.0.1 dev eth0</em> sends packets to 192.168.2.x through the gateway 10.0.0.1 on eth0.</span></div>
+            <div class="point"><span class="point-num">5</span><span class="point-text"><strong>ip route del &lt;dest&gt;</strong> — Removes a route from the kernel routing table. Example: <em>ip route del 192.168.2.0/24</em>.</span></div>
+            <div class="point"><span class="point-num">6</span><span class="point-text"><strong>traceroute &lt;dest&gt;</strong> — Shows the path packets take hop by hop to the destination. Each line is one router hop, with up to 3 RTT measurements. Asterisks (*) mean no response (ICMP filtered). Useful for diagnosing where packets are being dropped or delayed.</span></div>
+            <div class="point"><span class="point-num">7</span><span class="point-text"><strong>ping &lt;dest&gt;</strong> — Tests reachability and measures round-trip time (RTT). Sends ICMP Echo Request; expects ICMP Echo Reply. Reports packet loss % and min/avg/max RTT. If ping fails: no route, firewall block, or host down.</span></div>
+        </div>
+
+        <h2 class="section-head">MCQs — Router Design</h2>
+
+        <div class="mcq-block">
+            <div class="mcq-q">Q1. Which component of a router is responsible for running routing protocols like OSPF
+                and BGP?</div>
+            <div class="mcq-opts" id="r9q1">
+                <button class="opt"
+                    onclick="answer('r9q1',0,2,'The Route Processor (RP) is the control plane component that runs routing protocols, maintains the RIB, and updates the FIB. Line cards handle fast hardware forwarding. The switching fabric moves packets internally.')">A)
+                    Input Line Card</button>
+                <button class="opt"
+                    onclick="answer('r9q1',1,2,'The Route Processor (RP) is the control plane component that runs routing protocols, maintains the RIB, and updates the FIB. Line cards handle fast hardware forwarding. The switching fabric moves packets internally.')">B)
+                    Switching Fabric</button>
+                <button class="opt"
+                    onclick="answer('r9q1',2,2,'The Route Processor (RP) is the control plane component that runs routing protocols, maintains the RIB, and updates the FIB. Line cards handle fast hardware forwarding. The switching fabric moves packets internally.')">C)
+                    Route Processor (RP)</button>
+                <button class="opt"
+                    onclick="answer('r9q1',3,2,'The Route Processor (RP) is the control plane component that runs routing protocols, maintains the RIB, and updates the FIB. Line cards handle fast hardware forwarding. The switching fabric moves packets internally.')">D)
+                    Output Line Card</button>
+            </div>
+            <div class="explanation" id="r9q1-exp"></div>
+        </div>
+
+        <div class="mcq-block">
+            <div class="mcq-q">Q2. What does a router do to the TTL field of a packet before forwarding it?</div>
+            <div class="mcq-opts" id="r9q2">
+                <button class="opt"
+                    onclick="answer('r9q2',0,1,'Each router decrements TTL by 1. If TTL reaches 0, the packet is discarded and an ICMP Time Exceeded message is sent back to the source. This prevents packets from looping forever in the network.')">A)
+                    Increments TTL by 1</button>
+                <button class="opt"
+                    onclick="answer('r9q2',1,1,'Each router decrements TTL by 1. If TTL reaches 0, the packet is discarded and an ICMP Time Exceeded message is sent back to the source. This prevents packets from looping forever in the network.')">B)
+                    Decrements TTL by 1</button>
+                <button class="opt"
+                    onclick="answer('r9q2',2,1,'Each router decrements TTL by 1. If TTL reaches 0, the packet is discarded and an ICMP Time Exceeded message is sent back to the source. This prevents packets from looping forever in the network.')">C)
+                    Sets TTL to zero</button>
+                <button class="opt"
+                    onclick="answer('r9q2',3,1,'Each router decrements TTL by 1. If TTL reaches 0, the packet is discarded and an ICMP Time Exceeded message is sent back to the source. This prevents packets from looping forever in the network.')">D)
+                    Copies TTL from source</button>
+            </div>
+            <div class="explanation" id="r9q2-exp"></div>
+        </div>
+
+        <div class="mcq-block">
+            <div class="mcq-q">Q3. The Forwarding Information Base (FIB) differs from the Routing Information Base (RIB)
+                in that FIB:</div>
+            <div class="mcq-opts" id="r9q3">
+                <button class="opt"
+                    onclick="answer('r9q3',0,2,'FIB is a hardware-optimized structure (often TCAM) containing only the best routes per prefix, used for fast per-packet lookup. The RIB is the complete software-based routing database with all routes learned from all protocols.')">A)
+                    Contains all routes from all routing protocols</button>
+                <button class="opt"
+                    onclick="answer('r9q3',1,2,'FIB is a hardware-optimized structure (often TCAM) containing only the best routes per prefix, used for fast per-packet lookup. The RIB is the complete software-based routing database with all routes learned from all protocols.')">B)
+                    Is maintained by the routing protocols</button>
+                <button class="opt"
+                    onclick="answer('r9q3',2,2,'FIB is a hardware-optimized structure (often TCAM) containing only the best routes per prefix, used for fast per-packet lookup. The RIB is the complete software-based routing database with all routes learned from all protocols.')">C)
+                    Is hardware-optimized and contains only best routes for fast per-packet forwarding</button>
+                <button class="opt"
+                    onclick="answer('r9q3',3,2,'FIB is a hardware-optimized structure (often TCAM) containing only the best routes per prefix, used for fast per-packet lookup. The RIB is the complete software-based routing database with all routes learned from all protocols.')">D)
+                    Is updated more slowly than the RIB</button>
+            </div>
+            <div class="explanation" id="r9q3-exp"></div>
+        </div>
+
+        <div class="mcq-block">
+            <div class="mcq-q">Q4. In IP longest prefix match (LPM), if a routing table has entries for 192.168.1.0/24
+                and 192.168.1.128/25, and a packet arrives for 192.168.1.200, which route is chosen?</div>
+            <div class="mcq-opts" id="r9q4">
+                <button class="opt"
+                    onclick="answer('r9q4',0,1,'LPM selects the most specific (longest prefix) matching route. 192.168.1.128/25 has a /25 prefix (25-bit match), which is longer (more specific) than /24 (24-bit match). Since 192.168.1.200 falls in the 192.168.1.128/25 range, /25 wins.')">A)
+                    192.168.1.0/24 (shorter prefix wins)</button>
+                <button class="opt"
+                    onclick="answer('r9q4',1,1,'LPM selects the most specific (longest prefix) matching route. 192.168.1.128/25 has a /25 prefix (25-bit match), which is longer (more specific) than /24 (24-bit match). Since 192.168.1.200 falls in the 192.168.1.128/25 range, /25 wins.')">B)
+                    192.168.1.128/25 (longer/more specific prefix wins)</button>
+                <button class="opt"
+                    onclick="answer('r9q4',2,1,'LPM selects the most specific (longest prefix) matching route. 192.168.1.128/25 has a /25 prefix (25-bit match), which is longer (more specific) than /24 (24-bit match). Since 192.168.1.200 falls in the 192.168.1.128/25 range, /25 wins.')">C)
+                    Both routes are used equally</button>
+                <button class="opt"
+                    onclick="answer('r9q4',3,1,'LPM selects the most specific (longest prefix) matching route. 192.168.1.128/25 has a /25 prefix (25-bit match), which is longer (more specific) than /24 (24-bit match). Since 192.168.1.200 falls in the 192.168.1.128/25 range, /25 wins.')">D)
+                    Default route is used</button>
+            </div>
+            <div class="explanation" id="r9q4-exp"></div>
+        </div>
+
+        <div class="mcq-block">
+            <div class="mcq-q">Q5. In which generation of router evolution did forwarding move onto individual line cards (distributed forwarding) rather than being handled by a central CPU?</div>
+            <div class="mcq-opts" id="r9q12">
+                <button class="opt"
+                    onclick="answer('r9q12',0,2,'Generation 1 (1980s) used standard computers. Generation 3 (late 1990s) introduced distributed architecture where each line card had its own processor and local FIB copy, eliminating the central CPU as a forwarding bottleneck.')">A)
+                    Generation 1 — 1980s (standard computers)</button>
+                <button class="opt"
+                    onclick="answer('r9q12',1,2,'Generation 1 (1980s) used standard computers. Generation 3 (late 1990s) introduced distributed architecture where each line card had its own processor and local FIB copy, eliminating the central CPU as a forwarding bottleneck.')">B)
+                    Generation 2 — Early 1990s (dedicated interfaces)</button>
+                <button class="opt"
+                    onclick="answer('r9q12',2,2,'Generation 1 (1980s) used standard computers. Generation 3 (late 1990s) introduced distributed architecture where each line card had its own processor and local FIB copy, eliminating the central CPU as a forwarding bottleneck.')">C)
+                    Generation 3 — Late 1990s (distributed architecture)</button>
+                <button class="opt"
+                    onclick="answer('r9q12',3,2,'Generation 1 (1980s) used standard computers. Generation 3 (late 1990s) introduced distributed architecture where each line card had its own processor and local FIB copy, eliminating the central CPU as a forwarding bottleneck.')">D)
+                    Generation 5 — Current (SDN routers)</button>
+            </div>
+            <div class="explanation" id="r9q12-exp"></div>
+        </div>
+
+        <div class="mcq-block">
+            <div class="mcq-q">Q6. A network admin wants a route that will NOT change automatically when the network topology changes. Which type should they use?</div>
+            <div class="mcq-opts" id="r9q13">
+                <button class="opt"
+                    onclick="answer('r9q13',0,0,'Static routes are manually configured and do not change unless the admin modifies them. Dynamic routes (learned by OSPF, BGP, RIP) adapt automatically to topology changes but cannot guarantee fixed paths.')">A)
+                    Static route</button>
+                <button class="opt"
+                    onclick="answer('r9q13',1,0,'Static routes are manually configured and do not change unless the admin modifies them. Dynamic routes (learned by OSPF, BGP, RIP) adapt automatically to topology changes but cannot guarantee fixed paths.')">B)
+                    OSPF route</button>
+                <button class="opt"
+                    onclick="answer('r9q13',2,0,'Static routes are manually configured and do not change unless the admin modifies them. Dynamic routes (learned by OSPF, BGP, RIP) adapt automatically to topology changes but cannot guarantee fixed paths.')">C)
+                    BGP route</button>
+                <button class="opt"
+                    onclick="answer('r9q13',3,0,'Static routes are manually configured and do not change unless the admin modifies them. Dynamic routes (learned by OSPF, BGP, RIP) adapt automatically to topology changes but cannot guarantee fixed paths.')">D)
+                    RIP route</button>
+            </div>
+            <div class="explanation" id="r9q13-exp"></div>
+        </div>
+    </div>
+
+    <!-- SECTION 2: Switching Fabric -->
+    <div id="switching_fabric" class="section">
+        <div class="topic-title">Topic 2: Switching Fabric Types <span class="badge badge-exam">High Weightage</span>
+        </div>
+
+        <div class="card card-blue">
+            <h3>What is a Switching Fabric?</h3>
+            <p>The switching fabric (also called the interconnection network) is the internal hardware mechanism that
+                moves packets from input line cards to the correct output line cards. It is the heart of a router's data
+                plane performance. Three primary types: Shared Memory, Bus-based, and Crossbar.</p>
+        </div>
+
+        <h2 class="section-head">Type 1: Shared Memory Switching</h2>
+        <div class="card card-green">
+            <h3>Shared Memory</h3>
+            <ul>
+                <li>Input port writes packet to central shared memory; output port reads from it.</li>
+                <li>Route processor controls which memory area to read/write.</li>
+                <li><strong>Bottleneck:</strong> Memory bandwidth limits the throughput — entire packet must be written
+                    AND read = 2× memory bandwidth consumed per packet.</li>
+                <li>Simple design, but does NOT scale to high speed (limited by memory bus speed).</li>
+                <li>Used in early/slower routers. Example: Cisco 2500 series.</li>
+            </ul>
+        </div>
+
+        <h2 class="section-head">Type 2: Bus-Based Switching</h2>
+        <div class="card card-purple">
+            <h3>Shared Bus</h3>
+            <ul>
+                <li>All input and output line cards connected by a single shared bus.</li>
+                <li>One packet crosses the bus at a time — <strong>contention</strong> occurs when multiple inputs want
+                    to send simultaneously.</li>
+                <li>Only ONE transfer can happen at a time — serial access.</li>
+                <li><strong>Bottleneck:</strong> Bus bandwidth is the limiting factor. All ports share the same bus
+                    bandwidth.</li>
+                <li>Better than shared memory for some designs, but still does not scale to very high line rates.</li>
+                <li>Example: Cisco Catalyst 5000 (32 Gbps bus).</li>
+            </ul>
+        </div>
+
+        <h2 class="section-head">Type 3: Crossbar (Crosspoint) Switching</h2>
+        <div class="card card-amber">
+            <h3>Crossbar Switch Fabric</h3>
+            <ul>
+                <li>An N×N grid of crosspoints — each crosspoint can connect any input to any output.</li>
+                <li>Allows <strong>multiple simultaneous</strong> (non-conflicting) transfers in parallel.</li>
+                <li>If input i and input j want to send to DIFFERENT outputs, both can send simultaneously.</li>
+                <li><strong>Head-of-Line (HOL) Blocking:</strong> A packet at the head of an input queue may block other
+                    packets behind it even if those other packets' output ports are free. This is a key limitation of
+                    input-queued crossbars.</li>
+                <li>SPEEDUP: Run the crossbar faster than line rate to reduce HOL blocking.</li>
+                <li>High performance — used in modern high-speed routers and switches.</li>
+                <li>Example: Cisco 12000 series GSR uses crossbar fabric.</li>
+            </ul>
+        </div>
+
+        <div class="table-wrap">
+            <table>
+                <tr>
+                    <th>Fabric Type</th>
+                    <th>Parallelism</th>
+                    <th>Bottleneck</th>
+                    <th>Scalability</th>
+                    <th>HOL Blocking?</th>
+                </tr>
+                <tr>
+                    <td>Shared Memory</td>
+                    <td>None</td>
+                    <td>Memory bandwidth</td>
+                    <td>Low</td>
+                    <td>N/A</td>
+                </tr>
+                <tr>
+                    <td>Shared Bus</td>
+                    <td>None (serial)</td>
+                    <td>Bus bandwidth</td>
+                    <td>Medium</td>
+                    <td>N/A</td>
+                </tr>
+                <tr>
+                    <td>Crossbar</td>
+                    <td>High (N simultaneous)</td>
+                    <td>Scheduling algorithm</td>
+                    <td>High</td>
+                    <td>Yes (input-queued)</td>
+                </tr>
+            </table>
+        </div>
+
+        <h2 class="section-head">MCQs — Switching Fabric</h2>
+
+        <div class="mcq-block">
+            <div class="mcq-q">Q1. Which type of switching fabric allows multiple simultaneous packet transfers between
+                non-conflicting input-output pairs?</div>
+            <div class="mcq-opts" id="r9q5">
+                <button class="opt"
+                    onclick="answer('r9q5',0,2,'A crossbar switch fabric has an N×N grid of crosspoints and allows multiple non-conflicting input-output pairs to transfer simultaneously in parallel. Shared memory and shared bus allow only one transfer at a time.')">A)
+                    Shared Memory</button>
+                <button class="opt"
+                    onclick="answer('r9q5',1,2,'A crossbar switch fabric has an N×N grid of crosspoints and allows multiple non-conflicting input-output pairs to transfer simultaneously in parallel. Shared memory and shared bus allow only one transfer at a time.')">B)
+                    Shared Bus</button>
+                <button class="opt"
+                    onclick="answer('r9q5',2,2,'A crossbar switch fabric has an N×N grid of crosspoints and allows multiple non-conflicting input-output pairs to transfer simultaneously in parallel. Shared memory and shared bus allow only one transfer at a time.')">C)
+                    Crossbar</button>
+                <button class="opt"
+                    onclick="answer('r9q5',3,2,'A crossbar switch fabric has an N×N grid of crosspoints and allows multiple non-conflicting input-output pairs to transfer simultaneously in parallel. Shared memory and shared bus allow only one transfer at a time.')">D)
+                    Token Ring Fabric</button>
+            </div>
+            <div class="explanation" id="r9q5-exp"></div>
+        </div>
+
+        <div class="mcq-block">
+            <div class="mcq-q">Q2. Head-of-Line (HOL) blocking in a crossbar switch occurs because:</div>
+            <div class="mcq-opts" id="r9q6">
+                <button class="opt"
+                    onclick="answer('r9q6',0,3,'HOL blocking: In an input-queued crossbar, a packet at the head of an input queue that is waiting for a busy output port BLOCKS all packets behind it in the same input queue, even though those packets may be destined for free output ports. This wastes available capacity.')">A)
+                    The crossbar bus is too slow</button>
+                <button class="opt"
+                    onclick="answer('r9q6',1,3,'HOL blocking: In an input-queued crossbar, a packet at the head of an input queue that is waiting for a busy output port BLOCKS all packets behind it in the same input queue, even though those packets may be destined for free output ports. This wastes available capacity.')">B)
+                    Too many crosspoints fail</button>
+                <button class="opt"
+                    onclick="answer('r9q6',2,3,'HOL blocking: In an input-queued crossbar, a packet at the head of an input queue that is waiting for a busy output port BLOCKS all packets behind it in the same input queue, even though those packets may be destined for free output ports. This wastes available capacity.')">C)
+                    Memory bandwidth is insufficient</button>
+                <button class="opt"
+                    onclick="answer('r9q6',3,3,'HOL blocking: In an input-queued crossbar, a packet at the head of an input queue that is waiting for a busy output port BLOCKS all packets behind it in the same input queue, even though those packets may be destined for free output ports. This wastes available capacity.')">D)
+                    A packet waiting for a busy output port blocks packets behind it destined for free output
+                    ports</button>
+            </div>
+            <div class="explanation" id="r9q6-exp"></div>
+        </div>
+
+        <div class="mcq-block">
+            <div class="mcq-q">Q3. In a shared memory switching fabric, each packet consumes how many times the memory
+                bandwidth compared to the packet size?</div>
+            <div class="mcq-opts" id="r9q7">
+                <button class="opt"
+                    onclick="answer('r9q7',0,1,'In shared memory, a packet must be WRITTEN to memory by the input port, then READ from memory by the output port. This means each packet consumes 2× its size in memory bandwidth — write + read.')">A)
+                    1× (once)</button>
+                <button class="opt"
+                    onclick="answer('r9q7',1,1,'In shared memory, a packet must be WRITTEN to memory by the input port, then READ from memory by the output port. This means each packet consumes 2× its size in memory bandwidth — write + read.')">B)
+                    2× (write + read)</button>
+                <button class="opt"
+                    onclick="answer('r9q7',2,1,'In shared memory, a packet must be WRITTEN to memory by the input port, then READ from memory by the output port. This means each packet consumes 2× its size in memory bandwidth — write + read.')">C)
+                    4× (double write, double read)</button>
+                <button class="opt"
+                    onclick="answer('r9q7',3,1,'In shared memory, a packet must be WRITTEN to memory by the input port, then READ from memory by the output port. This means each packet consumes 2× its size in memory bandwidth — write + read.')">D)
+                    N× (one for each port)</button>
+            </div>
+            <div class="explanation" id="r9q7-exp"></div>
+        </div>
+    </div>
+
+    <!-- SECTION 3: Queuing & Scheduling -->
+    <div id="queuing" class="section">
+        <div class="topic-title">Topic 3: Queuing &amp; Packet Scheduling <span class="badge badge-exam">Exam
+                Favorite</span></div>
+
+        <div class="card card-blue">
+            <h3>Why Queuing?</h3>
+            <p>Queuing occurs when packets arrive faster than the output link can transmit them. Both input queuing (at
+                ingress) and output queuing (at egress) can occur. The scheduling discipline determines WHICH packet
+                from the queue is sent next.</p>
+        </div>
+
+        <h2 class="section-head">Input vs Output Queuing</h2>
+        <div class="table-wrap">
+            <table>
+                <tr>
+                    <th>Type</th>
+                    <th>Where</th>
+                    <th>Problem</th>
+                    <th>Solution</th>
+                </tr>
+                <tr>
+                    <td>Input Queuing</td>
+                    <td>At input line cards before the fabric</td>
+                    <td>HOL Blocking</td>
+                    <td>Virtual Output Queues (VOQ); Speedup</td>
+                </tr>
+                <tr>
+                    <td>Output Queuing</td>
+                    <td>At output line cards after the fabric</td>
+                    <td>Output contention when multiple inputs → same output</td>
+                    <td>Large buffers; QoS scheduling</td>
+                </tr>
+            </table>
+        </div>
+
+        <h2 class="section-head">Scheduling Algorithms</h2>
+        <div class="card" style="padding: 0.5rem 1.25rem;">
+            <div class="point"><span class="point-num">1</span><span class="point-text"><strong>FIFO (First-In
+                        First-Out):</strong> Packets served in strict arrival order. Simple. No priority. Tail-drop when
+                    buffer full. Used as the baseline.</span></div>
+            <div class="point"><span class="point-num">2</span><span class="point-text"><strong>Priority
+                        Queuing:</strong> Multiple queues with priorities. High-priority queue always served first.
+                    Low-priority packets may STARVE if high-priority traffic is heavy.</span></div>
+            <div class="point"><span class="point-num">3</span><span class="point-text"><strong>Round Robin
+                        (RR):</strong> Serve one packet from each queue in turn. Fair between flows. But does not
+                    account for different packet sizes.</span></div>
+            <div class="point"><span class="point-num">4</span><span class="point-text"><strong>Weighted Fair Queuing
+                        (WFQ):</strong> Each flow gets a WEIGHT. Bandwidth allocated proportional to weight. Most
+                    popular QoS algorithm. Approximates bit-by-bit round robin (fluid model).</span></div>
+            <div class="point"><span class="point-num">5</span><span class="point-text"><strong>Deficit Round Robin
+                        (DRR):</strong> Extension of RR that handles variable packet sizes fairly by maintaining a
+                    credit (deficit) counter per queue.</span></div>
+        </div>
+
+        <div class="card card-green">
+            <h3>Buffer Sizing — Rule of Thumb</h3>
+            <ul>
+                <li>Traditional rule: Buffer size = RTT × Link capacity (e.g., 250ms × 10Gbps = 2.5Gb)</li>
+                <li>Modern rule (for many flows): Buffer = RTT × C / √N (where N = number of TCP flows)</li>
+                <li>Too little buffer → packet loss, throughput suffers</li>
+                <li>Too much buffer → excessive queuing delay (bufferbloat)</li>
+            </ul>
+        </div>
+
+        <div class="card card-amber">
+            <h3>Active Queue Management (AQM)</h3>
+            <ul>
+                <li><strong>Tail Drop:</strong> Drop incoming packet when buffer is full. Simple but causes TCP
+                    synchronization.</li>
+                <li><strong>RED (Random Early Detection):</strong> Randomly drop packets BEFORE buffer is full,
+                    proportional to queue occupancy. Avoids global synchronization of TCP flows.</li>
+                <li><strong>WRED (Weighted RED):</strong> Different drop probabilities for different traffic classes —
+                    higher-priority traffic dropped less aggressively.</li>
+            </ul>
+        </div>
+
+        <h2 class="section-head">MCQs — Queuing &amp; Scheduling</h2>
+
+        <div class="mcq-block">
+            <div class="mcq-q">Q1. Which scheduling discipline can cause low-priority packets to STARVE (never get
+                served) when high-priority traffic is heavy?</div>
+            <div class="mcq-opts" id="r9q8">
+                <button class="opt"
+                    onclick="answer('r9q8',0,1,'Priority Queuing always serves the highest-priority queue first. If high-priority traffic is always present, lower-priority queues may NEVER get served — this is called starvation. WFQ guarantees a minimum bandwidth to each flow, preventing starvation.')">A)
+                    Weighted Fair Queuing (WFQ)</button>
+                <button class="opt"
+                    onclick="answer('r9q8',1,1,'Priority Queuing always serves the highest-priority queue first. If high-priority traffic is always present, lower-priority queues may NEVER get served — this is called starvation. WFQ guarantees a minimum bandwidth to each flow, preventing starvation.')">B)
+                    Priority Queuing</button>
+                <button class="opt"
+                    onclick="answer('r9q8',2,1,'Priority Queuing always serves the highest-priority queue first. If high-priority traffic is always present, lower-priority queues may NEVER get served — this is called starvation. WFQ guarantees a minimum bandwidth to each flow, preventing starvation.')">C)
+                    Round Robin</button>
+                <button class="opt"
+                    onclick="answer('r9q8',3,1,'Priority Queuing always serves the highest-priority queue first. If high-priority traffic is always present, lower-priority queues may NEVER get served — this is called starvation. WFQ guarantees a minimum bandwidth to each flow, preventing starvation.')">D)
+                    FIFO</button>
+            </div>
+            <div class="explanation" id="r9q8-exp"></div>
+        </div>
+
+        <div class="mcq-block">
+            <div class="mcq-q">Q2. RED (Random Early Detection) drops packets randomly BEFORE the buffer is completely
+                full. The primary reason for this is to:</div>
+            <div class="mcq-opts" id="r9q9">
+                <button class="opt"
+                    onclick="answer('r9q9',0,3,'RED avoids global synchronization of TCP flows. If the buffer fills and tail-drop kicks in simultaneously for many TCP flows, they ALL reduce their window size at the same time, causing oscillation. RED\'s early, random drops trigger individual TCP flows to slow down before a crisis.')">A)
+                    Save memory in the router</button>
+                <button class="opt"
+                    onclick="answer('r9q9',1,3,'RED avoids global synchronization of TCP flows. If the buffer fills and tail-drop kicks in simultaneously for many TCP flows, they ALL reduce their window size at the same time, causing oscillation. RED\'s early, random drops trigger individual TCP flows to slow down before a crisis.')">B)
+                    Give priority to newer packets</button>
+                <button class="opt"
+                    onclick="answer('r9q9',2,3,'RED avoids global synchronization of TCP flows. If the buffer fills and tail-drop kicks in simultaneously for many TCP flows, they ALL reduce their window size at the same time, causing oscillation. RED\'s early, random drops trigger individual TCP flows to slow down before a crisis.')">C)
+                    Improve security against flooding attacks</button>
+                <button class="opt"
+                    onclick="answer('r9q9',3,3,'RED avoids global synchronization of TCP flows. If the buffer fills and tail-drop kicks in simultaneously for many TCP flows, they ALL reduce their window size at the same time, causing oscillation. RED\'s early, random drops trigger individual TCP flows to slow down before a crisis.')">D)
+                    Avoid global synchronization of TCP flows and prevent buffer fill-up</button>
+            </div>
+            <div class="explanation" id="r9q9-exp"></div>
+        </div>
+    </div>
+
+    <!-- SECTION 4: Router Hardware -->
+    <div id="router_hw" class="section">
+        <div class="topic-title">Topic 4: Router Hardware — ASIC, TCAM &amp; NetFPGA <span
+                class="badge badge-imp">Important</span></div>
+
+        <div class="card card-blue">
+            <h3>Why Special Hardware?</h3>
+            <p>At high line rates (10 Gbps, 100 Gbps, 1 Tbps), even the fastest CPUs cannot process packets fast enough
+                in software. Dedicated hardware accelerators are needed to perform lookups, table searches, and
+                forwarding at wire speed.</p>
+        </div>
+
+        <h2 class="section-head">Key Hardware Components</h2>
+        <div class="card" style="padding: 0.5rem 1.25rem;">
+            <div class="point"><span class="point-num">1</span><span class="point-text"><strong>ASIC
+                        (Application-Specific Integrated Circuit):</strong> Custom silicon chips designed specifically
+                    for packet forwarding. Much faster than general-purpose CPUs. Not reprogrammable after manufacture.
+                    Used in all high-performance routers and switches.</span></div>
+            <div class="point"><span class="point-num">2</span><span class="point-text"><strong>TCAM (Ternary Content
+                        Addressable Memory):</strong> Memory that can be searched by CONTENT rather than address.
+                    Supports three values per bit: 0, 1, or Don't Care (X). Enables longest-prefix-match lookup in a
+                    SINGLE clock cycle. Much more expensive than SRAM but orders of magnitude faster for LPM.</span>
+            </div>
+            <div class="point"><span class="point-num">3</span><span class="point-text"><strong>NetFPGA:</strong>
+                    Field-Programmable Gate Array board designed for network research. Allows researchers to prototype
+                    high-speed router/switch functions in reconfigurable hardware. Open-source platform used by
+                    universities worldwide.</span></div>
+            <div class="point"><span class="point-num">4</span><span class="point-text"><strong>NP (Network
+                        Processor):</strong> Programmable processor optimized for network tasks (header parsing, table
+                    lookups). Sits between general CPU and ASIC in terms of flexibility vs speed.</span></div>
+        </div>
+
+        <div class="card card-purple">
+            <h3>TCAM: How It Works</h3>
+            <ul>
+                <li>Conventional RAM: you give an address → get back content (one address at a time).</li>
+                <li>CAM (Content Addressable Memory): you give content → get back the address where it is stored.
+                    Parallel search of ALL entries simultaneously.</li>
+                <li>TCAM adds a "Don't Care" (X or *) bit — perfect for IP prefix matching where trailing bits are
+                    wildcards.</li>
+                <li>A routing table with N entries: TCAM finds the matching entry in O(1) time regardless of N.</li>
+                <li>Limitation: High power consumption and cost. Entries stored in priority order (highest priority =
+                    most-specific prefix first).</li>
+            </ul>
+        </div>
+
+        <h2 class="section-head">TCAM Entry Structure — Worked Example</h2>
+        <div class="card card-green">
+            <h3>Prefix + Mask → Wildcard (TCAM) Format</h3>
+            <p style="margin-bottom: 10px;">In TCAM, each routing prefix is stored as a <strong>prefix pattern + wildcard mask</strong>. The mask length tells how many leading bits are fixed (must match exactly); the remaining bits become "Don't Care" (X) in TCAM. A search word is broadcast to all TCAM entries <em>simultaneously</em>; all matching entries signal a hit, and a <strong>priority encoder</strong> selects the longest match (highest priority = most specific prefix = fewest X bits).</p>
+            <div class="table-wrap">
+                <table>
+                    <tr>
+                        <th>Prefix (Binary)</th>
+                        <th>Mask Length</th>
+                        <th>TCAM Entry (Ternary)</th>
+                        <th>Meaning</th>
+                    </tr>
+                    <tr>
+                        <td>101</td>
+                        <td>3 (all bits fixed)</td>
+                        <td>101</td>
+                        <td>Exact match: only 101</td>
+                    </tr>
+                    <tr>
+                        <td>101</td>
+                        <td>2 (last bit wildcard)</td>
+                        <td>10X</td>
+                        <td>Matches 100 and 101</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>2 (both bits fixed)</td>
+                        <td>10XX</td>
+                        <td>Matches 1000, 1001, 1010, 1011</td>
+                    </tr>
+                    <tr>
+                        <td>(default)</td>
+                        <td>0 (all wildcard)</td>
+                        <td>XXXX</td>
+                        <td>Matches any address — default route</td>
+                    </tr>
+                </table>
+            </div>
+            <p style="margin-top: 10px;"><strong>Example search:</strong> Search word = <strong>1011</strong>. This matches TCAM entry "10XX" (prefix 10, mask 2) and also "XXXX" (default). The priority encoder selects "10XX" because it is more specific (fewer X bits = longer prefix = higher priority). This gives O(1) longest-prefix-match in hardware.</p>
+        </div>
+
+        <h2 class="section-head">Slotted Chassis Architecture</h2>
+        <div class="card card-amber">
+            <h3>Physical Chassis with Insert-able Slots</h3>
+            <p style="margin-bottom: 8px;">Modern enterprise and carrier-grade routers use a <strong>slotted chassis</strong> design — a physical enclosure with multiple numbered slots into which individual cards are inserted like modules in a rack.</p>
+            <div class="point"><span class="point-num">1</span><span class="point-text"><strong>Chassis (the case):</strong> Provides the physical backplane (high-speed bus/crossbar connecting all cards), power supplies, and cooling fans. The backplane is the internal switching fabric.</span></div>
+            <div class="point"><span class="point-num">2</span><span class="point-text"><strong>Route Processor Card:</strong> One (or two, for redundancy) card slots hold the Route Processor — the CPU that runs OSPF, BGP, and manages the control plane. Inserted into a dedicated slot, typically slot 0.</span></div>
+            <div class="point"><span class="point-num">3</span><span class="point-text"><strong>Interface / Line Cards:</strong> Each remaining slot holds one interface card (line card) providing physical ports (e.g., 4× 10GbE, 8× 1GbE). Cards can mix port types within the same chassis.</span></div>
+            <div class="point"><span class="point-num">4</span><span class="point-text"><strong>Hot-Swap / In-Service Repair:</strong> A faulty line card can be physically pulled out and replaced with a new one <em>without</em> powering down the chassis. Other slots continue forwarding traffic — the router remains operational during repair.</span></div>
+            <div class="point"><span class="point-num">5</span><span class="point-text"><strong>Capacity Upgrade:</strong> Adding capacity is as simple as inserting a new line card into an empty slot. No rewiring or downtime required for the existing slots. This makes chassis-based routers far more maintainable than fixed-port appliances.</span></div>
+        </div>
+
+        <h2 class="section-head">MTU and Loopback Interface</h2>
+        <div class="card card-blue">
+            <h3>MTU — Maximum Transmission Unit</h3>
+            <ul>
+                <li>Each network interface has a maximum packet size it can transmit in one frame, called the <strong>MTU</strong>.</li>
+                <li><strong>Ethernet MTU = 1500 bytes</strong> (most common). This is the maximum IP datagram size on an Ethernet link (excluding the Ethernet frame header).</li>
+                <li><strong>Loopback MTU = 65536 bytes</strong> — the loopback interface has a very large MTU because there is no physical medium limit.</li>
+                <li>If a packet is larger than the MTU of the outgoing interface, the router must either:
+                    <ul>
+                        <li><strong>Fragment</strong> the packet (IP fragmentation) — split it into smaller fragments, each with its own IP header.</li>
+                        <li><strong>Drop</strong> the packet and send an ICMP "Fragmentation Needed" message back to the source — if the <strong>DF (Don't Fragment)</strong> bit is set in the IP header. This is how Path MTU Discovery (PMTUD) works.</li>
+                    </ul>
+                </li>
+                <li>Fragmentation is expensive (CPU overhead) and fragments must be reassembled at the destination.</li>
+            </ul>
+        </div>
+
+        <div class="card card-green">
+            <h3>Loopback Interface (127.0.0.1)</h3>
+            <ul>
+                <li>A <strong>virtual network interface</strong> that exists on every machine and does not correspond to any physical hardware.</li>
+                <li>IP address: <strong>127.0.0.1</strong> (IPv4), configured with the /8 prefix (entire 127.0.0.0/8 block is loopback).</li>
+                <li>Hostname <strong>"localhost"</strong> resolves to 127.0.0.1 — used by applications to communicate with services on the same machine without network traffic leaving the host.</li>
+                <li><strong>Purpose:</strong> Test whether the local TCP/IP stack is working correctly without needing a physical network connection. If <code>ping 127.0.0.1</code> works, the kernel network stack is functional.</li>
+                <li>Packets sent to 127.0.0.1 are looped back by the kernel immediately — they never leave the machine and never go on any physical medium.</li>
+                <li>MTU of loopback is 65536 bytes (no physical medium constraint).</li>
+            </ul>
+        </div>
+
+        <div class="card card-amber">
+            <h3>Practical Router: Cisco IOS Router Components</h3>
+            <ul>
+                <li><strong>Flash memory:</strong> Stores the IOS (operating system) image.</li>
+                <li><strong>NVRAM:</strong> Stores the startup configuration file.</li>
+                <li><strong>RAM:</strong> Stores running configuration and routing tables.</li>
+                <li><strong>ROM:</strong> Bootstrap program (POST + ROM Monitor).</li>
+                <li><strong>Interfaces:</strong> Physical ports (Ethernet, Serial, etc.) — each is a line card.</li>
+            </ul>
+        </div>
+
+        <h2 class="section-head">MCQs — Router Hardware</h2>
+
+        <div class="mcq-block">
+            <div class="mcq-q">Q1. TCAM (Ternary Content Addressable Memory) is used for IP longest-prefix-match lookups
+                primarily because it:</div>
+            <div class="mcq-opts" id="r9q10">
+                <button class="opt"
+                    onclick="answer('r9q10',0,2,'TCAM searches ALL entries simultaneously in a single clock cycle, making LPM lookups O(1) regardless of table size. The ternary (0/1/X) nature allows wildcard matching needed for IP prefixes. This gives wire-speed performance but at high cost and power.')">A)
+                    Uses less power than SRAM</button>
+                <button class="opt"
+                    onclick="answer('r9q10',1,2,'TCAM searches ALL entries simultaneously in a single clock cycle, making LPM lookups O(1) regardless of table size. The ternary (0/1/X) nature allows wildcard matching needed for IP prefixes. This gives wire-speed performance but at high cost and power.')">B)
+                    Stores compressed routing tables</button>
+                <button class="opt"
+                    onclick="answer('r9q10',2,2,'TCAM searches ALL entries simultaneously in a single clock cycle, making LPM lookups O(1) regardless of table size. The ternary (0/1/X) nature allows wildcard matching needed for IP prefixes. This gives wire-speed performance but at high cost and power.')">C)
+                    Enables parallel search of all entries simultaneously in a single clock cycle</button>
+                <button class="opt"
+                    onclick="answer('r9q10',3,2,'TCAM searches ALL entries simultaneously in a single clock cycle, making LPM lookups O(1) regardless of table size. The ternary (0/1/X) nature allows wildcard matching needed for IP prefixes. This gives wire-speed performance but at high cost and power.')">D)
+                    Is cheaper than DRAM</button>
+            </div>
+            <div class="explanation" id="r9q10-exp"></div>
+        </div>
+
+        <div class="mcq-block">
+            <div class="mcq-q">Q2. On a Cisco router, where is the running configuration (active config) stored?</div>
+            <div class="mcq-opts" id="r9q11">
+                <button class="opt"
+                    onclick="answer('r9q11',0,2,'The running configuration is stored in RAM (volatile). When the router reboots, RAM is cleared and the startup configuration (from NVRAM) is loaded. Flash stores the IOS image. ROM stores the bootstrap program.')">A)
+                    Flash Memory</button>
+                <button class="opt"
+                    onclick="answer('r9q11',1,2,'The running configuration is stored in RAM (volatile). When the router reboots, RAM is cleared and the startup configuration (from NVRAM) is loaded. Flash stores the IOS image. ROM stores the bootstrap program.')">B)
+                    NVRAM</button>
+                <button class="opt"
+                    onclick="answer('r9q11',2,2,'The running configuration is stored in RAM (volatile). When the router reboots, RAM is cleared and the startup configuration (from NVRAM) is loaded. Flash stores the IOS image. ROM stores the bootstrap program.')">C)
+                    RAM</button>
+                <button class="opt"
+                    onclick="answer('r9q11',3,2,'The running configuration is stored in RAM (volatile). When the router reboots, RAM is cleared and the startup configuration (from NVRAM) is loaded. Flash stores the IOS image. ROM stores the bootstrap program.')">D)
+                    ROM</button>
+            </div>
+            <div class="explanation" id="r9q11-exp"></div>
+        </div>
+
+        <div class="mcq-block">
+            <div class="mcq-q">Q3. In a TCAM, if a search word "1011" matches both entry "10XX" (prefix 10, mask 2) and "XXXX" (default route), which entry is selected and why?</div>
+            <div class="mcq-opts" id="r9q14">
+                <button class="opt"
+                    onclick="answer('r9q14',0,1,'The priority encoder selects the most specific match — the entry with the fewest X (wildcard) bits, which corresponds to the longest prefix match. \"10XX\" has 2 fixed bits vs \"XXXX\" has 0 fixed bits, so \"10XX\" wins.')">A)
+                    "10XX" — it has fewer wildcard bits (longer prefix = more specific)</button>
+                <button class="opt"
+                    onclick="answer('r9q14',1,1,'The priority encoder selects the most specific match — the entry with the fewest X (wildcard) bits, which corresponds to the longest prefix match. \"10XX\" has 2 fixed bits vs \"XXXX\" has 0 fixed bits, so \"10XX\" wins.')">B)
+                    "XXXX" — it matches any address so it has the highest priority</button>
+                <button class="opt"
+                    onclick="answer('r9q14',2,1,'The priority encoder selects the most specific match — the entry with the fewest X (wildcard) bits, which corresponds to the longest prefix match. \"10XX\" has 2 fixed bits vs \"XXXX\" has 0 fixed bits, so \"10XX\" wins.')">C)
+                    Both entries are used simultaneously</button>
+                <button class="opt"
+                    onclick="answer('r9q14',3,1,'The priority encoder selects the most specific match — the entry with the fewest X (wildcard) bits, which corresponds to the longest prefix match. \"10XX\" has 2 fixed bits vs \"XXXX\" has 0 fixed bits, so \"10XX\" wins.')">D)
+                    The first matching entry found by sequential scan</button>
+            </div>
+            <div class="explanation" id="r9q14-exp"></div>
+        </div>
+
+        <div class="mcq-block">
+            <div class="mcq-q">Q4. A packet arriving at a router has a size of 2000 bytes, and the outgoing Ethernet interface has an MTU of 1500 bytes. The IP header has the DF (Don't Fragment) bit SET. What does the router do?</div>
+            <div class="mcq-opts" id="r9q15">
+                <button class="opt"
+                    onclick="answer('r9q15',0,2,'When DF=1 and packet > MTU, the router CANNOT fragment. It drops the packet and sends an ICMP Type 3, Code 4 (Fragmentation Needed, DF set) message back to the source. This is the mechanism behind Path MTU Discovery (PMTUD).')">A)
+                    Fragment the packet into two pieces and forward both</button>
+                <button class="opt"
+                    onclick="answer('r9q15',1,2,'When DF=1 and packet > MTU, the router CANNOT fragment. It drops the packet and sends an ICMP Type 3, Code 4 (Fragmentation Needed, DF set) message back to the source. This is the mechanism behind Path MTU Discovery (PMTUD).')">B)
+                    Drop the packet silently without notification</button>
+                <button class="opt"
+                    onclick="answer('r9q15',2,2,'When DF=1 and packet > MTU, the router CANNOT fragment. It drops the packet and sends an ICMP Type 3, Code 4 (Fragmentation Needed, DF set) message back to the source. This is the mechanism behind Path MTU Discovery (PMTUD).')">C)
+                    Drop the packet and send ICMP "Fragmentation Needed" back to the source</button>
+                <button class="opt"
+                    onclick="answer('r9q15',3,2,'When DF=1 and packet > MTU, the router CANNOT fragment. It drops the packet and sends an ICMP Type 3, Code 4 (Fragmentation Needed, DF set) message back to the source. This is the mechanism behind Path MTU Discovery (PMTUD).')">D)
+                    Buffer the packet and wait for a smaller MTU link</button>
+            </div>
+            <div class="explanation" id="r9q15-exp"></div>
+        </div>
+    </div>
+
+    <!-- SECTION 5: SDN & OpenFlow -->
+    <div id="sdn_openflow" class="section">
+        <div class="topic-title">Topic 5: Software-Defined Networking &amp; OpenFlow <span class="badge badge-exam">Exam Favorite</span></div>
+
+        <div class="card card-red">
+            <h3>SDN Motivation — Why Move Away from Traditional Routing?</h3>
+            <ul>
+                <li><strong>(a) Scalability limits:</strong> Distributed routing protocols (distance-vector, link-state) do not scale perfectly; convergence slows as networks grow.</li>
+                <li><strong>(b) Per-device management:</strong> Policy changes (e.g., block a traffic type) require reconfiguring every router individually — tedious and error-prone at scale.</li>
+                <li><strong>(c) Vendor lock-in:</strong> Each vendor has a proprietary OS (Cisco IOS, Juniper JunOS). Managing a multi-vendor network is complex; no standard API.</li>
+                <li><strong>(d) Configuration inconsistencies:</strong> In a distributed system, different routers may have inconsistent views of the network momentarily, causing transient routing loops or black holes.</li>
+                <li><strong>SDN solution:</strong> Centralize the control plane into a software controller. Switches become simple forwarding hardware with no routing intelligence of their own.</li>
+            </ul>
+        </div>
+
+        <h2 class="section-head">SDN Architecture — Three Layers</h2>
+        <div class="card card-blue">
+            <h3>Layered SDN Model</h3>
+            <div class="point"><span class="point-num">Top</span><span class="point-text"><strong>Application Layer:</strong> Network applications written by the operator — firewall, load balancer, traffic engineering, monitoring. These are normal software programs (Python, Java) that call the controller's northbound API to install/query forwarding rules.</span></div>
+            <div class="point"><span class="point-num">Mid</span><span class="point-text"><strong>Control Layer (SDN Controller):</strong> Centralized software running on a standard computer (or cluster). Collects network topology information, computes forwarding rules, and pushes them to switches via the southbound interface (OpenFlow). Acts as the "brain" of the network.</span></div>
+            <div class="point"><span class="point-num">Bot</span><span class="point-text"><strong>Infrastructure Layer (Data Plane Switches):</strong> Programmable "dumb" switches. They hold only a TCAM-based flow table and a forwarding engine. They have NO built-in routing logic — they simply execute rules installed by the controller. Cheap commodity hardware.</span></div>
+        </div>
+
+        <h2 class="section-head">Closed vs Open Innovation</h2>
+        <div class="card card-green">
+            <h3>Traditional Closed vs SDN Open Model</h3>
+            <div class="table-wrap">
+                <table>
+                    <tr>
+                        <th>Aspect</th>
+                        <th>Traditional (Closed)</th>
+                        <th>SDN (Open)</th>
+                    </tr>
+                    <tr>
+                        <td>Hardware + Software</td>
+                        <td>Both from same vendor (e.g., Cisco IOS on Cisco ASR)</td>
+                        <td>Vendor supplies hardware only; operator chooses software</td>
+                    </tr>
+                    <tr>
+                        <td>Control logic</td>
+                        <td>Built into router firmware, proprietary</td>
+                        <td>Runs as software on commodity server (open-source controller)</td>
+                    </tr>
+                    <tr>
+                        <td>Innovation pace</td>
+                        <td>Slow — hardware upgrade cycle required</td>
+                        <td>Fast — update control software without touching hardware</td>
+                    </tr>
+                    <tr>
+                        <td>Management</td>
+                        <td>Per-device CLI configuration</td>
+                        <td>Single controller manages all switches</td>
+                    </tr>
+                    <tr>
+                        <td>Vendor lock-in</td>
+                        <td>Yes — switch hardware and OS bundled</td>
+                        <td>No — standard OpenFlow interface</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <h2 class="section-head">Northbound and Southbound Interfaces</h2>
+        <div class="card card-purple">
+            <h3>API Interfaces in SDN</h3>
+            <ul>
+                <li><strong>Northbound Interface (NBI):</strong> The API between the SDN controller and the Application layer. Network programs (written in Python, Java, etc.) call the NBI to install forwarding rules, query topology, or set policies. Each SDN controller exposes its own NBI (e.g., REST API in OpenDaylight, Python API in Ryu).</li>
+                <li><strong>Southbound Interface (SBI):</strong> The protocol between the controller and the physical/virtual switches in the Infrastructure layer. <strong>OpenFlow</strong> is the most widely used southbound protocol. Other options: NETCONF, gRPC, P4Runtime.</li>
+                <li>Think of it as: Applications talk "north" to the controller → Controller talks "south" to switches.</li>
+            </ul>
+        </div>
+
+        <h2 class="section-head">OpenFlow Protocol</h2>
+        <div class="card card-amber">
+            <h3>OpenFlow — Controller-to-Switch Communication Standard</h3>
+            <p style="margin-bottom: 8px;">OpenFlow is the standardized protocol for an SDN controller to install, modify, and delete forwarding rules in a switch's flow table. Each entry in the flow table is a <strong>match-action pair</strong>:</p>
+            <ul>
+                <li><strong>Match fields</strong> (what to look for in packet headers): Source MAC, Destination MAC, Source IP, Destination IP, TCP/UDP source port, TCP/UDP destination port, VLAN ID, incoming switch port, Ethernet type, IP Type-of-Service (ToS).</li>
+                <li><strong>Actions</strong> (what to do when a packet matches): Forward to a specific port, Drop the packet, Encapsulate and forward to controller (Packet-In), Modify a header field (e.g., rewrite MAC for NAT).</li>
+                <li><strong>Statistics</strong> (maintained per rule): Packet counter, byte counter, time since last match — used for traffic monitoring and rule timeout.</li>
+                <li><strong>Priority:</strong> When multiple rules match a packet, the rule with the <em>highest priority number</em> wins. Enables specific rules to override more general ones.</li>
+            </ul>
+        </div>
+
+        <h2 class="section-head">OpenFlow Flow Table Examples</h2>
+        <div class="table-wrap">
+            <table>
+                <tr>
+                    <th>Use Case</th>
+                    <th>Match Fields</th>
+                    <th>Action</th>
+                </tr>
+                <tr>
+                    <td>Layer 2 Switching</td>
+                    <td>dst MAC = AA:BB:CC:DD:EE:FF</td>
+                    <td>Forward to port 3</td>
+                </tr>
+                <tr>
+                    <td>Firewall (block SSH)</td>
+                    <td>TCP dst port = 22</td>
+                    <td>Drop</td>
+                </tr>
+                <tr>
+                    <td>IP Forwarding</td>
+                    <td>dst IP = 202.2.*.* (/16)</td>
+                    <td>Forward to port eth2</td>
+                </tr>
+                <tr>
+                    <td>Flow-Specific Routing</td>
+                    <td>src IP = 10.0.0.1, dst IP = 10.0.0.2, src port = 5000, dst port = 80</td>
+                    <td>Forward to switch port 4</td>
+                </tr>
+            </table>
+        </div>
+
+        <h2 class="section-head">OpenFlow Message Types</h2>
+        <div class="card" style="padding: 0.5rem 1.25rem;">
+            <div class="point"><span class="point-num">1</span><span class="point-text"><strong>Hello:</strong> Exchanged at connection startup. Controller and switch negotiate the OpenFlow protocol version to use.</span></div>
+            <div class="point"><span class="point-num">2</span><span class="point-text"><strong>Features Request / Reply:</strong> Controller asks the switch what capabilities it supports (number of ports, actions supported, table sizes). Switch replies with its feature set.</span></div>
+            <div class="point"><span class="point-num">3</span><span class="point-text"><strong>Packet-In:</strong> Switch sends an unmatched packet UP to the controller. Triggered when a packet arrives and no flow table rule matches it. The controller then decides what to do.</span></div>
+            <div class="point"><span class="point-num">4</span><span class="point-text"><strong>Packet-Out:</strong> Controller sends a message DOWN to the switch telling it what to do with a buffered packet (forward to a port, drop, flood). Used to respond to Packet-In events before a flow rule is installed.</span></div>
+            <div class="point"><span class="point-num">5</span><span class="point-text"><strong>Flow-Mod:</strong> Controller installs, modifies, or deletes a flow table entry in the switch. This is the core operation of SDN — pushing forwarding rules into the switch's TCAM. Types: ADD, MODIFY, DELETE.</span></div>
+            <div class="point"><span class="point-num">6</span><span class="point-text"><strong>Echo Request / Reply:</strong> Keepalive mechanism. Controller sends Echo Request; switch responds with Echo Reply. Checks if the OpenFlow control channel is alive. If no reply, the connection is considered dead.</span></div>
+            <div class="point"><span class="point-num">7</span><span class="point-text"><strong>Stats Request / Reply:</strong> Controller requests flow statistics (packet counts, byte counts, durations) from the switch. Used for traffic monitoring, load balancing decisions, and billing.</span></div>
+        </div>
+
+        <h2 class="section-head">Open-Source SDN Controllers</h2>
+        <div class="table-wrap">
+            <table>
+                <tr>
+                    <th>Controller</th>
+                    <th>Language</th>
+                    <th>Key Characteristics</th>
+                </tr>
+                <tr>
+                    <td>Ryu</td>
+                    <td>Python</td>
+                    <td>Lightweight, widely used in research and industry, component-based architecture</td>
+                </tr>
+                <tr>
+                    <td>POX</td>
+                    <td>Python</td>
+                    <td>Older, designed for teaching and experimentation, successor of NOX Python port</td>
+                </tr>
+                <tr>
+                    <td>NOX</td>
+                    <td>C++</td>
+                    <td>Original OpenFlow controller, predecessor to POX, high performance but less flexible</td>
+                </tr>
+                <tr>
+                    <td>OpenDaylight</td>
+                    <td>Java</td>
+                    <td>Enterprise-grade, industry-supported (Linux Foundation), large plugin ecosystem</td>
+                </tr>
+                <tr>
+                    <td>ONOS</td>
+                    <td>Java</td>
+                    <td>Designed for carrier-grade networks, highly scalable, distributed controller cluster</td>
+                </tr>
+            </table>
+        </div>
+
+        <h2 class="section-head">SDN Use Cases</h2>
+        <div class="card card-green">
+            <h3>What OpenFlow Match-Action Rules Can Implement</h3>
+            <ul>
+                <li><strong>Firewall:</strong> Match src IP = 1.2.3.4 → Drop. Blocks specific sources without dedicated firewall hardware.</li>
+                <li><strong>NAT (Network Address Translation):</strong> Match src IP = 10.x.x.x → Modify src IP to public IP and forward. Rewrites headers for address translation.</li>
+                <li><strong>Flow-specific routing:</strong> Route packets from a specific application (identified by 5-tuple: src IP, dst IP, src port, dst port, protocol) along a chosen path through the network.</li>
+                <li><strong>VLAN switching:</strong> Match VLAN ID + dst MAC → Forward to specific port. Implements Layer 2 switching with VLAN isolation.</li>
+                <li><strong>Load balancer:</strong> Match dst IP = virtual IP → Modify dst IP to one of several real server IPs (round-robin or hash-based), distributing traffic across multiple servers.</li>
+            </ul>
+        </div>
+
+        <h2 class="section-head">MCQs — SDN &amp; OpenFlow</h2>
+
+        <div class="mcq-block">
+            <div class="mcq-q">Q1. In SDN architecture, when a packet arrives at a switch and there is NO matching flow table entry, what does the switch do?</div>
+            <div class="mcq-opts" id="r9sdn1">
+                <button class="opt"
+                    onclick="answer('r9sdn1',0,2,'When no flow table rule matches, the switch generates a Packet-In message and sends the packet UP to the SDN controller. The controller then decides how to handle it — either with a Packet-Out (one-time action) or by installing a Flow-Mod rule for future packets.')">A)
+                    Drops the packet silently</button>
+                <button class="opt"
+                    onclick="answer('r9sdn1',1,2,'When no flow table rule matches, the switch generates a Packet-In message and sends the packet UP to the SDN controller. The controller then decides how to handle it — either with a Packet-Out (one-time action) or by installing a Flow-Mod rule for future packets.')">B)
+                    Floods the packet to all ports automatically</button>
+                <button class="opt"
+                    onclick="answer('r9sdn1',2,2,'When no flow table rule matches, the switch generates a Packet-In message and sends the packet UP to the SDN controller. The controller then decides how to handle it — either with a Packet-Out (one-time action) or by installing a Flow-Mod rule for future packets.')">C)
+                    Sends a Packet-In message to the SDN controller</button>
+                <button class="opt"
+                    onclick="answer('r9sdn1',3,2,'When no flow table rule matches, the switch generates a Packet-In message and sends the packet UP to the SDN controller. The controller then decides how to handle it — either with a Packet-Out (one-time action) or by installing a Flow-Mod rule for future packets.')">D)
+                    Runs OSPF to find the best path</button>
+            </div>
+            <div class="explanation" id="r9sdn1-exp"></div>
+        </div>
+
+        <div class="mcq-block">
+            <div class="mcq-q">Q2. Which OpenFlow message type does an SDN controller use to install a new forwarding rule into a switch's flow table?</div>
+            <div class="mcq-opts" id="r9sdn2">
+                <button class="opt"
+                    onclick="answer('r9sdn2',0,2,'Flow-Mod is the OpenFlow message the controller sends to ADD, MODIFY, or DELETE a rule in the switch\'s flow table. Packet-Out handles specific buffered packets. Packet-In goes from switch to controller. Stats Request retrieves statistics.')">A)
+                    Packet-Out</button>
+                <button class="opt"
+                    onclick="answer('r9sdn2',1,2,'Flow-Mod is the OpenFlow message the controller sends to ADD, MODIFY, or DELETE a rule in the switch\'s flow table. Packet-Out handles specific buffered packets. Packet-In goes from switch to controller. Stats Request retrieves statistics.')">B)
+                    Packet-In</button>
+                <button class="opt"
+                    onclick="answer('r9sdn2',2,2,'Flow-Mod is the OpenFlow message the controller sends to ADD, MODIFY, or DELETE a rule in the switch\'s flow table. Packet-Out handles specific buffered packets. Packet-In goes from switch to controller. Stats Request retrieves statistics.')">C)
+                    Flow-Mod</button>
+                <button class="opt"
+                    onclick="answer('r9sdn2',3,2,'Flow-Mod is the OpenFlow message the controller sends to ADD, MODIFY, or DELETE a rule in the switch\'s flow table. Packet-Out handles specific buffered packets. Packet-In goes from switch to controller. Stats Request retrieves statistics.')">D)
+                    Stats Request</button>
+            </div>
+            <div class="explanation" id="r9sdn2-exp"></div>
+        </div>
+
+        <div class="mcq-block">
+            <div class="mcq-q">Q3. In SDN, the "southbound interface" refers to:</div>
+            <div class="mcq-opts" id="r9sdn3">
+                <button class="opt"
+                    onclick="answer('r9sdn3',0,1,'The southbound interface (e.g., OpenFlow) is the protocol between the SDN controller and the switches it controls (infrastructure layer). The northbound interface is between the controller and application-layer programs. South = controller talks down to hardware.')">A)
+                    The protocol between the controller and the programmable switches</button>
+                <button class="opt"
+                    onclick="answer('r9sdn3',1,1,'The southbound interface (e.g., OpenFlow) is the protocol between the SDN controller and the switches it controls (infrastructure layer). The northbound interface is between the controller and application-layer programs. South = controller talks down to hardware.')">B)
+                    The API between network applications and the controller</button>
+                <button class="opt"
+                    onclick="answer('r9sdn3',2,1,'The southbound interface (e.g., OpenFlow) is the protocol between the SDN controller and the switches it controls (infrastructure layer). The northbound interface is between the controller and application-layer programs. South = controller talks down to hardware.')">C)
+                    The link between two SDN controllers</button>
+                <button class="opt"
+                    onclick="answer('r9sdn3',3,1,'The southbound interface (e.g., OpenFlow) is the protocol between the SDN controller and the switches it controls (infrastructure layer). The northbound interface is between the controller and application-layer programs. South = controller talks down to hardware.')">D)
+                    The physical cable connecting the switch to the network</button>
+            </div>
+            <div class="explanation" id="r9sdn3-exp"></div>
+        </div>
+
+        <div class="mcq-block">
+            <div class="mcq-q">Q4. Which SDN controller is Java-based, designed for carrier-grade networks, and supports a distributed controller cluster for high scalability?</div>
+            <div class="mcq-opts" id="r9sdn4">
+                <button class="opt"
+                    onclick="answer('r9sdn4',0,3,'ONOS (Open Network Operating System) is Java-based and specifically designed for carrier-grade, highly scalable networks with a distributed controller cluster. Ryu and POX are Python-based. OpenDaylight is Java-based but more enterprise-focused.')">A)
+                    Ryu</button>
+                <button class="opt"
+                    onclick="answer('r9sdn4',1,3,'ONOS (Open Network Operating System) is Java-based and specifically designed for carrier-grade, highly scalable networks with a distributed controller cluster. Ryu and POX are Python-based. OpenDaylight is Java-based but more enterprise-focused.')">B)
+                    POX</button>
+                <button class="opt"
+                    onclick="answer('r9sdn4',2,3,'ONOS (Open Network Operating System) is Java-based and specifically designed for carrier-grade, highly scalable networks with a distributed controller cluster. Ryu and POX are Python-based. OpenDaylight is Java-based but more enterprise-focused.')">C)
+                    OpenDaylight</button>
+                <button class="opt"
+                    onclick="answer('r9sdn4',3,3,'ONOS (Open Network Operating System) is Java-based and specifically designed for carrier-grade, highly scalable networks with a distributed controller cluster. Ryu and POX are Python-based. OpenDaylight is Java-based but more enterprise-focused.')">D)
+                    ONOS</button>
+            </div>
+            <div class="explanation" id="r9sdn4-exp"></div>
+        </div>
+    </div>
+
+    <!-- SECTION 6: Wireshark & Mininet -->
+    <div id="wireshark_mininet" class="section">
+        <div class="topic-title">Topic 6: Wireshark &amp; Mininet <span class="badge badge-imp">Important</span></div>
+
+        <div class="card card-blue">
+            <h3>Wireshark — Packet Capture and Analysis Tool</h3>
+            <ul>
+                <li><strong>What it does:</strong> Captures live network packets on a selected physical or virtual interface and displays them in real time.</li>
+                <li><strong>Protocol stack display:</strong> Each captured packet is decoded and shown with its full protocol stack breakdown — Ethernet → IP → TCP → Application layer. Every header field is visible and expandable.</li>
+                <li><strong>Fields visible at each layer:</strong>
+                    <ul>
+                        <li>Ethernet: Source MAC, Destination MAC, EtherType</li>
+                        <li>IP: Source IP, Destination IP, TTL, Protocol, Header checksum, Fragment offset, DF bit</li>
+                        <li>TCP: Source port, Destination port, Sequence number, Acknowledgement number, Flags (SYN/ACK/FIN/RST/PSH), Window size, Checksum</li>
+                    </ul>
+                </li>
+                <li><strong>TCP three-way handshake visibility:</strong> Visible as three consecutive packets: (1) SYN [client → server], (2) SYN-ACK [server → client], (3) ACK [client → server]. Sequence and acknowledgement numbers increment visibly.</li>
+                <li><strong>Filter syntax examples:</strong>
+                    <ul>
+                        <li><code>tcp</code> — show only TCP packets</li>
+                        <li><code>http</code> — show only HTTP traffic</li>
+                        <li><code>ip.addr == 10.0.0.1</code> — show packets involving 10.0.0.1</li>
+                        <li><code>tcp.port == 22</code> — show SSH traffic</li>
+                        <li><code>icmp</code> — show ping packets</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <h2 class="section-head">Mininet — Network Emulator</h2>
+        <div class="card card-green">
+            <h3>Mininet Architecture and Internals</h3>
+            <ul>
+                <li><strong>What it does:</strong> Creates an entire virtual network inside a <em>single Linux machine</em>, with real hosts, switches, links, and an SDN controller — all simulated in software.</li>
+                <li><strong>Virtual Hosts:</strong> Implemented as <strong>Linux network namespaces</strong>. Each namespace has its own TCP/IP stack (routing table, ARP table, sockets). This is NOT a VM — it is a lightweight OS-level isolation mechanism.</li>
+                <li><strong>Virtual Switches:</strong> Implemented using <strong>Open vSwitch (OVS)</strong> — an open-source, OpenFlow-capable software switch. OVS runs partly in the Linux kernel (fast path) and partly in user space.</li>
+                <li><strong>Virtual Links:</strong> Implemented using <strong>veth (virtual Ethernet) pairs</strong>. A veth pair is like a virtual cable — packets written to one end appear on the other end. One end is attached to a host namespace, the other to OVS.</li>
+                <li><strong>Advantage over pure simulation:</strong> Mininet uses the REAL Linux kernel TCP/IP stack, so experiments produce realistic results (real TCP congestion control, real ARP, real routing). Pure simulators use simplified models.</li>
+            </ul>
+        </div>
+
+        <h2 class="section-head">Mininet Topology Commands</h2>
+        <div class="card" style="padding: 0.5rem 1.25rem;">
+            <div class="point"><span class="point-num">1</span><span class="point-text"><strong>mn --topo single,3</strong> — Creates one OVS switch with 3 hosts connected to it in a star topology. Hosts are h1, h2, h3; switch is s1. All hosts share the single switch.</span></div>
+            <div class="point"><span class="point-num">2</span><span class="point-text"><strong>mn --topo linear,3</strong> — Creates 3 switches (s1–s2–s3) in a linear chain, each with 1 host (h1 on s1, h2 on s2, h3 on s3). Packets from h1 to h3 traverse two switches.</span></div>
+            <div class="point"><span class="point-num">3</span><span class="point-text"><strong>mn --topo linear,2,3</strong> — Creates 2 switches, each with 3 hosts attached. Total: 6 hosts, 2 switches, 1 inter-switch link.</span></div>
+            <div class="point"><span class="point-num">4</span><span class="point-text"><strong>--controller remote</strong> — Connects all OVS switches to an external SDN controller (e.g., Ryu running on the same machine at 127.0.0.1:6633) instead of the built-in Mininet reference controller.</span></div>
+            <div class="point"><span class="point-num">5</span><span class="point-text"><strong>--switch ovsk</strong> — Specifies Open vSwitch kernel module as the switch implementation. The kernel module provides faster packet processing than the user-space OVS daemon.</span></div>
+            <div class="point"><span class="point-num">6</span><span class="point-text"><strong>h1 ping h2</strong> (inside Mininet CLI) — Runs the ping command from host h1 to h2's IP address. Tests connectivity and measures RTT. The first ping may take noticeably longer due to SDN first-packet delay.</span></div>
+        </div>
+
+        <h2 class="section-head">First-Packet Delay in SDN Networks</h2>
+        <div class="card card-amber">
+            <h3>Why the First Packet Is Slower</h3>
+            <p style="margin-bottom: 8px;">In a Mininet demo with a Ryu controller, pinging from h1 to h2 shows a pattern like:</p>
+            <ul>
+                <li>Ping 1: <strong>4.84 ms</strong> (much higher than expected)</li>
+                <li>Ping 2–5: <strong>0.02 – 0.16 ms</strong> (fast)</li>
+            </ul>
+            <p style="margin-top: 8px;"><strong>Reason for first-packet delay:</strong></p>
+            <ol style="padding-left: 1.4rem; line-height: 1.9; font-size: 14px; color: var(--color-text-primary);">
+                <li>First ICMP packet from h1 arrives at OVS switch s1.</li>
+                <li>No matching flow rule exists yet → OVS generates a <strong>Packet-In</strong> → sends packet to Ryu controller.</li>
+                <li>Ryu controller processes the Packet-In: learns MAC of h1, looks up MAC of h2, determines output port.</li>
+                <li>Ryu sends a <strong>Flow-Mod</strong> to install a bidirectional flow rule in OVS.</li>
+                <li>Ryu sends a <strong>Packet-Out</strong> to forward this specific packet to h2.</li>
+                <li>All subsequent ICMP packets hit the installed TCAM flow rule → forwarded at <strong>hardware speed</strong>, no controller involvement → sub-millisecond RTT.</li>
+            </ol>
+        </div>
+
+        <h2 class="section-head">Open vSwitch (OVS)</h2>
+        <div class="card card-purple">
+            <h3>Open vSwitch — Software SDN Switch</h3>
+            <ul>
+                <li><strong>Definition:</strong> An open-source, production-quality implementation of a multilayer virtual network switch.</li>
+                <li><strong>OpenFlow support:</strong> Fully supports OpenFlow 1.0 through 1.3 — can be controlled by any OpenFlow controller (Ryu, POX, OpenDaylight, ONOS).</li>
+                <li><strong>Kernel module:</strong> OVS has a kernel module (openvswitch.ko) for the fast path — packets matching existing flow rules are forwarded entirely within the kernel without context switching.</li>
+                <li><strong>Use in Mininet:</strong> OVS is the default switch type used by Mininet. The --switch ovsk flag selects the kernel module variant.</li>
+                <li><strong>Production use:</strong> OVS is used in major cloud platforms — OpenStack (Neutron), VMware NSX, Kubernetes CNI plugins. Not just a research tool.</li>
+            </ul>
+        </div>
+
+        <h2 class="section-head">simple_switch_13.py — Ryu Learning Switch Controller</h2>
+        <div class="card card-green">
+            <h3>How the simple_switch_13.py Controller Works</h3>
+            <p style="margin-bottom: 8px;">This Ryu application implements Layer 2 MAC address learning — the same behavior as a traditional Ethernet switch, but implemented in software on the SDN controller.</p>
+            <div class="point"><span class="point-num">1</span><span class="point-text"><strong>MAC Table:</strong> The controller maintains a dictionary mapping (dpid, MAC address) → output port. Initially empty.</span></div>
+            <div class="point"><span class="point-num">2</span><span class="point-text"><strong>packet_in_handler:</strong> Called when a Packet-In event arrives. Extracts the source MAC and the incoming port from the frame. Stores src_mac → in_port in the MAC table (learning).</span></div>
+            <div class="point"><span class="point-num">3</span><span class="point-text"><strong>Lookup:</strong> Looks up the destination MAC in the MAC table. If found → set out_port to the known port. If NOT found → set out_port = FLOOD (send to all ports except incoming).</span></div>
+            <div class="point"><span class="point-num">4</span><span class="point-text"><strong>add_flow:</strong> If out_port is known (not flood), installs a Flow-Mod rule in the OVS switch: "match dst_mac = X → forward to port P". Future packets for this destination are forwarded at hardware speed without involving the controller.</span></div>
+            <div class="point"><span class="point-num">5</span><span class="point-text"><strong>Packet-Out:</strong> Forwards the current (first) packet to the determined output port, either directly via Packet-Out or by letting the newly installed flow rule handle it.</span></div>
+        </div>
+
+        <h2 class="section-head">MCQs — Wireshark &amp; Mininet</h2>
+
+        <div class="mcq-block">
+            <div class="mcq-q">Q1. In a Mininet SDN network with a Ryu controller running simple_switch_13.py, the first ping between two hosts takes ~5 ms but subsequent pings take only ~0.1 ms. What causes this difference?</div>
+            <div class="mcq-opts" id="r9wm1">
+                <button class="opt"
+                    onclick="answer('r9wm1',0,3,'The first packet triggers a Packet-In → controller processes it → installs a Flow-Mod rule. This controller round-trip adds latency. After the flow rule is installed in OVS\'s TCAM, all subsequent packets are forwarded at hardware speed without any controller involvement.')">A)
+                    The first ping resolves ARP and subsequent pings skip ARP</button>
+                <button class="opt"
+                    onclick="answer('r9wm1',1,3,'The first packet triggers a Packet-In → controller processes it → installs a Flow-Mod rule. This controller round-trip adds latency. After the flow rule is installed in OVS\'s TCAM, all subsequent packets are forwarded at hardware speed without any controller involvement.')">B)
+                    Mininet initializes virtual links slowly for the first packet</button>
+                <button class="opt"
+                    onclick="answer('r9wm1',2,3,'The first packet triggers a Packet-In → controller processes it → installs a Flow-Mod rule. This controller round-trip adds latency. After the flow rule is installed in OVS\'s TCAM, all subsequent packets are forwarded at hardware speed without any controller involvement.')">C)
+                    The first packet has a larger MTU that requires fragmentation</button>
+                <button class="opt"
+                    onclick="answer('r9wm1',3,3,'The first packet triggers a Packet-In → controller processes it → installs a Flow-Mod rule. This controller round-trip adds latency. After the flow rule is installed in OVS\'s TCAM, all subsequent packets are forwarded at hardware speed without any controller involvement.')">D)
+                    The first packet causes a Packet-In event; the controller installs a flow rule via Flow-Mod; subsequent packets hit the cached TCAM rule at hardware speed</button>
+            </div>
+            <div class="explanation" id="r9wm1-exp"></div>
+        </div>
+
+        <div class="mcq-block">
+            <div class="mcq-q">Q2. In Mininet, virtual hosts are implemented using which Linux feature?</div>
+            <div class="mcq-opts" id="r9wm2">
+                <button class="opt"
+                    onclick="answer('r9wm2',0,2,'Linux network namespaces give each virtual host its own isolated TCP/IP stack (routing table, ARP, sockets). This is lighter than a VM and uses the REAL kernel stack, making Mininet results more realistic than pure simulation.')">A)
+                    Docker containers</button>
+                <button class="opt"
+                    onclick="answer('r9wm2',1,2,'Linux network namespaces give each virtual host its own isolated TCP/IP stack (routing table, ARP, sockets). This is lighter than a VM and uses the REAL kernel stack, making Mininet results more realistic than pure simulation.')">B)
+                    KVM virtual machines</button>
+                <button class="opt"
+                    onclick="answer('r9wm2',2,2,'Linux network namespaces give each virtual host its own isolated TCP/IP stack (routing table, ARP, sockets). This is lighter than a VM and uses the REAL kernel stack, making Mininet results more realistic than pure simulation.')">C)
+                    Linux network namespaces</button>
+                <button class="opt"
+                    onclick="answer('r9wm2',3,2,'Linux network namespaces give each virtual host its own isolated TCP/IP stack (routing table, ARP, sockets). This is lighter than a VM and uses the REAL kernel stack, making Mininet results more realistic than pure simulation.')">D)
+                    QEMU emulated network cards</button>
+            </div>
+            <div class="explanation" id="r9wm2-exp"></div>
+        </div>
+
+        <div class="mcq-block">
+            <div class="mcq-q">Q3. In Wireshark, a TCP three-way handshake is identified by which sequence of packet flags?</div>
+            <div class="mcq-opts" id="r9wm3">
+                <button class="opt"
+                    onclick="answer('r9wm3',0,1,'The TCP three-way handshake is always: (1) SYN from client — initiates connection; (2) SYN-ACK from server — acknowledges and also requests; (3) ACK from client — confirms. After this, data transfer begins. Wireshark shows these as three consecutive TCP segments.')">A)
+                    SYN → SYN-ACK → ACK</button>
+                <button class="opt"
+                    onclick="answer('r9wm3',1,1,'The TCP three-way handshake is always: (1) SYN from client — initiates connection; (2) SYN-ACK from server — acknowledges and also requests; (3) ACK from client — confirms. After this, data transfer begins. Wireshark shows these as three consecutive TCP segments.')">B)
+                    ACK → SYN → SYN-ACK</button>
+                <button class="opt"
+                    onclick="answer('r9wm3',2,1,'The TCP three-way handshake is always: (1) SYN from client — initiates connection; (2) SYN-ACK from server — acknowledges and also requests; (3) ACK from client — confirms. After this, data transfer begins. Wireshark shows these as three consecutive TCP segments.')">C)
+                    SYN → ACK → FIN</button>
+                <button class="opt"
+                    onclick="answer('r9wm3',3,1,'The TCP three-way handshake is always: (1) SYN from client — initiates connection; (2) SYN-ACK from server — acknowledges and also requests; (3) ACK from client — confirms. After this, data transfer begins. Wireshark shows these as three consecutive TCP segments.')">D)
+                    FIN → FIN-ACK → ACK</button>
+            </div>
+            <div class="explanation" id="r9wm3-exp"></div>
+        </div>
+    </div>
+
+    <!-- SECTION 7: Super Revision -->
+    <div id="revision9" class="section">
+        <div class="topic-title">Super Revision — Week 9 Last-Day Notes</div>
+
+        <div class="card card-red">
+            <h3>MOST FREQUENTLY ASKED — Memorize These</h3>
+            <ul>
+                <li>Control Plane = routing protocols (OSPF, BGP) → builds RIB → slow, software</li>
+                <li>Data Plane = packet forwarding using FIB → fast, hardware (ASIC/TCAM)</li>
+                <li>RIB = all routes from all protocols; FIB = best routes only for line-speed lookup</li>
+                <li>Router decrements TTL by 1 at each hop; packet discarded if TTL = 0</li>
+                <li>Switching fabrics: Shared Memory → Bus → Crossbar (increasing performance)</li>
+                <li>HOL Blocking = crossbar limitation; packet at head of input queue blocks others</li>
+                <li>TCAM = searches ALL entries in O(1) by content — perfect for LPM; ternary = 0/1/X (don't care)</li>
+                <li>Cisco router memory: Flash=IOS, NVRAM=startup config, RAM=running config, ROM=bootstrap</li>
+                <li><strong>SDN 3 layers:</strong> Infrastructure (dumb switches) → Control (SDN controller) → Application (network apps)</li>
+                <li><strong>OpenFlow = match-action rules</strong> in TCAM flow table; match on 10 fields; actions = forward/drop/modify</li>
+                <li><strong>Key OpenFlow messages:</strong> Packet-In (switch→controller, no match), Flow-Mod (controller→switch, install rule), Packet-Out (controller→switch, handle buffered packet)</li>
+                <li><strong>Controller examples:</strong> Ryu (Python, lightweight), OpenDaylight (Java, enterprise), ONOS (Java, carrier-grade)</li>
+                <li><strong>Southbound = OpenFlow</strong> (controller ↔ switches); <strong>Northbound = REST/Python API</strong> (apps ↔ controller)</li>
+                <li><strong>First-packet SDN delay:</strong> caused by Packet-In → controller → Flow-Mod round trip; subsequent packets hit TCAM at hardware speed</li>
+                <li>Mininet = Linux network namespaces as hosts + Open vSwitch + veth pairs; uses real kernel TCP/IP stack</li>
+            </ul>
+        </div>
+
+        <div class="card card-blue">
+            <h3>Scheduling Algorithm Summary</h3>
+            <div class="revision-item"><span class="bullet">→</span><span class="revision-text">FIFO: Simple, no
+                    priority, tail-drop. Baseline scheduler.</span></div>
+            <div class="revision-item"><span class="bullet">→</span><span class="revision-text">Priority Queuing: High
+                    priority always first. Risk of starvation for low-priority.</span></div>
+            <div class="revision-item"><span class="bullet">→</span><span class="revision-text">Round Robin: Serve one
+                    packet per queue in turn. Fair but ignores packet size.</span></div>
+            <div class="revision-item"><span class="bullet">→</span><span class="revision-text">WFQ: Weighted fair
+                    sharing of bandwidth. Most popular QoS mechanism. No starvation.</span></div>
+            <div class="revision-item"><span class="bullet">→</span><span class="revision-text">RED: Drop randomly
+                    before buffer fills → avoids global TCP synchronization.</span></div>
+        </div>
+
+        <div class="card card-green">
+            <h3>Switching Fabric Comparison (One-Line Each)</h3>
+            <div class="revision-item"><span class="bullet">→</span><span class="revision-text">Shared Memory: Central
+                    memory, CPU controls, bottleneck = memory bus, low scalability.</span></div>
+            <div class="revision-item"><span class="bullet">→</span><span class="revision-text">Shared Bus: Single bus,
+                    serial transfers, bottleneck = bus bandwidth, medium scalability.</span></div>
+            <div class="revision-item"><span class="bullet">→</span><span class="revision-text">Crossbar: N×N grid,
+                    parallel transfers, HOL blocking, high scalability, used in modern routers.</span></div>
+        </div>
+
+        <div class="card card-purple">
+            <h3>SDN Quick Reference</h3>
+            <div class="revision-item"><span class="bullet">→</span><span class="revision-text"><strong>Packet-In:</strong> switch → controller (no matching rule found)</span></div>
+            <div class="revision-item"><span class="bullet">→</span><span class="revision-text"><strong>Packet-Out:</strong> controller → switch (handle buffered packet, one-shot)</span></div>
+            <div class="revision-item"><span class="bullet">→</span><span class="revision-text"><strong>Flow-Mod:</strong> controller → switch (install/modify/delete TCAM flow rule)</span></div>
+            <div class="revision-item"><span class="bullet">→</span><span class="revision-text"><strong>Echo Req/Reply:</strong> keepalive on OpenFlow control channel</span></div>
+            <div class="revision-item"><span class="bullet">→</span><span class="revision-text"><strong>Ryu simple_switch:</strong> learns MACs, installs flow rules for known dst, floods for unknown dst</span></div>
+        </div>
+
+        <div
+            style="margin-top: 1.5rem; padding: 1rem; background: #E6F1FB; border-radius: var(--border-radius-lg); border: 0.5px solid #B5D4F4;">
+            <p style="font-size: 14px; font-weight: 500; color: #0C447C; margin-bottom: 6px;">Exam Strategy — Week 9</p>
+            <ul style="font-size: 13px; color: #185FA5; padding-left: 1.2rem; line-height: 1.8;">
+                <li>If asked about "where routing protocols run" → Control Plane / Route Processor</li>
+                <li>If asked about "where actual packet forwarding happens" → Data Plane / Line Cards / FIB</li>
+                <li>HOL Blocking is a crossbar-specific problem — do not say it affects bus or shared memory</li>
+                <li>TCAM key advantage = O(1) parallel search; key disadvantage = expensive, high power</li>
+                <li>WFQ provides QoS WITHOUT starvation — priority queuing CAN cause starvation</li>
+                <li>SDN switch = dumb TCAM + forwarding engine; ALL intelligence is in the controller</li>
+                <li>Packet-In goes UP (switch to controller); Flow-Mod goes DOWN (controller to switch)</li>
+                <li>First-packet SDN delay = controller round trip; not a bug, a fundamental SDN property</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    function show(id) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        event.target.classList.add('active');
+    }
+
+    function answer(qid, chosen, correct, explanation) {
+        const opts = document.querySelectorAll('#' + qid + ' .opt');
+        opts.forEach((o, i) => {
+            o.disabled = true;
+            if (i === correct) o.classList.add('correct');
+            else if (i === chosen && chosen !== correct) o.classList.add('wrong');
+        });
+        const exp = document.getElementById(qid + '-exp');
+        exp.textContent = (chosen === correct ? '✓ Correct! ' : '✗ Incorrect. ') + explanation;
+        exp.classList.add('visible');
+    }
+</script>

@@ -1,0 +1,539 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.w{max-width:900px;padding:1.5rem 1rem}
+.hero{border-bottom:0.5px solid var(--color-border-tertiary);padding-bottom:1.5rem;margin-bottom:2rem}
+.hero h1{font-size:22px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px}
+.hero p{font-size:14px;color:var(--color-text-secondary)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:2rem}
+.tab{padding:6px 14px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:13px;cursor:pointer;background:var(--color-background-primary);color:var(--color-text-secondary);transition:all 0.15s}
+.tab:hover{background:var(--color-background-secondary)}
+.tab.on{background:#E6F1FB;color:#0C447C;border-color:#85B7EB;font-weight:500}
+.sec{display:none}.sec.on{display:block}
+.ttl{font-size:20px;font-weight:500;color:var(--color-text-primary);margin-bottom:6px;padding-bottom:8px;border-bottom:2px solid #85B7EB}
+.bdg{display:inline-block;font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);margin-left:8px}
+.bx{border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin:1rem 0}
+.bbl{background:#E6F1FB;border-left:3px solid #185FA5}.bbl h3{color:#0C447C}
+.bgn{background:#EAF3DE;border-left:3px solid #3B6D11}.bgn h3{color:#27500A}
+.bamb{background:#FAEEDA;border-left:3px solid #854F0B}.bamb h3{color:#633806}
+.bred{background:#FCEBEB;border-left:3px solid #A32D2D}.bred h3{color:#791F1F}
+.bpur{background:#EEEDFE;border-left:3px solid #534AB7}.bpur h3{color:#3C3489}
+.bteal{background:#E1F5EE;border-left:3px solid #0F6E56}.bteal h3{color:#085041}
+.bsec{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:0.5rem 1.25rem;margin:1rem 0}
+.bx h3{font-size:14px;font-weight:500;margin-bottom:6px}
+.bx p,.bx li{font-size:14px;color:var(--color-text-primary);line-height:1.7}
+.bx ul{padding-left:1.2rem}
+.pt{display:flex;gap:10px;padding:8px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.pt:last-child{border-bottom:none}
+.pn{font-size:13px;font-weight:500;color:#185FA5;min-width:22px}
+.ptx{font-size:14px;color:var(--color-text-primary);line-height:1.6}
+.ptx strong{font-weight:500}
+.tw{overflow-x:auto;margin:1rem 0}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:#E6F1FB;color:#0C447C;font-weight:500;padding:8px 12px;text-align:left;border:0.5px solid #B5D4F4}
+td{padding:8px 12px;border:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary);vertical-align:top}
+tr:nth-child(even) td{background:var(--color-background-secondary)}
+h2.sh{font-size:18px;font-weight:500;color:var(--color-text-primary);margin:1.5rem 0 0.5rem}
+.mcq{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin:1rem 0;background:var(--color-background-primary)}
+.mcq-q{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:10px;line-height:1.6}
+.opts{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+.opt{font-size:13px;padding:6px 10px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);cursor:pointer;color:var(--color-text-primary);background:var(--color-background-primary);text-align:left;transition:background 0.1s}
+.opt:hover{background:var(--color-background-secondary)}
+.opt.ok{background:#EAF3DE;border-color:#639922;color:#27500A}
+.opt.no{background:#FCEBEB;border-color:#A32D2D;color:#791F1F}
+.exp{display:none;font-size:13px;color:var(--color-text-secondary);background:var(--color-background-secondary);padding:8px 12px;border-radius:var(--border-radius-md);margin-top:6px;line-height:1.6}
+.exp.show{display:block}
+.ri{display:flex;gap:8px;padding:6px 0;border-bottom:0.5px solid var(--color-border-tertiary);align-items:flex-start}
+.ri:last-child{border-bottom:none}
+.rb{font-size:14px;min-width:90px;color:#185FA5;font-weight:500}
+.rt{font-size:13px;color:var(--color-text-primary);line-height:1.6}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:1rem 0}
+.fbox{background:#E6F1FB;border:0.5px solid #B5D4F4;border-radius:var(--border-radius-md);padding:6px 12px;font-size:13px;color:#0C447C;font-weight:500}
+.farr{font-size:16px;color:var(--color-text-secondary)}
+.code{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:8px 12px;font-family:var(--font-mono);font-size:12px;color:var(--color-text-primary);margin:6px 0;line-height:1.6}
+</style>
+
+<div class="w">
+<div class="hero">
+  <h1>Computer Networks — Week 5: TCP Deep Dive, UDP, QUIC &amp; Sockets</h1>
+  <p>TCP Flow Control · TCP Timers · Congestion Control (Tahoe/Reno) · UDP · QUIC · Socket Programming &nbsp;|&nbsp; NPTEL Exam-Ready Notes</p>
+</div>
+
+<div class="tabs">
+  <button class="tab on" onclick="show('fc')">TCP Flow Control</button>
+  <button class="tab" onclick="show('tmr')">TCP Timers</button>
+  <button class="tab" onclick="show('cc')">Congestion Control</button>
+  <button class="tab" onclick="show('udp')">UDP &amp; QUIC</button>
+  <button class="tab" onclick="show('sock')">Socket Programming</button>
+  <button class="tab" onclick="show('rev')">Super Revision</button>
+</div>
+
+<!-- ═══════════════ TAB 1: TCP FLOW CONTROL ═══════════════ -->
+<div id="fc" class="sec on">
+  <div class="ttl">Topic 1: TCP Flow Control Algorithm <span class="bdg" style="background:#FAEEDA;color:#633806">High Weightage</span></div>
+  <div class="bx bbl">
+    <h3>TCP sliding window — Go-Back-N principle</h3>
+    <p>TCP uses a sliding window flow control algorithm with the <strong>Go-Back-N (GBN) ARQ</strong> principle. On a timeout, the sender retransmits ALL data currently inside the sender window — not just the lost segment. Sequence numbers start at the ISN established during 3WHS (we use 0 in examples only for simplicity).</p>
+  </div>
+
+  <h2 class="sh">Key explanation points — Basic sliding window example</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">1</span><span class="ptx"><strong>Example walkthrough — receiver buffer = 4 KB:</strong> App writes 2 KB → sent with seq=0. Receiver gets 2 KB → ACK=2048, window=2048 (2 KB free). App writes 2 KB more → sent from seq=2048. Receiver buffer now FULL → ACK=4096, window=0. <strong>Sender is blocked.</strong> App reads 2 KB from buffer → window reopens → ACK=4096, window=2048. Sender resumes sending.</span></div>
+    <div class="pt"><span class="pn">2</span><span class="ptx"><strong>Sender retransmission buffer:</strong> Sender keeps a copy of every sent-but-unacknowledged segment in its buffer. If timeout occurs before ACK is received → retransmit all data in sender window (GBN principle). Data is only removed from sender buffer when the corresponding ACK arrives.</span></div>
+    <div class="pt"><span class="pn">3</span><span class="ptx"><strong>Duplicate ACK (Dupack):</strong> When a receiver gets an out-of-order segment (e.g., seq=2048 arrives but seq=1024 is missing), it buffers the out-of-order segment AND sends an ACK for the LAST byte correctly received (e.g., ACK=1024 again). This repeated ACK for the same byte is called a <strong>duplicate acknowledgement (Dupack)</strong>.</span></div>
+    <div class="pt"><span class="pn">4</span><span class="ptx"><strong>Dupack example:</strong> Receiver has bytes 0,1,2 → ACK=3. Byte 3 lost. Bytes 4,5,6,7 arrive → receiver sends Dupack=3 three times. Eventually byte 3 retransmitted → receiver now has 0–7 → sends ACK=8 (one cumulative ACK jumping forward). Dupack triggers fast retransmit in congestion control.</span></div>
+  </div>
+
+  <h2 class="sh">Key explanation points — Telnet problem &amp; solutions</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">5</span><span class="ptx"><strong>Telnet keystroke problem:</strong> Telnet reacts to every single keystroke. TCP creates a 21-byte segment for every 1-byte character typed: 20-byte TCP header + 1 byte data. This means only 1/21 ≈ 5% of the segment is useful data — 95% is overhead. Also: an ACK + window-update is sent for each character read by the receiving app. Massive bandwidth waste.</span></div>
+    <div class="pt"><span class="pn">6</span><span class="ptx"><strong>Delayed Acknowledgement (solution 1 — receiver side):</strong> Receiver delays sending the ACK for up to 500 ms, hoping to receive more data packets within that interval. If more data arrives, one ACK covers multiple bytes. Prevents sender from immediately sending another tiny segment (sender won't send until it gets an ACK back with available window space).</span></div>
+    <div class="pt"><span class="pn">7</span><span class="ptx"><strong>Nagle's Algorithm (solution 2 — sender side):</strong> When data comes into the sender in small pieces: (1) Send the FIRST piece immediately. (2) Buffer ALL subsequent small pieces until the ACK for the first piece arrives. By the time the first ACK comes back, multiple bytes have accumulated in the buffer → sender combines them into one larger segment. Only ONE small packet is outstanding in the network at any time.</span></div>
+    <div class="pt"><span class="pn">8</span><span class="ptx"><strong>Nagle's Algorithm — when NOT to use:</strong> Nagle intentionally increases end-to-end delay (waits for ACK before sending next piece). For latency-sensitive applications (e.g., online gaming, interactive commands), this slow response time is unacceptable. Many apps disable Nagle using TCP_NODELAY socket option.</span></div>
+    <div class="pt"><span class="pn">9</span><span class="ptx"><strong>Nagle + Delayed ACK = STARVATION:</strong> Nagle algorithm: sender waits for ACK before sending next piece. Delayed ACK: receiver delays the ACK by 500 ms. If both are enabled simultaneously: sender is waiting for receiver's ACK → receiver is waiting 500 ms before sending ACK → sender is permanently blocked for 500 ms. This causes significant response delay (starvation). Do NOT enable both together.</span></div>
+    <div class="pt"><span class="pn">10</span><span class="ptx"><strong>Silly Window Syndrome (SWS):</strong> Sending app sends data in large blocks (10 Mbps rate). Receiving app reads data 1 byte at a time. Receiver buffer fills up → window=0 → sender blocked. App reads 1 byte → receiver sends window=1. Sender sends 1 byte with 20-byte header (again, tiny useful data). This becomes a vicious loop of 1-byte advertisements → same overhead problem as Telnet but from the receiver side.</span></div>
+    <div class="pt"><span class="pn">11</span><span class="ptx"><strong>Clark's Solution (SWS fix — receiver side):</strong> Do NOT send a window update for 1 byte. Instead, receiver waits until "sufficient space" is available in its buffer, then sends the window update. "Sufficient space" = implementation-defined (e.g., at least MSS bytes free, or at least 50% of buffer is free). Receiver stays quiet (no window update) until enough buffer is available — prevents sender from sending many tiny segments.</span></div>
+    <div class="pt"><span class="pn">12</span><span class="ptx"><strong>Nagle vs Clark — complementary, NOT conflicting:</strong> Nagle algorithm fixes tiny segments from the sender side (sending application delivers data 1 byte at a time). Clark's solution fixes tiny window updates from the receiver side (reading application reads data 1 byte at a time). They solve different halves of the same problem and work together without causing starvation (unlike Nagle + Delayed ACK).</span></div>
+    <div class="pt"><span class="pn">13</span><span class="ptx"><strong>PSH flag (bypassing wait):</strong> Both Nagle and Clark add some delay: waiting for data accumulation or waiting for buffer to free. For real-time applications this is unacceptable. Set the <strong>PSH (Push) flag</strong> in the TCP header: (1) Tells the sender to create and send a segment immediately without waiting for more data. (2) Tells the receiver to deliver data to the application immediately without buffering. Bypasses both Nagle and Clark delays.</span></div>
+  </div>
+
+  <div class="tw">
+    <table>
+      <tr><th>Problem</th><th>Side</th><th>Solution</th><th>Mechanism</th></tr>
+      <tr><td>Tiny segments (Telnet)</td><td>Sender</td><td>Nagle's Algorithm</td><td>Send 1st piece; buffer rest until ACK arrives</td></tr>
+      <tr><td>Too-frequent ACKs</td><td>Receiver</td><td>Delayed ACK</td><td>Delay ACK up to 500 ms to batch multiple data</td></tr>
+      <tr><td>Silly Window Syndrome</td><td>Receiver</td><td>Clark's Solution</td><td>Don't advertise window until sufficient space free</td></tr>
+      <tr><td>Nagle + Delayed ACK deadlock</td><td>Both</td><td>Don't combine</td><td>Use PSH flag OR disable Nagle (TCP_NODELAY)</td></tr>
+      <tr><td>Need immediate delivery</td><td>Both</td><td>PSH flag</td><td>Send now + deliver to app immediately</td></tr>
+    </table>
+  </div>
+
+  <h2 class="sh">MCQs — TCP Flow Control</h2>
+  <div class="mcq">
+    <div class="mcq-q">Q1. What happens when Nagle's algorithm and delayed acknowledgement are both enabled simultaneously?</div>
+    <div class="opts" id="fc1">
+      <button class="opt" onclick="ans('fc1',0,2,'Nagle: sender waits for ACK before sending next byte. Delayed ACK: receiver waits up to 500 ms before sending the ACK. Combined: sender waits for ACK → receiver delays the ACK → sender is stuck for 500 ms → STARVATION. This is why Nagle and delayed ACK must NOT be used simultaneously.')">A) Performance doubles due to combined buffering</button>
+      <button class="opt" onclick="ans('fc1',1,2,'Nagle: sender waits for ACK before sending next byte. Delayed ACK: receiver waits up to 500 ms before sending the ACK. Combined: sender waits for ACK → receiver delays the ACK → sender is stuck for 500 ms → STARVATION. This is why Nagle and delayed ACK must NOT be used simultaneously.')">B) Only Nagle takes effect; delayed ACK is ignored</button>
+      <button class="opt" onclick="ans('fc1',2,2,'Nagle: sender waits for ACK before sending next byte. Delayed ACK: receiver waits up to 500 ms before sending the ACK. Combined: sender waits for ACK → receiver delays the ACK → sender is stuck for 500 ms → STARVATION. This is why Nagle and delayed ACK must NOT be used simultaneously.')">C) Sender starvation — sender waits for ACK that receiver is delaying → long response time</button>
+      <button class="opt" onclick="ans('fc1',3,2,'Nagle: sender waits for ACK before sending next byte. Delayed ACK: receiver waits up to 500 ms before sending the ACK. Combined: sender waits for ACK → receiver delays the ACK → sender is stuck for 500 ms → STARVATION. This is why Nagle and delayed ACK must NOT be used simultaneously.')">D) Connection is terminated after 500 ms</button>
+    </div>
+    <div class="exp" id="fc1-e"></div>
+  </div>
+  <div class="mcq">
+    <div class="mcq-q">Q2. Clark's solution to the Silly Window Syndrome works by:</div>
+    <div class="opts" id="fc2">
+      <button class="opt" onclick="ans('fc2',0,1,'Clark\'s solution: receiver does NOT send a window update when only 1 byte is free. It waits until SUFFICIENT space (e.g., MSS bytes or 50% of buffer) is available — then sends window update. This prevents sender from sending many tiny 1-byte segments triggered by 1-byte window advertisements.')">A) Forcing the sender to buffer all data until the connection is closed</button>
+      <button class="opt" onclick="ans('fc2',1,1,'Clark\'s solution: receiver does NOT send a window update when only 1 byte is free. It waits until SUFFICIENT space (e.g., MSS bytes or 50% of buffer) is available — then sends window update. This prevents sender from sending many tiny 1-byte segments triggered by 1-byte window advertisements.')">B) Receiver delays window updates until sufficient buffer space is available</button>
+      <button class="opt" onclick="ans('fc2',2,1,'Clark\'s solution: receiver does NOT send a window update when only 1 byte is free. It waits until SUFFICIENT space (e.g., MSS bytes or 50% of buffer) is available — then sends window update. This prevents sender from sending many tiny 1-byte segments triggered by 1-byte window advertisements.')">C) Sender buffers all small pieces until 500 ms delay expires</button>
+      <button class="opt" onclick="ans('fc2',3,1,'Clark\'s solution: receiver does NOT send a window update when only 1 byte is free. It waits until SUFFICIENT space (e.g., MSS bytes or 50% of buffer) is available — then sends window update. This prevents sender from sending many tiny 1-byte segments triggered by 1-byte window advertisements.')">D) Receiver closes the connection when buffer is full</button>
+    </div>
+    <div class="exp" id="fc2-e"></div>
+  </div>
+  <div class="mcq">
+    <div class="mcq-q">Q3. A receiver has already received bytes 0–2. Byte 3 is lost. Bytes 4,5,6,7 arrive. How many duplicate ACKs are sent?</div>
+    <div class="opts" id="fc3">
+      <button class="opt" onclick="ans('fc3',0,1,'Byte 3 is lost. Every time an out-of-order byte arrives (4, 5, 6, 7), the receiver sends a duplicate ACK for the last correctly received byte (ACK=3). That is 4 duplicate ACKs — but TCP convention counts from the first one received at the SENDER, which counts 3DupACKs as the trigger. Strictly, 4 Dupacks are sent (one per out-of-order segment).')">A) 1</button>
+      <button class="opt" onclick="ans('fc3',1,1,'Byte 3 is lost. Every time an out-of-order byte arrives (4, 5, 6, 7), the receiver sends a duplicate ACK for the last correctly received byte (ACK=3). That is 4 duplicate ACKs — but TCP convention counts from the first one received at the SENDER, which counts 3DupACKs as the trigger. Strictly, 4 Dupacks are sent (one per out-of-order segment).')">B) 4 (one for each out-of-order byte: 4, 5, 6, 7)</button>
+      <button class="opt" onclick="ans('fc3',2,1,'Byte 3 is lost. Every time an out-of-order byte arrives (4, 5, 6, 7), the receiver sends a duplicate ACK for the last correctly received byte (ACK=3). That is 4 duplicate ACKs — but TCP convention counts from the first one received at the SENDER, which counts 3DupACKs as the trigger. Strictly, 4 Dupacks are sent (one per out-of-order segment).')">C) 3</button>
+      <button class="opt" onclick="ans('fc3',3,1,'Byte 3 is lost. Every time an out-of-order byte arrives (4, 5, 6, 7), the receiver sends a duplicate ACK for the last correctly received byte (ACK=3). That is 4 duplicate ACKs — but TCP convention counts from the first one received at the SENDER, which counts 3DupACKs as the trigger. Strictly, 4 Dupacks are sent (one per out-of-order segment).')">D) 0 (receiver discards out-of-order segments)</button>
+    </div>
+    <div class="exp" id="fc3-e"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ TAB 2: TCP TIMERS ═══════════════ -->
+<div id="tmr" class="sec">
+  <div class="ttl">Topic 2: TCP Timers &amp; RTO Estimation <span class="bdg" style="background:#FAEEDA;color:#633806">High Weightage</span></div>
+  <div class="bx bbl">
+    <h3>TCP Retransmission Timeout (RTO)</h3>
+    <p>When a segment is sent, a retransmission timer starts. If ACK arrives before timeout → timer stops. If timer expires before ACK → segment is retransmitted AND congestion control is triggered. The challenge: what should the RTO value be? Too small → spurious retransmissions. Too large → slow recovery from loss.</p>
+  </div>
+
+  <h2 class="sh">Key explanation points — RTO Estimation</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">1</span><span class="ptx"><strong>Why RTT estimation is hard at transport layer:</strong> At the data link layer: two nodes are directly connected → propagation delay is fixed → RTT has low variance → mean is a good estimate. At the transport layer: two hosts communicate through the entire internet → many hops, queue delays, varying routes → RTT has <strong>high variance</strong>. The mean alone is insufficient — it can lead to spurious RTOs when actual RTT deviates significantly from the mean.</span></div>
+    <div class="pt"><span class="pn">2</span><span class="ptx"><strong>Jacobson's algorithm (1988):</strong> Maintains a variable <strong>SRTT</strong> (Smoothed Round Trip Time) = best current estimate of RTT to the destination. TCP measures the actual RTT (R) for each ACK received = time between segment transmission and ACK receipt. Updates SRTT using EWMA (Exponentially Weighted Moving Average).</span></div>
+    <div class="pt"><span class="pn">3</span><span class="ptx"><strong>EWMA formula for SRTT:</strong> <strong>SRTT = α × SRTT + (1 − α) × R</strong>. Where R = measured RTT for this ACK. α = smoothing factor = 7/8 (= 0.875). High α means old values are forgotten slowly (more weight on history). Low α = very reactive to new measurements. Jacobson chose α = 7/8 for stability.</span></div>
+    <div class="pt"><span class="pn">4</span><span class="ptx"><strong>Problem with SRTT alone for RTO:</strong> Early TCP used RTO = 2 × SRTT. Under high network load, RTT variance increases sharply. If actual RTT deviates significantly from SRTT, RTO = 2×SRTT is inflexible → too many spurious RTOs. Solution: also track the VARIANCE of RTT.</span></div>
+    <div class="pt"><span class="pn">5</span><span class="ptx"><strong>RTTVAR — RTT Variance tracking:</strong> <strong>RTTVAR = β × RTTVAR + (1 − β) × |SRTT − R|</strong>. Where |SRTT − R| = current deviation between estimated and measured RTT. β = 3/4. Jacobson sets β = 3/4 to give more weight to historical variance but adapt to changes.</span></div>
+    <div class="pt"><span class="pn">6</span><span class="ptx"><strong>RTO formula with variance:</strong> <strong>RTO = SRTT + 4 × RTTVAR</strong>. The "4" was chosen by Jacobson using clever arithmetic — he used integer add/subtract/bit-shift operations to make computation lightweight. 4 = 2², so the multiply can be done with a left-shift (fast CPU operation). Under high load → RTTVAR increases → RTO increases automatically → adapts to network dynamics.</span></div>
+    <div class="pt"><span class="pn">7</span><span class="ptx"><strong>Karn's Algorithm:</strong> Problem: if a segment is retransmitted, you cannot tell which transmission the ACK refers to (ambiguity). Using an ACK from a retransmitted segment to estimate RTT would corrupt SRTT. Karn's rule: <strong>Do NOT update SRTT on any retransmitted segment</strong>. Additionally: double the RTO on each successive timeout (exponential backoff) until the segment gets through. Once a new (non-retransmitted) ACK arrives, reset RTO to SRTT + 4×RTTVAR.</span></div>
+    <div class="pt"><span class="pn">8</span><span class="ptx"><strong>Karn's exponential backoff:</strong> First timeout → retransmit → RTO = 2×RTO. Second timeout → RTO = 4×RTO. Third timeout → RTO = 8×RTO. This keeps increasing until ACK is received. Purpose: prevents flooding the network with retransmissions when it is heavily congested. Gives the network time to recover.</span></div>
+  </div>
+
+  <h2 class="sh">Key explanation points — Other TCP Timers</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">9</span><span class="ptx"><strong>Persistent Timer:</strong> Prevents deadlock when receiver advertises window=0. After sender receives window=0 advertisement and is blocked, the persistent timer fires periodically. When it fires, sender sends a <strong>Window Probe</strong> (probe packet) to the receiver to ask for an updated window size. Receiver replies with current window → if &gt; 0, sender resumes. Prevents permanent deadlock from lost window-update ACKs.</span></div>
+    <div class="pt"><span class="pn">10</span><span class="ptx"><strong>Keepalive Timer:</strong> Closes a connection that has been idle for too long. If no data has been sent for a long duration (typically 2 hours), the keepalive timer fires → sender sends a keepalive probe. If no response → connection is closed. Prevents zombie connections from wasting server resources when one side crashes silently.</span></div>
+    <div class="pt"><span class="pn">11</span><span class="ptx"><strong>Time Wait Timer:</strong> Used during connection closure by the active closer. Duration = 2 × MSL (Maximum Segment Lifetime). Already covered in Week 4. Ensures delayed packets from the closed connection expire before the port is reused, and allows resending the final ACK if needed.</span></div>
+  </div>
+
+  <div class="tw">
+    <table>
+      <tr><th>Timer</th><th>Purpose</th><th>Trigger</th><th>Action on fire</th></tr>
+      <tr><td>RTO (Retransmission)</td><td>Detect segment loss</td><td>Segment sent → ACK not received in time</td><td>Retransmit; trigger congestion control</td></tr>
+      <tr><td>Persistent</td><td>Deadlock prevention (window=0)</td><td>Receiver advertises window=0</td><td>Send window probe to get updated window</td></tr>
+      <tr><td>Keepalive</td><td>Detect idle/dead connections</td><td>No data for ~2 hours</td><td>Send keepalive probe; close if no response</td></tr>
+      <tr><td>Time Wait</td><td>Safe connection closure</td><td>Active closer sends final ACK</td><td>Wait 2×MSL then close</td></tr>
+    </table>
+  </div>
+
+  <div class="bx bgn">
+    <h3>RTO computation summary</h3>
+    <div class="ri"><span class="rb">SRTT update</span><span class="rt">SRTT = (7/8) × SRTT + (1/8) × R &nbsp; (EWMA, α=7/8)</span></div>
+    <div class="ri"><span class="rb">RTTVAR update</span><span class="rt">RTTVAR = (3/4) × RTTVAR + (1/4) × |SRTT − R| &nbsp; (β=3/4)</span></div>
+    <div class="ri"><span class="rb">RTO formula</span><span class="rt">RTO = SRTT + 4 × RTTVAR &nbsp; (4 = shift left 2 bits, fast computation)</span></div>
+    <div class="ri"><span class="rb">Karn's rule</span><span class="rt">Don't update SRTT on retransmitted segment. Double RTO each timeout (exponential backoff)</span></div>
+    <div class="ri"><span class="rb">Original TCP</span><span class="rt">RTO = 2 × SRTT (no variance tracking — fails under high load)</span></div>
+  </div>
+
+  <h2 class="sh">MCQs — TCP Timers</h2>
+  <div class="mcq">
+    <div class="mcq-q">Q1. Karn's algorithm says: do not update SRTT for retransmitted segments. Why?</div>
+    <div class="opts" id="t1">
+      <button class="opt" onclick="ans('t1',0,2,'When a segment is retransmitted and an ACK arrives, you cannot tell whether the ACK is for the ORIGINAL transmission or the RETRANSMISSION. If it is for the original (long round trip), you would overestimate RTT. If it is for the retransmission (short round trip), you would underestimate RTT. Either way, SRTT gets corrupted. Karn: skip SRTT update for all retransmitted segments.')">A) Retransmitted segments carry wrong sequence numbers</button>
+      <button class="opt" onclick="ans('t1',1,2,'When a segment is retransmitted and an ACK arrives, you cannot tell whether the ACK is for the ORIGINAL transmission or the RETRANSMISSION. If it is for the original (long round trip), you would overestimate RTT. If it is for the retransmission (short round trip), you would underestimate RTT. Either way, SRTT gets corrupted. Karn: skip SRTT update for all retransmitted segments.')">B) ACK for a retransmitted segment arrived too late to be valid</button>
+      <button class="opt" onclick="ans('t1',2,2,'When a segment is retransmitted and an ACK arrives, you cannot tell whether the ACK is for the ORIGINAL transmission or the RETRANSMISSION. If it is for the original (long round trip), you would overestimate RTT. If it is for the retransmission (short round trip), you would underestimate RTT. Either way, SRTT gets corrupted. Karn: skip SRTT update for all retransmitted segments.')">C) Ambiguity — cannot determine which transmission the ACK refers to; updating SRTT would corrupt the estimate</button>
+      <button class="opt" onclick="ans('t1',3,2,'When a segment is retransmitted and an ACK arrives, you cannot tell whether the ACK is for the ORIGINAL transmission or the RETRANSMISSION. If it is for the original (long round trip), you would overestimate RTT. If it is for the retransmission (short round trip), you would underestimate RTT. Either way, SRTT gets corrupted. Karn: skip SRTT update for all retransmitted segments.')">D) Retransmission always has RTT = 0 ms</button>
+    </div>
+    <div class="exp" id="t1-e"></div>
+  </div>
+  <div class="mcq">
+    <div class="mcq-q">Q2. RTO = SRTT + 4×RTTVAR. Why is the variance term multiplied by 4?</div>
+    <div class="opts" id="t2">
+      <button class="opt" onclick="ans('t2',0,1,'Jacobson chose 4 = 2² so the multiplication can be implemented as a left bit-shift operation (fast integer arithmetic, no division). This keeps the RTO computation very lightweight. There is no deep mathematical reason — it was an engineering/implementation choice using clever integer arithmetic to adapt RTO to variance.')">A) Because 4 exactly equals the average network queuing delay</button>
+      <button class="opt" onclick="ans('t2',1,1,'Jacobson chose 4 = 2² so the multiplication can be implemented as a left bit-shift operation (fast integer arithmetic, no division). This keeps the RTO computation very lightweight. There is no deep mathematical reason — it was an engineering/implementation choice using clever integer arithmetic to adapt RTO to variance.')">B) Jacobson chose 4 = 2² for efficient bit-shift computation; allows lightweight integer arithmetic</button>
+      <button class="opt" onclick="ans('t2',2,1,'Jacobson chose 4 = 2² so the multiplication can be implemented as a left bit-shift operation (fast integer arithmetic, no division). This keeps the RTO computation very lightweight. There is no deep mathematical reason — it was an engineering/implementation choice using clever integer arithmetic to adapt RTO to variance.')">C) 4 comes from the RTT standard deviation formula</button>
+      <button class="opt" onclick="ans('t2',3,1,'Jacobson chose 4 = 2² so the multiplication can be implemented as a left bit-shift operation (fast integer arithmetic, no division). This keeps the RTO computation very lightweight. There is no deep mathematical reason — it was an engineering/implementation choice using clever integer arithmetic to adapt RTO to variance.')">D) It corresponds to the TCP header checksum field size</button>
+    </div>
+    <div class="exp" id="t2-e"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ TAB 3: CONGESTION CONTROL ═══════════════ -->
+<div id="cc" class="sec">
+  <div class="ttl">Topic 3: TCP Congestion Control — Slow Start, Tahoe &amp; Reno <span class="bdg" style="background:#FCEBEB;color:#791F1F">Most Important</span></div>
+  <div class="bx bbl">
+    <h3>TCP Congestion Control History</h3>
+    <p>In 1986, the growing internet experienced the first <strong>congestion collapse</strong> — goodput dropped by a factor of &gt;100 as retransmissions made congestion worse. <strong>Van Jacobson</strong> investigated this and proposed TCP congestion control in 1988, designed to be compatible with existing TCP implementations (no protocol changes needed). Key insight: in wired networks, <strong>packet loss ≈ congestion</strong>.</p>
+  </div>
+
+  <h2 class="sh">Key explanation points — Core Algorithm</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">1</span><span class="ptx"><strong>Congestion Window (cwnd):</strong> TCP maintains a variable cwnd = maximum bytes the sender may have unacknowledged in the network at any time. Sending rate ≈ cwnd / RTT. Sender window = min(cwnd, rwnd). cwnd is managed by the congestion control algorithm; rwnd is managed by flow control (receiver-advertised window).</span></div>
+    <div class="pt"><span class="pn">2</span><span class="ptx"><strong>ACK clocking:</strong> Key Jacobson insight: acknowledgements arrive at the sender at the RATE of the slowest link in the path (bottleneck). Example: fast link → slow link → receiver. Packets burst through fast link; the slow link spaces them out. ACKs return at the rate of the slow link. Sender uses ACK arrival rate as a clock to trigger sending new segments at the network's actual rate.</span></div>
+    <div class="pt"><span class="pn">3</span><span class="ptx"><strong>Why simple additive increase is too slow:</strong> Example: 10 Mbps link × 100 ms RTT → BDP = 1 Mb → need 100 packets in window. Starting at cwnd=1, increasing by 1 per RTT → takes 100 RTTs × 100 ms = 10 seconds to reach capacity. Most HTTP connections close before 10 seconds → never reaches full speed. Need faster initial growth.</span></div>
+    <div class="pt"><span class="pn">4</span><span class="ptx"><strong>Slow Start:</strong> Despite the name, Slow Start is NOT slow — it starts slowly but grows EXPONENTIALLY. For every ACK received, cwnd increases by 1. This means cwnd DOUBLES every RTT: 1→2→4→8→16... RTT 1: send 1, get 1 ACK → cwnd=2. RTT 2: send 2, get 2 ACKs → cwnd=4. RTT 3: send 4, get 4 ACKs → cwnd=8. Reaches BDP in log₂(100) ≈ 7 RTTs instead of 100 RTTs.</span></div>
+    <div class="pt"><span class="pn">5</span><span class="ptx"><strong>ssthresh (Slow Start Threshold):</strong> Slow Start grows exponentially until cwnd reaches ssthresh. At ssthresh, TCP switches from Slow Start (exponential) to Congestion Avoidance (additive increase, linear). Initially ssthresh = BDP or an arbitrarily large value (maximum cwnd). Updated when congestion is detected.</span></div>
+    <div class="pt"><span class="pn">6</span><span class="ptx"><strong>Congestion Avoidance (AIMD additive increase):</strong> Once cwnd ≥ ssthresh, switch to additive increase. cwnd increases by MSS per RTT (not per ACK). Formula approximation: cwnd += MSS × (MSS / cwnd) per ACK. This gives approximately +1 MSS per RTT regardless of current cwnd size. Grows linearly toward link capacity.</span></div>
+    <div class="pt"><span class="pn">7</span><span class="ptx"><strong>Two congestion signals in TCP:</strong> (1) <strong>Retransmission Timeout (RTO)</strong>: no ACK received — sure sign of severe congestion, network may be completely choked. (2) <strong>Triple Duplicate ACK (3 DupACK)</strong>: receiving 3 duplicate ACKs — some packets still flowing (receiver is receiving and ACKing out-of-order segments). Less severe than RTO — link is not completely choked.</span></div>
+  </div>
+
+  <h2 class="sh">Key explanation points — TCP Tahoe &amp; TCP Reno</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">8</span><span class="ptx"><strong>TCP Tahoe — on RTO:</strong> Set ssthresh = cwnd / 2. Set cwnd = 1 MSS. Restart Slow Start from cwnd=1. Grow exponentially to new ssthresh, then additive increase.</span></div>
+    <div class="pt"><span class="pn">9</span><span class="ptx"><strong>TCP Tahoe — on 3 DupACK (Fast Retransmit):</strong> Retransmit the lost segment immediately without waiting for timeout (fast retransmit). Set ssthresh = cwnd / 2. Set cwnd = 1 MSS. Restart Slow Start. TCP Tahoe treats 3 DupACK the same as RTO — always drops to cwnd=1 and restarts Slow Start.</span></div>
+    <div class="pt"><span class="pn">10</span><span class="ptx"><strong>TCP Reno — improvement over Tahoe:</strong> Observation: 3 DupACKs means some packets ARE flowing (receiver is getting bytes 5,6,7 even though byte 4 is missing). The network is NOT completely choked. Dropping cwnd to 1 and doing slow start is too aggressive. TCP Reno uses <strong>Fast Recovery</strong> instead.</span></div>
+    <div class="pt"><span class="pn">11</span><span class="ptx"><strong>TCP Reno — Fast Retransmit + Fast Recovery (on 3 DupACK):</strong> Step 1: Immediately retransmit the lost segment (fast retransmit). Step 2: Set ssthresh = cwnd / 2. Step 3: Set cwnd = ssthresh + 3 MSS (the +3 accounts for the 3 packets that the receiver already confirmed receiving via DupACKs). Step 4: For each additional DupACK received → cwnd += 1 MSS, send new segment if allowed. Step 5: When a NEW ACK (non-duplicate) arrives → set cwnd = ssthresh → resume Congestion Avoidance (directly, skipping Slow Start).</span></div>
+    <div class="pt"><span class="pn">12</span><span class="ptx"><strong>TCP Reno — on RTO (still drops to cwnd=1):</strong> If congestion is detected via RTO (timeout, no ACK at all) → severe congestion. Set ssthresh = cwnd / 2. Set cwnd = 1 MSS. Restart Slow Start. RTO always causes full restart regardless of TCP version — timeout means severe congestion.</span></div>
+    <div class="pt"><span class="pn">13</span><span class="ptx"><strong>TCP NewReno:</strong> Improved version of TCP Reno. Handles multiple packet losses in one window more efficiently. Stays in fast recovery until all lost packets in that window are ACKed. Reduces unnecessary Slow Start entries.</span></div>
+    <div class="pt"><span class="pn">14</span><span class="ptx"><strong>TCP SACK (Selective ACK — RFC 2018):</strong> Standard TCP uses cumulative ACK (GBN principle) — on timeout, retransmit all segments in window. TCP SACK uses Selective Repeat ARQ — receiver explicitly tells sender WHICH segments were received (out-of-order) via SACK option in ACK. Sender retransmits ONLY the missing segments. More efficient under high loss.</span></div>
+  </div>
+
+  <div class="tw">
+    <table>
+      <tr><th>Phase</th><th>TCP Tahoe</th><th>TCP Reno</th></tr>
+      <tr><td>Start</td><td>cwnd=1 MSS, Slow Start</td><td>cwnd=1 MSS, Slow Start</td></tr>
+      <tr><td>Below ssthresh</td><td>Exponential (cwnd doubles per RTT)</td><td>Same</td></tr>
+      <tr><td>Above ssthresh</td><td>Linear +1 MSS per RTT (Congestion Avoidance)</td><td>Same</td></tr>
+      <tr><td>On 3 DupACK</td><td>cwnd=1, ssthresh=cwnd/2, restart Slow Start</td><td>Fast Retransmit + Fast Recovery (cwnd=ssthresh+3, no Slow Start restart)</td></tr>
+      <tr><td>On RTO</td><td>cwnd=1, ssthresh=cwnd/2, restart Slow Start</td><td>Same (cwnd=1, ssthresh=cwnd/2, restart Slow Start)</td></tr>
+      <tr><td>After Fast Recovery (Reno only)</td><td>N/A</td><td>cwnd=ssthresh → Congestion Avoidance</td></tr>
+    </table>
+  </div>
+
+  <h2 class="sh">MCQs — Congestion Control</h2>
+  <div class="mcq">
+    <div class="mcq-q">Q1. In TCP Slow Start, cwnd doubles every RTT. If cwnd starts at 1 and ssthresh = 16, after which RTT does TCP switch to Congestion Avoidance?</div>
+    <div class="opts" id="cc1">
+      <button class="opt" onclick="ans('cc1',0,2,'RTT1: cwnd=2. RTT2: cwnd=4. RTT3: cwnd=8. RTT4: cwnd=16 = ssthresh → switch to Congestion Avoidance. After RTT 4, TCP stops doubling. From RTT 5 onwards: cwnd = 17, 18, 19... (linear +1 per RTT).')">A) After RTT 2</button>
+      <button class="opt" onclick="ans('cc1',1,2,'RTT1: cwnd=2. RTT2: cwnd=4. RTT3: cwnd=8. RTT4: cwnd=16 = ssthresh → switch to Congestion Avoidance. After RTT 4, TCP stops doubling. From RTT 5 onwards: cwnd = 17, 18, 19... (linear +1 per RTT).')">B) After RTT 4 (cwnd reaches ssthresh=16)</button>
+      <button class="opt" onclick="ans('cc1',2,2,'RTT1: cwnd=2. RTT2: cwnd=4. RTT3: cwnd=8. RTT4: cwnd=16 = ssthresh → switch to Congestion Avoidance. After RTT 4, TCP stops doubling. From RTT 5 onwards: cwnd = 17, 18, 19... (linear +1 per RTT).')">C) After RTT 8</button>
+      <button class="opt" onclick="ans('cc1',3,2,'RTT1: cwnd=2. RTT2: cwnd=4. RTT3: cwnd=8. RTT4: cwnd=16 = ssthresh → switch to Congestion Avoidance. After RTT 4, TCP stops doubling. From RTT 5 onwards: cwnd = 17, 18, 19... (linear +1 per RTT).')">D) After RTT 16</button>
+    </div>
+    <div class="exp" id="cc1-e"></div>
+  </div>
+  <div class="mcq">
+    <div class="mcq-q">Q2. TCP Reno detects 3 DupACKs when cwnd=40 MSS. ssthresh was 32. What are the new ssthresh and cwnd values after Fast Recovery begins?</div>
+    <div class="opts" id="cc2">
+      <button class="opt" onclick="ans('cc2',0,1,'New ssthresh = cwnd/2 = 40/2 = 20. New cwnd = ssthresh + 3 = 20 + 3 = 23 MSS. The +3 accounts for the 3 packets the receiver has already confirmed (via the 3 DupACKs). TCP then stays in Fast Recovery — each additional DupACK increments cwnd by 1. When a new ACK arrives, cwnd = ssthresh = 20 and Congestion Avoidance resumes.')">A) ssthresh=16, cwnd=1</button>
+      <button class="opt" onclick="ans('cc2',1,1,'New ssthresh = cwnd/2 = 40/2 = 20. New cwnd = ssthresh + 3 = 20 + 3 = 23 MSS. The +3 accounts for the 3 packets the receiver has already confirmed (via the 3 DupACKs). TCP then stays in Fast Recovery — each additional DupACK increments cwnd by 1. When a new ACK arrives, cwnd = ssthresh = 20 and Congestion Avoidance resumes.')">B) ssthresh=20, cwnd=23 MSS</button>
+      <button class="opt" onclick="ans('cc2',2,1,'New ssthresh = cwnd/2 = 40/2 = 20. New cwnd = ssthresh + 3 = 20 + 3 = 23 MSS. The +3 accounts for the 3 packets the receiver has already confirmed (via the 3 DupACKs). TCP then stays in Fast Recovery — each additional DupACK increments cwnd by 1. When a new ACK arrives, cwnd = ssthresh = 20 and Congestion Avoidance resumes.')">C) ssthresh=20, cwnd=1 MSS (restart Slow Start)</button>
+      <button class="opt" onclick="ans('cc2',3,1,'New ssthresh = cwnd/2 = 40/2 = 20. New cwnd = ssthresh + 3 = 20 + 3 = 23 MSS. The +3 accounts for the 3 packets the receiver has already confirmed (via the 3 DupACKs). TCP then stays in Fast Recovery — each additional DupACK increments cwnd by 1. When a new ACK arrives, cwnd = ssthresh = 20 and Congestion Avoidance resumes.')">D) ssthresh=32, cwnd=40 (no change)</button>
+    </div>
+    <div class="exp" id="cc2-e"></div>
+  </div>
+  <div class="mcq">
+    <div class="mcq-q">Q3. What is the key difference between TCP Tahoe and TCP Reno on detecting 3 DupACKs?</div>
+    <div class="opts" id="cc3">
+      <button class="opt" onclick="ans('cc3',0,2,'TCP Tahoe: 3 DupACK → cwnd=1, ssthresh=cwnd/2, restart Slow Start from scratch. TCP Reno: 3 DupACK → Fast Retransmit + Fast Recovery (cwnd=ssthresh/2+3), no Slow Start restart. Reno skips Slow Start because packets are still flowing; Tahoe assumes worst-case severe congestion for all loss types.')">A) Tahoe uses Go-Back-N; Reno uses Selective Repeat</button>
+      <button class="opt" onclick="ans('cc3',1,2,'TCP Tahoe: 3 DupACK → cwnd=1, ssthresh=cwnd/2, restart Slow Start from scratch. TCP Reno: 3 DupACK → Fast Retransmit + Fast Recovery (cwnd=ssthresh/2+3), no Slow Start restart. Reno skips Slow Start because packets are still flowing; Tahoe assumes worst-case severe congestion for all loss types.')">B) Tahoe uses cumulative ACK; Reno uses SACK</button>
+      <button class="opt" onclick="ans('cc3',2,2,'TCP Tahoe: 3 DupACK → cwnd=1, ssthresh=cwnd/2, restart Slow Start from scratch. TCP Reno: 3 DupACK → Fast Retransmit + Fast Recovery (cwnd=ssthresh/2+3), no Slow Start restart. Reno skips Slow Start because packets are still flowing; Tahoe assumes worst-case severe congestion for all loss types.')">C) Tahoe restarts from cwnd=1+Slow Start; Reno uses Fast Recovery (no Slow Start restart)</button>
+      <button class="opt" onclick="ans('cc3',3,2,'TCP Tahoe: 3 DupACK → cwnd=1, ssthresh=cwnd/2, restart Slow Start from scratch. TCP Reno: 3 DupACK → Fast Retransmit + Fast Recovery (cwnd=ssthresh/2+3), no Slow Start restart. Reno skips Slow Start because packets are still flowing; Tahoe assumes worst-case severe congestion for all loss types.')">D) Tahoe does not support 3 DupACK detection</button>
+    </div>
+    <div class="exp" id="cc3-e"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ TAB 4: UDP & QUIC ═══════════════ -->
+<div id="udp" class="sec">
+  <div class="ttl">Topic 4: UDP &amp; QUIC <span class="bdg" style="background:#FAEEDA;color:#633806">Medium Weightage</span></div>
+  <div class="bx bbl">
+    <h3>Why UDP exists alongside TCP</h3>
+    <p>TCP has significant overhead: 3WHS (3 messages for setup + 3 for close), Slow Start phase, retransmissions (block new data), per-connection state. For short messages or real-time apps, these overheads are unacceptable. UDP = minimal wrapper over IP — just adds port numbers and checksum. Fast, connectionless, unreliable.</p>
+  </div>
+
+  <h2 class="sh">Key explanation points — UDP</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">1</span><span class="ptx"><strong>UDP features:</strong> No connection establishment. No reliability, no ACK. No flow control. No congestion control. No ordered delivery. Works well when the network has low loss probability. Application must implement its own loss recovery if needed. Extremely low overhead — just adds 4 fields to IP.</span></div>
+    <div class="pt"><span class="pn">2</span><span class="ptx"><strong>UDP header (4 fields only):</strong> Source Port (16 bits) — sender's port. Destination Port (16 bits) — receiver's port. Length (16 bits) — total UDP datagram length (header + data). Checksum (16 bits) — error detection. That's it — 8 bytes total vs TCP's 20+ bytes. Rest is data payload.</span></div>
+    <div class="pt"><span class="pn">3</span><span class="ptx"><strong>UDP Checksum with pseudo-header:</strong> During checksum computation, TCP/UDP create a <strong>pseudo-header</strong> NOT transmitted with the packet — used only for computation. Pseudo-header fields (from IP header): Source IP, Destination IP, Protocol field, Reserved bits. After computing checksum, pseudo-header is discarded. At receiver, reconstruct pseudo-header, recompute checksum, verify match.</span></div>
+    <div class="pt"><span class="pn">4</span><span class="ptx"><strong>Why include pseudo-header in checksum?</strong> IP header has its own checksum, but the IP checksum CHANGES at every router hop (routers update TTL → recompute IP checksum). The transport layer checksum is end-to-end and never changes at intermediate hops. Including the pseudo-header provides double validation of src IP, dst IP, and protocol — ensures no router error corrupted these critical routing fields.</span></div>
+    <div class="pt"><span class="pn">5</span><span class="ptx"><strong>Internet Checksum computation:</strong> Divide the message into fixed-size blocks → perform ones-complement addition → result = checksum. This is NOT a cryptographic hash — designed only to detect common transmission errors (bit flips during signal processing, ADC/DAC quantization errors). Computationally lightweight by design.</span></div>
+    <div class="pt"><span class="pn">6</span><span class="ptx"><strong>Checksum is NOT security:</strong> Checksum detects random transmission errors (bit flips from physical layer noise/quantization). It does NOT protect against intentional attacks. An attacker can recompute and forge a matching checksum. For security, use cryptographic hashes (HMAC, SHA-256) or TLS.</span></div>
+    <div class="pt"><span class="pn">7</span><span class="ptx"><strong>UDP use cases:</strong> DNS — short query/response, no connection needed. BOOTP/DHCP — network configuration, short messages. TFTP — Trivial FTP for small file transfers. SNMP — Simple Network Management Protocol, small query/traps, also cuts through congestion (UDP bypasses congestion control — useful for network management during congestion when TCP flows back off). VoIP, video streaming, gaming — real-time, tolerates some loss.</span></div>
+  </div>
+
+  <h2 class="sh">Key explanation points — QUIC</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">8</span><span class="ptx"><strong>What is QUIC?</strong> QUIC = Quick UDP Internet Connections. Developed by Google, detailed paper published 2017. Runs on top of UDP (for direct IP access without TCP overhead). Implements reliability, flow control, congestion control, and security INSIDE the application layer on top of UDP. No slow start delay for subsequent connections to the same server.</span></div>
+    <div class="pt"><span class="pn">9</span><span class="ptx"><strong>QUIC architecture:</strong> vs TCP: HTTP → (SSL/TLS) → TCP → IP. QUIC: HTTP → QUIC (with embedded security) → UDP → IP. Security is built into QUIC itself — no separate TLS/SSL handshake layer needed. Every QUIC packet is end-to-end encrypted by default.</span></div>
+    <div class="pt"><span class="pn">10</span><span class="ptx"><strong>QUIC handshake — 1-RTT initial:</strong> Client sends equate-CHLO (Client Hello, no credentials). Server sends REJECT (client credentials invalid) + server's security certificate. Client now has certificate. Client sends complete client-CHLO (with credentials) + starts sending encrypted requests. Server sends server-CHLO (server hello) + encrypted responses. Total: 1 RTT for handshake. Data flows immediately.</span></div>
+    <div class="pt"><span class="pn">11</span><span class="ptx"><strong>QUIC — 0-RTT for subsequent connections:</strong> After the first connection, client already has the server's security certificate cached. Client can send complete client-CHLO immediately without waiting for the server's REJECT+certificate cycle. → 0-RTT for all subsequent connections to the same server. Versus TCP: requires 3WHS for EVERY new connection. QUIC: 0-RTT after the first connection.</span></div>
+    <div class="pt"><span class="pn">12</span><span class="ptx"><strong>Head-of-Line (HOL) Blocking — the TCP problem:</strong> HTTP/2 multiplexes multiple streams over ONE TCP connection. If a single packet from any stream is lost → TCP BLOCKS delivery of ALL streams (cumulative ACK, GBN principle) even if other streams' packets are fully received and buffered. One lost red packet blocks all blue and black stream data waiting in buffer.</span></div>
+    <div class="pt"><span class="pn">13</span><span class="ptx"><strong>QUIC solves HOL blocking:</strong> QUIC uses UDP (which has no blocking) + implements stream-wise flow control and congestion control. Each stream is independent. A lost packet in Stream A does NOT block Streams B, C, D. QUIC delivers other streams' data immediately while retransmitting the lost packet for Stream A only.</span></div>
+    <div class="pt"><span class="pn">14</span><span class="ptx"><strong>QUIC retransmission — new seq numbers:</strong> Unlike TCP, QUIC gives a NEW sequence number to every retransmitted packet (different from original transmission). This fully removes the Karn ambiguity problem — QUIC can always determine exact RTT from any ACK, including those for retransmitted packets.</span></div>
+  </div>
+
+  <div class="tw">
+    <table>
+      <tr><th>Feature</th><th>TCP</th><th>UDP</th><th>QUIC</th></tr>
+      <tr><td>Connection Setup</td><td>3WHS (3 RTT overhead)</td><td>None</td><td>1-RTT (first) / 0-RTT (subsequent)</td></tr>
+      <tr><td>Reliability</td><td>Yes (GBN ARQ)</td><td>No</td><td>Yes (per-stream, selective)</td></tr>
+      <tr><td>Flow Control</td><td>Yes (rwnd)</td><td>No</td><td>Yes (per-stream)</td></tr>
+      <tr><td>Congestion Control</td><td>Yes (cwnd, AIMD)</td><td>No</td><td>Yes (per-stream)</td></tr>
+      <tr><td>Security</td><td>Separate TLS/SSL</td><td>None</td><td>Built-in end-to-end encryption</td></tr>
+      <tr><td>HOL Blocking</td><td>Yes (single TCP stream)</td><td>No</td><td>No (independent streams over UDP)</td></tr>
+      <tr><td>Slow Start</td><td>Yes (every new connection)</td><td>No</td><td>Minimized (0-RTT resumption)</td></tr>
+    </table>
+  </div>
+
+  <h2 class="sh">MCQs — UDP &amp; QUIC</h2>
+  <div class="mcq">
+    <div class="mcq-q">Q1. Why does the TCP/UDP checksum computation include a pseudo-header not actually transmitted in the packet?</div>
+    <div class="opts" id="u1">
+      <button class="opt" onclick="ans('u1',0,2,'IP header checksum changes at every router (TTL decremented → IP checksum recomputed). Transport checksum is end-to-end. By including src IP, dst IP, protocol in the pseudo-header for checksum computation, TCP/UDP do a double-validation of critical IP fields that might have been corrupted by a faulty router — catching errors the IP checksum might miss at intermediate hops.')">A) To make the checksum cryptographically secure against attacks</button>
+      <button class="opt" onclick="ans('u1',1,2,'IP header checksum changes at every router (TTL decremented → IP checksum recomputed). Transport checksum is end-to-end. By including src IP, dst IP, protocol in the pseudo-header for checksum computation, TCP/UDP do a double-validation of critical IP fields that might have been corrupted by a faulty router — catching errors the IP checksum might miss at intermediate hops.')">B) To extend the checksum to cover the full IP header</button>
+      <button class="opt" onclick="ans('u1',2,2,'IP header checksum changes at every router (TTL decremented → IP checksum recomputed). Transport checksum is end-to-end. By including src IP, dst IP, protocol in the pseudo-header for checksum computation, TCP/UDP do a double-validation of critical IP fields that might have been corrupted by a faulty router — catching errors the IP checksum might miss at intermediate hops.')">C) End-to-end double-validation of src/dst IP and protocol — IP checksum changes per hop so transport checksum catches router errors</button>
+      <button class="opt" onclick="ans('u1',3,2,'IP header checksum changes at every router (TTL decremented → IP checksum recomputed). Transport checksum is end-to-end. By including src IP, dst IP, protocol in the pseudo-header for checksum computation, TCP/UDP do a double-validation of critical IP fields that might have been corrupted by a faulty router — catching errors the IP checksum might miss at intermediate hops.')">D) Required by RFC 793 for backward compatibility with older routers</button>
+    </div>
+    <div class="exp" id="u1-e"></div>
+  </div>
+  <div class="mcq">
+    <div class="mcq-q">Q2. QUIC uses new sequence numbers for retransmitted packets (unlike TCP). What problem does this solve?</div>
+    <div class="opts" id="u2">
+      <button class="opt" onclick="ans('u2',0,1,'TCP reuses the same sequence number for retransmissions → Karn ambiguity (cannot tell if ACK refers to original or retransmitted segment → cannot update RTT estimate). QUIC assigns NEW sequence numbers to retransmissions → every ACK unambiguously corresponds to a specific transmission → RTT can always be measured accurately, even for retransmitted packets.')">A) Prevents sequence number wrap-around in 32-bit space</button>
+      <button class="opt" onclick="ans('u2',1,1,'TCP reuses the same sequence number for retransmissions → Karn ambiguity (cannot tell if ACK refers to original or retransmitted segment → cannot update RTT estimate). QUIC assigns NEW sequence numbers to retransmissions → every ACK unambiguously corresponds to a specific transmission → RTT can always be measured accurately, even for retransmitted packets.')">B) Eliminates Karn ambiguity — ACK always clearly identifies which transmission it acknowledges, enabling accurate RTT measurement</button>
+      <button class="opt" onclick="ans('u2',2,1,'TCP reuses the same sequence number for retransmissions → Karn ambiguity (cannot tell if ACK refers to original or retransmitted segment → cannot update RTT estimate). QUIC assigns NEW sequence numbers to retransmissions → every ACK unambiguously corresponds to a specific transmission → RTT can always be measured accurately, even for retransmitted packets.')">C) Allows QUIC to use UDP without any reliability mechanism</button>
+      <button class="opt" onclick="ans('u2',3,1,'TCP reuses the same sequence number for retransmissions → Karn ambiguity (cannot tell if ACK refers to original or retransmitted segment → cannot update RTT estimate). QUIC assigns NEW sequence numbers to retransmissions → every ACK unambiguously corresponds to a specific transmission → RTT can always be measured accurately, even for retransmitted packets.')">D) Ensures backward compatibility with IPv4 routers</button>
+    </div>
+    <div class="exp" id="u2-e"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ TAB 5: SOCKET PROGRAMMING ═══════════════ -->
+<div id="sock" class="sec">
+  <div class="ttl">Topic 5: Socket Programming <span class="bdg" style="background:#EAF3DE;color:#27500A">Medium Weightage</span></div>
+  <div class="bx bbl">
+    <h3>What is socket programming?</h3>
+    <p>The entire TCP/IP stack (Transport + Network layer) is implemented in the <strong>OS kernel</strong>. Applications in <strong>user space</strong> communicate with the kernel protocol stack via system calls. A <strong>socket</strong> = a logical pipe from one process to another process, represented as a file descriptor in UNIX. Socket programming = using system call APIs to create and manage these logical pipes.</p>
+  </div>
+
+  <h2 class="sh">Key explanation points — Concepts</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">1</span><span class="ptx"><strong>Where is the protocol stack?</strong> Physical layer → NIC hardware. Lower Data Link (MAC) → NIC firmware/driver. Upper Data Link (LLC) + Network (IP) + Transport (TCP/UDP) → OS kernel (Unix/Linux: under /usr/src/linux/net/). Application layer → user space. User space applications access the kernel stack through system calls.</span></div>
+    <div class="pt"><span class="pn">2</span><span class="ptx"><strong>Port-based multiplexing:</strong> Multiple processes on the same machine communicate over the network simultaneously. IP address identifies the machine. Port number identifies the specific process/application on that machine. Example: Machine at 202.141.81.2, port 8081 (running HTTP client) connects to 203.12.23.43 port 80 (HTTP server). Each connection is a separate logical pipe (socket).</span></div>
+    <div class="pt"><span class="pn">3</span><span class="ptx"><strong>Stream socket vs Datagram socket:</strong> SOCK_STREAM = TCP socket (reliable, connection-oriented, ordered). SOCK_DGRAM = UDP socket (unreliable, connectionless). SOCK_RAW = raw socket (bypasses transport layer, talks directly to IP — not covered for exam).</span></div>
+    <div class="pt"><span class="pn">4</span><span class="ptx"><strong>Active open vs Passive open:</strong> Server = passive open: announces address (bind+listen), waits for connections. Client = active open: initiates a connection when data needs to be sent. Client knows the server IP + port (e.g., well-known HTTP port 80). Client's own port is randomly chosen at runtime.</span></div>
+    <div class="pt"><span class="pn">5</span><span class="ptx"><strong>Host byte order vs Network byte order:</strong> Computers can be little-endian (store least significant byte first: 0D, 0C, 0B, 0A) or big-endian (most significant first: 0A, 0B, 0C, 0D). Network uses big-endian (network byte order). Before putting port number in socket address struct, convert from host byte order to network byte order with <strong>htons()</strong> (host-to-network short). At receiver: <strong>ntohs()</strong> to convert back.</span></div>
+  </div>
+
+  <h2 class="sh">Key explanation points — TCP Socket API</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">6</span><span class="ptx"><strong>socket() system call:</strong> Creates a socket file descriptor. Parameters: domain (AF_INET for IPv4), type (SOCK_STREAM for TCP, SOCK_DGRAM for UDP), protocol (0 for default). Returns: socket file descriptor (integer). Usage: int s = socket(AF_INET, SOCK_STREAM, 0);</span></div>
+    <div class="pt"><span class="pn">7</span><span class="ptx"><strong>bind() — server only:</strong> Binds the socket to a specific IP + port on the local machine. Parameters: socket fd, pointer to sockaddr_in struct (containing AF_INET, INADDR_ANY for local IP, htons(port)). INADDR_ANY = use whichever IP is assigned to this machine's NIC. Error if port already in use by another process.</span></div>
+    <div class="pt"><span class="pn">8</span><span class="ptx"><strong>listen() — server only:</strong> Puts socket into listening state — announces "I accept connections on this port." Parameter: socket fd + backlog (max number of connections queued while server is busy). Backlog=5 means up to 5 pending connections can wait. Excess connections are dropped.</span></div>
+    <div class="pt"><span class="pn">9</span><span class="ptx"><strong>connect() — client only:</strong> Initiates TCP 3-way handshake with the server. Parameters: socket fd, server address struct (server IP + port). This call BLOCKS until the handshake is complete (or fails). Inside connect(): SYN is sent → SYN+ACK received → ACK sent.</span></div>
+    <div class="pt"><span class="pn">10</span><span class="ptx"><strong>accept() — server only:</strong> Blocks until a client connection arrives. When client connects, accept() returns a NEW socket file descriptor (connfd) specific to THAT client. The original server socket keeps listening for more clients. All data exchange with this specific client is through connfd (not the original socket fd).</span></div>
+    <div class="pt"><span class="pn">11</span><span class="ptx"><strong>send/recv (TCP) and sendto/recvfrom (UDP):</strong> TCP (stream socket): use send(connfd, buffer, len, flags) and recv(connfd, buffer, len, flags). recv() returns 0 when connection is closed by remote side. UDP (datagram socket): use sendto() and recvfrom() — include the remote address in each call since there's no established connection. Client's port changes randomly each run (randomly assigned by OS).</span></div>
+    <div class="pt"><span class="pn">12</span><span class="ptx"><strong>close() — both sides:</strong> After data transfer is done, close(fd) closes the connection. For TCP: triggers the FIN sequence (TCP state machine: ESTABLISHED → FIN_WAIT_1 → ... → CLOSED). Server should close(connfd) after finishing with a client; client should close its socket after receiving all data.</span></div>
+  </div>
+
+  <h2 class="sh">Key explanation points — Server Design Patterns</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">13</span><span class="ptx"><strong>Iterative Server:</strong> Server loop: accept() → send/receive with client → close(connfd) → accept() again. Problem: while sending/receiving with Client 1, all other clients are BLOCKED in the backlog queue. Cannot handle concurrent clients efficiently. OK only for very low request rates.</span></div>
+    <div class="pt"><span class="pn">14</span><span class="ptx"><strong>Concurrent Server (fork):</strong> After accept() returns connfd → call fork() to create a child process. Child process: handles send/recv with connfd (closes original server socket). Parent process: immediately returns from fork(), closes connfd, calls accept() again to handle next client. Multiple clients handled in parallel by different child processes. Risk: zombie child processes if parent doesn't wait() for them.</span></div>
+    <div class="pt"><span class="pn">15</span><span class="ptx"><strong>Select() — I/O Multiplexing:</strong> Used when a single process must monitor multiple file descriptors (e.g., chat app: multiple client sockets + keyboard input). select(nfds, &amp;readfds, &amp;writefds, &amp;exceptfds, &amp;timeout) waits until ANY of the monitored file descriptors becomes ready for read/write/exception. Returns number of ready fds. Use FD_SET to add fds; FD_ISSET to check if ready after select returns. No child processes needed → no zombie risk. Advantage over fork: single process, simpler resource management.</span></div>
+    <div class="pt"><span class="pn">16</span><span class="ptx"><strong>select() return values:</strong> −1 = error. 0 = timeout expired (no fds ready). &gt;0 = number of sockets with pending events. After select returns &gt;0: use FD_ISSET(fd, &amp;readfds) to identify which fd is ready, then call accept()/recv() on that fd.</span></div>
+  </div>
+
+  <div class="tw">
+    <table>
+      <tr><th>System Call</th><th>Who calls it</th><th>What it does</th></tr>
+      <tr><td>socket()</td><td>Both</td><td>Create socket file descriptor</td></tr>
+      <tr><td>bind()</td><td>Server</td><td>Attach socket to local IP+port</td></tr>
+      <tr><td>listen()</td><td>Server</td><td>Mark socket as accepting connections (passive open)</td></tr>
+      <tr><td>connect()</td><td>Client</td><td>Initiate TCP 3WHS to server (active open)</td></tr>
+      <tr><td>accept()</td><td>Server</td><td>Block until client connects; return new connfd for that client</td></tr>
+      <tr><td>send()/write()</td><td>Both</td><td>Send data over established connection</td></tr>
+      <tr><td>recv()/read()</td><td>Both</td><td>Receive data (returns 0 if connection closed)</td></tr>
+      <tr><td>sendto()</td><td>UDP client</td><td>Send UDP datagram to address</td></tr>
+      <tr><td>recvfrom()</td><td>UDP server</td><td>Receive UDP datagram + get sender's address</td></tr>
+      <tr><td>close()</td><td>Both</td><td>Close socket (triggers FIN for TCP)</td></tr>
+      <tr><td>fork()</td><td>Server</td><td>Create child process to handle client in parallel</td></tr>
+      <tr><td>select()</td><td>Both</td><td>Monitor multiple fds simultaneously; avoid blocking</td></tr>
+    </table>
+  </div>
+
+  <h2 class="sh">MCQs — Socket Programming</h2>
+  <div class="mcq">
+    <div class="mcq-q">Q1. In a TCP server, why does accept() return a NEW socket file descriptor (connfd)?</div>
+    <div class="opts" id="sk1">
+      <button class="opt" onclick="ans('sk1',0,2,'The original server socket must continue LISTENING for new incoming connections (it stays in LISTEN state). Each accepted client needs its OWN dedicated logical pipe for data exchange. accept() creates a new connfd specific to one client → server can accept multiple clients simultaneously. Data exchange happens on connfd; listening continues on sockfd.')">A) Because the original socket is closed by listen()</button>
+      <button class="opt" onclick="ans('sk1',1,2,'The original server socket must continue LISTENING for new incoming connections (it stays in LISTEN state). Each accepted client needs its OWN dedicated logical pipe for data exchange. accept() creates a new connfd specific to one client → server can accept multiple clients simultaneously. Data exchange happens on connfd; listening continues on sockfd.')">B) So the original socket can keep listening while the new socket handles data exchange with that specific client</button>
+      <button class="opt" onclick="ans('sk1',2,2,'The original server socket must continue LISTENING for new incoming connections (it stays in LISTEN state). Each accepted client needs its OWN dedicated logical pipe for data exchange. accept() creates a new connfd specific to one client → server can accept multiple clients simultaneously. Data exchange happens on connfd; listening continues on sockfd.')">C) The OS requires unique fd numbers for different data types</button>
+      <button class="opt" onclick="ans('sk1',3,2,'The original server socket must continue LISTENING for new incoming connections (it stays in LISTEN state). Each accepted client needs its OWN dedicated logical pipe for data exchange. accept() creates a new connfd specific to one client → server can accept multiple clients simultaneously. Data exchange happens on connfd; listening continues on sockfd.')">D) accept() only works with UDP and needs a separate fd</button>
+    </div>
+    <div class="exp" id="sk1-e"></div>
+  </div>
+  <div class="mcq">
+    <div class="mcq-q">Q2. The select() system call is preferred over fork() in some scenarios because:</div>
+    <div class="opts" id="sk2">
+      <button class="opt" onclick="ans('sk2',0,1,'select() allows ONE PROCESS to monitor MULTIPLE file descriptors (sockets + keyboard) simultaneously. No child processes = no zombie risk. Simpler resource management. Useful for chat servers where you need to read from both network and keyboard asynchronously. Fork creates parallel processes which need cleanup (wait/waitpid to prevent zombies).')">A) select() is faster than fork() for large data transfers</button>
+      <button class="opt" onclick="ans('sk2',1,1,'select() allows ONE PROCESS to monitor MULTIPLE file descriptors (sockets + keyboard) simultaneously. No child processes = no zombie risk. Simpler resource management. Useful for chat servers where you need to read from both network and keyboard asynchronously. Fork creates parallel processes which need cleanup (wait/waitpid to prevent zombies).')">B) select() multiplexes multiple fds in a single process — no zombie child processes, simpler resource management</button>
+      <button class="opt" onclick="ans('sk2',2,1,'select() allows ONE PROCESS to monitor MULTIPLE file descriptors (sockets + keyboard) simultaneously. No child processes = no zombie risk. Simpler resource management. Useful for chat servers where you need to read from both network and keyboard asynchronously. Fork creates parallel processes which need cleanup (wait/waitpid to prevent zombies).')">C) select() provides encryption not available in fork-based servers</button>
+      <button class="opt" onclick="ans('sk2',3,1,'select() allows ONE PROCESS to monitor MULTIPLE file descriptors (sockets + keyboard) simultaneously. No child processes = no zombie risk. Simpler resource management. Useful for chat servers where you need to read from both network and keyboard asynchronously. Fork creates parallel processes which need cleanup (wait/waitpid to prevent zombies).')">D) select() can handle more than 65535 simultaneous connections</button>
+    </div>
+    <div class="exp" id="sk2-e"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ TAB 6: SUPER REVISION ═══════════════ -->
+<div id="rev" class="sec">
+  <div class="ttl">Super Revision Notes — Week 5 (Last-Day Study)</div>
+
+  <div class="bx bred">
+    <h3>Absolute must-know facts</h3>
+    <ul>
+      <li>TCP flow control uses sliding window with <strong>Go-Back-N</strong> (on timeout, retransmit all in window)</li>
+      <li>Telnet problem: 21-byte segment for 1-byte data (20B header + 1B data) → 95% overhead</li>
+      <li>Delayed ACK: receiver delays ACK up to 500 ms (receiver-side fix)</li>
+      <li>Nagle's Algorithm: send 1st byte; buffer rest until ACK arrives (sender-side fix)</li>
+      <li>Nagle + Delayed ACK together → STARVATION (never use both simultaneously)</li>
+      <li>Silly Window Syndrome: receiver reads 1 byte → advertises window=1 → tiny segments again</li>
+      <li>Clark's Solution: receiver delays window update until SUFFICIENT space free (SWS fix)</li>
+      <li>Nagle (sender-side) + Clark (receiver-side) are complementary — safe to use together</li>
+      <li>PSH flag: bypass both Nagle and Clark → send/deliver immediately</li>
+      <li>Dupack: receiver sends same ACK repeatedly for out-of-order segments. Trigger: 3 Dupacks = congestion in TCP Tahoe/Reno</li>
+      <li>RTO: SRTT = (7/8)×SRTT + (1/8)×R. RTTVAR = (3/4)×RTTVAR + (1/4)×|SRTT−R|. RTO = SRTT + 4×RTTVAR</li>
+      <li>Karn's algorithm: no SRTT update on retransmitted segments; double RTO on each timeout</li>
+      <li>Persistent timer: fires when window=0 → sends window probe → deadlock prevention</li>
+      <li>Keepalive timer: fires after long idle period (~2 hours) → sends probe → closes if no response</li>
+      <li>Congestion collapse: 1986 internet event. Van Jacobson invented TCP congestion control in 1988</li>
+      <li>Slow Start: cwnd doubles every RTT (NOT slow — exponential growth). Ironic name</li>
+      <li>ssthresh: when cwnd reaches ssthresh → switch from exponential to linear (Congestion Avoidance)</li>
+      <li>On RTO (both Tahoe &amp; Reno): cwnd=1, ssthresh=cwnd/2, restart Slow Start</li>
+      <li>On 3 DupACK — Tahoe: cwnd=1, ssthresh=cwnd/2, restart Slow Start</li>
+      <li>On 3 DupACK — Reno: Fast Recovery: ssthresh=cwnd/2, cwnd=ssthresh+3, then linear; no Slow Start restart</li>
+      <li>UDP header: 4 fields only (src port, dst port, length, checksum) = 8 bytes total</li>
+      <li>Pseudo-header (not transmitted): src IP, dst IP, protocol, reserved — for checksum validation of IP fields</li>
+      <li>Checksum = ones-complement addition of message blocks. NOT cryptographic</li>
+      <li>QUIC: Google 2017. UDP-based. 1-RTT initial, 0-RTT subsequent. Embedded security. HOL-blocking free. New seq# for retransmissions</li>
+      <li>socket() → bind() → listen() → accept() → send/recv → close() (TCP server)</li>
+      <li>socket() → connect() → send/recv → close() (TCP client — no bind/listen)</li>
+      <li>Iterative server: handle one client at a time. Concurrent: fork() for each client. select(): monitor multiple fds in one process</li>
+      <li>htons(): host byte order → network byte order (big-endian). ntohs(): reverse</li>
+    </ul>
+  </div>
+
+  <div class="bx bpur">
+    <h3>RTO estimation formulas</h3>
+    <div class="ri"><span class="rb">SRTT</span><span class="rt">= α×SRTT + (1−α)×R &nbsp;&nbsp; α = 7/8 (EWMA — exponentially weighted moving average)</span></div>
+    <div class="ri"><span class="rb">RTTVAR</span><span class="rt">= β×RTTVAR + (1−β)×|SRTT−R| &nbsp;&nbsp; β = 3/4</span></div>
+    <div class="ri"><span class="rb">RTO</span><span class="rt">= SRTT + 4×RTTVAR &nbsp;&nbsp; (4 = 2² = left-shift, fast computation)</span></div>
+    <div class="ri"><span class="rb">Karn</span><span class="rt">No SRTT update on retransmission. Each timeout: RTO = 2×RTO (exponential backoff)</span></div>
+  </div>
+
+  <div class="bx bgn">
+    <h3>TCP Congestion Control phases (Reno)</h3>
+    <div class="ri"><span class="rb">Phase 1</span><span class="rt">Slow Start: cwnd starts at 1 MSS. Doubles every RTT (+1 per ACK). Until cwnd = ssthresh</span></div>
+    <div class="ri"><span class="rb">Phase 2</span><span class="rt">Congestion Avoidance: +1 MSS per RTT (linear). Formula: cwnd += MSS²/cwnd per ACK</span></div>
+    <div class="ri"><span class="rb">On RTO</span><span class="rt">ssthresh = cwnd/2. cwnd = 1. Go to Phase 1 (Slow Start)</span></div>
+    <div class="ri"><span class="rb">On 3DupACK (Reno)</span><span class="rt">Fast Retransmit: retransmit lost segment. ssthresh=cwnd/2. cwnd=ssthresh+3. Each more Dupack: cwnd+=1. On new ACK: cwnd=ssthresh → Phase 2</span></div>
+    <div class="ri"><span class="rb">On 3DupACK (Tahoe)</span><span class="rt">ssthresh=cwnd/2. cwnd=1. Go to Phase 1 (Slow Start like RTO)</span></div>
+  </div>
+
+  <div class="bx bamb">
+    <h3>Tricky NPTEL MCQ traps — don't get these wrong</h3>
+    <div class="ri"><span class="rb">1</span><span class="rt">Slow Start is NOT slow — it is exponential growth starting from a slow initial value</span></div>
+    <div class="ri"><span class="rb">2</span><span class="rt">Nagle + Delayed ACK = starvation. Nagle + Clark = safe (complementary)</span></div>
+    <div class="ri"><span class="rb">3</span><span class="rt">Tahoe and Reno BOTH drop to cwnd=1 on RTO. They DIFFER only on 3 DupACK handling</span></div>
+    <div class="ri"><span class="rb">4</span><span class="rt">Reno Fast Recovery: cwnd = ssthresh + 3 (not ssthresh + 0 or ssthresh alone)</span></div>
+    <div class="ri"><span class="rb">5</span><span class="rt">Karn: do NOT update SRTT on retransmission. Do exponential backoff on timeout</span></div>
+    <div class="ri"><span class="rb">6</span><span class="rt">Pseudo-header is NOT transmitted — used only for checksum computation</span></div>
+    <div class="ri"><span class="rb">7</span><span class="rt">UDP header = 4 fields, 8 bytes. TCP header = minimum 20 bytes (much larger)</span></div>
+    <div class="ri"><span class="rb">8</span><span class="rt">QUIC: 1-RTT handshake for FIRST connection; 0-RTT for all subsequent connections to same server</span></div>
+    <div class="ri"><span class="rb">9</span><span class="rt">TCP SACK uses Selective Repeat. Standard TCP uses Go-Back-N (cumulative ACK)</span></div>
+    <div class="ri"><span class="rb">10</span><span class="rt">accept() returns a NEW fd for each client — original server socket stays in LISTEN state</span></div>
+    <div class="ri"><span class="rb">11</span><span class="rt">Client does NOT call bind() or listen() — only server does</span></div>
+    <div class="ri"><span class="rb">12</span><span class="rt">ACK clocking: ACKs arrive at sender at the rate of the SLOWEST link in the path</span></div>
+    <div class="ri"><span class="rb">13</span><span class="rt">Persistent timer prevents window=0 deadlock. Keepalive timer closes idle connections</span></div>
+    <div class="ri"><span class="rb">14</span><span class="rt">QUIC assigns NEW sequence numbers to retransmissions → solves Karn ambiguity completely</span></div>
+  </div>
+
+  <div style="margin-top:1.5rem;padding:1rem;background:#E6F1FB;border-radius:var(--border-radius-lg);border:0.5px solid #B5D4F4">
+    <p style="font-size:14px;font-weight:500;color:#0C447C;margin-bottom:8px">Exam strategy — Week 5</p>
+    <ul style="font-size:13px;color:#185FA5;padding-left:1.2rem;line-height:1.9">
+      <li>Flow control: Know Telnet problem numbers (21-byte segment). Know all 3 solutions (Nagle, Delayed ACK, Clark) and which pairs conflict and which complement</li>
+      <li>Dupack: Know how many Dupacks trigger fast retransmit (3). Trace through example: bytes 0-2 received, byte 3 lost, bytes 4-7 received → 4 dupacks, trigger at 3rd</li>
+      <li>RTO: Memorise SRTT = 7/8×SRTT + 1/8×R. RTO = SRTT + 4×RTTVAR. Karn's rule. Exponential backoff</li>
+      <li>Congestion control: Draw the cwnd vs time graph. Mark Slow Start (exponential), ssthresh crossover, Congestion Avoidance (linear), RTO event, DupACK event</li>
+      <li>Tahoe vs Reno: Only difference = 3 DupACK handling. Reno: Fast Recovery (no Slow Start). Tahoe: full restart</li>
+      <li>UDP: 4-field header. Pseudo-header purpose. Checksum = ones-complement. Why UDP for DNS/SNMP</li>
+      <li>QUIC: 1-RTT first, 0-RTT subsequent. Head-of-line blocking solved. New seq# for retransmissions. Built-in encryption</li>
+      <li>Socket API: Know exact sequence of calls for TCP server and client. Know what each call does</li>
+      <li>SOCK_STREAM = TCP. SOCK_DGRAM = UDP. htons() before putting port in struct. INADDR_ANY for server address</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<script>
+function show(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  event.target.classList.add('on');
+}
+function ans(qid,chosen,correct,explanation){
+  const opts=document.querySelectorAll('#'+qid+' .opt');
+  opts.forEach((o,i)=>{
+    o.disabled=true;
+    if(i===correct)o.classList.add('ok');
+    else if(i===chosen&&chosen!==correct)o.classList.add('no');
+  });
+  const exp=document.getElementById(qid+'-e');
+  exp.textContent=(chosen===correct?'Correct! ':'Incorrect. ')+explanation;
+  exp.classList.add('show');
+}
+</script>

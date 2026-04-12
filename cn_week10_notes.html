@@ -1,0 +1,951 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); }
+.container { max-width: 900px; padding: 1.5rem 1rem; }
+.hero { border-bottom: 0.5px solid var(--color-border-tertiary); padding-bottom: 1.5rem; margin-bottom: 2rem; }
+.hero h1 { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 4px; }
+.hero p { font-size: 14px; color: var(--color-text-secondary); }
+.tab-bar { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 2rem; }
+.tab { padding: 6px 14px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); font-size: 13px; cursor: pointer; background: var(--color-background-primary); color: var(--color-text-secondary); transition: all 0.15s; }
+.tab:hover { background: var(--color-background-secondary); }
+.tab.active { background: #E6F1FB; color: #0C447C; border-color: #85B7EB; font-weight: 500; }
+.section { display: none; }
+.section.active { display: block; }
+.topic-title { font-size: 20px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; padding-bottom: 8px; border-bottom: 2px solid #85B7EB; }
+.badge { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: var(--border-radius-md); margin-left: 8px; }
+.badge-exam { background: #FAEEDA; color: #633806; }
+.badge-imp { background: #E1F5EE; color: #085041; }
+.card { background: var(--color-background-secondary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; margin: 1rem 0; }
+.card-blue { background: #E6F1FB; border-left: 3px solid #185FA5; }
+.card-green { background: #EAF3DE; border-left: 3px solid #3B6D11; }
+.card-amber { background: #FAEEDA; border-left: 3px solid #854F0B; }
+.card-red { background: #FCEBEB; border-left: 3px solid #A32D2D; }
+.card-purple { background: #EEEDFE; border-left: 3px solid #534AB7; }
+.card h3 { font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+.card-blue h3 { color: #0C447C; }
+.card-green h3 { color: #27500A; }
+.card-amber h3 { color: #633806; }
+.card-red h3 { color: #791F1F; }
+.card-purple h3 { color: #3C3489; }
+.card p, .card li { font-size: 14px; color: var(--color-text-primary); line-height: 1.7; }
+.card ul { padding-left: 1.2rem; }
+.card ol { padding-left: 1.4rem; }
+.point { display: flex; gap: 10px; padding: 8px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.point:last-child { border-bottom: none; }
+.point-num { font-size: 13px; font-weight: 500; color: #185FA5; min-width: 22px; }
+.point-text { font-size: 14px; color: var(--color-text-primary); line-height: 1.6; }
+.point-text strong { font-weight: 500; color: var(--color-text-primary); }
+.mcq-block { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; margin: 1rem 0; background: var(--color-background-primary); }
+.mcq-q { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 10px; line-height: 1.6; }
+.mcq-opts { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+.opt { font-size: 13px; padding: 6px 10px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-tertiary); cursor: pointer; color: var(--color-text-primary); background: var(--color-background-primary); text-align: left; transition: background 0.1s; }
+.opt:hover { background: var(--color-background-secondary); }
+.opt.correct { background: #EAF3DE; border-color: #639922; color: #27500A; }
+.opt.wrong { background: #FCEBEB; border-color: #A32D2D; color: #791F1F; }
+.explanation { display: none; font-size: 13px; color: var(--color-text-secondary); background: var(--color-background-secondary); padding: 8px 12px; border-radius: var(--border-radius-md); margin-top: 6px; line-height: 1.6; }
+.explanation.visible { display: block; }
+.table-wrap { overflow-x: auto; margin: 1rem 0; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { background: #E6F1FB; color: #0C447C; font-weight: 500; padding: 8px 12px; text-align: left; border: 0.5px solid #B5D4F4; }
+td { padding: 8px 12px; border: 0.5px solid var(--color-border-tertiary); color: var(--color-text-primary); vertical-align: top; }
+tr:nth-child(even) td { background: var(--color-background-secondary); }
+.revision-item { display: flex; gap: 8px; padding: 6px 0; border-bottom: 0.5px solid var(--color-border-tertiary); align-items: flex-start; }
+.revision-item:last-child { border-bottom: none; }
+.bullet { font-size: 16px; min-width: 20px; }
+.revision-text { font-size: 13px; color: var(--color-text-primary); line-height: 1.6; }
+h2.section-head { font-size: 18px; font-weight: 500; color: var(--color-text-primary); margin: 1.5rem 0 0.5rem; }
+.tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 99px; margin: 2px; }
+.tag-blue { background: #E6F1FB; color: #185FA5; }
+.tag-green { background: #EAF3DE; color: #3B6D11; }
+.tag-red { background: #FCEBEB; color: #A32D2D; }
+</style>
+
+<div class="container">
+<div class="hero">
+  <h1>Computer Networks &amp; Internet Protocols — Week 10</h1>
+  <p>NPTEL Exam-Ready Notes &nbsp;|&nbsp; IIT Kharagpur &nbsp;|&nbsp; Data Link Layer: Framing, Error Control, Flow Control, MAC &amp; ARP</p>
+</div>
+
+<div class="tab-bar">
+  <button class="tab active" onclick="show('dl_intro')">DLL / LLC</button>
+  <button class="tab" onclick="show('framing')">Framing</button>
+  <button class="tab" onclick="show('error_control')">Error Control</button>
+  <button class="tab" onclick="show('flow_control')">Flow Control &amp; ARQ</button>
+  <button class="tab" onclick="show('mac')">MAC Protocols</button>
+  <button class="tab" onclick="show('ethernet_hw')">Ethernet &amp; Devices</button>
+  <button class="tab" onclick="show('revision10')">Super Revision</button>
+</div>
+
+<!-- SECTION 1: DLL / LLC Introduction -->
+<div id="dl_intro" class="section active">
+  <div class="topic-title">Topic 1: Data Link Layer — Role, Functions &amp; LLC Services <span class="badge badge-exam">Exam Favorite</span></div>
+
+  <div class="card card-blue">
+    <h3>What Does the Data Link Layer Do?</h3>
+    <p>The Data Link Layer (Layer 2) is responsible for reliable transfer of frames between adjacent nodes (hop-by-hop). It bridges the gap between the physical layer (bits) and the network layer (packets). Key functions: Framing, Error Detection/Correction, Flow Control, and Medium Access Control (MAC).</p>
+  </div>
+
+  <h2 class="section-head">Four Key Functions of DLL</h2>
+  <div class="card" style="padding: 0.5rem 1.25rem;">
+    <div class="point"><span class="point-num">1</span><span class="point-text"><strong>Framing:</strong> Divides the bit stream from the physical layer into discrete units called FRAMES. Defines where each frame begins and ends.</span></div>
+    <div class="point"><span class="point-num">2</span><span class="point-text"><strong>Error Detection and Correction:</strong> Detects (and sometimes corrects) errors introduced by the physical link. Uses redundancy bits: parity, CRC, checksums, Hamming codes.</span></div>
+    <div class="point"><span class="point-num">3</span><span class="point-text"><strong>Flow Control:</strong> Ensures the sender does not overwhelm the receiver. Key protocols: Stop-and-Wait, Sliding Window.</span></div>
+    <div class="point"><span class="point-num">4</span><span class="point-text"><strong>Medium Access Control (MAC):</strong> Controls who gets to use the shared medium at any given time. Resolves contention on shared links (bus, wireless).</span></div>
+  </div>
+
+  <div class="card card-green">
+    <h3>DLL Sublayers</h3>
+    <ul>
+      <li><strong>LLC (Logical Link Control) — Upper sublayer:</strong> Provides the interface to the network layer. Multiplexes network protocols. Handles flow control and error control (in some implementations). Defined by IEEE 802.2.</li>
+      <li><strong>MAC (Medium Access Control) — Lower sublayer:</strong> Controls access to the shared physical medium. Contains the hardware MAC address (48-bit = 6 bytes). Handles framing at the hardware level.</li>
+    </ul>
+  </div>
+
+  <h2 class="section-head">LLC Service Types <span class="badge badge-exam">Direct Theory Question</span></h2>
+  <div class="card card-blue">
+    <h3>Type 1 — Unacknowledged Connectionless Service</h3>
+    <ul>
+      <li><strong>Definition:</strong> Frames are sent without establishing a connection and without any acknowledgment. The sender does not know if the frame was received correctly.</li>
+      <li><strong>ACK used?</strong> No — no acknowledgment sent by receiver.</li>
+      <li><strong>Reliability:</strong> Unreliable. Error recovery (if needed) must be done by a higher layer (e.g., TCP).</li>
+      <li><strong>Use case:</strong> Real-time traffic (voice, video streaming) where retransmission would cause more harm than the lost frame. Also used in Ethernet — fast, low overhead. The most widely used LLC service.</li>
+    </ul>
+  </div>
+  <div class="card card-green">
+    <h3>Type 2 — Connection-Oriented Service</h3>
+    <ul>
+      <li><strong>Definition:</strong> A logical connection is established between sender and receiver before data transfer begins. Data is delivered reliably, in order, with error correction and flow control.</li>
+      <li><strong>ACK used?</strong> Yes — every frame is acknowledged. Lost frames are retransmitted.</li>
+      <li><strong>Reliability:</strong> Reliable. Similar to TCP but at the link layer.</li>
+      <li><strong>Use case:</strong> Older WAN protocols (X.25, LAPB, HDLC) where the link itself was unreliable and a reliable DLL was needed. Less common today because transport-layer reliability (TCP) is preferred.</li>
+    </ul>
+  </div>
+  <div class="card card-purple">
+    <h3>Type 3 — Acknowledged Connectionless Service</h3>
+    <ul>
+      <li><strong>Definition:</strong> No connection is established (connectionless), but each frame IS individually acknowledged by the receiver. If no ACK is received within a timeout, the frame is retransmitted.</li>
+      <li><strong>ACK used?</strong> Yes — each individual frame is acknowledged, but no prior connection setup.</li>
+      <li><strong>Reliability:</strong> Reliable on a per-frame basis, but without the overhead of full connection establishment.</li>
+      <li><strong>Use case:</strong> Industrial control networks (e.g., factory floor automation) where transactions are infrequent but each must be guaranteed. Connecting to a device that may be temporarily switched off.</li>
+    </ul>
+  </div>
+
+  <h2 class="section-head">LLC Service Types Comparison Table</h2>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Property</th><th>Type 1: Unacknowledged Connectionless</th><th>Type 2: Connection-Oriented</th><th>Type 3: Acknowledged Connectionless</th></tr>
+      <tr><td>Connection setup?</td><td>No</td><td>Yes (before data)</td><td>No</td></tr>
+      <tr><td>ACK per frame?</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+      <tr><td>Flow Control?</td><td>No</td><td>Yes</td><td>No</td></tr>
+      <tr><td>Error Recovery?</td><td>No (higher layer)</td><td>Yes</td><td>Yes (retransmit)</td></tr>
+      <tr><td>Overhead</td><td>Lowest</td><td>Highest</td><td>Medium</td></tr>
+      <tr><td>Use Cases</td><td>Ethernet, UDP over LAN</td><td>HDLC, X.25, LAPB</td><td>Industrial control, IoT sensors</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-amber">
+    <h3>DLL in the Context of Different Links</h3>
+    <ul>
+      <li><strong>Point-to-point links:</strong> Only two nodes share the link. No contention. DLL simpler — PPP, HDLC.</li>
+      <li><strong>Broadcast/shared links:</strong> Multiple nodes share same medium. Contention possible. DLL needs MAC sublayer. Examples: Ethernet (802.3), Wi-Fi (802.11).</li>
+    </ul>
+  </div>
+
+  <h2 class="section-head">MCQs — DLL / LLC</h2>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q1. The Data Link Layer is responsible for hop-by-hop delivery. This means it ensures reliable transfer between:</div>
+    <div class="mcq-opts" id="w10q1">
+      <button class="opt" onclick="answer('w10q1',0,2,'DLL provides hop-by-hop (link-by-link) delivery between adjacent nodes. End-to-end reliability is the job of the Transport Layer (TCP).')">A) Source host and final destination host</button>
+      <button class="opt" onclick="answer('w10q1',1,2,'DLL provides hop-by-hop (link-by-link) delivery between adjacent nodes. End-to-end reliability is the job of the Transport Layer (TCP).')">B) Two processes on different hosts</button>
+      <button class="opt" onclick="answer('w10q1',2,2,'DLL provides hop-by-hop (link-by-link) delivery between adjacent nodes. End-to-end reliability is the job of the Transport Layer (TCP).')">C) Adjacent nodes (directly connected devices)</button>
+      <button class="opt" onclick="answer('w10q1',3,2,'DLL provides hop-by-hop (link-by-link) delivery between adjacent nodes. End-to-end reliability is the job of the Transport Layer (TCP).')">D) Application processes across the internet</button>
+    </div>
+    <div class="explanation" id="w10q1-exp"></div>
+  </div>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q2. Which LLC service type sends frames with NO connection setup and NO acknowledgment?</div>
+    <div class="mcq-opts" id="w10q2">
+      <button class="opt" onclick="answer('w10q2',0,0,'Type 1 (Unacknowledged Connectionless) has no connection setup and no ACK. It is the simplest and lowest-overhead service, used by Ethernet. Type 2 has connection setup + ACK. Type 3 has ACK but no connection setup.')">A) Type 1 — Unacknowledged Connectionless</button>
+      <button class="opt" onclick="answer('w10q2',1,0,'Type 1 (Unacknowledged Connectionless) has no connection setup and no ACK. It is the simplest and lowest-overhead service, used by Ethernet. Type 2 has connection setup + ACK. Type 3 has ACK but no connection setup.')">B) Type 2 — Connection-Oriented</button>
+      <button class="opt" onclick="answer('w10q2',2,0,'Type 1 (Unacknowledged Connectionless) has no connection setup and no ACK. It is the simplest and lowest-overhead service, used by Ethernet. Type 2 has connection setup + ACK. Type 3 has ACK but no connection setup.')">C) Type 3 — Acknowledged Connectionless</button>
+      <button class="opt" onclick="answer('w10q2',3,0,'Type 1 (Unacknowledged Connectionless) has no connection setup and no ACK. It is the simplest and lowest-overhead service, used by Ethernet. Type 2 has connection setup + ACK. Type 3 has ACK but no connection setup.')">D) All LLC types use acknowledgments</button>
+    </div>
+    <div class="explanation" id="w10q2-exp"></div>
+  </div>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q3. An industrial control system needs to guarantee that each command frame reaches its destination, but cannot afford the delay of a full connection setup before each command. Which LLC service type is most appropriate?</div>
+    <div class="mcq-opts" id="w10q2b">
+      <button class="opt" onclick="answer('w10q2b',0,2,'Type 3 (Acknowledged Connectionless) provides per-frame ACK without the overhead of connection setup, making it ideal for infrequent but critical transactions in industrial systems. Type 1 has no ACK. Type 2 has connection overhead.')">A) Type 1 — Unacknowledged Connectionless</button>
+      <button class="opt" onclick="answer('w10q2b',1,2,'Type 3 (Acknowledged Connectionless) provides per-frame ACK without the overhead of connection setup, making it ideal for infrequent but critical transactions in industrial systems. Type 1 has no ACK. Type 2 has connection overhead.')">B) Type 2 — Connection-Oriented</button>
+      <button class="opt" onclick="answer('w10q2b',2,2,'Type 3 (Acknowledged Connectionless) provides per-frame ACK without the overhead of connection setup, making it ideal for infrequent but critical transactions in industrial systems. Type 1 has no ACK. Type 2 has connection overhead.')">C) Type 3 — Acknowledged Connectionless</button>
+      <button class="opt" onclick="answer('w10q2b',3,2,'Type 3 (Acknowledged Connectionless) provides per-frame ACK without the overhead of connection setup, making it ideal for infrequent but critical transactions in industrial systems. Type 1 has no ACK. Type 2 has connection overhead.')">D) None — use TCP instead</button>
+    </div>
+    <div class="explanation" id="w10q2b-exp"></div>
+  </div>
+</div>
+
+<!-- SECTION 2: Framing -->
+<div id="framing" class="section">
+  <div class="topic-title">Topic 2: Framing Methods <span class="badge badge-exam">High Weightage</span></div>
+
+  <div class="card card-blue">
+    <h3>Why Framing?</h3>
+    <p>The physical layer delivers a raw stream of bits. The DLL must organize these bits into manageable, distinguishable units — frames. The receiver needs to know where each frame starts and ends.</p>
+  </div>
+
+  <h2 class="section-head">Framing Methods</h2>
+
+  <div class="card card-green">
+    <h3>1. Character Count</h3>
+    <ul>
+      <li>First field of the frame header contains the NUMBER of characters (or bytes) in the frame.</li>
+      <li>Receiver uses this count to determine frame boundaries.</li>
+      <li><strong>Problem:</strong> If count field is corrupted by an error, the receiver loses synchronization and cannot recover. NOT reliable.</li>
+    </ul>
+  </div>
+
+  <div class="card card-purple">
+    <h3>2. Flag Bytes with Byte Stuffing (Character-Oriented)</h3>
+    <ul>
+      <li>Frames begin and end with a special FLAG byte (e.g., 01111110 = 0x7E in HDLC).</li>
+      <li><strong>Problem:</strong> Flag pattern might appear in data. Solution: <strong>Byte Stuffing (character stuffing)</strong>.</li>
+      <li>Before transmission: if the flag byte appears in data, an ESCAPE byte is inserted before it.</li>
+      <li>If the escape byte itself appears in data, ANOTHER escape byte is inserted before it.</li>
+      <li>Receiver removes extra escape bytes (destuffing).</li>
+      <li>Used in: PPP (Point-to-Point Protocol).</li>
+    </ul>
+  </div>
+
+  <div class="card card-amber">
+    <h3>3. Flag Bits with Bit Stuffing (Bit-Oriented)</h3>
+    <ul>
+      <li>Frame delimiter = special bit pattern, e.g., 01111110 (flag = six 1s between two 0s).</li>
+      <li><strong>Problem:</strong> Six consecutive 1s in data would look like a flag. Solution: <strong>Bit Stuffing</strong>.</li>
+      <li>Sender: After every five consecutive 1s in data, automatically inserts a 0 bit.</li>
+      <li>Receiver: After every five consecutive 1s, if the next bit is 0, it is removed. If it is 1 followed by 0, it is a flag (end of frame).</li>
+      <li>Used in: HDLC, SDLC. Bit-efficient — works at bit level.</li>
+    </ul>
+  </div>
+
+  <div class="card card-blue">
+    <h3>4. Physical Layer Coding Violations</h3>
+    <ul>
+      <li>Uses special signal patterns that are INVALID in the normal encoding scheme to mark frame boundaries.</li>
+      <li>Example: In Manchester encoding, a deliberate violation (no transition) marks start/end of frame.</li>
+      <li>No stuffing needed. Only works when the physical layer encoding has unused signal patterns.</li>
+      <li>Used in: IEEE 802.5 (Token Ring), 100Base-TX Ethernet (uses 4B/5B encoding to mark delimiters).</li>
+    </ul>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <tr><th>Method</th><th>Mechanism</th><th>Problem</th><th>Example Protocol</th></tr>
+      <tr><td>Character Count</td><td>Count in header field</td><td>Lost synchronization if count corrupted</td><td>Early ARPANET</td></tr>
+      <tr><td>Byte Stuffing</td><td>Flag byte + escape byte for data conflict</td><td>Data expansion; char-level only</td><td>PPP</td></tr>
+      <tr><td>Bit Stuffing</td><td>Flag bit pattern + insert 0 after five 1s</td><td>Slight overhead</td><td>HDLC, SDLC</td></tr>
+      <tr><td>Coding Violations</td><td>Invalid signal patterns as delimiters</td><td>Requires encoding with unused patterns</td><td>802.5 Token Ring</td></tr>
+    </table>
+  </div>
+
+  <h2 class="section-head">MCQs — Framing</h2>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q1. In bit stuffing, a sender inserts a 0 bit after every _____ consecutive 1 bits in the data stream.</div>
+    <div class="mcq-opts" id="w10q3">
+      <button class="opt" onclick="answer('w10q3',0,2,'In bit stuffing (used in HDLC), after every FIVE consecutive 1 bits, the sender inserts a 0 bit. This prevents the flag pattern (01111110 = six 1s) from appearing in data. The receiver removes any 0 bit that follows five consecutive 1s.')">A) Three</button>
+      <button class="opt" onclick="answer('w10q3',1,2,'In bit stuffing (used in HDLC), after every FIVE consecutive 1 bits, the sender inserts a 0 bit. This prevents the flag pattern (01111110 = six 1s) from appearing in data. The receiver removes any 0 bit that follows five consecutive 1s.')">B) Four</button>
+      <button class="opt" onclick="answer('w10q3',2,2,'In bit stuffing (used in HDLC), after every FIVE consecutive 1 bits, the sender inserts a 0 bit. This prevents the flag pattern (01111110 = six 1s) from appearing in data. The receiver removes any 0 bit that follows five consecutive 1s.')">C) Five</button>
+      <button class="opt" onclick="answer('w10q3',3,2,'In bit stuffing (used in HDLC), after every FIVE consecutive 1 bits, the sender inserts a 0 bit. This prevents the flag pattern (01111110 = six 1s) from appearing in data. The receiver removes any 0 bit that follows five consecutive 1s.')">D) Six</button>
+    </div>
+    <div class="explanation" id="w10q3-exp"></div>
+  </div>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q2. PPP (Point-to-Point Protocol) uses which framing method?</div>
+    <div class="mcq-opts" id="w10q4">
+      <button class="opt" onclick="answer('w10q4',0,0,'PPP uses byte stuffing (character stuffing). It uses 0x7E as the flag byte and 0x7D as the escape byte. If 0x7E or 0x7D appears in data, 0x7D is inserted before it and the conflicting byte is XORed with 0x20.')">A) Byte Stuffing</button>
+      <button class="opt" onclick="answer('w10q4',1,0,'PPP uses byte stuffing (character stuffing). It uses 0x7E as the flag byte and 0x7D as the escape byte. If 0x7E or 0x7D appears in data, 0x7D is inserted before it and the conflicting byte is XORed with 0x20.')">B) Bit Stuffing</button>
+      <button class="opt" onclick="answer('w10q4',2,0,'PPP uses byte stuffing (character stuffing). It uses 0x7E as the flag byte and 0x7D as the escape byte. If 0x7E or 0x7D appears in data, 0x7D is inserted before it and the conflicting byte is XORed with 0x20.')">C) Character Count</button>
+      <button class="opt" onclick="answer('w10q4',3,0,'PPP uses byte stuffing (character stuffing). It uses 0x7E as the flag byte and 0x7D as the escape byte. If 0x7E or 0x7D appears in data, 0x7D is inserted before it and the conflicting byte is XORed with 0x20.')">D) Physical Coding Violations</button>
+    </div>
+    <div class="explanation" id="w10q4-exp"></div>
+  </div>
+</div>
+
+<!-- SECTION 3: Error Control -->
+<div id="error_control" class="section">
+  <div class="topic-title">Topic 3: Error Detection &amp; Correction <span class="badge badge-exam">Most Important</span></div>
+
+  <div class="card card-blue">
+    <h3>Why Error Detection?</h3>
+    <p>Physical links are imperfect — noise, interference, and hardware limitations introduce bit errors. The DLL uses redundancy bits to detect (and sometimes correct) errors. Key principle: send more bits than necessary so the receiver can verify correctness.</p>
+  </div>
+
+  <h2 class="section-head">Error Detection Methods</h2>
+  <div class="card" style="padding: 0.5rem 1.25rem;">
+    <div class="point"><span class="point-num">1</span><span class="point-text"><strong>Parity Bit (Single Bit):</strong> Add one extra bit to make total number of 1s even (even parity) or odd (odd parity). Detects ALL single-bit errors. CANNOT detect 2-bit errors (two flips cancel out). Cannot correct errors.</span></div>
+    <div class="point"><span class="point-num">2</span><span class="point-text"><strong>2D Parity (Longitudinal &amp; Transverse):</strong> Arrange data in a matrix. Compute parity for each row AND each column. Can detect AND correct single-bit errors. Can detect ALL 2-bit errors.</span></div>
+    <div class="point"><span class="point-num">3</span><span class="point-text"><strong>Checksum:</strong> Treat data as 16-bit integers, add them up (one's complement arithmetic), and send the complement. Receiver adds all including checksum — should get all 1s. Used in TCP/UDP/IP headers. Weak — cannot detect many error patterns.</span></div>
+    <div class="point"><span class="point-num">4</span><span class="point-text"><strong>CRC (Cyclic Redundancy Check):</strong> Most powerful standard error detection. Treat data as a polynomial, divide by a GENERATOR polynomial (e.g., CRC-32). Send remainder as the FCS (Frame Check Sequence). Receiver divides: if remainder = 0, frame is correct. Detects ALL single-bit errors, ALL burst errors ≤ degree of generator, most other burst errors.</span></div>
+  </div>
+
+  <div class="card card-green">
+    <h3>Hamming Code — Error Correction</h3>
+    <ul>
+      <li>Developed by Richard Hamming at Bell Labs.</li>
+      <li>Inserts PARITY BITS at positions that are powers of 2 (positions 1, 2, 4, 8, 16…).</li>
+      <li>Each parity bit covers a specific set of data bits (based on binary representation of bit positions).</li>
+      <li>Can DETECT and CORRECT single-bit errors using the syndrome (parity check results).</li>
+      <li>Syndrome non-zero → identifies EXACTLY which bit is wrong → flip it.</li>
+      <li>For n data bits, need r parity bits such that 2^r ≥ n + r + 1.</li>
+      <li>Used in: RAM chips (ECC memory), some disk systems. Extended Hamming can detect 2-bit errors.</li>
+    </ul>
+  </div>
+
+  <div class="card card-purple">
+    <h3>CRC — Key Details (NPTEL Favorite)</h3>
+    <ul>
+      <li><strong>Generator polynomial examples:</strong> CRC-16 (x¹⁶+x¹⁵+x²+1), CRC-32 (used in Ethernet).</li>
+      <li>Sender appends r zeros to data (r = degree of generator), divides by generator using XOR division, gets remainder → this is the FCS.</li>
+      <li>Receiver appends FCS to data and divides by generator → if remainder = 0, no error detected.</li>
+      <li>CRC can detect: All 1-bit errors, All 2-bit errors (with correct generator), All odd number of bit errors, All burst errors of length ≤ r, most burst errors of length &gt; r.</li>
+    </ul>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <tr><th>Method</th><th>Detects</th><th>Corrects</th><th>Overhead</th><th>Where Used</th></tr>
+      <tr><td>Parity (1-bit)</td><td>1-bit errors only</td><td>No</td><td>1 bit per block</td><td>Simple memory, keyboards</td></tr>
+      <tr><td>2D Parity</td><td>1 and 2-bit errors</td><td>1-bit errors</td><td>Row + column parity</td><td>Old disk systems</td></tr>
+      <tr><td>Checksum</td><td>Most errors (weak)</td><td>No</td><td>16 bits</td><td>IP, TCP, UDP headers</td></tr>
+      <tr><td>CRC</td><td>All burst ≤ r bits; all 1,2-bit errors</td><td>No (usually)</td><td>r bits (16 or 32)</td><td>Ethernet, Wi-Fi, USB</td></tr>
+      <tr><td>Hamming Code</td><td>2-bit errors (extended)</td><td>1-bit errors</td><td>~log(n) bits</td><td>ECC RAM, some disk</td></tr>
+    </table>
+  </div>
+
+  <h2 class="section-head">MCQs — Error Control</h2>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q1. CRC (Cyclic Redundancy Check) is the most commonly used error detection method at the Data Link Layer. The FCS (Frame Check Sequence) appended to a frame is:</div>
+    <div class="mcq-opts" id="w10q5">
+      <button class="opt" onclick="answer('w10q5',0,2,'The FCS is the REMAINDER of dividing the data (with r appended zeros) by the generator polynomial using XOR (modulo-2) arithmetic. The receiver performs the same division — a zero remainder means no error was detected.')">A) The sum of all data bytes</button>
+      <button class="opt" onclick="answer('w10q5',1,2,'The FCS is the REMAINDER of dividing the data (with r appended zeros) by the generator polynomial using XOR (modulo-2) arithmetic. The receiver performs the same division — a zero remainder means no error was detected.')">B) The XOR of all bits in the frame</button>
+      <button class="opt" onclick="answer('w10q5',2,2,'The FCS is the REMAINDER of dividing the data (with r appended zeros) by the generator polynomial using XOR (modulo-2) arithmetic. The receiver performs the same division — a zero remainder means no error was detected.')">C) The remainder from dividing data by the generator polynomial</button>
+      <button class="opt" onclick="answer('w10q5',3,2,'The FCS is the REMAINDER of dividing the data (with r appended zeros) by the generator polynomial using XOR (modulo-2) arithmetic. The receiver performs the same division — a zero remainder means no error was detected.')">D) The complement of the generator polynomial</button>
+    </div>
+    <div class="explanation" id="w10q5-exp"></div>
+  </div>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q2. In Hamming code, parity bits are placed at positions that are:</div>
+    <div class="mcq-opts" id="w10q6">
+      <button class="opt" onclick="answer('w10q6',0,0,'Hamming code places parity bits at positions that are POWERS OF 2 (1, 2, 4, 8, 16...). These positions are chosen so that each parity bit covers a unique combination of data bit positions, enabling the syndrome to IDENTIFY the exact faulty bit position.')">A) Powers of 2 (1, 2, 4, 8, 16, ...)</button>
+      <button class="opt" onclick="answer('w10q6',1,0,'Hamming code places parity bits at positions that are POWERS OF 2 (1, 2, 4, 8, 16...). These positions are chosen so that each parity bit covers a unique combination of data bit positions, enabling the syndrome to IDENTIFY the exact faulty bit position.')">B) Prime numbers (2, 3, 5, 7, ...)</button>
+      <button class="opt" onclick="answer('w10q6',2,0,'Hamming code places parity bits at positions that are POWERS OF 2 (1, 2, 4, 8, 16...). These positions are chosen so that each parity bit covers a unique combination of data bit positions, enabling the syndrome to IDENTIFY the exact faulty bit position.')">C) Even positions only (2, 4, 6, 8, ...)</button>
+      <button class="opt" onclick="answer('w10q6',3,0,'Hamming code places parity bits at positions that are POWERS OF 2 (1, 2, 4, 8, 16...). These positions are chosen so that each parity bit covers a unique combination of data bit positions, enabling the syndrome to IDENTIFY the exact faulty bit position.')">D) Every alternate position starting from position 3</button>
+    </div>
+    <div class="explanation" id="w10q6-exp"></div>
+  </div>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q3. A single-bit parity check fails to detect errors when:</div>
+    <div class="mcq-opts" id="w10q7">
+      <button class="opt" onclick="answer('w10q7',0,3,'Single-bit parity detects only ODD numbers of bit errors. If TWO bits are flipped, the parity is preserved (even + even = even), so the error is undetected. More generally, any EVEN number of bit errors (2, 4, 6...) is undetected by single-bit parity.')">A) One bit is flipped</button>
+      <button class="opt" onclick="answer('w10q7',1,3,'Single-bit parity detects only ODD numbers of bit errors. If TWO bits are flipped, the parity is preserved (even + even = even), so the error is undetected. More generally, any EVEN number of bit errors (2, 4, 6...) is undetected by single-bit parity.')">B) Three bits are flipped</button>
+      <button class="opt" onclick="answer('w10q7',2,3,'Single-bit parity detects only ODD numbers of bit errors. If TWO bits are flipped, the parity is preserved (even + even = even), so the error is undetected. More generally, any EVEN number of bit errors (2, 4, 6...) is undetected by single-bit parity.')">C) Five bits are flipped</button>
+      <button class="opt" onclick="answer('w10q7',3,3,'Single-bit parity detects only ODD numbers of bit errors. If TWO bits are flipped, the parity is preserved (even + even = even), so the error is undetected. More generally, any EVEN number of bit errors (2, 4, 6...) is undetected by single-bit parity.')">D) Two bits are flipped (even number of errors)</button>
+    </div>
+    <div class="explanation" id="w10q7-exp"></div>
+  </div>
+</div>
+
+<!-- SECTION 4: Flow Control & ARQ -->
+<div id="flow_control" class="section">
+  <div class="topic-title">Topic 4: Flow Control, ARQ Protocols &amp; Piggybacking <span class="badge badge-exam">Very Important</span></div>
+
+  <div class="card card-blue">
+    <h3>What is Flow Control?</h3>
+    <p>Flow control prevents a fast sender from overwhelming a slow receiver. Without flow control, the receiver's buffer overflows and frames are lost. At DLL, flow control is per-hop.</p>
+  </div>
+
+  <h2 class="section-head">Piggybacking <span class="badge badge-exam">Important — Missing from Many Notes</span></h2>
+  <div class="card card-green">
+    <h3>Piggybacking — Combining ACK with Data</h3>
+    <ul>
+      <li><strong>Definition:</strong> The technique of attaching (piggybacking) an acknowledgment to an outgoing data frame, rather than sending the ACK as a separate frame.</li>
+      <li><strong>Working example:</strong> Node A sends Frame 0 to Node B. Instead of Node B sending a bare ACK 0 back, Node B waits briefly until it has its OWN data frame to send to A. Then Node B sends "Data Frame + ACK 0" in a single combined frame. This way, the ACK "rides" on the data frame for free.</li>
+      <li><strong>Advantage:</strong> Saves bandwidth — instead of 2 frames (1 data + 1 bare ACK), only 1 frame is sent. Especially significant on bidirectional (full-duplex) links.</li>
+      <li><strong>Disadvantage:</strong> If Node B has no data to send, it must eventually send a bare ACK anyway (after a piggybacking timeout) to avoid the sender timing out and retransmitting.</li>
+      <li><strong>Used in:</strong> TCP (the ACK field in every TCP segment is a piggybacked ACK), HDLC, and all full-duplex sliding window protocols.</li>
+    </ul>
+  </div>
+
+  <h2 class="section-head">Stop-and-Wait ARQ — Three Critical Scenarios</h2>
+  <div class="card card-purple">
+    <h3>Stop-and-Wait Basic Operation</h3>
+    <ul>
+      <li>Sender transmits ONE frame, then STOPS and waits for an ACK.</li>
+      <li>If ACK received → send next frame. If timeout → retransmit same frame.</li>
+      <li><strong>Efficiency = 1 / (1 + 2a)</strong> where a = Tp/Tf (propagation delay / transmission time).</li>
+      <li>Sequence numbers needed: only 1 bit (0 or 1) — alternating bit protocol.</li>
+    </ul>
+  </div>
+
+  <div class="card card-amber">
+    <h3>Scenario 1 — Lost Frame</h3>
+    <ul>
+      <li><strong>What happens:</strong> Sender transmits Frame N. Frame is lost in transit — receiver never receives it.</li>
+      <li><strong>Receiver behavior:</strong> Receiver sees nothing. It does not send any ACK.</li>
+      <li><strong>Sender behavior:</strong> Sender's retransmission timer expires (timeout). Sender retransmits Frame N.</li>
+      <li><strong>Resolution:</strong> Retransmitted frame arrives at receiver → receiver sends ACK N → sender advances.</li>
+      <li><strong>Key point:</strong> The timer is the ONLY mechanism the sender has to detect a lost frame. If no timer, sender waits forever.</li>
+    </ul>
+  </div>
+
+  <div class="card card-red">
+    <h3>Scenario 2 — Lost ACK</h3>
+    <ul>
+      <li><strong>What happens:</strong> Sender transmits Frame N. Receiver receives Frame N correctly and sends ACK N. But the ACK is lost in transit.</li>
+      <li><strong>Receiver behavior:</strong> Receiver has already delivered Frame N to the network layer. It is now waiting for Frame N+1.</li>
+      <li><strong>Sender behavior:</strong> Sender's timer expires (ACK not received). Sender retransmits Frame N (same frame again).</li>
+      <li><strong>Problem:</strong> Receiver gets Frame N again — it thinks this is a NEW frame N+1, but it is actually a DUPLICATE of Frame N.</li>
+      <li><strong>Solution:</strong> Sequence numbers (1-bit alternating). Receiver checks the sequence number — Frame 0 again after expecting Frame 1 → it is a duplicate → receiver discards it but still sends ACK 0 again.</li>
+    </ul>
+  </div>
+
+  <div class="card card-blue">
+    <h3>Scenario 3 — Delayed ACK (Premature Timeout)</h3>
+    <ul>
+      <li><strong>What happens:</strong> ACK is NOT lost but is significantly delayed in the network (queued at an intermediate switch, etc.).</li>
+      <li><strong>Sender behavior:</strong> Timer expires before the delayed ACK arrives. Sender retransmits Frame N.</li>
+      <li><strong>Receiver behavior:</strong> Receiver may now receive TWO copies of Frame N — the retransmission AND the original delayed ACK arrives at the sender after retransmission.</li>
+      <li><strong>Complication:</strong> Sender now receives two ACKs for Frame N. It may start sending Frame N+1 after the first ACK — then the second ACK arrives and could be misinterpreted as an ACK for Frame N+1.</li>
+      <li><strong>Solution:</strong> 1-bit sequence numbers + careful ACK interpretation. Sender ignores duplicate ACKs for a frame it has already moved past.</li>
+      <li><strong>Timer setting:</strong> Timer must be set appropriately — too short → unnecessary retransmissions; too long → wasted idle time after a real loss.</li>
+    </ul>
+  </div>
+
+  <h2 class="section-head">Sliding Window ARQ</h2>
+  <div class="card card-purple">
+    <h3>Sliding Window Variables</h3>
+    <ul>
+      <li>Sender can have up to W frames "in flight" (unacknowledged) simultaneously. W = window size.</li>
+      <li>Efficiency = W / (1 + 2a) if W &lt; 1+2a; = 1 (100%) if W ≥ 1 + 2a.</li>
+    </ul>
+    <p style="margin-top: 8px; font-weight: 500; font-size: 14px; color: #3C3489;">Go-Back-N Window Variables:</p>
+    <ul>
+      <li><strong>S (Send Base / SF):</strong> Sequence number of the oldest unacknowledged frame (the start of the sender's window). Also called the "send base".</li>
+      <li><strong>SL (Send Last / Last frame sent):</strong> Sequence number of the most recently sent frame. The window spans from S to SL.</li>
+      <li><strong>Window slides forward</strong> when the sender receives an ACK for S — S advances to S+1, and SL can advance by one more.</li>
+      <li>GBN Sender Window = 2^n − 1 (with n-bit sequence numbers).</li>
+    </ul>
+    <p style="margin-top: 8px; font-weight: 500; font-size: 14px; color: #3C3489;">Selective Repeat Window Variables:</p>
+    <ul>
+      <li><strong>RF (Receive First):</strong> The lowest sequence number the receiver is waiting for (the start of the receiver's window).</li>
+      <li><strong>RL (Receive Last):</strong> The highest sequence number the receiver will accept. Frames outside [RF, RL] are discarded.</li>
+      <li>SR Receiver Window = 2^(n-1). Receiver buffers out-of-order frames within [RF, RL].</li>
+    </ul>
+  </div>
+
+  <div class="card card-green">
+    <h3>Go-Back-N — Cumulative ACK</h3>
+    <ul>
+      <li>In GBN, acknowledgments are <strong>cumulative</strong>: ACK N means "I have correctly received ALL frames up to and including frame N."</li>
+      <li>If the receiver sends ACK 5, it means frames 0, 1, 2, 3, 4, 5 have all been received correctly.</li>
+      <li><strong>Benefit:</strong> Reduces ACK overhead — if multiple frames arrive before the ACK is sent, a single ACK covers all of them.</li>
+      <li><strong>Used in TCP:</strong> TCP uses cumulative ACKs. "ACK 1000" means "I have received all bytes up to sequence 999; send me byte 1000 next."</li>
+      <li>GBN receiver has window size = 1 → can only accept next expected frame; out-of-order frames are discarded.</li>
+    </ul>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <tr><th>Feature</th><th>Go-Back-N (GBN)</th><th>Selective Repeat (SR)</th></tr>
+      <tr><td>On error</td><td>Retransmit erroneous frame AND all frames after it</td><td>Retransmit ONLY the erroneous frame</td></tr>
+      <tr><td>Receiver buffer</td><td>Only 1 (discard out-of-order frames)</td><td>W frames (buffer out-of-order frames)</td></tr>
+      <tr><td>Sender window</td><td>Up to 2^n - 1 (n-bit sequence number)</td><td>Up to 2^(n-1) (n-bit sequence number)</td></tr>
+      <tr><td>ACK type</td><td>Cumulative (ACK N = all up to N received)</td><td>Individual (ACK N = only frame N received)</td></tr>
+      <tr><td>Complexity</td><td>Simpler receiver</td><td>More complex receiver (buffering)</td></tr>
+      <tr><td>Efficiency on noisy links</td><td>Lower (retransmits extra frames)</td><td>Higher (only retransmits needed frames)</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-amber">
+    <h3>Bandwidth-Delay Product (BDP)</h3>
+    <ul>
+      <li>BDP = Bandwidth × Round-Trip Propagation Delay</li>
+      <li>Represents how many bits can be "in flight" at any given time.</li>
+      <li>For SAW to be 100% efficient, the frame must be large enough to fill the pipe.</li>
+      <li>For sliding window: Window size W ≥ BDP / Frame size = 1 + 2a.</li>
+      <li>Satellite links have huge BDP → large windows needed.</li>
+    </ul>
+  </div>
+
+  <h2 class="section-head">MCQs — Flow Control &amp; ARQ</h2>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q1. In Go-Back-N ARQ with a 3-bit sequence number field, the maximum sender window size is:</div>
+    <div class="mcq-opts" id="w10q8">
+      <button class="opt" onclick="answer('w10q8',0,2,'For GBN with n-bit sequence numbers: sender window size = 2^n - 1. With n=3: 2^3 - 1 = 8 - 1 = 7. For Selective Repeat: window = 2^(n-1) = 2^2 = 4. This restriction prevents ambiguity between new and retransmitted frames.')">A) 8</button>
+      <button class="opt" onclick="answer('w10q8',1,2,'For GBN with n-bit sequence numbers: sender window size = 2^n - 1. With n=3: 2^3 - 1 = 8 - 1 = 7. For Selective Repeat: window = 2^(n-1) = 2^2 = 4. This restriction prevents ambiguity between new and retransmitted frames.')">B) 4</button>
+      <button class="opt" onclick="answer('w10q8',2,2,'For GBN with n-bit sequence numbers: sender window size = 2^n - 1. With n=3: 2^3 - 1 = 8 - 1 = 7. For Selective Repeat: window = 2^(n-1) = 2^2 = 4. This restriction prevents ambiguity between new and retransmitted frames.')">C) 7</button>
+      <button class="opt" onclick="answer('w10q8',3,2,'For GBN with n-bit sequence numbers: sender window size = 2^n - 1. With n=3: 2^3 - 1 = 8 - 1 = 7. For Selective Repeat: window = 2^(n-1) = 2^2 = 4. This restriction prevents ambiguity between new and retransmitted frames.')">D) 6</button>
+    </div>
+    <div class="explanation" id="w10q8-exp"></div>
+  </div>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q2. In Stop-and-Wait ARQ, a frame is received correctly but the ACK is lost. What happens next?</div>
+    <div class="mcq-opts" id="w10q9">
+      <button class="opt" onclick="answer('w10q9',0,2,'The sender\'s timer expires since no ACK was received → sender retransmits the same frame. Receiver gets a duplicate → checks sequence number → recognizes it as a duplicate → discards it but re-sends the ACK. 1-bit sequence numbers prevent confusion between new and retransmitted frames.')">A) The sender immediately sends the next frame without waiting</button>
+      <button class="opt" onclick="answer('w10q9',1,2,'The sender\'s timer expires since no ACK was received → sender retransmits the same frame. Receiver gets a duplicate → checks sequence number → recognizes it as a duplicate → discards it but re-sends the ACK. 1-bit sequence numbers prevent confusion between new and retransmitted frames.')">B) The receiver retransmits the ACK automatically without the sender doing anything</button>
+      <button class="opt" onclick="answer('w10q9',2,2,'The sender\'s timer expires since no ACK was received → sender retransmits the same frame. Receiver gets a duplicate → checks sequence number → recognizes it as a duplicate → discards it but re-sends the ACK. 1-bit sequence numbers prevent confusion between new and retransmitted frames.')">C) Sender\'s timer expires → sender retransmits the frame → receiver discards duplicate and re-sends ACK</button>
+      <button class="opt" onclick="answer('w10q9',3,2,'The sender\'s timer expires since no ACK was received → sender retransmits the same frame. Receiver gets a duplicate → checks sequence number → recognizes it as a duplicate → discards it but re-sends the ACK. 1-bit sequence numbers prevent confusion between new and retransmitted frames.')">D) Sender permanently marks the frame as lost and skips it</button>
+    </div>
+    <div class="explanation" id="w10q9-exp"></div>
+  </div>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q3. In GBN, receiving ACK 7 from the receiver means:</div>
+    <div class="mcq-opts" id="w10q10">
+      <button class="opt" onclick="answer('w10q10',0,3,'GBN uses CUMULATIVE ACKs. ACK N means all frames up to and including frame N have been received correctly. So ACK 7 = frames 0 through 7 all received. The sender can now slide its window forward past frame 7.')">A) Only frame 7 was received correctly</button>
+      <button class="opt" onclick="answer('w10q10',1,3,'GBN uses CUMULATIVE ACKs. ACK N means all frames up to and including frame N have been received correctly. So ACK 7 = frames 0 through 7 all received. The sender can now slide its window forward past frame 7.')">B) Frame 7 was received with errors</button>
+      <button class="opt" onclick="answer('w10q10',2,3,'GBN uses CUMULATIVE ACKs. ACK N means all frames up to and including frame N have been received correctly. So ACK 7 = frames 0 through 7 all received. The sender can now slide its window forward past frame 7.')">C) Frames 0 through 6 were received, frame 7 is pending</button>
+      <button class="opt" onclick="answer('w10q10',3,3,'GBN uses CUMULATIVE ACKs. ACK N means all frames up to and including frame N have been received correctly. So ACK 7 = frames 0 through 7 all received. The sender can now slide its window forward past frame 7.')">D) All frames from 0 up to and including frame 7 have been received correctly</button>
+    </div>
+    <div class="explanation" id="w10q10-exp"></div>
+  </div>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q4. Piggybacking in data link layer protocols refers to:</div>
+    <div class="mcq-opts" id="w10q10b">
+      <button class="opt" onclick="answer('w10q10b',0,2,'Piggybacking attaches an ACK for received data onto an outgoing data frame heading in the opposite direction. This saves bandwidth by combining two messages into one frame, eliminating the need for a separate ACK frame.')">A) Placing multiple data payloads into a single frame</button>
+      <button class="opt" onclick="answer('w10q10b',1,2,'Piggybacking attaches an ACK for received data onto an outgoing data frame heading in the opposite direction. This saves bandwidth by combining two messages into one frame, eliminating the need for a separate ACK frame.')">B) Encrypting ACKs for security</button>
+      <button class="opt" onclick="answer('w10q10b',2,2,'Piggybacking attaches an ACK for received data onto an outgoing data frame heading in the opposite direction. This saves bandwidth by combining two messages into one frame, eliminating the need for a separate ACK frame.')">C) Attaching an ACK to an outgoing data frame to avoid sending a separate ACK</button>
+      <button class="opt" onclick="answer('w10q10b',3,2,'Piggybacking attaches an ACK for received data onto an outgoing data frame heading in the opposite direction. This saves bandwidth by combining two messages into one frame, eliminating the need for a separate ACK frame.')">D) Sending duplicate frames for reliability</button>
+    </div>
+    <div class="explanation" id="w10q10b-exp"></div>
+  </div>
+</div>
+
+<!-- SECTION 5: MAC Protocols -->
+<div id="mac" class="section">
+  <div class="topic-title">Topic 5: MAC Protocols — Classification, ALOHA, CSMA/CD &amp; ARP <span class="badge badge-exam">Exam Favorite</span></div>
+
+  <h2 class="section-head">MAC Design Goals <span class="badge badge-exam">Direct Theory Question</span></h2>
+  <div class="card card-blue">
+    <h3>Four Goals Every MAC Protocol Must Achieve</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Goal</th><th>Meaning</th><th>Why Important</th></tr>
+        <tr><td><strong>Efficient</strong></td><td>Maximize the fraction of channel capacity used for useful data (minimize idle time and collision waste)</td><td>Wasted channel capacity = wasted money and bandwidth</td></tr>
+        <tr><td><strong>Fair</strong></td><td>Each node should get an equal (or proportional) share of the channel over time; no single node should monopolize the medium</td><td>Prevents starvation of some nodes while others dominate</td></tr>
+        <tr><td><strong>Simple</strong></td><td>The protocol must be implementable in hardware at high speed with low complexity</td><td>DLL runs in hardware (NIC); complex protocols are too slow</td></tr>
+        <tr><td><strong>Decentralized</strong></td><td>No central coordinator or arbiter needed; each node makes its own decision about when to transmit</td><td>A central controller is a single point of failure; distributed systems are more robust</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <h2 class="section-head">MAC Protocol Classification — Lecture Version</h2>
+  <div class="card card-green">
+    <h3>Complete Classification Hierarchy</h3>
+    <p style="margin-bottom: 8px;">The lecture classifies MAC protocols into two top-level categories:</p>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Top-Level</th><th>Sub-Category</th><th>Examples</th><th>Key Property</th></tr>
+        <tr><td rowspan="2"><strong>Synchronous</strong><br>(Fixed allocation)</td><td>TDM — Time Division Multiplexing</td><td>TDMA in cellular</td><td>Fixed time slot per node; wasteful if idle</td></tr>
+        <tr><td>FDM — Frequency Division Multiplexing</td><td>FDMA in radio</td><td>Fixed frequency band per node; wasteful if idle</td></tr>
+        <tr><td rowspan="3"><strong>Asynchronous</strong><br>(On-demand)</td><td>Contention (Random Access)</td><td>ALOHA, CSMA/CD, CSMA/CA</td><td>Nodes compete for channel; collisions possible</td></tr>
+        <tr><td>Reservation</td><td>DQDB, Reservation ALOHA</td><td>Nodes reserve time slots before transmitting; no collision</td></tr>
+        <tr><td>Round-Robin (Taking Turns)</td><td>Token Ring, Token Bus</td><td>Orderly turn-taking with a token; no collision</td></tr>
+      </table>
+    </div>
+    <p style="margin-top: 8px; font-size: 14px; color: var(--color-text-primary);"><strong>Mapping to existing HTML categories:</strong> "Channel Partitioning" = Synchronous (TDM/FDM); "Random Access" = Asynchronous Contention; "Taking Turns" = Asynchronous Round-Robin.</p>
+  </div>
+
+  <h2 class="section-head">ALOHA Protocols — Efficiency Numbers <span class="badge badge-exam">High-Probability Numerical</span></h2>
+  <div class="card card-amber">
+    <h3>Pure ALOHA</h3>
+    <ul>
+      <li><strong>Working:</strong> When a node has a frame, it transmits immediately — no carrier sensing, no slot synchronization.</li>
+      <li><strong>Collision:</strong> If two nodes transmit at any overlapping time, both frames are destroyed. A node that transmitted at time t can collide with any frame transmitted in the interval [t−Tf, t+Tf].</li>
+      <li><strong>Vulnerable period:</strong> 2 × frame transmission time (2Tf) — twice as long as slotted ALOHA.</li>
+      <li><strong>Maximum efficiency = 1/(2e) ≈ 18.4%</strong> — achieved when the channel load G = 0.5. This means at best, only 18% of the channel capacity is used for successful transmissions.</li>
+      <li><strong>Throughput S = G × e^(−2G)</strong> where G = offered load (frames/slot).</li>
+    </ul>
+  </div>
+  <div class="card card-green">
+    <h3>Slotted ALOHA</h3>
+    <ul>
+      <li><strong>Working:</strong> Time is divided into equal SLOTS, each exactly one frame long. Nodes can only begin transmission at the START of a slot. All nodes are synchronized.</li>
+      <li><strong>Collision:</strong> A collision can only occur within the same slot — if two or more nodes start simultaneously. Outside the same slot, no collision is possible.</li>
+      <li><strong>Vulnerable period:</strong> 1 × frame transmission time (Tf) — HALF that of pure ALOHA because a node's transmission only risks collision within one slot, not across two.</li>
+      <li><strong>Maximum efficiency = 1/e ≈ 36.8%</strong> — achieved when the channel load G = 1. This is exactly DOUBLE the efficiency of pure ALOHA.</li>
+      <li><strong>Throughput S = G × e^(−G)</strong>.</li>
+      <li><strong>Why slotted is better:</strong> By synchronizing transmission starts, the vulnerable period is cut in half, reducing the probability of collision and doubling useful throughput.</li>
+    </ul>
+  </div>
+
+  <h2 class="section-head">ALOHA Comparison Table</h2>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Property</th><th>Pure ALOHA</th><th>Slotted ALOHA</th></tr>
+      <tr><td>Transmission timing</td><td>Any time — no synchronization</td><td>Only at slot boundaries</td></tr>
+      <tr><td>Vulnerable period</td><td>2 × Tf (two frame durations)</td><td>1 × Tf (one frame duration)</td></tr>
+      <tr><td>Max efficiency</td><td><strong>≈ 18.4%</strong> (at G=0.5)</td><td><strong>≈ 36.8%</strong> (at G=1.0)</td></tr>
+      <tr><td>Throughput formula</td><td>S = G·e^(−2G)</td><td>S = G·e^(−G)</td></tr>
+      <tr><td>Synchronization needed?</td><td>No</td><td>Yes — clock sync required</td></tr>
+      <tr><td>Complexity</td><td>Simpler</td><td>Slightly more complex</td></tr>
+    </table>
+  </div>
+
+  <h2 class="section-head">Token Passing — Step-by-Step Flow</h2>
+  <div class="card card-purple">
+    <h3>How Token Ring / Token Passing Works</h3>
+    <p style="margin-bottom: 8px;">A special control frame called the <strong>token</strong> circulates around the ring (or logical ring). Only the node holding the token may transmit.</p>
+    <div class="point"><span class="point-num">1</span><span class="point-text"><strong>Wait for Token:</strong> Each node monitors the ring/bus waiting for the token to arrive. The token is a short, distinctly formatted frame (no data payload) that identifies itself as "free" or "busy". Node cannot transmit until it captures the token.</span></div>
+    <div class="point"><span class="point-num">2</span><span class="point-text"><strong>Capture Token:</strong> When the node's turn arrives and the free token passes, the node "captures" it by either removing it from the ring (in 802.4 Token Bus) or marking it as "busy" and appending data (in 802.5 Token Ring). The node now has exclusive transmission rights.</span></div>
+    <div class="point"><span class="point-num">3</span><span class="point-text"><strong>Transmit Data:</strong> The capturing node sends its data frame(s) around the ring. Other nodes see the "busy" token and do NOT transmit — they simply regenerate and forward the frame.</span></div>
+    <div class="point"><span class="point-num">4</span><span class="point-text"><strong>Time Limit or All Data Sent:</strong> The node is allowed to transmit for up to a <strong>token holding time (THT)</strong>. When the time limit expires OR all queued frames are sent (whichever comes first), the node stops transmitting.</span></div>
+    <div class="point"><span class="point-num">5</span><span class="point-text"><strong>Release Token:</strong> The node generates and releases a new FREE token back onto the ring. The token circulates to the next node, which can now capture it and repeat the process.</span></div>
+    <p style="margin-top: 10px; font-size: 14px; color: var(--color-text-primary);"><strong>Why no collision?</strong> Only the token holder can transmit. Since only one node holds the token at any moment, there is never more than one node transmitting — so collision is physically impossible.</p>
+    <p style="font-size: 14px; color: var(--color-text-primary);"><strong>Limitation:</strong> If the token is lost (due to transmission error, node crash, or ring break), the entire network stalls. A designated <em>monitor node</em> detects token loss (by timeout) and generates a new token.</p>
+  </div>
+
+  <h2 class="section-head">CSMA/CD — The Ethernet MAC Protocol</h2>
+  <div class="card card-amber">
+    <h3>CSMA/CD Step-by-Step</h3>
+    <ul>
+      <li><strong>CSMA = Carrier Sense Multiple Access:</strong> "Listen before you talk" — check if channel is idle before transmitting.</li>
+      <li><strong>CD = Collision Detection:</strong> While transmitting, monitor the channel. If a collision is detected (another signal mixed in), STOP immediately.</li>
+      <li><strong>Jam Signal:</strong> After detecting a collision, broadcast a 48-bit jam signal to notify all stations.</li>
+      <li><strong>Binary Exponential Backoff:</strong> After collision attempt k, wait a random number of slot times in range [0, 2^k − 1], then retry. After 10 collisions, max range fixed at 1023. After 16 failures, give up and report error.</li>
+      <li><strong>Minimum Frame Size (Ethernet):</strong> 64 bytes = 512 bits. Guarantees sender can detect collisions before finishing transmission.</li>
+    </ul>
+  </div>
+
+  <h2 class="section-head">ARP — Address Resolution Protocol <span class="badge badge-exam">Frequently Asked</span></h2>
+  <div class="card card-blue">
+    <h3>What is ARP and Why is it Needed?</h3>
+    <ul>
+      <li>ARP resolves a known <strong>IP address (Layer 3)</strong> to its corresponding <strong>MAC address (Layer 2)</strong>.</li>
+      <li><strong>Why needed?</strong> When a host wants to send an IP packet to another host on the same LAN, it knows the destination IP address (from DNS or application) but needs the destination MAC address to create the Ethernet frame.</li>
+      <li><strong>Position:</strong> ARP sits between Layer 2 (DLL) and Layer 3 (Network). It is sometimes called a "glue" protocol — it enables the IP layer to work over Ethernet.</li>
+    </ul>
+  </div>
+
+  <div class="card card-green">
+    <h3>ARP Working — Step by Step</h3>
+    <div class="point"><span class="point-num">1</span><span class="point-text"><strong>Check ARP Cache:</strong> Sender host looks up its ARP table (cache) for an existing MAC address entry for the destination IP. The ARP cache stores recently resolved IP→MAC mappings with a timeout (typically 20 minutes).</span></div>
+    <div class="point"><span class="point-num">2</span><span class="point-text"><strong>Cache Miss → Broadcast ARP Request:</strong> If no cache entry found, sender broadcasts an ARP Request frame to all nodes on the LAN. Destination MAC = FF:FF:FF:FF:FF:FF (broadcast). Payload: "Who has IP address 192.168.1.5? Tell 192.168.1.1." Every device on the LAN receives this.</span></div>
+    <div class="point"><span class="point-num">3</span><span class="point-text"><strong>Target Replies:</strong> The host with IP 192.168.1.5 recognizes its IP address in the request and sends a unicast ARP Reply directly back to the requester: "I have IP 192.168.1.5; my MAC is AA:BB:CC:DD:EE:FF." All other hosts ignore the request.</span></div>
+    <div class="point"><span class="point-num">4</span><span class="point-text"><strong>Cache Update:</strong> Requester receives the ARP Reply, stores the IP→MAC mapping in its ARP cache with a timestamp. Future packets to the same IP use the cached entry without broadcasting again. The cache entry expires after the timeout period.</span></div>
+    <div class="point"><span class="point-num">5</span><span class="point-text"><strong>Frame Sent:</strong> Sender now constructs the Ethernet frame with the resolved destination MAC address and sends the IP packet inside it to the intended host.</span></div>
+  </div>
+
+  <div class="card card-purple">
+    <h3>ARP Message Format</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Field</th><th>ARP Request</th><th>ARP Reply</th></tr>
+        <tr><td>Sender MAC</td><td>Requester's MAC address</td><td>Responder's MAC address</td></tr>
+        <tr><td>Sender IP</td><td>Requester's IP address</td><td>Responder's IP address</td></tr>
+        <tr><td>Target MAC</td><td>00:00:00:00:00:00 (unknown)</td><td>Requester's MAC address</td></tr>
+        <tr><td>Target IP</td><td>IP address being queried</td><td>IP address that was queried</td></tr>
+        <tr><td>Destination Ethernet MAC</td><td>FF:FF:FF:FF:FF:FF (broadcast)</td><td>Requester's specific MAC (unicast)</td></tr>
+        <tr><td>Operation Code</td><td>1 (Request)</td><td>2 (Reply)</td></tr>
+      </table>
+    </div>
+    <p style="margin-top: 6px; font-size: 14px; color: var(--color-text-primary);"><strong>Key fact:</strong> ARP Request is broadcast; ARP Reply is unicast. ARP has no authentication — this enables ARP spoofing/poisoning attacks.</p>
+  </div>
+
+  <h2 class="section-head">MAC Protocols Summary Table</h2>
+  <div class="table-wrap">
+    <table>
+      <tr><th>MAC Protocol</th><th>Category</th><th>How It Works</th><th>Best For</th></tr>
+      <tr><td>TDMA</td><td>Synchronous</td><td>Fixed time slots per station</td><td>Constant traffic, no contention</td></tr>
+      <tr><td>FDMA</td><td>Synchronous</td><td>Fixed frequency band per station</td><td>Constant traffic</td></tr>
+      <tr><td>Pure ALOHA</td><td>Asynchronous Contention</td><td>Transmit any time; efficiency ≈ 18%</td><td>Low load, simple systems</td></tr>
+      <tr><td>Slotted ALOHA</td><td>Asynchronous Contention</td><td>Transmit at slot boundary; efficiency ≈ 36%</td><td>Low-medium load</td></tr>
+      <tr><td>CSMA/CD</td><td>Asynchronous Contention</td><td>Listen first; detect collision; backoff</td><td>Ethernet LAN (wired)</td></tr>
+      <tr><td>CSMA/CA</td><td>Asynchronous Contention</td><td>Listen first; avoid collision (wireless)</td><td>Wi-Fi (802.11)</td></tr>
+      <tr><td>Token Ring</td><td>Asynchronous Round-Robin</td><td>Pass token; only token holder transmits; no collision</td><td>Deterministic delay needed</td></tr>
+    </table>
+  </div>
+
+  <h2 class="section-head">MCQs — MAC Protocols</h2>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q1. Slotted ALOHA achieves approximately double the maximum channel efficiency of Pure ALOHA. The efficiencies are:</div>
+    <div class="mcq-opts" id="w10q11">
+      <button class="opt" onclick="answer('w10q11',0,2,'Pure ALOHA max efficiency ≈ 18% (1/2e, at load G=0.5). Slotted ALOHA max efficiency ≈ 36% (1/e, at load G=1.0). Slotted ALOHA is doubled because synchronizing to slot boundaries cuts the vulnerable period from 2Tf to Tf, halving collision probability.')">A) Pure ALOHA ≈ 25%; Slotted ALOHA ≈ 50%</button>
+      <button class="opt" onclick="answer('w10q11',1,2,'Pure ALOHA max efficiency ≈ 18% (1/2e, at load G=0.5). Slotted ALOHA max efficiency ≈ 36% (1/e, at load G=1.0). Slotted ALOHA is doubled because synchronizing to slot boundaries cuts the vulnerable period from 2Tf to Tf, halving collision probability.')">B) Pure ALOHA ≈ 10%; Slotted ALOHA ≈ 20%</button>
+      <button class="opt" onclick="answer('w10q11',2,2,'Pure ALOHA max efficiency ≈ 18% (1/2e, at load G=0.5). Slotted ALOHA max efficiency ≈ 36% (1/e, at load G=1.0). Slotted ALOHA is doubled because synchronizing to slot boundaries cuts the vulnerable period from 2Tf to Tf, halving collision probability.')">C) Pure ALOHA ≈ 18%; Slotted ALOHA ≈ 36%</button>
+      <button class="opt" onclick="answer('w10q11',3,2,'Pure ALOHA max efficiency ≈ 18% (1/2e, at load G=0.5). Slotted ALOHA max efficiency ≈ 36% (1/e, at load G=1.0). Slotted ALOHA is doubled because synchronizing to slot boundaries cuts the vulnerable period from 2Tf to Tf, halving collision probability.')">D) Pure ALOHA ≈ 36%; Slotted ALOHA ≈ 72%</button>
+    </div>
+    <div class="explanation" id="w10q11-exp"></div>
+  </div>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q2. In ARP, when a host needs to resolve an IP address it does NOT have in its cache, it sends:</div>
+    <div class="mcq-opts" id="w10q12">
+      <button class="opt" onclick="answer('w10q12',0,2,'An ARP Request is broadcast (dst MAC = FF:FF:FF:FF:FF:FF) to all LAN nodes. Only the host with the matching IP responds with a unicast ARP Reply containing its MAC address. The reply goes directly back to the requester, not broadcast.')">A) A unicast ARP Request to the destination IP</button>
+      <button class="opt" onclick="answer('w10q12',1,2,'An ARP Request is broadcast (dst MAC = FF:FF:FF:FF:FF:FF) to all LAN nodes. Only the host with the matching IP responds with a unicast ARP Reply containing its MAC address. The reply goes directly back to the requester, not broadcast.')">B) A broadcast ARP Request to all LAN nodes (dst MAC = FF:FF:FF:FF:FF:FF)</button>
+      <button class="opt" onclick="answer('w10q12',2,2,'An ARP Request is broadcast (dst MAC = FF:FF:FF:FF:FF:FF) to all LAN nodes. Only the host with the matching IP responds with a unicast ARP Reply containing its MAC address. The reply goes directly back to the requester, not broadcast.')">C) An ICMP Echo Request to the destination</button>
+      <button class="opt" onclick="answer('w10q12',3,2,'An ARP Request is broadcast (dst MAC = FF:FF:FF:FF:FF:FF) to all LAN nodes. Only the host with the matching IP responds with a unicast ARP Reply containing its MAC address. The reply goes directly back to the requester, not broadcast.')">D) A DNS query to resolve IP to MAC</button>
+    </div>
+    <div class="explanation" id="w10q12-exp"></div>
+  </div>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q3. In token ring/token passing MAC, why is collision impossible?</div>
+    <div class="mcq-opts" id="w10q13">
+      <button class="opt" onclick="answer('w10q13',0,1,'Only one node can hold the token at any time, and only the token holder may transmit. Since simultaneous transmission is prevented by token ownership, there can never be two nodes transmitting at the same time — making collision physically impossible.')">A) Only the node holding the token may transmit at any given time</button>
+      <button class="opt" onclick="answer('w10q13',1,1,'Only one node can hold the token at any time, and only the token holder may transmit. Since simultaneous transmission is prevented by token ownership, there can never be two nodes transmitting at the same time — making collision physically impossible.')">B) Token passing uses a separate frequency for each node</button>
+      <button class="opt" onclick="answer('w10q13',2,1,'Only one node can hold the token at any time, and only the token holder may transmit. Since simultaneous transmission is prevented by token ownership, there can never be two nodes transmitting at the same time — making collision physically impossible.')">C) Nodes check for carrier before transmitting (CSMA)</button>
+      <button class="opt" onclick="answer('w10q13',3,1,'Only one node can hold the token at any time, and only the token holder may transmit. Since simultaneous transmission is prevented by token ownership, there can never be two nodes transmitting at the same time — making collision physically impossible.')">D) The token ring uses full-duplex links</button>
+    </div>
+    <div class="explanation" id="w10q13-exp"></div>
+  </div>
+</div>
+
+<!-- SECTION 6: Ethernet & Devices -->
+<div id="ethernet_hw" class="section">
+  <div class="topic-title">Topic 6: Ethernet Hardware, Devices &amp; Network Components <span class="badge badge-exam">Very Important</span></div>
+
+  <h2 class="section-head">Ethernet Physical Variants</h2>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Standard</th><th>Speed</th><th>Medium</th><th>Topology</th><th>Max Length</th><th>Key Notes</th></tr>
+      <tr><td><strong>10Base2</strong> ("Thinnet")</td><td>10 Mbps</td><td>Thin coaxial cable (RG-58)</td><td>Bus</td><td>185 m per segment</td><td>Nodes tap directly onto cable with BNC connectors; one break = entire segment fails</td></tr>
+      <tr><td><strong>10BaseT</strong></td><td>10 Mbps</td><td>Twisted-pair cable (Cat3 UTP)</td><td>Star (hub/switch at center)</td><td>100 m per segment</td><td>Most common early Ethernet; star topology isolates failures; default CSMA/CD</td></tr>
+      <tr><td><strong>10BaseF</strong></td><td>10 Mbps</td><td>Optical fiber</td><td>Star or point-to-point</td><td>Up to 2 km</td><td>Used for longer runs, inter-building links; immune to electromagnetic interference</td></tr>
+      <tr><td><strong>100BaseTX</strong> (Fast Ethernet)</td><td>100 Mbps</td><td>Twisted-pair (Cat5 UTP)</td><td>Star</td><td>100 m</td><td>IEEE 802.3u; supports auto-negotiation 10/100 Mbps</td></tr>
+      <tr><td><strong>1000BaseT</strong> (Gigabit)</td><td>1 Gbps</td><td>Twisted-pair (Cat5e/Cat6)</td><td>Star</td><td>100 m</td><td>IEEE 802.3ab; uses all 4 wire pairs simultaneously</td></tr>
+    </table>
+  </div>
+
+  <h2 class="section-head">Networking Devices — Full Comparison <span class="badge badge-exam">Very Important</span></h2>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Device</th><th>OSI Layer</th><th>Collision Domain</th><th>Broadcast Domain</th><th>Primary Function</th></tr>
+      <tr><td><strong>Repeater</strong></td><td>Layer 1 (Physical)</td><td>Extends (same domain)</td><td>Same (extends)</td><td>Amplifies/regenerates signal; extends cable length; no intelligence</td></tr>
+      <tr><td><strong>Hub</strong></td><td>Layer 1 (Physical)</td><td>All ports = ONE domain</td><td>All ports = ONE domain</td><td>Multi-port repeater; broadcasts all frames to all ports; half-duplex only</td></tr>
+      <tr><td><strong>Bridge</strong></td><td>Layer 2 (Data Link)</td><td>Divides into segments (one per bridge port)</td><td>Same broadcast domain</td><td>Connects two LAN segments; learns MAC addresses; filters frames between segments</td></tr>
+      <tr><td><strong>Switch</strong></td><td>Layer 2 (Data Link)</td><td>Each port = separate domain</td><td>All ports = ONE domain (unless VLANs)</td><td>Multi-port bridge; learns MACs; forwards frames only to correct port</td></tr>
+      <tr><td><strong>Router</strong></td><td>Layer 3 (Network)</td><td>Each port = separate domain</td><td>Each port = separate domain</td><td>Routes IP packets between networks; does NOT forward broadcast frames</td></tr>
+    </table>
+  </div>
+
+  <h2 class="section-head">Hub — Multi-Port Repeater</h2>
+  <div class="card card-blue">
+    <h3>Hub Architecture and Limitations</h3>
+    <ul>
+      <li>A hub is a <strong>Layer 1 (Physical layer)</strong> device — it has no intelligence, does not read MAC or IP addresses.</li>
+      <li><strong>Multi-port repeater:</strong> When a frame arrives on any port, the hub repeats (regenerates and amplifies) it out of ALL other ports simultaneously.</li>
+      <li><strong>Same collision domain:</strong> All nodes connected to a hub share one collision domain. Any two nodes that transmit simultaneously will collide. Hubs are half-duplex only.</li>
+      <li><strong>Same broadcast domain:</strong> Broadcast frames are forwarded out all ports by the hub.</li>
+      <li><strong>Result:</strong> As more nodes are added to a hub, collision frequency increases and overall throughput decreases. Hubs are now obsolete — replaced by switches in all modern networks.</li>
+    </ul>
+  </div>
+
+  <h2 class="section-head">Bridge &amp; Bridged Ethernet</h2>
+  <div class="card card-green">
+    <h3>Bridge — LAN Segment Divider</h3>
+    <ul>
+      <li>A bridge connects two or more LAN segments together, operating at <strong>Layer 2 (MAC layer)</strong>.</li>
+      <li><strong>MAC learning:</strong> A bridge learns which MAC addresses are on which port by observing source MAC addresses of incoming frames. Builds a MAC address table.</li>
+      <li><strong>Filtering:</strong> If the destination MAC is known and on the same port the frame arrived from, the bridge <em>filters</em> (drops) the frame — no need to forward it to other segments.</li>
+      <li><strong>Forwarding:</strong> If the destination is on a different port, the bridge forwards the frame to that port only — reducing traffic on other segments.</li>
+      <li><strong>Reduces collisions:</strong> Each bridge port is its own collision domain. Nodes on different bridge ports cannot collide with each other.</li>
+      <li><strong>Multi-port bridge = Switch:</strong> A switch is simply a bridge with many ports — one collision domain per port (per connected node), which is why switches essentially eliminate collisions in modern Ethernet.</li>
+    </ul>
+  </div>
+
+  <h2 class="section-head">Full-Duplex Ethernet</h2>
+  <div class="card card-purple">
+    <h3>Full Duplex — Collisions Eliminated</h3>
+    <ul>
+      <li><strong>Half-duplex:</strong> A node can either send OR receive at a given time, but not both. CSMA/CD is required because collisions are possible when multiple nodes share the medium.</li>
+      <li><strong>Full-duplex:</strong> A node can send AND receive simultaneously. Requires <strong>separate wires (or fiber strands) for each direction</strong> — no shared medium, so signals do not mix.</li>
+      <li><strong>CSMA/CD not needed:</strong> Since full-duplex has a dedicated send path and a dedicated receive path point-to-point (switch port ↔ NIC), two signals can never collide. CSMA/CD is disabled.</li>
+      <li><strong>Effective bandwidth doubles:</strong> A 100 Mbps full-duplex link gives 100 Mbps in each direction simultaneously = effective 200 Mbps aggregate.</li>
+      <li><strong>Requirement:</strong> Both ends must support full duplex — negotiated via auto-negotiation. Used in all modern switched Ethernet (each switch port = dedicated full-duplex link to one node).</li>
+    </ul>
+  </div>
+
+  <h2 class="section-head">Fast Ethernet Auto-Negotiation</h2>
+  <div class="card card-amber">
+    <h3>Auto-Negotiation (IEEE 802.3u)</h3>
+    <ul>
+      <li>Defined in <strong>IEEE 802.3u</strong> (Fast Ethernet standard, 100 Mbps).</li>
+      <li>Two Ethernet devices automatically negotiate the best compatible operating mode when they connect — without manual configuration.</li>
+      <li><strong>Parameters negotiated:</strong> Speed (10 Mbps or 100 Mbps), Duplex (half-duplex or full-duplex).</li>
+      <li><strong>Mechanism:</strong> Devices exchange Fast Link Pulses (FLPs) during the link establishment phase before data transmission begins. FLPs encode the capabilities of each device.</li>
+      <li><strong>Highest common capability wins:</strong> If one device supports 100 Mbps full-duplex and the other supports only 10 Mbps half-duplex, the link operates at 10 Mbps half-duplex.</li>
+      <li><strong>Auto-negotiation failure:</strong> If one side has auto-negotiation disabled and manually set to 100 Mbps full-duplex, while the other uses auto-negotiation and defaults to half-duplex, a duplex mismatch occurs — causing poor performance and many late collisions.</li>
+    </ul>
+  </div>
+
+  <h2 class="section-head">Ethernet Frame Format (IEEE 802.3)</h2>
+  <div class="card card-blue">
+    <h3>Frame Structure</h3>
+    <ul>
+      <li><strong>Preamble (7 bytes):</strong> 10101010... — synchronizes clocks of sender and receiver.</li>
+      <li><strong>SFD (Start Frame Delimiter, 1 byte):</strong> 10101011 — signals start of actual frame.</li>
+      <li><strong>Destination MAC (6 bytes):</strong> 48-bit hardware address of recipient.</li>
+      <li><strong>Source MAC (6 bytes):</strong> 48-bit hardware address of sender.</li>
+      <li><strong>Type/Length (2 bytes):</strong> Identifies the upper-layer protocol (e.g., 0x0800 = IPv4, 0x0806 = ARP).</li>
+      <li><strong>Data (46–1500 bytes):</strong> Payload (minimum 46 bytes; padding added if less).</li>
+      <li><strong>FCS (4 bytes):</strong> CRC-32 for error detection.</li>
+      <li>Total minimum frame size: <strong>64 bytes</strong> (excluding preamble + SFD).</li>
+    </ul>
+  </div>
+
+  <div class="card card-green">
+    <h3>MAC Address (Hardware Address)</h3>
+    <ul>
+      <li>48 bits = 6 bytes = 12 hexadecimal digits. Example: AA:BB:CC:DD:EE:FF</li>
+      <li>Burned into the NIC (Network Interface Card) at manufacture — also called hardware address or physical address.</li>
+      <li>First 3 bytes = OUI (Organizationally Unique Identifier) — assigned to manufacturer by IEEE.</li>
+      <li>Last 3 bytes = device-specific portion assigned by manufacturer.</li>
+      <li>Broadcast MAC address: FF:FF:FF:FF:FF:FF (all ones) — received by ALL stations.</li>
+      <li>Multicast MAC address: least significant bit of first byte = 1.</li>
+    </ul>
+  </div>
+
+  <h2 class="section-head">MCQs — Ethernet &amp; Devices</h2>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q1. A network switch differs from a hub in that a switch:</div>
+    <div class="mcq-opts" id="w10q14">
+      <button class="opt" onclick="answer('w10q14',0,3,'A switch gives each port its OWN collision domain by learning MAC addresses and forwarding frames ONLY to the correct port. A hub repeats every frame to ALL ports, sharing one collision domain. Both devices share the same broadcast domain (unless VLANs are used on the switch).')">A) Operates at Layer 3 and performs IP routing</button>
+      <button class="opt" onclick="answer('w10q14',1,3,'A switch gives each port its OWN collision domain by learning MAC addresses and forwarding frames ONLY to the correct port. A hub repeats every frame to ALL ports, sharing one collision domain. Both devices share the same broadcast domain (unless VLANs are used on the switch).')">B) Operates at Layer 1 and forwards all frames to all ports</button>
+      <button class="opt" onclick="answer('w10q14',2,3,'A switch gives each port its OWN collision domain by learning MAC addresses and forwarding frames ONLY to the correct port. A hub repeats every frame to ALL ports, sharing one collision domain. Both devices share the same broadcast domain (unless VLANs are used on the switch).')">C) Creates a separate broadcast domain per port</button>
+      <button class="opt" onclick="answer('w10q14',3,3,'A switch gives each port its OWN collision domain by learning MAC addresses and forwarding frames ONLY to the correct port. A hub repeats every frame to ALL ports, sharing one collision domain. Both devices share the same broadcast domain (unless VLANs are used on the switch).')">D) Learns MAC addresses and forwards frames only to the correct port, giving each port its own collision domain</button>
+    </div>
+    <div class="explanation" id="w10q14-exp"></div>
+  </div>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q2. Which networking device operates at Layer 3 AND separates both collision domains AND broadcast domains?</div>
+    <div class="mcq-opts" id="w10q15">
+      <button class="opt" onclick="answer('w10q15',0,3,'A router operates at Layer 3 and routes IP packets between different networks. Each router interface is both a separate collision domain AND a separate broadcast domain — routers do NOT forward broadcast frames. Switches separate collision domains but share a broadcast domain. Hubs share both.')">A) Hub</button>
+      <button class="opt" onclick="answer('w10q15',1,3,'A router operates at Layer 3 and routes IP packets between different networks. Each router interface is both a separate collision domain AND a separate broadcast domain — routers do NOT forward broadcast frames. Switches separate collision domains but share a broadcast domain. Hubs share both.')">B) Switch</button>
+      <button class="opt" onclick="answer('w10q15',2,3,'A router operates at Layer 3 and routes IP packets between different networks. Each router interface is both a separate collision domain AND a separate broadcast domain — routers do NOT forward broadcast frames. Switches separate collision domains but share a broadcast domain. Hubs share both.')">C) Bridge</button>
+      <button class="opt" onclick="answer('w10q15',3,3,'A router operates at Layer 3 and routes IP packets between different networks. Each router interface is both a separate collision domain AND a separate broadcast domain — routers do NOT forward broadcast frames. Switches separate collision domains but share a broadcast domain. Hubs share both.')">D) Router</button>
+    </div>
+    <div class="explanation" id="w10q15-exp"></div>
+  </div>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q3. Why is CSMA/CD NOT needed in full-duplex Ethernet?</div>
+    <div class="mcq-opts" id="w10q16">
+      <button class="opt" onclick="answer('w10q16',0,2,'Full-duplex uses SEPARATE wires for send and receive — the transmit path and receive path are physically isolated. Since two signals can never mix on the same wire simultaneously, a collision is physically impossible, so CSMA/CD collision detection logic is unnecessary and is disabled.')">A) Full-duplex Ethernet uses fiber which is collision-immune</button>
+      <button class="opt" onclick="answer('w10q16',1,2,'Full-duplex uses SEPARATE wires for send and receive — the transmit path and receive path are physically isolated. Since two signals can never mix on the same wire simultaneously, a collision is physically impossible, so CSMA/CD collision detection logic is unnecessary and is disabled.')">B) Full-duplex Ethernet operates at higher speed so collisions are ignored</button>
+      <button class="opt" onclick="answer('w10q16',2,2,'Full-duplex uses SEPARATE wires for send and receive — the transmit path and receive path are physically isolated. Since two signals can never mix on the same wire simultaneously, a collision is physically impossible, so CSMA/CD collision detection logic is unnecessary and is disabled.')">C) Separate send and receive paths eliminate the possibility of a collision</button>
+      <button class="opt" onclick="answer('w10q16',3,2,'Full-duplex uses SEPARATE wires for send and receive — the transmit path and receive path are physically isolated. Since two signals can never mix on the same wire simultaneously, a collision is physically impossible, so CSMA/CD collision detection logic is unnecessary and is disabled.')">D) CSMA/CD is replaced by token passing in full-duplex Ethernet</button>
+    </div>
+    <div class="explanation" id="w10q16-exp"></div>
+  </div>
+</div>
+
+<!-- SECTION 7: Super Revision -->
+<div id="revision10" class="section">
+  <div class="topic-title">Super Revision — Week 10 Last-Day Notes</div>
+
+  <div class="card card-red">
+    <h3>MOST FREQUENTLY ASKED — Memorize These</h3>
+    <ul>
+      <li>DLL four functions: Framing, Error control, Flow control, MAC</li>
+      <li><strong>LLC Types:</strong> Type 1 = Unacknowledged Connectionless (no ACK, no connection — used in Ethernet); Type 2 = Connection-Oriented (ACK + connection); Type 3 = Acknowledged Connectionless (ACK, no connection)</li>
+      <li>Framing: Character count (fragile), Byte stuffing (PPP), Bit stuffing (HDLC — 5 ones → insert 0), Coding violations</li>
+      <li>CRC = most powerful error detection; FCS = remainder of data ÷ generator polynomial</li>
+      <li>Hamming code: parity bits at powers of 2 positions (1,2,4,8...); can CORRECT 1-bit errors</li>
+      <li>Parity: detects odd-number bit errors ONLY; cannot correct</li>
+      <li>SAW efficiency = 1/(1+2a); Sliding window efficiency = W/(1+2a) if W &lt; 1+2a</li>
+      <li>GBN window = 2^n − 1; SR window = 2^(n−1); GBN cumulative ACK (ACK N = all up to N); SR individual ACK</li>
+      <li>GBN: retransmit ALL frames from error; SR: retransmit ONLY erroneous frame</li>
+      <li><strong>Piggybacking = ACK attached to outgoing data frame;</strong> saves bandwidth on bidirectional links</li>
+      <li>Stop-and-Wait scenarios: Lost frame → timer expires → retransmit; Lost ACK → timer expires → duplicate sent → discard by seq num; Delayed ACK → may cause premature retransmit</li>
+      <li><strong>Pure ALOHA ≈ 18%; Slotted ALOHA ≈ 36%</strong> — slotted is 2× because vulnerable period halved</li>
+      <li><strong>MAC Goals:</strong> Efficient, Fair, Simple, Decentralized</li>
+      <li><strong>ARP:</strong> IP → MAC resolution; Request = broadcast; Reply = unicast; cache with timeout</li>
+      <li>Hub = Layer 1, ALL ports same collision+broadcast domain; Switch = Layer 2, each port separate collision domain; Router = Layer 3, each port separate broadcast domain</li>
+      <li>Ethernet minimum frame = 64 bytes (to detect collisions before finish transmitting)</li>
+      <li>MAC = 48 bits; FF:FF:FF:FF:FF:FF = broadcast; OUI = first 3 bytes</li>
+      <li>Full-duplex = separate send/receive wires; no CSMA/CD needed; collisions impossible</li>
+      <li>Token passing: no collision because only token holder transmits; limitation = token loss stalls network</li>
+    </ul>
+  </div>
+
+  <div class="card card-blue">
+    <h3>Error Detection Method Comparison</h3>
+    <div class="revision-item"><span class="bullet">→</span><span class="revision-text">Parity (1-bit): 1 extra bit; detects 1-bit and all odd-count errors; NO correction.</span></div>
+    <div class="revision-item"><span class="bullet">→</span><span class="revision-text">2D Parity: Row + column parity; detects+corrects 1-bit; detects all 2-bit errors.</span></div>
+    <div class="revision-item"><span class="bullet">→</span><span class="revision-text">Checksum: 16-bit; used in IP/TCP/UDP; weak detection; one's complement sum.</span></div>
+    <div class="revision-item"><span class="bullet">→</span><span class="revision-text">CRC: Strongest; r-bit FCS (remainder); used in Ethernet (CRC-32), Wi-Fi.</span></div>
+    <div class="revision-item"><span class="bullet">→</span><span class="revision-text">Hamming: Parity at powers-of-2 positions; corrects single-bit errors.</span></div>
+  </div>
+
+  <div class="card card-green">
+    <h3>Flow Control &amp; MAC — Quick Reference</h3>
+    <div class="revision-item"><span class="bullet">→</span><span class="revision-text">Stop-and-Wait: 1 frame at a time; efficiency = 1/(1+2a); 1-bit seq nums.</span></div>
+    <div class="revision-item"><span class="bullet">→</span><span class="revision-text">Go-Back-N: Window = 2^n − 1; cumulative ACK; retransmit from error; simple receiver.</span></div>
+    <div class="revision-item"><span class="bullet">→</span><span class="revision-text">Selective Repeat: Window = 2^(n-1); individual ACK; retransmit only errored; needs larger receiver buffer.</span></div>
+    <div class="revision-item"><span class="bullet">→</span><span class="revision-text">Optimal window = 1 + 2a to achieve 100% link utilization.</span></div>
+    <div class="revision-item"><span class="bullet">→</span><span class="revision-text">Pure ALOHA: 18% max; Slotted ALOHA: 36% max. Both are random access (asynchronous contention).</span></div>
+    <div class="revision-item"><span class="bullet">→</span><span class="revision-text">Token Ring: Round-robin; deterministic; no collision; token loss = stall.</span></div>
+  </div>
+
+  <div class="card card-purple">
+    <h3>ARP, Hub vs Switch vs Router</h3>
+    <div class="revision-item"><span class="bullet">→</span><span class="revision-text">ARP: check cache → broadcast request → unicast reply → cache entry → send frame.</span></div>
+    <div class="revision-item"><span class="bullet">→</span><span class="revision-text">Hub: Layer 1, 1 collision domain for ALL ports, broadcasts to all — obsolete.</span></div>
+    <div class="revision-item"><span class="bullet">→</span><span class="revision-text">Switch: Layer 2, collision domain per port, one broadcast domain — modern standard.</span></div>
+    <div class="revision-item"><span class="bullet">→</span><span class="revision-text">Router: Layer 3, separate collision AND broadcast domain per port — connects networks.</span></div>
+    <div class="revision-item"><span class="bullet">→</span><span class="revision-text">Bridge = 2-port switch; multi-port bridge = switch.</span></div>
+  </div>
+
+  <div style="margin-top: 1.5rem; padding: 1rem; background: #E6F1FB; border-radius: var(--border-radius-lg); border: 0.5px solid #B5D4F4;">
+    <p style="font-size: 14px; font-weight: 500; color: #0C447C; margin-bottom: 6px;">Exam Strategy — Week 10</p>
+    <ul style="font-size: 13px; color: #185FA5; padding-left: 1.2rem; line-height: 1.8;">
+      <li>LLC type questions: Type 1 = no ACK (Ethernet); Type 2 = full connection+ACK (HDLC); Type 3 = ACK, no connection (industrial)</li>
+      <li>ALOHA numericals: Pure ALOHA = 18%; Slotted ALOHA = 36%. Memorize: slotted = 2× pure.</li>
+      <li>For window size formula: GBN = 2^n − 1; SR = 2^(n−1). These WILL be asked.</li>
+      <li>Piggybacking saves bandwidth — ACK rides on data frame in the reverse direction.</li>
+      <li>For CRC questions: always check if remainder = 0 → no error. Non-zero → error detected.</li>
+      <li>CSMA/CD is Ethernet; CSMA/CA is Wi-Fi (no collision detection in wireless).</li>
+      <li>ARP Request = broadcast; ARP Reply = unicast. This distinction is commonly tested.</li>
+      <li>Hub vs Switch: Hub = all ports same collision domain; Switch = each port separate collision domain.</li>
+      <li>Router separates BROADCAST domains; switch does NOT (without VLANs).</li>
+      <li>Full-duplex: no CSMA/CD needed because separate send/receive wires prevent collisions.</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<script>
+function show(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function answer(qid, chosen, correct, explanation) {
+  const opts = document.querySelectorAll('#' + qid + ' .opt');
+  opts.forEach((o, i) => {
+    o.disabled = true;
+    if (i === correct) o.classList.add('correct');
+    else if (i === chosen && chosen !== correct) o.classList.add('wrong');
+  });
+  const exp = document.getElementById(qid + '-exp');
+  exp.textContent = (chosen === correct ? '✓ Correct! ' : '✗ Incorrect. ') + explanation;
+  exp.classList.add('visible');
+}
+</script>

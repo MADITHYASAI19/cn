@@ -1,0 +1,447 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.w{max-width:900px;padding:1.5rem 1rem}
+.hero{border-bottom:0.5px solid var(--color-border-tertiary);padding-bottom:1.5rem;margin-bottom:2rem}
+.hero h1{font-size:22px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px}
+.hero p{font-size:14px;color:var(--color-text-secondary)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:2rem}
+.tab{padding:6px 14px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:13px;cursor:pointer;background:var(--color-background-primary);color:var(--color-text-secondary);transition:all 0.15s}
+.tab:hover{background:var(--color-background-secondary)}
+.tab.on{background:#E6F1FB;color:#0C447C;border-color:#85B7EB;font-weight:500}
+.sec{display:none}.sec.on{display:block}
+.ttl{font-size:20px;font-weight:500;color:var(--color-text-primary);margin-bottom:6px;padding-bottom:8px;border-bottom:2px solid #85B7EB}
+.bdg{display:inline-block;font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);margin-left:8px}
+.bx{border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin:1rem 0}
+.bbl{background:#E6F1FB;border-left:3px solid #185FA5}.bbl h3{color:#0C447C}
+.bgn{background:#EAF3DE;border-left:3px solid #3B6D11}.bgn h3{color:#27500A}
+.bamb{background:#FAEEDA;border-left:3px solid #854F0B}.bamb h3{color:#633806}
+.bred{background:#FCEBEB;border-left:3px solid #A32D2D}.bred h3{color:#791F1F}
+.bpur{background:#EEEDFE;border-left:3px solid #534AB7}.bpur h3{color:#3C3489}
+.bteal{background:#E1F5EE;border-left:3px solid #0F6E56}.bteal h3{color:#085041}
+.bsec{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:0.5rem 1.25rem;margin:1rem 0}
+.bx h3{font-size:14px;font-weight:500;margin-bottom:6px}
+.bx p,.bx li{font-size:14px;color:var(--color-text-primary);line-height:1.7}
+.bx ul{padding-left:1.2rem}
+.pt{display:flex;gap:10px;padding:8px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.pt:last-child{border-bottom:none}
+.pn{font-size:13px;font-weight:500;color:#185FA5;min-width:22px}
+.ptx{font-size:14px;color:var(--color-text-primary);line-height:1.6}
+.ptx strong{font-weight:500}
+.tw{overflow-x:auto;margin:1rem 0}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:#E6F1FB;color:#0C447C;font-weight:500;padding:8px 12px;text-align:left;border:0.5px solid #B5D4F4}
+td{padding:8px 12px;border:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary);vertical-align:top}
+tr:nth-child(even) td{background:var(--color-background-secondary)}
+h2.sh{font-size:18px;font-weight:500;color:var(--color-text-primary);margin:1.5rem 0 0.5rem}
+.mcq{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin:1rem 0;background:var(--color-background-primary)}
+.mcq-q{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:10px;line-height:1.6}
+.opts{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+.opt{font-size:13px;padding:6px 10px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);cursor:pointer;color:var(--color-text-primary);background:var(--color-background-primary);text-align:left;transition:background 0.1s}
+.opt:hover{background:var(--color-background-secondary)}
+.opt.ok{background:#EAF3DE;border-color:#639922;color:#27500A}
+.opt.no{background:#FCEBEB;border-color:#A32D2D;color:#791F1F}
+.exp{display:none;font-size:13px;color:var(--color-text-secondary);background:var(--color-background-secondary);padding:8px 12px;border-radius:var(--border-radius-md);margin-top:6px;line-height:1.6}
+.exp.show{display:block}
+.ri{display:flex;gap:8px;padding:6px 0;border-bottom:0.5px solid var(--color-border-tertiary);align-items:flex-start}
+.ri:last-child{border-bottom:none}
+.rb{font-size:14px;min-width:160px;color:#185FA5;font-weight:500}
+.rt{font-size:13px;color:var(--color-text-primary);line-height:1.6}
+.code{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:8px 12px;font-family:monospace;font-size:12px;color:var(--color-text-primary);margin:8px 0;line-height:1.7;white-space:pre}
+</style>
+
+<div class="w">
+<div class="hero">
+  <h1>Computer Networks — Week 8: IP Routing Protocols</h1>
+  <p>Routing Fundamentals · Distance Vector (RIP) · Link State (OSPF) · Path Vector (BGP) · Convergence &amp; Policy &nbsp;|&nbsp; NPTEL Exam-Ready Notes</p>
+</div>
+
+<div class="tabs">
+  <button class="tab on" onclick="show('fund')">Routing Fundamentals</button>
+  <button class="tab" onclick="show('dv')">Distance Vector &amp; RIP</button>
+  <button class="tab" onclick="show('ls')">Link State &amp; OSPF</button>
+  <button class="tab" onclick="show('bgp')">Path Vector &amp; BGP</button>
+  <button class="tab" onclick="show('rev')">Super Revision</button>
+</div>
+
+<!-- ═══════════════ TAB 1: ROUTING FUNDAMENTALS ═══════════════ -->
+<div id="fund" class="sec on">
+  <div class="ttl">Topic 1: Routing Fundamentals <span class="bdg" style="background:#FAEEDA;color:#633806">Core Foundation</span></div>
+  <div class="bx bbl">
+    <h3>What is routing?</h3>
+    <p><strong>Routing</strong> is the process of determining the best path a packet should take from source to destination across a network of interconnected routers. This is distinct from <strong>forwarding</strong> (the actual act of moving a packet from an input port to an output port using the forwarding table). Routing protocols build and maintain the routing table; forwarding uses the built routing/forwarding table.</p>
+  </div>
+
+  <h2 class="sh">Key explanation points — Fundamentals</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">1</span><span class="ptx"><strong>Routing vs Forwarding:</strong> <strong>Routing</strong> = control-plane function. Routers exchange information with neighbours, run routing algorithms, and build routing tables. Happens periodically or on topology changes. <strong>Forwarding</strong> = data-plane function. For each arriving packet, look up destination IP in forwarding table, identify output port, send packet. Routing is slow (seconds); forwarding must be fast (nanoseconds per packet).</span></div>
+    <div class="pt"><span class="pn">2</span><span class="ptx"><strong>Routing table vs Forwarding table:</strong> <strong>Routing table</strong>: built by routing protocols. Contains: Destination network, next-hop router, metric (cost), and which routing protocol installed this route. May have multiple routes to same destination. <strong>Forwarding table (FIB — Forwarding Information Base)</strong>: derived from routing table. Contains: Destination prefix → output interface + next-hop MAC. Optimised for fast lookup (hardware TCAM).</span></div>
+    <div class="pt"><span class="pn">3</span><span class="ptx"><strong>Autonomous System (AS):</strong> A collection of IP networks and routers under the control of a single organisation (ISP, university, enterprise) with a common routing policy. Each AS is assigned a unique <strong>ASN (Autonomous System Number)</strong> by IANA/RIRs. 16-bit (1–65535) historically; now 32-bit (4-byte ASNs). Private ASNs: 64512–65534. Example: Google AS15169, Airtel AS24560. Internet = collection of thousands of interconnected ASes.</span></div>
+    <div class="pt"><span class="pn">4</span><span class="ptx"><strong>Intra-domain vs Inter-domain routing:</strong> <strong>Intra-domain (IGP — Interior Gateway Protocol)</strong>: routing within a single AS. Goal: find shortest/least-cost path. Examples: RIP (Distance Vector), OSPF (Link State), EIGRP (Hybrid). <strong>Inter-domain (EGP — Exterior Gateway Protocol)</strong>: routing between different ASes. Goal: follow policy (not just shortest path). Only one standard today: <strong>BGP (Border Gateway Protocol)</strong>.</span></div>
+    <div class="pt"><span class="pn">5</span><span class="ptx"><strong>Graph model of a network:</strong> The network is modelled as a graph G = (N, E) where N = set of routers (nodes) and E = set of links (edges). Each edge has a <strong>cost/weight</strong> (can represent delay, bandwidth, hop count, administrative metric). Goal of routing algorithm: find the minimum-cost path from source to destination in this graph. Different routing protocols use different algorithms to compute this.</span></div>
+    <div class="pt"><span class="pn">6</span><span class="ptx"><strong>Static vs Dynamic routing:</strong> <strong>Static routing</strong>: routes entered manually by administrators. Simple, predictable, zero protocol overhead. Problems: does not adapt to topology changes (link failures), does not scale. Used for small networks or default routes. <strong>Dynamic routing</strong>: routing protocols automatically discover neighbours, exchange network reachability information, recompute routes on topology changes. Scales to large networks. Converges automatically after failures.</span></div>
+    <div class="pt"><span class="pn">7</span><span class="ptx"><strong>Convergence:</strong> The time taken for all routers in a network to have a consistent, correct view of the network topology after a change (link failure, new link, new router). Fast convergence = less routing instability, less packet loss during changes. Distance Vector protocols converge slowly (count-to-infinity problem). Link State protocols converge faster. BGP convergence can take minutes in the internet — impractical for real-time failure recovery.</span></div>
+    <div class="pt"><span class="pn">8</span><span class="ptx"><strong>Routing algorithm classification:</strong> (1) <strong>Centralised vs Decentralised</strong>: Link State = centralised knowledge (each router has full topology); Distance Vector = decentralised (each router only knows neighbours). (2) <strong>Static vs Dynamic</strong>: static routes vs protocols that respond to topology changes. (3) <strong>Load-sensitive vs Load-insensitive</strong>: most internet protocols are load-insensitive (don't consider current congestion in link cost). ARPANET originally used load-sensitive — caused oscillations.</span></div>
+  </div>
+
+  <h2 class="sh">MCQs — Fundamentals</h2>
+  <div class="mcq">
+    <div class="mcq-q">Q1. What is the difference between routing and forwarding?</div>
+    <div class="opts" id="f1">
+      <button class="opt" onclick="ans('f1',0,2,'Routing = control plane = how routing tables are built (protocol runs, path computation). Forwarding = data plane = how each packet is sent out using the already-built table. Routing is slow and periodic; forwarding must be fast (line-rate, nanoseconds per packet). Both are essential: routing without forwarding = no data delivery; forwarding without routing = tables never built.')">A) Routing sends packets; forwarding builds the table</button>
+      <button class="opt" onclick="ans('f1',1,2,'Routing = control plane = how routing tables are built (protocol runs, path computation). Forwarding = data plane = how each packet is sent out using the already-built table. Routing is slow and periodic; forwarding must be fast (line-rate, nanoseconds per packet). Both are essential: routing without forwarding = no data delivery; forwarding without routing = tables never built.')">B) Routing uses protocols to build tables (control plane); forwarding uses the table to move packets (data plane)</button>
+      <button class="opt" onclick="ans('f1',2,2,'Routing = control plane = how routing tables are built (protocol runs, path computation). Forwarding = data plane = how each packet is sent out using the already-built table. Routing is slow and periodic; forwarding must be fast (line-rate, nanoseconds per packet). Both are essential: routing without forwarding = no data delivery; forwarding without routing = tables never built.')">C) They are the same process — both move packets through the network</button>
+      <button class="opt" onclick="ans('f1',3,2,'Routing = control plane = how routing tables are built (protocol runs, path computation). Forwarding = data plane = how each packet is sent out using the already-built table. Routing is slow and periodic; forwarding must be fast (line-rate, nanoseconds per packet). Both are essential: routing without forwarding = no data delivery; forwarding without routing = tables never built.')">D) Routing works at Layer 2; forwarding works at Layer 3</button>
+    </div>
+    <div class="exp" id="f1-e"></div>
+  </div>
+  <div class="mcq">
+    <div class="mcq-q">Q2. Why is BGP used between ASes rather than OSPF or RIP?</div>
+    <div class="opts" id="f2">
+      <button class="opt" onclick="ans('f2',0,3,'IGPs (OSPF, RIP) are designed for intra-domain routing — optimising path cost within one AS under a single administrative control. They share full topology information freely, which is unsafe between competing organisations. BGP is designed for inter-domain routing where: (1) Policy matters more than shortest path (e.g., traffic engineering, commercial agreements). (2) Organisations must control what routes they advertise. (3) OSPF would not scale to internet size (millions of routes). BGP carries policy attributes (AS path, communities, local preference) for fine-grained control.')">A) BGP uses link-state; OSPF uses path-vector — BGP is faster</button>
+      <button class="opt" onclick="ans('f2',1,3,'IGPs (OSPF, RIP) are designed for intra-domain routing — optimising path cost within one AS under a single administrative control. They share full topology information freely, which is unsafe between competing organisations. BGP is designed for inter-domain routing where: (1) Policy matters more than shortest path (e.g., traffic engineering, commercial agreements). (2) Organisations must control what routes they advertise. (3) OSPF would not scale to internet size (millions of routes). BGP carries policy attributes (AS path, communities, local preference) for fine-grained control.')">B) IGPs need full trust and share internal topology; BGP supports policy-based routing and hides internal topology between competing ASes</button>
+      <button class="opt" onclick="ans('f2',2,3,'IGPs (OSPF, RIP) are designed for intra-domain routing — optimising path cost within one AS under a single administrative control. They share full topology information freely, which is unsafe between competing organisations. BGP is designed for inter-domain routing where: (1) Policy matters more than shortest path (e.g., traffic engineering, commercial agreements). (2) Organisations must control what routes they advertise. (3) OSPF would not scale to internet size (millions of routes). BGP carries policy attributes (AS path, communities, local preference) for fine-grained control.')">C) BGP works only on IPv6; OSPF works only on IPv4</button>
+      <button class="opt" onclick="ans('f2',3,3,'IGPs (OSPF, RIP) are designed for intra-domain routing — optimising path cost within one AS under a single administrative control. They share full topology information freely, which is unsafe between competing organisations. BGP is designed for inter-domain routing where: (1) Policy matters more than shortest path (e.g., traffic engineering, commercial agreements). (2) Organisations must control what routes they advertise. (3) OSPF would not scale to internet size (millions of routes). BGP carries policy attributes (AS path, communities, local preference) for fine-grained control.')">D) BGP uses distance vector which is more accurate for large networks</button>
+    </div>
+    <div class="exp" id="f2-e"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ TAB 2: DISTANCE VECTOR & RIP ═══════════════ -->
+<div id="dv" class="sec">
+  <div class="ttl">Topic 2: Distance Vector Routing &amp; RIP <span class="bdg" style="background:#FCEBEB;color:#791F1F">Most Important</span></div>
+  <div class="bx bbl">
+    <h3>Distance Vector — overview</h3>
+    <p>Distance Vector (DV) routing is a <strong>distributed, iterative, asynchronous</strong> algorithm. Each router maintains a table (vector) of distances (costs) to every destination in the network. Routers share their tables only with <strong>directly connected neighbours</strong>. Based on received neighbour tables, each router recomputes its own table using the <strong>Bellman-Ford equation</strong>.</p>
+  </div>
+
+  <h2 class="sh">Key explanation points — Distance Vector Algorithm</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">1</span><span class="ptx"><strong>Bellman-Ford equation:</strong> The core of DV routing. For each router x, and for each destination y: <strong>D_x(y) = min over all neighbours v { c(x,v) + D_v(y) }</strong>. Where c(x,v) = cost of link from x to its neighbour v, and D_v(y) = v's estimated distance to y. Router x tries all its neighbours and picks the one that gives the minimum total cost to y. That neighbour becomes the next-hop for destination y.</span></div>
+    <div class="pt"><span class="pn">2</span><span class="ptx"><strong>DV algorithm operation (distributed Bellman-Ford):</strong> Each router: (1) Initialises its distance to itself = 0, to all others = ∞. (2) Sends its distance vector to all directly connected neighbours. (3) On receiving a neighbour's DV, recomputes D_x(y) for all y using Bellman-Ford. (4) If D_x(y) changes for any y → update table and send updated DV to all neighbours. (5) Repeat until no updates — algorithm has converged. Works asynchronously — routers don't need to be in sync.</span></div>
+    <div class="pt"><span class="pn">3</span><span class="ptx"><strong>Good news travels fast:</strong> When a link cost decreases (e.g., new faster link), the improvement propagates rapidly. Affected router immediately computes improved distance and tells its neighbours. Neighbours update and tell their neighbours. In O(number of hops) rounds, all routers converge on the new optimal paths. This is the "good news" scenario — DV handles it efficiently.</span></div>
+    <div class="pt"><span class="pn">4</span><span class="ptx"><strong>Count-to-infinity problem (bad news travels slowly):</strong> When a link fails or cost increases, DV routing can converge extremely slowly. Example: A—B—C. A-B link fails. A knows it can't reach C directly. But A hears B's table which says B can reach C with cost 2 (via A). A thinks: "I can reach C via B at cost 1+2=3." A updates table. B gets this and thinks: "I can reach C via A at cost 1+3=4." This loop continues, incrementing by 2 each round, until cost reaches ∞ (some max value like 16 in RIP). Very slow convergence for bad news.</span></div>
+    <div class="pt"><span class="pn">5</span><span class="ptx"><strong>Solutions to count-to-infinity:</strong> (1) <strong>Split Horizon</strong>: if router B learned a route to destination X from router A, then B does NOT advertise this route back to A. "Don't tell me what you learned from me." Breaks simple 2-node routing loops. (2) <strong>Poison Reverse</strong> (stronger): if B learned route to X from A, B advertises the route to A but with metric = ∞ (poison = explicitly advertise the route as unreachable back to the source). Better than simple split horizon — handles more loop scenarios. (3) <strong>Hold-down timers</strong>: when a route is invalidated, don't accept updates for it for a hold-down period. Prevents premature reinstallation of stale routes.</span></div>
+    <div class="pt"><span class="pn">6</span><span class="ptx"><strong>Maximum hop count (infinity = 16 in RIP):</strong> RIP defines infinity = 16 hops. Any route with metric ≥ 16 is considered unreachable. This limits count-to-infinity to at most 16 iterations. Consequence: RIP cannot support networks larger than 15 hops diameter. Any destination more than 15 hops away is unreachable in RIP. This is why RIP is limited to small networks.</span></div>
+    <div class="pt"><span class="pn">7</span><span class="ptx"><strong>Triggered updates:</strong> Normal DV sends updates periodically (every 30s in RIP). <strong>Triggered updates</strong> send an immediate update whenever a route changes, before the next periodic update. This speeds up convergence significantly. If a link fails at time t, router detects it immediately and sends a triggered update rather than waiting up to 30 seconds for the next periodic update.</span></div>
+  </div>
+
+  <h2 class="sh">Key explanation points — RIP (Routing Information Protocol)</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">8</span><span class="ptx"><strong>RIP overview:</strong> <strong>RIP (Routing Information Protocol)</strong> is the oldest and simplest distance vector IGP. Defined in RFC 1058 (RIPv1), RFC 2453 (RIPv2). Metric: <strong>hop count</strong> (number of routers a packet must traverse). Simple — does not consider bandwidth, delay, or congestion. Maximum metric = 15 (16 = infinity = unreachable). Maximum network diameter = 15 hops. Suitable only for small networks.</span></div>
+    <div class="pt"><span class="pn">9</span><span class="ptx"><strong>RIP operation details:</strong> Routers send full routing table to neighbours every <strong>30 seconds</strong> (periodic updates). Transport: <strong>UDP port 520</strong>. After 180 seconds (6 missed updates) without hearing about a route → route marked invalid (metric set to 16). After 240 seconds (hold-down) → route removed from table. RIPv1: classful (no subnet mask in updates). RIPv2: classless (includes subnet mask, supports VLSM and CIDR). RIPng: RIP for IPv6.</span></div>
+    <div class="pt"><span class="pn">10</span><span class="ptx"><strong>RIPv1 vs RIPv2 differences:</strong> RIPv1: classful only (no subnet mask in advertisements), no authentication, broadcast updates. RIPv2: subnet masks included (VLSM/CIDR support), MD5 authentication, multicast updates (224.0.0.9 instead of broadcast). Both use hop count metric. Both limited to 15 hops diameter. Both have slow convergence and count-to-infinity problem.</span></div>
+    <div class="pt"><span class="pn">11</span><span class="ptx"><strong>RIP convergence time:</strong> Worst case convergence time for RIP ≈ 6 × 30 = 180 seconds (must miss 6 updates before declaring a route invalid). In a 15-hop network, count-to-infinity can take many minutes. This makes RIP unsuitable for any network where fast failover is required. Modern alternatives (OSPF, EIGRP, IS-IS) converge in seconds.</span></div>
+    <div class="pt"><span class="pn">12</span><span class="ptx"><strong>EIGRP (Enhanced IGRP):</strong> Cisco proprietary hybrid protocol — combines DV simplicity with some LS features. Uses <strong>DUAL (Diffusing Update Algorithm)</strong> — guarantees loop-free paths. Metric: composite (bandwidth + delay + reliability + load). Sends only incremental updates (not full table). Very fast convergence. Supports VLSM, CIDR. Not fully open standard (though later partially opened), so less universal than OSPF.</span></div>
+  </div>
+
+  <div class="tw">
+    <table>
+      <tr><th>DV Problem</th><th>Cause</th><th>Solution</th></tr>
+      <tr><td>Count-to-infinity</td><td>Bad news propagates slowly; loops increment metric until ∞</td><td>Max metric (define infinity=16); Split Horizon; Poison Reverse</td></tr>
+      <tr><td>Routing loops</td><td>Inconsistent views during convergence</td><td>Split Horizon + Poison Reverse; Hold-down timers</td></tr>
+      <tr><td>Slow convergence</td><td>Periodic updates every 30s; must wait for 6 missed updates</td><td>Triggered updates; reduce timers</td></tr>
+      <tr><td>Size limitation</td><td>Infinity = 16 → max 15 hops</td><td>Use OSPF for larger networks</td></tr>
+    </table>
+  </div>
+
+  <h2 class="sh">MCQs — Distance Vector &amp; RIP</h2>
+  <div class="mcq">
+    <div class="mcq-q">Q1. The Bellman-Ford equation D_x(y) = min_v { c(x,v) + D_v(y) } is computed by router X. What does V represent in this equation?</div>
+    <div class="opts" id="dv1">
+      <button class="opt" onclick="ans('dv1',0,3,'In Bellman-Ford: D_x(y) = minimum over all DIRECT NEIGHBOURS v of {cost of link x→v + v\'s distance to y}. Router X tries each of its directly connected neighbours v in turn, asks: "if I go to v first (cost c(x,v)), then from v to y (cost D_v(y)), what\'s the total?" The neighbour that gives the minimum total becomes the next-hop for y. This is why DV routing only requires routers to share their tables with DIRECT NEIGHBOURS — you don\'t need the full topology.')">A) All routers in the network</button>
+      <button class="opt" onclick="ans('dv1',1,3,'In Bellman-Ford: D_x(y) = minimum over all DIRECT NEIGHBOURS v of {cost of link x→v + v\'s distance to y}. Router X tries each of its directly connected neighbours v in turn, asks: "if I go to v first (cost c(x,v)), then from v to y (cost D_v(y)), what\'s the total?" The neighbour that gives the minimum total becomes the next-hop for y. This is why DV routing only requires routers to share their tables with DIRECT NEIGHBOURS — you don\'t need the full topology.')">B) All destination routers in the network</button>
+      <button class="opt" onclick="ans('dv1',2,3,'In Bellman-Ford: D_x(y) = minimum over all DIRECT NEIGHBOURS v of {cost of link x→v + v\'s distance to y}. Router X tries each of its directly connected neighbours v in turn, asks: "if I go to v first (cost c(x,v)), then from v to y (cost D_v(y)), what\'s the total?" The neighbour that gives the minimum total becomes the next-hop for y. This is why DV routing only requires routers to share their tables with DIRECT NEIGHBOURS — you don\'t need the full topology.')">C) The destination router being reached</button>
+      <button class="opt" onclick="ans('dv1',3,3,'In Bellman-Ford: D_x(y) = minimum over all DIRECT NEIGHBOURS v of {cost of link x→v + v\'s distance to y}. Router X tries each of its directly connected neighbours v in turn, asks: "if I go to v first (cost c(x,v)), then from v to y (cost D_v(y)), what\'s the total?" The neighbour that gives the minimum total becomes the next-hop for y. This is why DV routing only requires routers to share their tables with DIRECT NEIGHBOURS — you don\'t need the full topology.')">D) Each direct neighbour of router X — the equation tries all neighbours and picks the best next-hop</button>
+    </div>
+    <div class="exp" id="dv1-e"></div>
+  </div>
+  <div class="mcq">
+    <div class="mcq-q">Q2. In a network A–B–C, A's link to B fails. B's table still says it can reach A via "via A, cost 1". C's table says "reach A via B, cost 2". What happens in count-to-infinity?</div>
+    <div class="opts" id="dv2">
+      <button class="opt" onclick="ans('dv2',0,2,'Count-to-infinity: B now can\'t reach A directly. B hears C\'s update: C thinks it can reach A at cost 2 (via B). B computes: cost via C = 1+2=3. B updates its table: A is reachable at cost 3. B sends to C. C hears B says cost 3, computes via B = 1+3=4. C sends to B. B gets 4, computes 5. This loop continues: 3, 5, 7, 9 ... until the cost reaches 16 (RIP infinity). Only when metric=16 do both declare A unreachable. This takes 8 iterations and ~4 minutes in RIP.')">A) B immediately marks A as unreachable (∞) and tells C — fast convergence</button>
+      <button class="opt" onclick="ans('dv2',1,2,'Count-to-infinity: B now can\'t reach A directly. B hears C\'s update: C thinks it can reach A at cost 2 (via B). B computes: cost via C = 1+2=3. B updates its table: A is reachable at cost 3. B sends to C. C hears B says cost 3, computes via B = 1+3=4. C sends to B. B gets 4, computes 5. This loop continues: 3, 5, 7, 9 ... until the cost reaches 16 (RIP infinity). Only when metric=16 do both declare A unreachable. This takes 8 iterations and ~4 minutes in RIP.')">B) B believes C can reach A via B, C believes B can reach A via C — metric increments by 2 each round until reaching 16 (slow convergence)</button>
+      <button class="opt" onclick="ans('dv2',2,2,'Count-to-infinity: B now can\'t reach A directly. B hears C\'s update: C thinks it can reach A at cost 2 (via B). B computes: cost via C = 1+2=3. B updates its table: A is reachable at cost 3. B sends to C. C hears B says cost 3, computes via B = 1+3=4. C sends to B. B gets 4, computes 5. This loop continues: 3, 5, 7, 9 ... until the cost reaches 16 (RIP infinity). Only when metric=16 do both declare A unreachable. This takes 8 iterations and ~4 minutes in RIP.')">C) The routing tables stabilise immediately at cost 5 for both B and C</button>
+      <button class="opt" onclick="ans('dv2',3,2,'Count-to-infinity: B now can\'t reach A directly. B hears C\'s update: C thinks it can reach A at cost 2 (via B). B computes: cost via C = 1+2=3. B updates its table: A is reachable at cost 3. B sends to C. C hears B says cost 3, computes via B = 1+3=4. C sends to B. B gets 4, computes 5. This loop continues: 3, 5, 7, 9 ... until the cost reaches 16 (RIP infinity). Only when metric=16 do both declare A unreachable. This takes 8 iterations and ~4 minutes in RIP.')">D) B and C both immediately set A unreachable because they share one link</button>
+    </div>
+    <div class="exp" id="dv2-e"></div>
+  </div>
+  <div class="mcq">
+    <div class="mcq-q">Q3. How does Poison Reverse solve count-to-infinity better than simple Split Horizon?</div>
+    <div class="opts" id="dv3">
+      <button class="opt" onclick="ans('dv3',0,1,'Split Horizon: if B learned route to X from A, B simply OMITS the route when sending to A (doesn\'t advertise it back). Poison Reverse: B EXPLICITLY advertises route to X back to A, but with metric=∞ (poisoned). This is more explicit — A immediately knows the route through B back to itself is unreachable, preventing it from using B\'s update to create a loop. Poison Reverse is more effective at breaking loops but generates slightly more update traffic (explicitly includes the poisoned entries rather than omitting them).')">A) Poison Reverse uses a larger hold-down timer (60s vs 30s)</button>
+      <button class="opt" onclick="ans('dv3',1,1,'Split Horizon: if B learned route to X from A, B simply OMITS the route when sending to A (doesn\'t advertise it back). Poison Reverse: B EXPLICITLY advertises route to X back to A, but with metric=∞ (poisoned). This is more explicit — A immediately knows the route through B back to itself is unreachable, preventing it from using B\'s update to create a loop. Poison Reverse is more effective at breaking loops but generates slightly more update traffic (explicitly includes the poisoned entries rather than omitting them).')">B) Poison Reverse explicitly tells the source router that routes learned from it are infinite (unreachable); Split Horizon just omits them — Poison Reverse is more explicit and breaks loops faster</button>
+      <button class="opt" onclick="ans('dv3',2,1,'Split Horizon: if B learned route to X from A, B simply OMITS the route when sending to A (doesn\'t advertise it back). Poison Reverse: B EXPLICITLY advertises route to X back to A, but with metric=∞ (poisoned). This is more explicit — A immediately knows the route through B back to itself is unreachable, preventing it from using B\'s update to create a loop. Poison Reverse is more effective at breaking loops but generates slightly more update traffic (explicitly includes the poisoned entries rather than omitting them).')">C) They are identical — both suppress route advertisements back to source</button>
+      <button class="opt" onclick="ans('dv3',3,1,'Split Horizon: if B learned route to X from A, B simply OMITS the route when sending to A (doesn\'t advertise it back). Poison Reverse: B EXPLICITLY advertises route to X back to A, but with metric=∞ (poisoned). This is more explicit — A immediately knows the route through B back to itself is unreachable, preventing it from using B\'s update to create a loop. Poison Reverse is more effective at breaking loops but generates slightly more update traffic (explicitly includes the poisoned entries rather than omitting them).')">D) Poison Reverse works only for BGP; Split Horizon works for RIP</button>
+    </div>
+    <div class="exp" id="dv3-e"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ TAB 3: LINK STATE & OSPF ═══════════════ -->
+<div id="ls" class="sec">
+  <div class="ttl">Topic 3: Link State Routing &amp; OSPF <span class="bdg" style="background:#FCEBEB;color:#791F1F">Most Important</span></div>
+  <div class="bx bbl">
+    <h3>Link State — overview</h3>
+    <p>Link State (LS) routing gives every router a <strong>complete map of the entire network topology</strong>. Each router floods information about its directly connected links to all other routers. Every router independently runs <strong>Dijkstra's shortest path algorithm</strong> on this complete map to compute the shortest path tree rooted at itself — giving it the optimal next-hop to every destination.</p>
+  </div>
+
+  <h2 class="sh">Key explanation points — Link State Algorithm</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">1</span><span class="ptx"><strong>Link State Advertisement (LSA):</strong> Each router creates an <strong>LSA (Link State Advertisement)</strong> that contains: (1) Router ID (its own identity). (2) List of all directly connected neighbours with link costs. (3) Sequence number (to detect stale LSAs). (4) Age (TTL — LSAs expire). Routers flood LSAs using <strong>reliable flooding</strong>: when a router gets an LSA, it forwards it out all interfaces except the one it arrived on. Duplicate LSAs (seen before) are dropped.</span></div>
+    <div class="pt"><span class="pn">2</span><span class="ptx"><strong>Link State Database (LSDB):</strong> Each router collects LSAs from all routers in the network and stores them in its <strong>LSDB (Link State Database)</strong>. When the LSDB is complete (contains LSAs from all routers), each router has an identical view of the entire network topology — a complete weighted graph. Then each router independently runs Dijkstra's algorithm on this graph to compute shortest paths.</span></div>
+    <div class="pt"><span class="pn">3</span><span class="ptx"><strong>Dijkstra's algorithm — concept:</strong> A <strong>greedy shortest path algorithm</strong>. Start at source node s. Maintain: (1) <strong>Visited set N'</strong> — nodes whose shortest path from s is confirmed. (2) <strong>Distance array D(v)</strong> — current best known distance from s to each node v. Initialise: D(s)=0, D(all others)=∞. Each step: pick node w not in N' with minimum D(w) → add to N'. Then relax: for each neighbour u of w, if D(w)+c(w,u) &lt; D(u) → update D(u). Repeat until all nodes in N'. Result: shortest path tree.</span></div>
+    <div class="pt"><span class="pn">4</span><span class="ptx"><strong>Dijkstra's algorithm — example:</strong> Network: A-B cost 2, A-C cost 5, B-C cost 1, B-D cost 3, C-D cost 1. Find shortest paths from A. Start: D(A)=0, others=∞. Step 1: visit A (min). Update: D(B)=2, D(C)=5. Step 2: visit B (D=2). Update: D(C)=min(5, 2+1)=3, D(D)=2+3=5. Step 3: visit C (D=3). Update: D(D)=min(5, 3+1)=4. Step 4: visit D (D=4). Done. Shortest paths: A→B=2, A→C=3 (via B), A→D=4 (via B,C).</span></div>
+    <div class="pt"><span class="pn">5</span><span class="ptx"><strong>Dijkstra's complexity:</strong> Naive implementation: O(n²) where n = number of nodes. With a priority queue (binary heap): O((n+E) log n) where E = edges. With Fibonacci heap: O(E + n log n). For practical router implementations with thousands of nodes, the priority queue version is used. Each router independently computes the same result — no coordination needed after LSA flooding is complete.</span></div>
+    <div class="pt"><span class="pn">6</span><span class="ptx"><strong>LS vs DV — key comparison:</strong> LS: each router has full topology → runs Dijkstra locally. More memory (full LSDB), more computation (Dijkstra), but converges fast (milliseconds with triggered LSAs), no count-to-infinity. DV: each router only knows neighbours → distributed Bellman-Ford. Less memory, less computation per iteration, but converges slowly, count-to-infinity problem. LS is preferred for real networks; DV (RIP) only for small/simple networks.</span></div>
+    <div class="pt"><span class="pn">7</span><span class="ptx"><strong>Oscillation problem in LS:</strong> If link cost is based on current traffic load (load-sensitive), and all routers simultaneously recompute paths → they all shift to the less-loaded path → that path becomes overloaded → back again. This oscillation makes the network unstable. Solution: use load-insensitive metrics (fixed administrative costs). Modern OSPF uses static link costs (usually based on bandwidth only, not current load).</span></div>
+  </div>
+
+  <h2 class="sh">Key explanation points — OSPF</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">8</span><span class="ptx"><strong>OSPF — Open Shortest Path First:</strong> The standard link-state IGP. RFC 2328 (OSPFv2 for IPv4), RFC 5340 (OSPFv3 for IPv6). Open standard (not proprietary). Metric: cost (typically 10⁸ / link_bandwidth_bps — so faster links have lower cost). Example: 100Mbps link = cost 1; 10Mbps link = cost 10. Sends LSAs using IP protocol number 89 (not TCP or UDP — built directly on IP). Uses multicast: 224.0.0.5 (all OSPF routers), 224.0.0.6 (DR/BDR only).</span></div>
+    <div class="pt"><span class="pn">9</span><span class="ptx"><strong>OSPF areas:</strong> Large OSPF networks are divided into <strong>areas</strong> to limit the scope of LSA flooding and reduce LSDB size. Each area has its own LSDB — routers only flood LSAs within their area. Areas connect through <strong>Area 0 (Backbone area)</strong>. Inter-area routing: routers on area boundaries (ABRs — Area Border Routers) summarise routes and advertise summaries into Area 0. Benefits: smaller LSDB, faster SPF computation, less flooding overhead, better scalability.</span></div>
+    <div class="pt"><span class="pn">10</span><span class="ptx"><strong>OSPF router types:</strong> (1) <strong>Internal Router</strong>: all interfaces in one area. (2) <strong>Backbone Router</strong>: has interface in Area 0. (3) <strong>ABR (Area Border Router)</strong>: connects two or more areas. Maintains LSDB for each connected area. Summarises routes between areas. (4) <strong>ASBR (AS Boundary Router)</strong>: connects OSPF domain to external routing domain (e.g., redistributes BGP routes into OSPF). (5) <strong>DR/BDR</strong>: roles on broadcast/multi-access networks (see below).</span></div>
+    <div class="pt"><span class="pn">11</span><span class="ptx"><strong>DR and BDR on broadcast networks:</strong> On broadcast networks (Ethernet LAN), if N routers on same segment all form OSPF adjacencies with each other → O(N²) adjacencies and LSAs. Solution: elect a <strong>DR (Designated Router)</strong> and <strong>BDR (Backup DR)</strong>. All routers form adjacency only with DR and BDR. All routing updates flow through DR. DR's LSA represents the broadcast segment and all routers on it. Reduces adjacencies from O(N²) to O(N). Election: highest <strong>OSPF priority</strong> wins; tie-break: highest <strong>Router ID</strong> (highest IP address).</span></div>
+    <div class="pt"><span class="pn">12</span><span class="ptx"><strong>OSPF packet types:</strong> 5 types: (1) <strong>Hello</strong> — neighbour discovery and keepalive. (2) <strong>DBD (Database Description)</strong> — summary of LSDB contents during adjacency formation. (3) <strong>LSR (Link State Request)</strong> — request specific LSAs from neighbour. (4) <strong>LSU (Link State Update)</strong> — contains one or more LSAs. (5) <strong>LSAck (Link State Acknowledgement)</strong> — acknowledge received LSUs. Reliable flooding: uses sequence numbers + explicit ACKs.</span></div>
+    <div class="pt"><span class="pn">13</span><span class="ptx"><strong>OSPF adjacency formation (Hello protocol):</strong> Routers send Hello packets every <strong>hello interval</strong> (default 10s on point-to-point; 10s on broadcast). A neighbour is declared dead if no Hello received for <strong>dead interval</strong> (default 4 × hello = 40s). Hello packets contain: Router ID, Area ID, Hello/Dead intervals, DR/BDR, Neighbour list. Two routers become neighbours only if: same Area ID, same subnet, same hello/dead intervals, same authentication. Adjacency formed after LSDB synchronisation (DBD + LSR + LSU exchange).</span></div>
+    <div class="pt"><span class="pn">14</span><span class="ptx"><strong>OSPF convergence:</strong> When a link fails: router detects failure (dead interval expires or physical link down). Immediately sends LSU with updated LSA (link removed, sequence number incremented). LSA flooded throughout the area. All routers rerun Dijkstra and compute new forwarding table. Total time: typically &lt;1 second for link-down detection + SPF computation (sub-second with modern implementations). Much faster than RIP's 180-second convergence.</span></div>
+  </div>
+
+  <div class="tw">
+    <table>
+      <tr><th>Feature</th><th>Distance Vector (RIP)</th><th>Link State (OSPF)</th></tr>
+      <tr><td>Algorithm</td><td>Distributed Bellman-Ford</td><td>Dijkstra (local computation)</td></tr>
+      <tr><td>Topology knowledge</td><td>Neighbour tables only</td><td>Full network topology (LSDB)</td></tr>
+      <tr><td>Information shared</td><td>Full routing table to neighbours</td><td>LSAs (own links only) to all routers</td></tr>
+      <tr><td>Convergence</td><td>Slow (minutes); count-to-infinity</td><td>Fast (seconds); no count-to-infinity</td></tr>
+      <tr><td>Memory/CPU</td><td>Low (small tables)</td><td>High (full LSDB + Dijkstra)</td></tr>
+      <tr><td>Loop prevention</td><td>Split Horizon + Poison Reverse + max metric</td><td>Inherent — shortest path tree has no loops</td></tr>
+      <tr><td>Scale</td><td>Max 15 hops (RIP)</td><td>Scales to large networks (with areas)</td></tr>
+      <tr><td>Metric</td><td>Hop count</td><td>Cost (bandwidth-based, configurable)</td></tr>
+      <tr><td>Transport</td><td>UDP port 520</td><td>IP protocol 89 (own IP)</td></tr>
+      <tr><td>Example protocol</td><td>RIP, RIPv2</td><td>OSPF, IS-IS</td></tr>
+    </table>
+  </div>
+
+  <h2 class="sh">MCQs — Link State &amp; OSPF</h2>
+  <div class="mcq">
+    <div class="mcq-q">Q1. In Dijkstra's algorithm, after each iteration, what property is guaranteed for nodes added to the visited set N'?</div>
+    <div class="opts" id="ls1">
+      <button class="opt" onclick="ans('ls1',0,2,'Dijkstra uses a greedy approach. When a node w is added to N\' (visited set), its current distance D(w) is GUARANTEED to be the SHORTEST path from source s to w. Proof: any other path to w would have to go through an unvisited node with higher distance (since Dijkstra always picks the minimum). Once in N\', the distance to w is FINAL — it will never be updated again. This is the key invariant of Dijkstra that makes it correct.')">A) The node has been visited but its shortest path may still be updated</button>
+      <button class="opt" onclick="ans('ls1',1,2,'Dijkstra uses a greedy approach. When a node w is added to N\' (visited set), its current distance D(w) is GUARANTEED to be the SHORTEST path from source s to w. Proof: any other path to w would have to go through an unvisited node with higher distance (since Dijkstra always picks the minimum). Once in N\', the distance to w is FINAL — it will never be updated again. This is the key invariant of Dijkstra that makes it correct.')">B) The shortest path distance to that node from the source is finalized — will never decrease</button>
+      <button class="opt" onclick="ans('ls1',2,2,'Dijkstra uses a greedy approach. When a node w is added to N\' (visited set), its current distance D(w) is GUARANTEED to be the SHORTEST path from source s to w. Proof: any other path to w would have to go through an unvisited node with higher distance (since Dijkstra always picks the minimum). Once in N\', the distance to w is FINAL — it will never be updated again. This is the key invariant of Dijkstra that makes it correct.')">C) The node has received LSAs from all its neighbours</button>
+      <button class="opt" onclick="ans('ls1',3,2,'Dijkstra uses a greedy approach. When a node w is added to N\' (visited set), its current distance D(w) is GUARANTEED to be the SHORTEST path from source s to w. Proof: any other path to w would have to go through an unvisited node with higher distance (since Dijkstra always picks the minimum). Once in N\', the distance to w is FINAL — it will never be updated again. This is the key invariant of Dijkstra that makes it correct.')">D) All paths to that node have been explored equally</button>
+    </div>
+    <div class="exp" id="ls1-e"></div>
+  </div>
+  <div class="mcq">
+    <div class="mcq-q">Q2. Why does OSPF elect a DR (Designated Router) on Ethernet segments?</div>
+    <div class="opts" id="ls2">
+      <button class="opt" onclick="ans('ls2',0,1,'Without DR: on an Ethernet with N routers, each router forms OSPF adjacency with all others = N(N-1)/2 adjacencies. Each link-state change generates N-1 LSAs. With DR: all N routers form adjacency ONLY with DR (and BDR) = only N-1 adjacencies. Routing updates flow to DR → DR floods to all. Reduces adjacency count and LSA flooding overhead dramatically. DR also sends a single "network LSA" representing the LAN segment and all attached routers. Election: highest priority wins; tie-break by highest Router ID.')">A) To enable encryption of OSPF packets on shared segments</button>
+      <button class="opt" onclick="ans('ls2',1,1,'Without DR: on an Ethernet with N routers, each router forms OSPF adjacency with all others = N(N-1)/2 adjacencies. Each link-state change generates N-1 LSAs. With DR: all N routers form adjacency ONLY with DR (and BDR) = only N-1 adjacencies. Routing updates flow to DR → DR floods to all. Reduces adjacency count and LSA flooding overhead dramatically. DR also sends a single "network LSA" representing the LAN segment and all attached routers. Election: highest priority wins; tie-break by highest Router ID.')">B) To reduce adjacencies from O(N²) to O(N) on broadcast networks — DR centralises LSA flooding for the segment</button>
+      <button class="opt" onclick="ans('ls2',2,1,'Without DR: on an Ethernet with N routers, each router forms OSPF adjacency with all others = N(N-1)/2 adjacencies. Each link-state change generates N-1 LSAs. With DR: all N routers form adjacency ONLY with DR (and BDR) = only N-1 adjacencies. Routing updates flow to DR → DR floods to all. Reduces adjacency count and LSA flooding overhead dramatically. DR also sends a single "network LSA" representing the LAN segment and all attached routers. Election: highest priority wins; tie-break by highest Router ID.')">C) To perform NAT on behalf of all routers</button>
+      <button class="opt" onclick="ans('ls2',3,1,'Without DR: on an Ethernet with N routers, each router forms OSPF adjacency with all others = N(N-1)/2 adjacencies. Each link-state change generates N-1 LSAs. With DR: all N routers form adjacency ONLY with DR (and BDR) = only N-1 adjacencies. Routing updates flow to DR → DR floods to all. Reduces adjacency count and LSA flooding overhead dramatically. DR also sends a single "network LSA" representing the LAN segment and all attached routers. Election: highest priority wins; tie-break by highest Router ID.')">D) To run Dijkstra on behalf of all routers on the segment</button>
+    </div>
+    <div class="exp" id="ls2-e"></div>
+  </div>
+  <div class="mcq">
+    <div class="mcq-q">Q3. An OSPF router has reference bandwidth 10⁸ bps. Calculate OSPF cost for a 1Gbps link and a 10Mbps link.</div>
+    <div class="opts" id="ls3">
+      <button class="opt" onclick="ans('ls3',0,2,'OSPF cost = reference_bandwidth / interface_bandwidth. Default reference = 10⁸ = 100Mbps. 1Gbps = 10⁹ bps: cost = 10⁸/10⁹ = 0.1 → rounded to 1 (minimum cost = 1). 10Mbps: cost = 10⁸/10⁷ = 10. So: 1Gbps = cost 1; 10Mbps = cost 10. Problem: default reference bandwidth treats everything ≥100Mbps with cost 1 (1Gbps, 10Gbps same cost). Solution: increase reference bandwidth (e.g., 10⁹ or 10¹⁰) to differentiate faster links.')">A) 1Gbps = cost 1000; 10Mbps = cost 10</button>
+      <button class="opt" onclick="ans('ls3',1,2,'OSPF cost = reference_bandwidth / interface_bandwidth. Default reference = 10⁸ = 100Mbps. 1Gbps = 10⁹ bps: cost = 10⁸/10⁹ = 0.1 → rounded to 1 (minimum cost = 1). 10Mbps: cost = 10⁸/10⁷ = 10. So: 1Gbps = cost 1; 10Mbps = cost 10. Problem: default reference bandwidth treats everything ≥100Mbps with cost 1 (1Gbps, 10Gbps same cost). Solution: increase reference bandwidth (e.g., 10⁹ or 10¹⁰) to differentiate faster links.')">B) 1Gbps = cost 1 (min, since 10⁸/10⁹ &lt; 1); 10Mbps = cost 10</button>
+      <button class="opt" onclick="ans('ls3',2,2,'OSPF cost = reference_bandwidth / interface_bandwidth. Default reference = 10⁸ = 100Mbps. 1Gbps = 10⁹ bps: cost = 10⁸/10⁹ = 0.1 → rounded to 1 (minimum cost = 1). 10Mbps: cost = 10⁸/10⁷ = 10. So: 1Gbps = cost 1; 10Mbps = cost 10. Problem: default reference bandwidth treats everything ≥100Mbps with cost 1 (1Gbps, 10Gbps same cost). Solution: increase reference bandwidth (e.g., 10⁹ or 10¹⁰) to differentiate faster links.')">C) 1Gbps = cost 0.1; 10Mbps = cost 10</button>
+      <button class="opt" onclick="ans('ls3',3,2,'OSPF cost = reference_bandwidth / interface_bandwidth. Default reference = 10⁸ = 100Mbps. 1Gbps = 10⁹ bps: cost = 10⁸/10⁹ = 0.1 → rounded to 1 (minimum cost = 1). 10Mbps: cost = 10⁸/10⁷ = 10. So: 1Gbps = cost 1; 10Mbps = cost 10. Problem: default reference bandwidth treats everything ≥100Mbps with cost 1 (1Gbps, 10Gbps same cost). Solution: increase reference bandwidth (e.g., 10⁹ or 10¹⁰) to differentiate faster links.')">D) 1Gbps = cost 100; 10Mbps = cost 1000</button>
+    </div>
+    <div class="exp" id="ls3-e"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ TAB 4: PATH VECTOR & BGP ═══════════════ -->
+<div id="bgp" class="sec">
+  <div class="ttl">Topic 4: Path Vector Routing &amp; BGP <span class="bdg" style="background:#FCEBEB;color:#791F1F">Most Important</span></div>
+  <div class="bx bbl">
+    <h3>BGP — the glue of the internet</h3>
+    <p><strong>BGP (Border Gateway Protocol)</strong> is the <strong>only EGP deployed on the internet</strong>. It is a <strong>Path Vector protocol</strong> — like distance vector, but instead of advertising a cost/metric, BGP advertises the <strong>complete AS path</strong> (sequence of ASes) to reach each destination prefix. This eliminates routing loops (if your own AS is in the AS path, drop the route) and enables rich policy control.</p>
+  </div>
+
+  <h2 class="sh">Key explanation points — Path Vector &amp; BGP Architecture</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">1</span><span class="ptx"><strong>Path Vector concept:</strong> Each router advertises not just the distance/cost to a destination, but the <strong>complete path (sequence of ASes)</strong> taken to reach it. Example: AS1 says "I can reach prefix 10.0.0.0/8 via path [AS1, AS2, AS5]." When AS3 receives this, it prepends itself: "I can reach 10.0.0.0/8 via path [AS3, AS1, AS2, AS5]." Loop prevention: if a router sees its own AS in the AS_PATH attribute → drop the route (it loops back). Solves count-to-infinity completely — loops are detected immediately.</span></div>
+    <div class="pt"><span class="pn">2</span><span class="ptx"><strong>EBGP vs IBGP:</strong> <strong>EBGP (External BGP)</strong>: BGP session between routers in DIFFERENT ASes. Typically: directly connected border routers of neighbouring ASes. Routes exchanged between ASes. TTL is 1 (must be directly connected by default). <strong>IBGP (Internal BGP)</strong>: BGP session between routers within the SAME AS. Used to propagate externally-learned routes across the AS to all routers. Can be between non-directly-connected routers (multi-hop IBGP). Requires full-mesh or Route Reflectors.</span></div>
+    <div class="pt"><span class="pn">3</span><span class="ptx"><strong>IBGP full-mesh problem:</strong> IBGP rule: a route learned from an IBGP peer must NOT be re-advertised to another IBGP peer (to prevent loops within a single AS, since IBGP doesn't add AS number in path). This means: in an AS with N routers, every router must have IBGP sessions with every other router = N(N-1)/2 sessions (full mesh). Does not scale for large ASes. Solutions: (1) <strong>Route Reflectors (RR)</strong>: designated router reflects IBGP routes to clients (like BGP DR). (2) <strong>Confederations</strong>: split large AS into smaller sub-ASes.</span></div>
+    <div class="pt"><span class="pn">4</span><span class="ptx"><strong>BGP session establishment:</strong> BGP runs on top of <strong>TCP port 179</strong>. Provides reliable, ordered delivery of BGP messages. Two routers wanting to exchange BGP routes must first establish a TCP connection, then exchange BGP OPEN messages (agree on parameters), then exchange routing information via UPDATE messages. BGP peers are called BGP <strong>neighbours or peers</strong>. A BGP session is called a BGP <strong>peering</strong>.</span></div>
+    <div class="pt"><span class="pn">5</span><span class="ptx"><strong>BGP message types:</strong> (1) <strong>OPEN</strong>: establish BGP session (version, ASN, hold time, BGP router ID). (2) <strong>UPDATE</strong>: advertise new routes or withdraw withdrawn routes. Contains NLRI (Network Layer Reachability Information = prefixes) + path attributes. (3) <strong>NOTIFICATION</strong>: error message — terminates the BGP session. (4) <strong>KEEPALIVE</strong>: sent periodically to maintain the session (default every 60s; hold timer = 180s — session drops if no KEEPALIVE for 180s).</span></div>
+    <div class="pt"><span class="pn">6</span><span class="ptx"><strong>BGP path attributes:</strong> When advertising a prefix, BGP attaches path attributes: (1) <strong>AS_PATH</strong>: sequence of ASes traversed (mandatory). (2) <strong>NEXT_HOP</strong>: IP of next router to reach the prefix (mandatory). (3) <strong>LOCAL_PREF</strong>: preference within an AS (for IBGP — higher = preferred). (4) <strong>MED (Multi-Exit Discriminator)</strong>: hint to neighbouring AS about preferred entry point (lower MED = preferred). (5) <strong>ORIGIN</strong>: how route was learned (IGP=i, EGP=e, Incomplete=?). (6) <strong>COMMUNITY</strong>: tag for grouping routes for policy.</span></div>
+    <div class="pt"><span class="pn">7</span><span class="ptx"><strong>BGP best-path selection:</strong> When BGP receives multiple paths to the same prefix from different peers, it selects ONE best path using a decision process (in order): (1) Highest WEIGHT (Cisco proprietary, local to router). (2) Highest LOCAL_PREF. (3) Locally originated (network command or redistribute). (4) Shortest AS_PATH. (5) Lowest ORIGIN (i &lt; e &lt; ?). (6) Lowest MED. (7) EBGP over IBGP. (8) Lowest IGP metric to next-hop. (9) Lowest Router ID. Only ONE best path is installed and advertised. Mnemonic: <strong>We Love Oranges AS Oranges Mean Pure Refreshment</strong>.</span></div>
+    <div class="pt"><span class="pn">8</span><span class="ptx"><strong>BGP policy — why it matters:</strong> Unlike OSPF which finds the shortest path, BGP finds the path that satisfies <strong>policy</strong>. An AS may prefer routes based on: commercial agreements (prefer routes via provider A who pays more), traffic engineering (load balancing outbound traffic across multiple exit points), security (avoid routing through certain ASes). BGP provides the tools: LOCAL_PREF controls outbound path selection. MED influences how neighbours send traffic in. AS_PATH prepending makes your route look longer (less preferred by others).</span></div>
+    <div class="pt"><span class="pn">9</span><span class="ptx"><strong>BGP route aggregation:</strong> ISPs aggregate many prefixes into a shorter prefix before advertising to neighbours (to reduce the global BGP routing table size). Example: an ISP with 10.1.0.0/24, 10.2.0.0/24 ... 10.255.0.0/24 can advertise just 10.0.0.0/8 to the wider internet. <strong>Aggregation reduces the global routing table</strong> (currently ~900k IPv4 routes). Without aggregation, the internet routing table would be orders of magnitude larger.</span></div>
+    <div class="pt"><span class="pn">10</span><span class="ptx"><strong>BGP convergence &amp; stability issues:</strong> BGP convergence after a topology change can take <strong>minutes</strong> (much slower than OSPF, which takes seconds). Reason: BGP uses TCP (reliable delivery), changes propagate hop-by-hop across ASes, MRAI (Minimum Route Advertisement Interval) = 30s for EBGP, 5s for IBGP — limits how often updates can be sent. BGP instability (route flap) can be damped with <strong>route dampening</strong> (suppress frequently flapping routes). BGP carries the full internet routing table (~1 million IPv4 prefixes) — convergence of all of these after a major event is complex.</span></div>
+    <div class="pt"><span class="pn">11</span><span class="ptx"><strong>BGP and internet routing security:</strong> BGP has no built-in authentication for route correctness. <strong>BGP hijacking</strong>: a malicious/misconfigured AS advertises prefixes it doesn't own → traffic redirected to the hijacker (e.g., Pakistan Telecom hijacked YouTube in 2008; China Telecom hijacked US military traffic in 2010). <strong>BGP route leaks</strong>: customer accidentally advertises provider routes to another provider → becomes unintended transit. Solution: <strong>RPKI (Resource Public Key Infrastructure)</strong> — cryptographically signs prefix-to-ASN mappings. Route Origin Authorization (ROA) validates that an AS is authorised to originate a prefix.</span></div>
+    <div class="pt"><span class="pn">12</span><span class="ptx"><strong>Hot potato routing:</strong> An intra-AS routing policy where a router hands off a packet (to exit the AS) as quickly as possible — through the nearest IBGP exit point (lowest IGP cost to EBGP next-hop), even if a farther exit would result in a shorter end-to-end path. Each AS passes the "hot potato" (processing cost) to the next AS as fast as possible. Opposite: <strong>cold potato routing</strong> (early exit through the AS to deliver the packet via the best overall path — used in some CDNs).</span></div>
+  </div>
+
+  <div class="tw">
+    <table>
+      <tr><th>Feature</th><th>OSPF (Link State)</th><th>BGP (Path Vector)</th></tr>
+      <tr><td>Protocol type</td><td>IGP (intra-domain)</td><td>EGP (inter-domain)</td></tr>
+      <tr><td>Algorithm</td><td>Dijkstra</td><td>Path Vector + Policy</td></tr>
+      <tr><td>Transport</td><td>IP protocol 89</td><td>TCP port 179</td></tr>
+      <tr><td>Routing goal</td><td>Shortest path (cost metric)</td><td>Policy-compliant path</td></tr>
+      <tr><td>Loop prevention</td><td>SPF tree (inherently loop-free)</td><td>AS_PATH attribute (own AS = loop)</td></tr>
+      <tr><td>Convergence</td><td>Fast (seconds)</td><td>Slow (minutes)</td></tr>
+      <tr><td>Scalability</td><td>Area-based; up to thousands of routers</td><td>Entire internet (~900k IPv4 prefixes)</td></tr>
+      <tr><td>RFC</td><td>RFC 2328</td><td>RFC 4271 (BGP-4)</td></tr>
+    </table>
+  </div>
+
+  <h2 class="sh">MCQs — BGP</h2>
+  <div class="mcq">
+    <div class="mcq-q">Q1. How does BGP prevent routing loops between ASes?</div>
+    <div class="opts" id="b1">
+      <button class="opt" onclick="ans('b1',0,2,'BGP path vector: each UPDATE carries AS_PATH — the complete ordered list of ASes the route has traversed. When a BGP router receives an UPDATE, it checks if its own AS number appears in the AS_PATH. If YES → the route would loop back through this AS → DROP the route (do not install or re-advertise). This is a simple and effective loop prevention mechanism that avoids count-to-infinity entirely. Unlike DV where you can\'t detect loops in the metric, BGP makes the full path explicit.')">A) BGP uses TTL field in IP headers to limit route propagation depth</button>
+      <button class="opt" onclick="ans('b1',1,2,'BGP path vector: each UPDATE carries AS_PATH — the complete ordered list of ASes the route has traversed. When a BGP router receives an UPDATE, it checks if its own AS number appears in the AS_PATH. If YES → the route would loop back through this AS → DROP the route (do not install or re-advertise). This is a simple and effective loop prevention mechanism that avoids count-to-infinity entirely. Unlike DV where you can\'t detect loops in the metric, BGP makes the full path explicit.')">B) If own AS number appears in the AS_PATH attribute → route is dropped (loop detected)</button>
+      <button class="opt" onclick="ans('b1',2,2,'BGP path vector: each UPDATE carries AS_PATH — the complete ordered list of ASes the route has traversed. When a BGP router receives an UPDATE, it checks if its own AS number appears in the AS_PATH. If YES → the route would loop back through this AS → DROP the route (do not install or re-advertise). This is a simple and effective loop prevention mechanism that avoids count-to-infinity entirely. Unlike DV where you can\'t detect loops in the metric, BGP makes the full path explicit.')">C) BGP uses Split Horizon like RIP to prevent loops</button>
+      <button class="opt" onclick="ans('b1',3,2,'BGP path vector: each UPDATE carries AS_PATH — the complete ordered list of ASes the route has traversed. When a BGP router receives an UPDATE, it checks if its own AS number appears in the AS_PATH. If YES → the route would loop back through this AS → DROP the route (do not install or re-advertise). This is a simple and effective loop prevention mechanism that avoids count-to-infinity entirely. Unlike DV where you can\'t detect loops in the metric, BGP makes the full path explicit.')">D) BGP uses sequence numbers to detect stale routes</button>
+    </div>
+    <div class="exp" id="b1-e"></div>
+  </div>
+  <div class="mcq">
+    <div class="mcq-q">Q2. AS100 has two BGP exit points to reach a destination. Path 1: shorter AS_PATH (2 hops). Path 2: higher LOCAL_PREF. Which path is selected and why?</div>
+    <div class="opts" id="b2">
+      <button class="opt" onclick="ans('b2',0,2,'BGP best-path selection order: (1) Weight → (2) LOCAL_PREF → (3) locally originated → (4) AS_PATH length. LOCAL_PREF is checked BEFORE AS_PATH length. So Path 2 (higher LOCAL_PREF) is selected, even though Path 1 has shorter AS_PATH. LOCAL_PREF dominates AS_PATH length in the decision process. This allows network administrators to force traffic through a preferred path (e.g., a paid peering link) regardless of raw path length. LOCAL_PREF is typically used to implement traffic engineering and commercial routing policies.')">A) Path 1 — shortest AS_PATH always wins</button>
+      <button class="opt" onclick="ans('b2',1,2,'BGP best-path selection order: (1) Weight → (2) LOCAL_PREF → (3) locally originated → (4) AS_PATH length. LOCAL_PREF is checked BEFORE AS_PATH length. So Path 2 (higher LOCAL_PREF) is selected, even though Path 1 has shorter AS_PATH. LOCAL_PREF dominates AS_PATH length in the decision process. This allows network administrators to force traffic through a preferred path (e.g., a paid peering link) regardless of raw path length. LOCAL_PREF is typically used to implement traffic engineering and commercial routing policies.')">B) Path 2 — LOCAL_PREF is evaluated before AS_PATH length in BGP decision process</button>
+      <button class="opt" onclick="ans('b2',2,2,'BGP best-path selection order: (1) Weight → (2) LOCAL_PREF → (3) locally originated → (4) AS_PATH length. LOCAL_PREF is checked BEFORE AS_PATH length. So Path 2 (higher LOCAL_PREF) is selected, even though Path 1 has shorter AS_PATH. LOCAL_PREF dominates AS_PATH length in the decision process. This allows network administrators to force traffic through a preferred path (e.g., a paid peering link) regardless of raw path length. LOCAL_PREF is typically used to implement traffic engineering and commercial routing policies.')">C) Both paths are installed (BGP does multipath by default)</button>
+      <button class="opt" onclick="ans('b2',3,2,'BGP best-path selection order: (1) Weight → (2) LOCAL_PREF → (3) locally originated → (4) AS_PATH length. LOCAL_PREF is checked BEFORE AS_PATH length. So Path 2 (higher LOCAL_PREF) is selected, even though Path 1 has shorter AS_PATH. LOCAL_PREF dominates AS_PATH length in the decision process. This allows network administrators to force traffic through a preferred path (e.g., a paid peering link) regardless of raw path length. LOCAL_PREF is typically used to implement traffic engineering and commercial routing policies.')">D) Path with lower MED is always preferred over LOCAL_PREF</button>
+    </div>
+    <div class="exp" id="b2-e"></div>
+  </div>
+  <div class="mcq">
+    <div class="mcq-q">Q3. Why does IBGP require a full mesh (or Route Reflectors) within an AS?</div>
+    <div class="opts" id="b3">
+      <button class="opt" onclick="ans('b3',0,3,'IBGP rule: routes learned from an IBGP peer must NOT be re-advertised to other IBGP peers (because within an AS, BGP does not add AS number to AS_PATH → no loop detection). To ensure all routers in the AS know all BGP routes, every router must receive BGP updates directly → full mesh required. For N routers = N(N-1)/2 sessions. In an AS with 100 border routers = 4950 sessions — unmanageable. Route Reflectors solve this: one or more RR routers re-advertise IBGP routes to other IBGP clients, eliminating the full-mesh requirement.')">A) IBGP requires full mesh because all routers must run Dijkstra simultaneously</button>
+      <button class="opt" onclick="ans('b3',1,3,'IBGP rule: routes learned from an IBGP peer must NOT be re-advertised to other IBGP peers (because within an AS, BGP does not add AS number to AS_PATH → no loop detection). To ensure all routers in the AS know all BGP routes, every router must receive BGP updates directly → full mesh required. For N routers = N(N-1)/2 sessions. In an AS with 100 border routers = 4950 sessions — unmanageable. Route Reflectors solve this: one or more RR routers re-advertise IBGP routes to other IBGP clients, eliminating the full-mesh requirement.')">B) IBGP cannot re-advertise routes between IBGP peers (no AS added to loop-detect) → every router must be peered with all others to receive all routes; Reflectors solve this</button>
+      <button class="opt" onclick="ans('b3',2,3,'IBGP rule: routes learned from an IBGP peer must NOT be re-advertised to other IBGP peers (because within an AS, BGP does not add AS number to AS_PATH → no loop detection). To ensure all routers in the AS know all BGP routes, every router must receive BGP updates directly → full mesh required. For N routers = N(N-1)/2 sessions. In an AS with 100 border routers = 4950 sessions — unmanageable. Route Reflectors solve this: one or more RR routers re-advertise IBGP routes to other IBGP clients, eliminating the full-mesh requirement.')">C) TCP requires full mesh establishment before BGP can run</button>
+      <button class="opt" onclick="ans('b3',3,3,'IBGP rule: routes learned from an IBGP peer must NOT be re-advertised to other IBGP peers (because within an AS, BGP does not add AS number to AS_PATH → no loop detection). To ensure all routers in the AS know all BGP routes, every router must receive BGP updates directly → full mesh required. For N routers = N(N-1)/2 sessions. In an AS with 100 border routers = 4950 sessions — unmanageable. Route Reflectors solve this: one or more RR routers re-advertise IBGP routes to other IBGP clients, eliminating the full-mesh requirement.')">D) IBGP requires full mesh because TTL=1 prevents multi-hop BGP</button>
+    </div>
+    <div class="exp" id="b3-e"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ TAB 5: SUPER REVISION ═══════════════ -->
+<div id="rev" class="sec">
+  <div class="ttl">Super Revision Notes — Week 8 (Last-Day Study)</div>
+
+  <div class="bx bred">
+    <h3>Absolute must-know facts</h3>
+    <ul>
+      <li>Routing = control plane (build tables). Forwarding = data plane (move packets using table)</li>
+      <li>AS (Autonomous System) = network under single organisation. ASN uniquely identifies it</li>
+      <li>IGP (intra-AS): RIP, OSPF, EIGRP. EGP (inter-AS): only BGP in use today</li>
+      <li><strong>DV (Distance Vector):</strong> distributed Bellman-Ford. Share table with neighbours only</li>
+      <li>Bellman-Ford: D_x(y) = min over v { c(x,v) + D_v(y) }. v = direct neighbours</li>
+      <li>Count-to-infinity: bad news (link failure) propagates slowly in DV — routing loops increment metric to ∞</li>
+      <li>Solutions: Split Horizon (don't advertise route back to source), Poison Reverse (advertise as ∞), Hold-down timers, Triggered updates</li>
+      <li><strong>RIP:</strong> hop count metric. Max metric=15 (16=∞=unreachable). UDP port 520. Updates every 30s. RIPv2 = classless (subnet mask included)</li>
+      <li>RIPv1 = classful (no mask). RIPv2 = classless + MD5 auth + multicast 224.0.0.9</li>
+      <li><strong>LS (Link State):</strong> flood LSAs to all. Each router has complete topology (LSDB). Run Dijkstra locally</li>
+      <li>Dijkstra: greedy algorithm. O(n²) naive; O((n+E)log n) with heap. Finalized distances in N'</li>
+      <li><strong>OSPF:</strong> IP protocol 89 (not UDP/TCP). Cost = 10⁸/bandwidth. Multicast 224.0.0.5 (all) / 224.0.0.6 (DR/BDR)</li>
+      <li>OSPF areas: Area 0 = backbone. ABR connects areas. ASBR connects to external. LSAs flooded only within area</li>
+      <li>OSPF DR/BDR: elected on broadcast segments. Reduces adjacencies from O(N²) to O(N). Highest priority wins; tie-break = highest Router ID</li>
+      <li>OSPF hello=10s, dead=40s (4×hello). Packets: Hello, DBD, LSR, LSU, LSAck. Convergence: seconds</li>
+      <li><strong>BGP:</strong> only EGP. Path Vector protocol. TCP port 179. RFC 4271 (BGP-4)</li>
+      <li>Loop prevention: AS_PATH — if own AS in path → drop route</li>
+      <li>EBGP = between different ASes (TTL=1). IBGP = same AS (multi-hop OK)</li>
+      <li>IBGP full-mesh: can't re-advertise IBGP routes to other IBGP peers → full-mesh or Route Reflectors</li>
+      <li>BGP messages: OPEN, UPDATE, NOTIFICATION, KEEPALIVE. Keepalive every 60s, hold=180s</li>
+      <li>BGP path attributes: AS_PATH (mandatory), NEXT_HOP, LOCAL_PREF, MED, ORIGIN, COMMUNITY</li>
+      <li>BGP best-path order: Weight → LOCAL_PREF → Locally originated → AS_PATH length → ORIGIN → MED → EBGP over IBGP → lowest IGP cost → lowest Router ID</li>
+      <li>Hot potato routing: exit AS as quickly as possible (nearest exit point)</li>
+      <li>BGP convergence: minutes (MRAI = 30s EBGP, 5s IBGP). OSPF convergence: seconds</li>
+      <li>BGP hijacking: rogue AS advertises others' prefixes. RPKI/ROA prevents this</li>
+    </ul>
+  </div>
+
+  <div class="bx bpur">
+    <h3>Protocol quick comparison</h3>
+    <div class="ri"><span class="rb">RIP metric</span><span class="rt">Hop count. Max 15. RIP = 16 = unreachable. UDP 520. Updates every 30s</span></div>
+    <div class="ri"><span class="rb">RIPv1 vs v2</span><span class="rt">v1 = classful, broadcast. v2 = classless, multicast 224.0.0.9, auth</span></div>
+    <div class="ri"><span class="rb">OSPF metric</span><span class="rt">Cost = 10⁸/BW. IP proto 89. Multicast 224.0.0.5/224.0.0.6</span></div>
+    <div class="ri"><span class="rb">OSPF DR election</span><span class="rt">Highest priority → tie-break highest Router ID. Non-preemptive</span></div>
+    <div class="ri"><span class="rb">BGP transport</span><span class="rt">TCP port 179. KEEPALIVE 60s. Hold 180s</span></div>
+    <div class="ri"><span class="rb">BGP loop prevent</span><span class="rt">AS_PATH — own AS in path → drop</span></div>
+    <div class="ri"><span class="rb">BGP best path #1-4</span><span class="rt">Weight → LOCAL_PREF → Locally originated → shortest AS_PATH</span></div>
+    <div class="ri"><span class="rb">IBGP rule</span><span class="rt">Cannot re-advertise IBGP route to other IBGP peer → full mesh or RR needed</span></div>
+    <div class="ri"><span class="rb">Dijkstra complexity</span><span class="rt">O(n²) naive. O((n+E)log n) with priority queue</span></div>
+    <div class="ri"><span class="rb">Bellman-Ford</span><span class="rt">D_x(y) = min_v { c(x,v) + D_v(y) }. Converges in n-1 iterations</span></div>
+  </div>
+
+  <div class="bx bgn">
+    <h3>Routing protocols summary table</h3>
+    <div class="tw">
+      <table>
+        <tr><th>Protocol</th><th>Type</th><th>Algorithm</th><th>Metric</th><th>Transport</th><th>Convergence</th></tr>
+        <tr><td>RIPv1/v2</td><td>IGP / DV</td><td>Bellman-Ford</td><td>Hop count (max 15)</td><td>UDP 520</td><td>Minutes (slow)</td></tr>
+        <tr><td>EIGRP</td><td>IGP / Hybrid DV</td><td>DUAL</td><td>Composite (BW+delay)</td><td>IP proto 88</td><td>Fast (DUAL)</td></tr>
+        <tr><td>OSPF</td><td>IGP / LS</td><td>Dijkstra</td><td>Cost (10⁸/BW)</td><td>IP proto 89</td><td>Fast (seconds)</td></tr>
+        <tr><td>IS-IS</td><td>IGP / LS</td><td>Dijkstra</td><td>Administrative</td><td>ISO CLNP</td><td>Fast (seconds)</td></tr>
+        <tr><td>BGP-4</td><td>EGP / PV</td><td>Path Vector</td><td>Policy attributes</td><td>TCP 179</td><td>Minutes</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="bx bamb">
+    <h3>Tricky NPTEL MCQ traps — don't get these wrong</h3>
+    <div class="ri"><span class="rb">1</span><span class="rb-trick"></span><span class="rt">RIP uses UDP (port 520). OSPF uses IP directly (protocol 89 — NOT TCP/UDP). BGP uses TCP (port 179)</span></div>
+    <div class="ri"><span class="rb">2</span><span class="rt">RIP infinity = 16 → max hop count in network = 15 (not 16). 16th hop = unreachable</span></div>
+    <div class="ri"><span class="rb">3</span><span class="rt">Split Horizon = omit route. Poison Reverse = advertise route with metric ∞. Both prevent loops</span></div>
+    <div class="ri"><span class="rb">4</span><span class="rt">Dijkstra cannot handle negative-weight edges. Bellman-Ford can (detects negative cycles). Internet uses positive costs — Dijkstra is fine</span></div>
+    <div class="ri"><span class="rb">5</span><span class="rt">OSPF DR election: highest PRIORITY wins. Tie-break = highest ROUTER ID (usually highest IP). Priority 0 = never becomes DR</span></div>
+    <div class="ri"><span class="rb">6</span><span class="rt">EBGP: directly connected (TTL=1 by default). IBGP: multi-hop allowed (TTL=255 typically)</span></div>
+    <div class="ri"><span class="rb">7</span><span class="rt">BGP best-path: LOCAL_PREF checked BEFORE AS_PATH length. Higher LOCAL_PREF wins even over shorter path</span></div>
+    <div class="ri"><span class="rb">8</span><span class="rt">IBGP full-mesh: N routers = N(N-1)/2 sessions. Solution: Route Reflectors, not DR (DR is OSPF concept)</span></div>
+    <div class="ri"><span class="rb">9</span><span class="rt">LS flooding = LSAs sent out ALL interfaces except arrival interface. Not a broadcast to all — done hop-by-hop</span></div>
+    <div class="ri"><span class="rb">10</span><span class="rt">Intra-domain = IGP (OSPF, RIP). Inter-domain = EGP (BGP only). BGP is NOT an IGP</span></div>
+    <div class="ri"><span class="rb">11</span><span class="rt">Good news travels fast / Bad news travels slowly — this refers to DV (count-to-infinity). LS has no such problem</span></div>
+    <div class="ri"><span class="rb">12</span><span class="rt">OSPF cost calculation: if link=100Mbps, ref=10⁸, cost=10⁸/10⁸=1. If link=10Mbps, cost=10⁸/10⁷=10. If link=1Gbps, cost=0.1→rounds to 1 (minimum)</span></div>
+    <div class="ri"><span class="rb">13</span><span class="rt">Path Vector = BGP. Distance Vector = RIP, EIGRP. Link State = OSPF, IS-IS. Hybrid = EIGRP. Don't mix them up</span></div>
+    <div class="ri"><span class="rb">14</span><span class="rt">BGP KEEPALIVE = 60s. Hold timer = 180s. OSPF Hello = 10s. OSPF Dead = 40s. RIP update = 30s. RIP invalid = 180s</span></div>
+  </div>
+
+  <div style="margin-top:1.5rem;padding:1rem;background:#E6F1FB;border-radius:var(--border-radius-lg);border:0.5px solid #B5D4F4">
+    <p style="font-size:14px;font-weight:500;color:#0C447C;margin-bottom:8px">Exam strategy — Week 8</p>
+    <ul style="font-size:13px;color:#185FA5;padding-left:1.2rem;line-height:1.9">
+      <li>Bellman-Ford equation: always write it out. Practice trace through 3–4 node examples step by step</li>
+      <li>Count-to-infinity: trace the A–B–C failure example. Know why split horizon helps and why it's not complete</li>
+      <li>Dijkstra: practice on 5-node example. Trace N' set expansion step-by-step. Show D(v) updates clearly</li>
+      <li>OSPF cost calculation: formula = 10⁸/BW. Know that 1Gbps and 10Gbps both give cost=1 (problem with default ref bandwidth)</li>
+      <li>DV vs LS comparison table: memory, topology knowledge, convergence speed, loop prevention. Very likely exam question</li>
+      <li>BGP best-path order: memorise top 4 (Weight → LOCAL_PREF → local origin → AS_PATH). Exam typically asks about LOCAL_PREF vs AS_PATH priority</li>
+      <li>IBGP vs EBGP: same AS vs different AS. Full-mesh problem and Route Reflectors as solution</li>
+      <li>Protocol transport: RIP=UDP 520, OSPF=IP proto 89, BGP=TCP 179. Frequently tested</li>
+      <li>BGP loop prevention via AS_PATH: if own ASN appears → drop. Simple and effective</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<script>
+function show(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  event.target.classList.add('on');
+}
+function ans(qid,chosen,correct,explanation){
+  const opts=document.querySelectorAll('#'+qid+' .opt');
+  opts.forEach((o,i)=>{
+    o.disabled=true;
+    if(i===correct)o.classList.add('ok');
+    else if(i===chosen&&chosen!==correct)o.classList.add('no');
+  });
+  const exp=document.getElementById(qid+'-e');
+  exp.textContent=(chosen===correct?'Correct! ':'Incorrect. ')+explanation;
+  exp.classList.add('show');
+}
+</script>

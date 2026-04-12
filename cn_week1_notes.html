@@ -1,0 +1,1673 @@
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: var(--font-sans);
+  }
+
+  .container {
+    max-width: 900px;
+    padding: 1.5rem 1rem;
+  }
+
+  .hero {
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .hero h1 {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: 4px;
+  }
+
+  .hero p {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+  }
+
+  .tab-bar {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+
+  .tab {
+    padding: 6px 14px;
+    border: 0.5px solid var(--color-border-secondary);
+    border-radius: var(--border-radius-md);
+    font-size: 13px;
+    cursor: pointer;
+    background: var(--color-background-primary);
+    color: var(--color-text-secondary);
+    transition: all 0.15s;
+  }
+
+  .tab:hover {
+    background: var(--color-background-secondary);
+  }
+
+  .tab.active {
+    background: #E6F1FB;
+    color: #0C447C;
+    border-color: #85B7EB;
+    font-weight: 500;
+  }
+
+  .section {
+    display: none;
+  }
+
+  .section.active {
+    display: block;
+  }
+
+  .topic-title {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: 6px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #85B7EB;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: var(--border-radius-md);
+    margin-left: 8px;
+  }
+
+  .badge-exam {
+    background: #FAEEDA;
+    color: #633806;
+  }
+
+  .badge-imp {
+    background: #E1F5EE;
+    color: #085041;
+  }
+
+  .card {
+    background: var(--color-background-secondary);
+    border-radius: var(--border-radius-lg);
+    padding: 1rem 1.25rem;
+    margin: 1rem 0;
+  }
+
+  .card-blue {
+    background: #E6F1FB;
+    border-left: 3px solid #185FA5;
+  }
+
+  .card-green {
+    background: #EAF3DE;
+    border-left: 3px solid #3B6D11;
+  }
+
+  .card-amber {
+    background: #FAEEDA;
+    border-left: 3px solid #854F0B;
+  }
+
+  .card-red {
+    background: #FCEBEB;
+    border-left: 3px solid #A32D2D;
+  }
+
+  .card-purple {
+    background: #EEEDFE;
+    border-left: 3px solid #534AB7;
+  }
+
+  .card h3 {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .card-blue h3 {
+    color: #0C447C;
+  }
+
+  .card-green h3 {
+    color: #27500A;
+  }
+
+  .card-amber h3 {
+    color: #633806;
+  }
+
+  .card-red h3 {
+    color: #791F1F;
+  }
+
+  .card-purple h3 {
+    color: #3C3489;
+  }
+
+  .card p,
+  .card li {
+    font-size: 14px;
+    color: var(--color-text-primary);
+    line-height: 1.7;
+  }
+
+  .card ul {
+    padding-left: 1.2rem;
+  }
+
+  .point {
+    display: flex;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+  }
+
+  .point:last-child {
+    border-bottom: none;
+  }
+
+  .point-num {
+    font-size: 13px;
+    font-weight: 500;
+    color: #185FA5;
+    min-width: 22px;
+  }
+
+  .point-text {
+    font-size: 14px;
+    color: var(--color-text-primary);
+    line-height: 1.6;
+  }
+
+  .point-text strong {
+    font-weight: 500;
+    color: var(--color-text-primary);
+  }
+
+  .mcq-block {
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 1rem 1.25rem;
+    margin: 1rem 0;
+    background: var(--color-background-primary);
+  }
+
+  .mcq-q {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: 10px;
+    line-height: 1.6;
+  }
+
+  .mcq-opts {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .opt {
+    font-size: 13px;
+    padding: 6px 10px;
+    border-radius: var(--border-radius-md);
+    border: 0.5px solid var(--color-border-tertiary);
+    cursor: pointer;
+    color: var(--color-text-primary);
+    background: var(--color-background-primary);
+    text-align: left;
+    transition: background 0.1s;
+  }
+
+  .opt:hover {
+    background: var(--color-background-secondary);
+  }
+
+  .opt.correct {
+    background: #EAF3DE;
+    border-color: #639922;
+    color: #27500A;
+  }
+
+  .opt.wrong {
+    background: #FCEBEB;
+    border-color: #A32D2D;
+    color: #791F1F;
+  }
+
+  .explanation {
+    display: none;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    background: var(--color-background-secondary);
+    padding: 8px 12px;
+    border-radius: var(--border-radius-md);
+    margin-top: 6px;
+    line-height: 1.6;
+  }
+
+  .explanation.visible {
+    display: block;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    margin: 1rem 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  th {
+    background: #E6F1FB;
+    color: #0C447C;
+    font-weight: 500;
+    padding: 8px 12px;
+    text-align: left;
+    border: 0.5px solid #B5D4F4;
+  }
+
+  td {
+    padding: 8px 12px;
+    border: 0.5px solid var(--color-border-tertiary);
+    color: var(--color-text-primary);
+    vertical-align: top;
+  }
+
+  tr:nth-child(even) td {
+    background: var(--color-background-secondary);
+  }
+
+  .layer-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    margin: 3px 0;
+    border-radius: var(--border-radius-md);
+    border: 0.5px solid var(--color-border-secondary);
+  }
+
+  .layer-num {
+    font-size: 12px;
+    font-weight: 500;
+    min-width: 60px;
+    color: #185FA5;
+  }
+
+  .layer-name {
+    font-size: 14px;
+    font-weight: 500;
+    flex: 1;
+  }
+
+  .layer-proto {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+  }
+
+  .l7 {
+    background: #EEEDFE;
+  }
+
+  .l7 .layer-name {
+    color: #3C3489;
+  }
+
+  .l6 {
+    background: #FAECE7;
+  }
+
+  .l6 .layer-name {
+    color: #993C1D;
+  }
+
+  .l5 {
+    background: #FAEEDA;
+  }
+
+  .l5 .layer-name {
+    color: #633806;
+  }
+
+  .l4 {
+    background: #EAF3DE;
+  }
+
+  .l4 .layer-name {
+    color: #27500A;
+  }
+
+  .l3 {
+    background: #E6F1FB;
+  }
+
+  .l3 .layer-name {
+    color: #0C447C;
+  }
+
+  .l2 {
+    background: #E1F5EE;
+  }
+
+  .l2 .layer-name {
+    color: #085041;
+  }
+
+  .l1 {
+    background: #FCEBEB;
+  }
+
+  .l1 .layer-name {
+    color: #791F1F;
+  }
+
+  .revision-item {
+    display: flex;
+    gap: 8px;
+    padding: 6px 0;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    align-items: flex-start;
+  }
+
+  .revision-item:last-child {
+    border-bottom: none;
+  }
+
+  .bullet {
+    font-size: 16px;
+    min-width: 20px;
+  }
+
+  .revision-text {
+    font-size: 13px;
+    color: var(--color-text-primary);
+    line-height: 1.6;
+  }
+
+  .score-bar {
+    height: 6px;
+    border-radius: 3px;
+    background: var(--color-background-secondary);
+    margin: 4px 0 8px;
+    overflow: hidden;
+  }
+
+  .score-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: #1D9E75;
+  }
+
+  h2.section-head {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin: 1.5rem 0 0.5rem;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 99px;
+    margin: 2px;
+  }
+
+  .tag-blue {
+    background: #E6F1FB;
+    color: #185FA5;
+  }
+
+  .tag-green {
+    background: #EAF3DE;
+    color: #3B6D11;
+  }
+
+  .tag-red {
+    background: #FCEBEB;
+    color: #A32D2D;
+  }
+</style>
+
+<div class="container">
+  <div class="hero">
+    <h1>Computer Networks & Internet Protocols — Week 1</h1>
+    <p>NPTEL Exam-Ready Notes &nbsp;|&nbsp; IIT Kharagpur &nbsp;|&nbsp; Complete Study Guide with MCQs</p>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab active" onclick="show('intro')">Introduction</button>
+    <button class="tab" onclick="show('history')">History</button>
+    <button class="tab" onclick="show('layers')">Protocol Stack</button>
+    <button class="tab" onclick="show('switching')">Switching</button>
+    <button class="tab" onclick="show('applayer')">App Layer</button>
+    <button class="tab" onclick="show('revision')">Super Revision</button>
+  </div>
+
+  <div id="intro" class="section active">
+    <div class="topic-title">Topic 1: Introduction to Computer Networks <span class="badge badge-exam">Exam
+        Favorite</span></div>
+
+    <div class="card card-blue">
+      <h3>What is a Computer Network?</h3>
+      <p>A collection of interconnected devices (computers, servers, routers) that can communicate and share resources.
+        Think of it like a highway system — different vehicles (data packets) travel between cities (computers) using
+        roads (network links) and intersections (routers).</p>
+    </div>
+
+    <h2 class="section-head">Key Explanation Points</h2>
+    <div class="card" style="padding: 0.5rem 1.25rem;">
+      <div class="point"><span class="point-num">1</span><span class="point-text"><strong>Protocol:</strong> A set of
+          rules governing communication between devices. Like traffic rules — everyone must follow them for orderly
+          movement. Formally: "a controlled sequence of messages exchanged between two or more systems to accomplish a
+          given task."</span></div>
+      <div class="point"><span class="point-num">2</span><span class="point-text"><strong>Network Architecture:</strong>
+          A blueprint showing how computers in a network communicate. It defines the physical components, functional
+          organization, and protocols. Like the blueprint of a building — defines how rooms connect.</span></div>
+      <div class="point"><span class="point-num">3</span><span class="point-text"><strong>Functionalities vs
+            Protocols:</strong> Functionalities = what you want to achieve (e.g., file transfer). Protocols = rules you
+          follow to achieve it (e.g., FTP). Architecture ties them together.</span></div>
+      <div class="point"><span class="point-num">4</span><span class="point-text"><strong>Physical Layer (Layer
+            1):</strong> Handles actual signal transmission. Converts digital data ↔ analog signals. Devices: Hub,
+          Repeater. All nodes in same collision domain AND same broadcast domain.</span></div>
+      <div class="point"><span class="point-num">5</span><span class="point-text"><strong>Data Link Layer (Layer
+            2):</strong> Divides collision domains but nodes remain in same broadcast domain. Devices: Switch, Bridge.
+          Uses MAC (hardware) addresses. Improves bandwidth utilization.</span></div>
+      <div class="point"><span class="point-num">6</span><span class="point-text"><strong>Network Layer (Layer
+            3):</strong> Divides BOTH collision and broadcast domains. Devices: Router, L3 Switch. Handles routing
+          between different networks. Uses IP addresses.</span></div>
+      <div class="point"><span class="point-num">7</span><span class="point-text"><strong>Transport Layer (Layer
+            4):</strong> Provides process-to-process communication. Sits above network layer. Handles error control,
+          flow control, traffic management.</span></div>
+      <div class="point"><span class="point-num">8</span><span class="point-text"><strong>Collision Domain vs Broadcast
+            Domain:</strong> Collision domain = segment where collisions occur. Broadcast domain = segment where
+          broadcasts reach. Hub does NOT separate either. Switch separates collision domains. Router separates
+          BOTH.</span></div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <tr>
+          <th>Device</th>
+          <th>Layer</th>
+          <th>Collision Domain</th>
+          <th>Broadcast Domain</th>
+        </tr>
+        <tr>
+          <td>Hub / Repeater</td>
+          <td>Layer 1</td>
+          <td>One (shared)</td>
+          <td>One (shared)</td>
+        </tr>
+        <tr>
+          <td>Bridge / Switch</td>
+          <td>Layer 2</td>
+          <td>Divided per port</td>
+          <td>One (shared)</td>
+        </tr>
+        <tr>
+          <td>Router</td>
+          <td>Layer 3</td>
+          <td>Divided</td>
+          <td>Divided</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card card-amber">
+      <h3>Common Mistakes Students Make</h3>
+      <ul>
+        <li>Confusing collision domain with broadcast domain</li>
+        <li>Thinking switches divide broadcast domains — they do NOT</li>
+        <li>Saying hub is a Layer 2 device — it is Layer 1</li>
+        <li>Forgetting that routers divide BOTH domains</li>
+      </ul>
+    </div>
+
+    <h2 class="section-head">MCQs — Introduction</h2>
+
+    <div class="mcq-block">
+      <div class="mcq-q">Q1. Which device divides collision domains but NOT broadcast domains?</div>
+      <div class="mcq-opts" id="q1">
+        <button class="opt"
+          onclick="answer('q1',0,1,'A Layer 2 switch filters traffic by MAC address, separating collision domains per port, but all ports remain in the same broadcast domain.')">A)
+          Hub</button>
+        <button class="opt"
+          onclick="answer('q1',1,1,'A Layer 2 switch filters traffic by MAC address, separating collision domains per port, but all ports remain in the same broadcast domain.')">B)
+          Layer 2 Switch</button>
+        <button class="opt"
+          onclick="answer('q1',2,1,'A Layer 2 switch filters traffic by MAC address, separating collision domains per port, but all ports remain in the same broadcast domain.')">C)
+          Router</button>
+        <button class="opt"
+          onclick="answer('q1',3,1,'A Layer 2 switch filters traffic by MAC address, separating collision domains per port, but all ports remain in the same broadcast domain.')">D)
+          Repeater</button>
+      </div>
+      <div class="explanation" id="q1-exp"></div>
+    </div>
+
+    <div class="mcq-block">
+      <div class="mcq-q">Q2. What does a protocol primarily define in computer networking?</div>
+      <div class="mcq-opts" id="q2">
+        <button class="opt"
+          onclick="answer('q2',0,2,'A protocol defines a controlled sequence of messages (rules) that two or more systems exchange to accomplish a task. It is NOT the hardware or physical medium.')">A)
+          Physical characteristics of cables</button>
+        <button class="opt"
+          onclick="answer('q2',1,2,'A protocol defines a controlled sequence of messages (rules) that two or more systems exchange to accomplish a task. It is NOT the hardware or physical medium.')">B)
+          Hardware specifications of NIC</button>
+        <button class="opt"
+          onclick="answer('q2',2,2,'A protocol defines a controlled sequence of messages (rules) that two or more systems exchange to accomplish a task. It is NOT the hardware or physical medium.')">C)
+          A controlled sequence of messages exchanged between systems</button>
+        <button class="opt"
+          onclick="answer('q2',3,2,'A protocol defines a controlled sequence of messages (rules) that two or more systems exchange to accomplish a task. It is NOT the hardware or physical medium.')">D)
+          Speed of data transmission</button>
+      </div>
+      <div class="explanation" id="q2-exp"></div>
+    </div>
+
+    <div class="mcq-block">
+      <div class="mcq-q">Q3. In a network with a hub, if Device A sends data to Device B, which devices receive the
+        data?</div>
+      <div class="mcq-opts" id="q3">
+        <button class="opt"
+          onclick="answer('q3',0,1,'Hubs operate at Layer 1 and broadcast all incoming data to ALL ports. Every device in the collision domain receives the data — this is why hubs are inefficient and cause bandwidth waste.')">A)
+          Only Device B</button>
+        <button class="opt"
+          onclick="answer('q3',1,1,'Hubs operate at Layer 1 and broadcast all incoming data to ALL ports. Every device in the collision domain receives the data — this is why hubs are inefficient and cause bandwidth waste.')">B)
+          All devices connected to the hub</button>
+        <button class="opt"
+          onclick="answer('q3',2,1,'Hubs operate at Layer 1 and broadcast all incoming data to ALL ports. Every device in the collision domain receives the data — this is why hubs are inefficient and cause bandwidth waste.')">C)
+          Only the sender and receiver</button>
+        <button class="opt"
+          onclick="answer('q3',3,1,'Hubs operate at Layer 1 and broadcast all incoming data to ALL ports. Every device in the collision domain receives the data — this is why hubs are inefficient and cause bandwidth waste.')">D)
+          Devices decided by MAC table</button>
+      </div>
+      <div class="explanation" id="q3-exp"></div>
+    </div>
+
+    <div class="mcq-block">
+      <div class="mcq-q">Q4. The transport layer in TCP/IP provides which type of communication?</div>
+      <div class="mcq-opts" id="q4">
+        <button class="opt"
+          onclick="answer('q4',0,2,'Transport layer provides process-to-process communication. Physical = node-to-node signal. Data Link = hub-to-hub (MAC). Network = network-to-network (IP). Transport = process-to-process (port).')">A)
+          Hub-to-hub communication</button>
+        <button class="opt"
+          onclick="answer('q4',1,2,'Transport layer provides process-to-process communication. Physical = node-to-node signal. Data Link = hub-to-hub (MAC). Network = network-to-network (IP). Transport = process-to-process (port).')">B)
+          Network-to-network communication</button>
+        <button class="opt"
+          onclick="answer('q4',2,2,'Transport layer provides process-to-process communication. Physical = node-to-node signal. Data Link = hub-to-hub (MAC). Network = network-to-network (IP). Transport = process-to-process (port).')">C)
+          Process-to-process communication</button>
+        <button class="opt"
+          onclick="answer('q4',3,2,'Transport layer provides process-to-process communication. Physical = node-to-node signal. Data Link = hub-to-hub (MAC). Network = network-to-network (IP). Transport = process-to-process (port).')">D)
+          Physical signal transmission</button>
+      </div>
+      <div class="explanation" id="q4-exp"></div>
+    </div>
+  </div>
+
+  <div id="history" class="section">
+    <div class="topic-title">Topic 2: History of the Internet <span class="badge badge-imp">Important Dates</span></div>
+
+    <div class="card card-blue">
+      <h3>Why This Matters for NPTEL</h3>
+      <p>NPTEL exams frequently ask about specific years, milestones, and who invented what. Memorize the timeline below
+        carefully — these are direct fact-based MCQs.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <tr>
+          <th>Year</th>
+          <th>Milestone</th>
+          <th>Significance</th>
+        </tr>
+        <tr>
+          <td>1836</td>
+          <td>Telegraph invented (Morse Code)</td>
+          <td>First dots-and-dashes → analogous to binary 0s and 1s</td>
+        </tr>
+        <tr>
+          <td>1858–1866</td>
+          <td>Trans-Atlantic cable laid</td>
+          <td>Submarine cables — still the internet's backbone today</td>
+        </tr>
+        <tr>
+          <td>~1950s</td>
+          <td>ARPA formed (US DoD)</td>
+          <td>Advanced Research Projects Agency — origin of internet</td>
+        </tr>
+        <tr>
+          <td>1962</td>
+          <td>ARPANET founded</td>
+          <td>Goal: resilient network for extreme situations</td>
+        </tr>
+        <tr>
+          <td>Early 1960s</td>
+          <td>Packet switching developed</td>
+          <td>Data split into packets taking different routes</td>
+        </tr>
+        <tr>
+          <td>1969</td>
+          <td>ARPANET commissioned by DoD</td>
+          <td>4 universities: UCLA, Stanford, UCSB, U of Utah</td>
+        </tr>
+        <tr>
+          <td>1971</td>
+          <td>First email program sent</td>
+          <td>15 nodes, 35 hosts on ARPANET</td>
+        </tr>
+        <tr>
+          <td>1973</td>
+          <td>Global networking — UK & Norway</td>
+          <td>First trans-continental connection</td>
+        </tr>
+        <tr>
+          <td>1974</td>
+          <td>TCP proposed</td>
+          <td>Transmission Control Protocol emerges</td>
+        </tr>
+        <tr>
+          <td>1982</td>
+          <td>TCP/IP proposed for ARPANET</td>
+          <td>Standard protocol for ARPANET</td>
+        </tr>
+        <tr>
+          <td>1983</td>
+          <td>Name servers developed</td>
+          <td>Precursor to DNS — IP numbers too hard to remember</td>
+        </tr>
+        <tr>
+          <td>1984</td>
+          <td>DNS introduced; hosts &gt; 1000</td>
+          <td>Domain Name System officially launched</td>
+        </tr>
+        <tr>
+          <td>1987</td>
+          <td>Hosts exceed 30,000</td>
+          <td>Rapid growth of internet</td>
+        </tr>
+        <tr>
+          <td>1989</td>
+          <td>WWW concept coined by Tim Berners-Lee</td>
+          <td>World Wide Web — most impactful invention</td>
+        </tr>
+        <tr>
+          <td>1990</td>
+          <td>ARPANET ceases to exist; Gopher released</td>
+          <td>Distributed development; text-based internet browser</td>
+        </tr>
+        <tr>
+          <td>1991</td>
+          <td>Gopher — user-friendly internet interface</td>
+          <td>Menu-driven text-based access</td>
+        </tr>
+        <tr>
+          <td>1993</td>
+          <td>Mosaic web browser launched; hosts &gt; 1 million</td>
+          <td>First graphical web browser — WWW revolution begins</td>
+        </tr>
+        <tr>
+          <td>1994</td>
+          <td>Hotmail; W3C founded</td>
+          <td>Web standardization body created</td>
+        </tr>
+        <tr>
+          <td>1995</td>
+          <td>Java released; 6.4 million hosts</td>
+          <td>Web programming language</td>
+        </tr>
+        <tr>
+          <td>1998</td>
+          <td>Google founded</td>
+          <td>Search engine changes internet use</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card card-green">
+      <h3>Key Persons to Remember</h3>
+      <ul>
+        <li><strong>Tim Berners-Lee</strong> — Invented WWW concept (1989)</li>
+        <li><strong>Vint Cerf & Bob Kahn</strong> — TCP/IP protocol designers</li>
+        <li><strong>IETF</strong> — Internet Engineering Task Force — manages internet standards from 1986</li>
+        <li><strong>W3C</strong> — World Wide Web Consortium — web standards (founded 1994)</li>
+      </ul>
+    </div>
+
+    <h2 class="section-head">MCQs — History</h2>
+
+    <div class="mcq-block">
+      <div class="mcq-q">Q1. Who coined the concept of the World Wide Web (WWW)?</div>
+      <div class="mcq-opts" id="qh1">
+        <button class="opt"
+          onclick="answer('qh1',0,0,'Tim Berners-Lee coined the WWW concept in 1989. Vint Cerf is associated with TCP/IP. Bill Gates is Microsoft founder. Claude Shannon is the father of information theory.')">A)
+          Tim Berners-Lee</button>
+        <button class="opt"
+          onclick="answer('qh1',1,0,'Tim Berners-Lee coined the WWW concept in 1989. Vint Cerf is associated with TCP/IP. Bill Gates is Microsoft founder. Claude Shannon is the father of information theory.')">B)
+          Vint Cerf</button>
+        <button class="opt"
+          onclick="answer('qh1',2,0,'Tim Berners-Lee coined the WWW concept in 1989. Vint Cerf is associated with TCP/IP. Bill Gates is Microsoft founder. Claude Shannon is the father of information theory.')">C)
+          Bill Gates</button>
+        <button class="opt"
+          onclick="answer('qh1',3,0,'Tim Berners-Lee coined the WWW concept in 1989. Vint Cerf is associated with TCP/IP. Bill Gates is Microsoft founder. Claude Shannon is the father of information theory.')">D)
+          Claude Shannon</button>
+      </div>
+      <div class="explanation" id="qh1-exp"></div>
+    </div>
+
+    <div class="mcq-block">
+      <div class="mcq-q">Q2. ARPANET was commissioned by which organization in 1969?</div>
+      <div class="mcq-opts" id="qh2">
+        <button class="opt"
+          onclick="answer('qh2',0,1,'ARPANET was commissioned by the US Department of Defense (DoD) in 1969, connecting 4 major universities: UCLA, Stanford Research Institute, UCSB, and University of Utah.')">A)
+          NASA</button>
+        <button class="opt"
+          onclick="answer('qh2',1,1,'ARPANET was commissioned by the US Department of Defense (DoD) in 1969, connecting 4 major universities: UCLA, Stanford Research Institute, UCSB, and University of Utah.')">B)
+          US Department of Defense (DoD)</button>
+        <button class="opt"
+          onclick="answer('qh2',2,1,'ARPANET was commissioned by the US Department of Defense (DoD) in 1969, connecting 4 major universities: UCLA, Stanford Research Institute, UCSB, and University of Utah.')">C)
+          MIT</button>
+        <button class="opt"
+          onclick="answer('qh2',3,1,'ARPANET was commissioned by the US Department of Defense (DoD) in 1969, connecting 4 major universities: UCLA, Stanford Research Institute, UCSB, and University of Utah.')">D)
+          IBM</button>
+      </div>
+      <div class="explanation" id="qh2-exp"></div>
+    </div>
+
+    <div class="mcq-block">
+      <div class="mcq-q">Q3. In which year was the Domain Name System (DNS) introduced?</div>
+      <div class="mcq-opts" id="qh3">
+        <button class="opt"
+          onclick="answer('qh3',0,2,'DNS was introduced in 1984 when the number of internet hosts exceeded 1000. Name servers were developed in 1983 as a precursor because remembering IP numbers was becoming difficult.')">A)
+          1982</button>
+        <button class="opt"
+          onclick="answer('qh3',1,2,'DNS was introduced in 1984 when the number of internet hosts exceeded 1000. Name servers were developed in 1983 as a precursor because remembering IP numbers was becoming difficult.')">B)
+          1983</button>
+        <button class="opt"
+          onclick="answer('qh3',2,2,'DNS was introduced in 1984 when the number of internet hosts exceeded 1000. Name servers were developed in 1983 as a precursor because remembering IP numbers was becoming difficult.')">C)
+          1984</button>
+        <button class="opt"
+          onclick="answer('qh3',3,2,'DNS was introduced in 1984 when the number of internet hosts exceeded 1000. Name servers were developed in 1983 as a precursor because remembering IP numbers was becoming difficult.')">D)
+          1989</button>
+      </div>
+      <div class="explanation" id="qh3-exp"></div>
+    </div>
+
+    <div class="mcq-block">
+      <div class="mcq-q">Q4. Which was the first graphical web browser, launched in 1993?</div>
+      <div class="mcq-opts" id="qh4">
+        <button class="opt"
+          onclick="answer('qh4',0,2,'Mosaic was the first graphical web browser (1993), marking the true beginning of the WWW revolution. Gopher (1991) was text-based. Netscape came after Mosaic. Internet Explorer came even later.')">A)
+          Gopher</button>
+        <button class="opt"
+          onclick="answer('qh4',1,2,'Mosaic was the first graphical web browser (1993), marking the true beginning of the WWW revolution. Gopher (1991) was text-based. Netscape came after Mosaic. Internet Explorer came even later.')">B)
+          Netscape</button>
+        <button class="opt"
+          onclick="answer('qh4',2,2,'Mosaic was the first graphical web browser (1993), marking the true beginning of the WWW revolution. Gopher (1991) was text-based. Netscape came after Mosaic. Internet Explorer came even later.')">C)
+          Mosaic</button>
+        <button class="opt"
+          onclick="answer('qh4',3,2,'Mosaic was the first graphical web browser (1993), marking the true beginning of the WWW revolution. Gopher (1991) was text-based. Netscape came after Mosaic. Internet Explorer came even later.')">D)
+          Internet Explorer</button>
+      </div>
+      <div class="explanation" id="qh4-exp"></div>
+    </div>
+  </div>
+
+  <div id="layers" class="section">
+    <div class="topic-title">Topic 3: OSI & TCP/IP Protocol Stack <span class="badge badge-exam">Most Important</span>
+    </div>
+
+    <div class="card card-blue">
+      <h3>The OSI Model — 7 Layers (Remember: "All People Seem To Need Data Processing")</h3>
+      <p>OSI = Open System Interconnection. Defined by ISO. 7 layers from physical to application.</p>
+    </div>
+
+    <div class="layer-box l7"><span class="layer-num">Layer 7</span><span class="layer-name">Application</span><span
+        class="layer-proto">HTTP, FTP, SMTP, DNS, Telnet, SNMP</span></div>
+    <div class="layer-box l6"><span class="layer-num">Layer 6</span><span class="layer-name">Presentation</span><span
+        class="layer-proto">Data formatting, encryption, compression</span></div>
+    <div class="layer-box l5"><span class="layer-num">Layer 5</span><span class="layer-name">Session</span><span
+        class="layer-proto">Session establishment and maintenance</span></div>
+    <div class="layer-box l4"><span class="layer-num">Layer 4</span><span class="layer-name">Transport</span><span
+        class="layer-proto">TCP, UDP, RTP — process-to-process</span></div>
+    <div class="layer-box l3"><span class="layer-num">Layer 3</span><span class="layer-name">Network</span><span
+        class="layer-proto">IP (IPv4, IPv6), MPLS — routing</span></div>
+    <div class="layer-box l2"><span class="layer-num">Layer 2</span><span class="layer-name">Data Link</span><span
+        class="layer-proto">Ethernet, Wi-Fi, Bluetooth, UMTS, LTE</span></div>
+    <div class="layer-box l1"><span class="layer-num">Layer 1</span><span class="layer-name">Physical</span><span
+        class="layer-proto">Cables, signals, bits, repeaters, hubs</span></div>
+
+    <div class="card card-green" style="margin-top: 1rem;">
+      <h3>TCP/IP Stack — 4 or 5 Layers</h3>
+      <p>TCP/IP is the actual internet standard. 5-layer version: Application → Transport → Network (Internet) → Data
+        Link → Physical. 4-layer version merges Data Link + Physical into "Network Interface."</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <tr>
+          <th>OSI Layer</th>
+          <th>TCP/IP Layer</th>
+          <th>Key Protocols</th>
+          <th>Data Unit</th>
+        </tr>
+        <tr>
+          <td>Application (7)</td>
+          <td rowspan="3">Application</td>
+          <td>HTTP, FTP, SMTP, DNS</td>
+          <td>Message/Data</td>
+        </tr>
+        <tr>
+          <td>Presentation (6)</td>
+          <td>SSL/TLS, JPEG, MPEG</td>
+          <td>Message</td>
+        </tr>
+        <tr>
+          <td>Session (5)</td>
+          <td>NetBIOS, PPTP</td>
+          <td>Message</td>
+        </tr>
+        <tr>
+          <td>Transport (4)</td>
+          <td>Transport</td>
+          <td>TCP, UDP, RTP</td>
+          <td>Segment</td>
+        </tr>
+        <tr>
+          <td>Network (3)</td>
+          <td>Internet (IP)</td>
+          <td>IPv4, IPv6, ICMP, ARP, IGMP</td>
+          <td>Packet/Datagram</td>
+        </tr>
+        <tr>
+          <td>Data Link (2)</td>
+          <td rowspan="2">Network Interface</td>
+          <td>Ethernet, Wi-Fi, Frame Relay</td>
+          <td>Frame</td>
+        </tr>
+        <tr>
+          <td>Physical (1)</td>
+          <td>Cables, Hubs, Repeaters</td>
+          <td>Bits</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card card-purple">
+      <h3>Encapsulation — The Onion Principle</h3>
+      <p>Data from higher layers becomes the "payload" (cargo) for lower layers. Each layer adds its own header. Like
+        packing a gift: the gift (data) goes inside a box (transport), the box goes in a bag (network), the bag is
+        carried by a vehicle (physical). At the destination, each layer unwraps its own envelope.</p>
+      <ul style="margin-top: 8px;">
+        <li>Application data → Transport adds header → becomes Segment</li>
+        <li>Segment → Network adds IP header → becomes Packet</li>
+        <li>Packet → Data Link adds MAC header → becomes Frame</li>
+        <li>Frame → Physical converts to Bits → transmitted</li>
+      </ul>
+    </div>
+
+    <div class="card card-amber">
+      <h3>Cross-Layer Protocols (NPTEL Frequently Asks)</h3>
+      <ul>
+        <li><strong>DNS</strong> — between Application and Transport layers</li>
+        <li><strong>SNMP</strong> — between Transport and Network layers</li>
+        <li><strong>ARP, DHCP</strong> — between Network and Data Link layers</li>
+        <li><strong>ICMP</strong> — works alongside IP at Network layer</li>
+      </ul>
+    </div>
+
+    <div class="card card-blue">
+      <h3>Key Protocol Features (3 Elements)</h3>
+      <ul>
+        <li><strong>Syntax</strong> — Data format, signal levels, structure of messages</li>
+        <li><strong>Semantics</strong> — Control information, error handling, meaning of each field</li>
+        <li><strong>Timing</strong> — Speed matching, sequencing, synchronization</li>
+      </ul>
+    </div>
+
+    <h2 class="section-head">MCQs — Protocol Stack</h2>
+
+    <div class="mcq-block">
+      <div class="mcq-q">Q1. In the OSI model, which layer is responsible for data formatting and encryption?</div>
+      <div class="mcq-opts" id="qp1">
+        <button class="opt"
+          onclick="answer('qp1',0,1,'The Presentation layer (Layer 6) handles data formatting, encryption, decryption, and compression. Session layer (5) manages sessions. Application layer (7) provides user-facing services. Transport layer (4) handles end-to-end delivery.')">A)
+          Session Layer</button>
+        <button class="opt"
+          onclick="answer('qp1',1,1,'The Presentation layer (Layer 6) handles data formatting, encryption, decryption, and compression. Session layer (5) manages sessions. Application layer (7) provides user-facing services. Transport layer (4) handles end-to-end delivery.')">B)
+          Presentation Layer</button>
+        <button class="opt"
+          onclick="answer('qp1',2,1,'The Presentation layer (Layer 6) handles data formatting, encryption, decryption, and compression. Session layer (5) manages sessions. Application layer (7) provides user-facing services. Transport layer (4) handles end-to-end delivery.')">C)
+          Application Layer</button>
+        <button class="opt"
+          onclick="answer('qp1',3,1,'The Presentation layer (Layer 6) handles data formatting, encryption, decryption, and compression. Session layer (5) manages sessions. Application layer (7) provides user-facing services. Transport layer (4) handles end-to-end delivery.')">D)
+          Transport Layer</button>
+      </div>
+      <div class="explanation" id="qp1-exp"></div>
+    </div>
+
+    <div class="mcq-block">
+      <div class="mcq-q">Q2. What is the data unit called at the Network layer?</div>
+      <div class="mcq-opts" id="qp2">
+        <button class="opt"
+          onclick="answer('qp2',0,2,'At the Network layer, the data unit is called a Packet (or Datagram). Bit = Physical layer. Frame = Data Link layer. Segment = Transport layer.')">A)
+          Bit</button>
+        <button class="opt"
+          onclick="answer('qp2',1,2,'At the Network layer, the data unit is called a Packet (or Datagram). Bit = Physical layer. Frame = Data Link layer. Segment = Transport layer.')">B)
+          Frame</button>
+        <button class="opt"
+          onclick="answer('qp2',2,2,'At the Network layer, the data unit is called a Packet (or Datagram). Bit = Physical layer. Frame = Data Link layer. Segment = Transport layer.')">C)
+          Packet</button>
+        <button class="opt"
+          onclick="answer('qp2',3,2,'At the Network layer, the data unit is called a Packet (or Datagram). Bit = Physical layer. Frame = Data Link layer. Segment = Transport layer.')">D)
+          Segment</button>
+      </div>
+      <div class="explanation" id="qp2-exp"></div>
+    </div>
+
+    <div class="mcq-block">
+      <div class="mcq-q">Q3. Which of the following is a cross-layer protocol that operates between the Network and Data
+        Link layers?</div>
+      <div class="mcq-opts" id="qp3">
+        <button class="opt"
+          onclick="answer('qp3',0,1,'ARP (Address Resolution Protocol) operates between Network and Data Link layers — it resolves IP addresses to MAC addresses. HTTP is Application layer. TCP is Transport layer. DNS is between Application and Transport.')">A)
+          HTTP</button>
+        <button class="opt"
+          onclick="answer('qp3',1,1,'ARP (Address Resolution Protocol) operates between Network and Data Link layers — it resolves IP addresses to MAC addresses. HTTP is Application layer. TCP is Transport layer. DNS is between Application and Transport.')">B)
+          ARP</button>
+        <button class="opt"
+          onclick="answer('qp3',2,1,'ARP (Address Resolution Protocol) operates between Network and Data Link layers — it resolves IP addresses to MAC addresses. HTTP is Application layer. TCP is Transport layer. DNS is between Application and Transport.')">C)
+          TCP</button>
+        <button class="opt"
+          onclick="answer('qp3',3,1,'ARP (Address Resolution Protocol) operates between Network and Data Link layers — it resolves IP addresses to MAC addresses. HTTP is Application layer. TCP is Transport layer. DNS is between Application and Transport.')">D)
+          DNS</button>
+      </div>
+      <div class="explanation" id="qp3-exp"></div>
+    </div>
+
+    <div class="mcq-block">
+      <div class="mcq-q">Q4. A router typically operates up to which layer of the OSI model?</div>
+      <div class="mcq-opts" id="qp4">
+        <button class="opt"
+          onclick="answer('qp4',0,2,'Routers are Layer 3 (Network layer) devices. They examine IP addresses to make routing decisions. Hubs = Layer 1. Switches = Layer 2. Layer 4+ devices are typically end-host devices or advanced firewalls.')">A)
+          Layer 1</button>
+        <button class="opt"
+          onclick="answer('qp4',1,2,'Routers are Layer 3 (Network layer) devices. They examine IP addresses to make routing decisions. Hubs = Layer 1. Switches = Layer 2. Layer 4+ devices are typically end-host devices or advanced firewalls.')">B)
+          Layer 2</button>
+        <button class="opt"
+          onclick="answer('qp4',2,2,'Routers are Layer 3 (Network layer) devices. They examine IP addresses to make routing decisions. Hubs = Layer 1. Switches = Layer 2. Layer 4+ devices are typically end-host devices or advanced firewalls.')">C)
+          Layer 3</button>
+        <button class="opt"
+          onclick="answer('qp4',3,2,'Routers are Layer 3 (Network layer) devices. They examine IP addresses to make routing decisions. Hubs = Layer 1. Switches = Layer 2. Layer 4+ devices are typically end-host devices or advanced firewalls.')">D)
+          Layer 7</button>
+      </div>
+      <div class="explanation" id="qp4-exp"></div>
+    </div>
+  </div>
+
+  <div id="switching" class="section">
+    <div class="topic-title">Topic 4: Circuit Switching vs Packet Switching <span class="badge badge-exam">High
+        Weightage</span></div>
+
+    <div class="card card-blue">
+      <h3>Switching Networks — The Basic Concept</h3>
+      <p>When two devices are far apart and need to communicate, intermediate "switching nodes" route data from source
+        to destination. Like a postal system — your letter passes through multiple post offices before reaching the
+        destination.</p>
+    </div>
+
+    <h2 class="section-head">Circuit Switching</h2>
+    <div class="card" style="padding: 0.5rem 1.25rem;">
+      <div class="point"><span class="point-num">1</span><span class="point-text"><strong>Definition:</strong> A
+          dedicated communication path is established between source and destination for the ENTIRE duration of
+          communication. Like booking a private taxi — the car is yours from start to finish.</span></div>
+      <div class="point"><span class="point-num">2</span><span class="point-text"><strong>Three Phases:</strong> (a)
+          Connection establishment / path setup → (b) Data transfer → (c) Disconnection / teardown. Resources are
+          reserved in ALL three phases.</span></div>
+      <div class="point"><span class="point-num">3</span><span class="point-text"><strong>Dedicated resources:</strong>
+          The bandwidth is reserved for the connection even if no data is being sent. Channel is wasted during silence
+          periods (e.g., pauses in phone call).</span></div>
+      <div class="point"><span class="point-num">4</span><span class="point-text"><strong>Transparent
+            connection:</strong> Once established, it behaves like a direct wire — no additional overhead during data
+          transfer.</span></div>
+      <div class="point"><span class="point-num">5</span><span class="point-text"><strong>Fixed data rate:</strong> Both
+          ends MUST operate at the same data rate. No flexibility.</span></div>
+      <div class="point"><span class="point-num">6</span><span class="point-text"><strong>Blocking vs
+            Non-blocking:</strong> If all circuits are busy, new connections are BLOCKED. Non-blocking = enough
+          resources for all simultaneous connections.</span></div>
+      <div class="point"><span class="point-num">7</span><span class="point-text"><strong>Types of switching:</strong>
+          Space Division Switching, Time Division Switching (TDM), TDM Bus, and combinations.</span></div>
+      <div class="point"><span class="point-num">8</span><span class="point-text"><strong>Primary use:</strong>
+          Traditional telephone networks (PSTN). Our landline phone calls use circuit switching.</span></div>
+    </div>
+
+    <h2 class="section-head">Packet Switching</h2>
+    <div class="card" style="padding: 0.5rem 1.25rem;">
+      <div class="point"><span class="point-num">1</span><span class="point-text"><strong>Definition:</strong> Data is
+          broken into small packets. Each packet travels independently through the network and may take different
+          routes. Like sending multiple postcards — each one may take a different route to reach the same
+          destination.</span></div>
+      <div class="point"><span class="point-num">2</span><span class="point-text"><strong>Store and Forward:</strong>
+          Each intermediate node receives the ENTIRE packet, stores it temporarily, then forwards it to the next node.
+          This is the fundamental mechanism.</span></div>
+      <div class="point"><span class="point-num">3</span><span class="point-text"><strong>Packet structure:</strong>
+          Each packet = Data portion + Control information (routing/addressing info to find the destination).</span>
+      </div>
+      <div class="point"><span class="point-num">4</span><span class="point-text"><strong>Typical size:</strong> 1000
+          octets (1000 × 8 bits = 8000 bits).</span></div>
+      <div class="point"><span class="point-num">5</span><span class="point-text"><strong>No dedicated path:</strong>
+          Bandwidth is dynamically allocated. Much more efficient use of network resources.</span></div>
+      <div class="point"><span class="point-num">6</span><span class="point-text"><strong>Rate conversion
+            possible:</strong> Nodes can buffer and synchronize different-speed links. Unlike circuit switching, both
+          ends need NOT operate at the same data rate.</span></div>
+      <div class="point"><span class="point-num">7</span><span class="point-text"><strong>Priority possible:</strong>
+          Some packets can be given higher priority over others.</span></div>
+    </div>
+
+    <h2 class="section-head">Two Types of Packet Switching</h2>
+    <div class="table-wrap">
+      <table>
+        <tr>
+          <th>Feature</th>
+          <th>Datagram</th>
+          <th>Virtual Circuit</th>
+        </tr>
+        <tr>
+          <td>Path</td>
+          <td>Each packet chooses its own route independently</td>
+          <td>Pre-established route; all packets follow same path</td>
+        </tr>
+        <tr>
+          <td>Setup phase</td>
+          <td>Not required</td>
+          <td>Required (call request + call accept)</td>
+        </tr>
+        <tr>
+          <td>Packet header</td>
+          <td>Contains full destination address</td>
+          <td>Contains Virtual Circuit Identifier (VCI)</td>
+        </tr>
+        <tr>
+          <td>Ordering</td>
+          <td>Packets may arrive out of order</td>
+          <td>Packets arrive in order</td>
+        </tr>
+        <tr>
+          <td>Routing decision</td>
+          <td>Made at each hop for each packet</td>
+          <td>Made once during setup</td>
+        </tr>
+        <tr>
+          <td>Node failure</td>
+          <td>Route can be changed dynamically</td>
+          <td>All circuits through failed node are lost</td>
+        </tr>
+        <tr>
+          <td>Example</td>
+          <td>Internet (IP)</td>
+          <td>ATM, Frame Relay, X.25</td>
+        </tr>
+      </table>
+    </div>
+
+    <h2 class="section-head">Circuit vs Packet Switching — Comparison</h2>
+    <div class="table-wrap">
+      <table>
+        <tr>
+          <th>Property</th>
+          <th>Circuit Switching</th>
+          <th>Packet Switching</th>
+        </tr>
+        <tr>
+          <td>Bandwidth</td>
+          <td>Guaranteed, dedicated</td>
+          <td>Dynamic, shared, not guaranteed</td>
+        </tr>
+        <tr>
+          <td>Efficiency</td>
+          <td>Low (wasted if idle)</td>
+          <td>High (shared bandwidth)</td>
+        </tr>
+        <tr>
+          <td>Setup time</td>
+          <td>Required before data transfer</td>
+          <td>No setup needed (datagram)</td>
+        </tr>
+        <tr>
+          <td>Data rate</td>
+          <td>Fixed; both ends must match</td>
+          <td>Variable; rate conversion possible</td>
+        </tr>
+        <tr>
+          <td>Delay</td>
+          <td>Constant after setup</td>
+          <td>Variable (queuing delay)</td>
+        </tr>
+        <tr>
+          <td>Congestion</td>
+          <td>At setup time</td>
+          <td>During data transfer</td>
+        </tr>
+        <tr>
+          <td>Best for</td>
+          <td>Voice (real-time, continuous)</td>
+          <td>Data (bursty, tolerates delay)</td>
+        </tr>
+        <tr>
+          <td>Example</td>
+          <td>Traditional phone (PSTN)</td>
+          <td>Internet, email, web browsing</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card card-amber">
+      <h3>Common Mistakes</h3>
+      <ul>
+        <li>Forgetting that circuit switching wastes bandwidth even during silence</li>
+        <li>Confusing datagram and virtual circuit packet switching</li>
+        <li>Thinking virtual circuit = circuit switching (it is still packet switching!)</li>
+        <li>VCI (Virtual Circuit Identifier) ≠ destination address — VCI is local to each link</li>
+      </ul>
+    </div>
+
+    <h2 class="section-head">MCQs — Switching</h2>
+
+    <div class="mcq-block">
+      <div class="mcq-q">Q1. In circuit switching, the channel capacity is wasted when:</div>
+      <div class="mcq-opts" id="qs1">
+        <button class="opt"
+          onclick="answer('qs1',0,2,'In circuit switching, the channel (dedicated path) is reserved for the ENTIRE duration regardless of actual data transmission. If no data is being sent (e.g., silence in a phone call), the bandwidth is wasted because no other party can use that reserved channel.')">A)
+          Too many packets are in the network</button>
+        <button class="opt"
+          onclick="answer('qs1',1,2,'In circuit switching, the channel (dedicated path) is reserved for the ENTIRE duration regardless of actual data transmission. If no data is being sent (e.g., silence in a phone call), the bandwidth is wasted because no other party can use that reserved channel.')">B)
+          Packets take different routes</button>
+        <button class="opt"
+          onclick="answer('qs1',2,2,'In circuit switching, the channel (dedicated path) is reserved for the ENTIRE duration regardless of actual data transmission. If no data is being sent (e.g., silence in a phone call), the bandwidth is wasted because no other party can use that reserved channel.')">C)
+          The connection is established but no data is being transmitted</button>
+        <button class="opt"
+          onclick="answer('qs1',3,2,'In circuit switching, the channel (dedicated path) is reserved for the ENTIRE duration regardless of actual data transmission. If no data is being sent (e.g., silence in a phone call), the bandwidth is wasted because no other party can use that reserved channel.')">D)
+          The receiver cannot process data fast enough</button>
+      </div>
+      <div class="explanation" id="qs1-exp"></div>
+    </div>
+
+    <div class="mcq-block">
+      <div class="mcq-q">Q2. Which packet switching approach uses Virtual Circuit Identifiers (VCI) instead of
+        destination addresses in each packet?</div>
+      <div class="mcq-opts" id="qs2">
+        <button class="opt"
+          onclick="answer('qs2',0,1,'Virtual circuit packet switching uses VCI (Virtual Circuit Identifier) — a locally significant identifier — instead of the full destination address. This is efficient because the routing decision is made once during circuit setup, not for each packet.')">A)
+          Datagram switching</button>
+        <button class="opt"
+          onclick="answer('qs2',1,1,'Virtual circuit packet switching uses VCI (Virtual Circuit Identifier) — a locally significant identifier — instead of the full destination address. This is efficient because the routing decision is made once during circuit setup, not for each packet.')">B)
+          Virtual circuit switching</button>
+        <button class="opt"
+          onclick="answer('qs2',2,1,'Virtual circuit packet switching uses VCI (Virtual Circuit Identifier) — a locally significant identifier — instead of the full destination address. This is efficient because the routing decision is made once during circuit setup, not for each packet.')">C)
+          Circuit switching</button>
+        <button class="opt"
+          onclick="answer('qs2',3,1,'Virtual circuit packet switching uses VCI (Virtual Circuit Identifier) — a locally significant identifier — instead of the full destination address. This is efficient because the routing decision is made once during circuit setup, not for each packet.')">D)
+          Space division switching</button>
+      </div>
+      <div class="explanation" id="qs2-exp"></div>
+    </div>
+
+    <div class="mcq-block">
+      <div class="mcq-q">Q3. The "store and forward" mechanism is associated with which type of switching?</div>
+      <div class="mcq-opts" id="qs3">
+        <button class="opt"
+          onclick="answer('qs3',0,1,'Packet switching uses store-and-forward: intermediate nodes receive the entire packet, store it in buffer, then forward it to the next hop. Circuit switching has a dedicated path so there is no need to store and forward.')">A)
+          Circuit switching</button>
+        <button class="opt"
+          onclick="answer('qs3',1,1,'Packet switching uses store-and-forward: intermediate nodes receive the entire packet, store it in buffer, then forward it to the next hop. Circuit switching has a dedicated path so there is no need to store and forward.')">B)
+          Packet switching</button>
+        <button class="opt"
+          onclick="answer('qs3',2,1,'Packet switching uses store-and-forward: intermediate nodes receive the entire packet, store it in buffer, then forward it to the next hop. Circuit switching has a dedicated path so there is no need to store and forward.')">C)
+          Space division switching</button>
+        <button class="opt"
+          onclick="answer('qs3',3,1,'Packet switching uses store-and-forward: intermediate nodes receive the entire packet, store it in buffer, then forward it to the next hop. Circuit switching has a dedicated path so there is no need to store and forward.')">D)
+          Time division switching</button>
+      </div>
+      <div class="explanation" id="qs3-exp"></div>
+    </div>
+
+    <div class="mcq-block">
+      <div class="mcq-q">Q4. In datagram packet switching, which statement is TRUE?</div>
+      <div class="mcq-opts" id="qs4">
+        <button class="opt"
+          onclick="answer('qs4',0,3,'In datagram switching: (1) each packet is treated independently, (2) packets can take ANY route, (3) they may arrive OUT of order, (4) they may even be lost. It is the RECEIVER\'s responsibility to reorder packets and request retransmission of lost ones.')">A)
+          All packets follow the same predetermined path</button>
+        <button class="opt"
+          onclick="answer('qs4',1,3,'In datagram switching: (1) each packet is treated independently, (2) packets can take ANY route, (3) they may arrive OUT of order, (4) they may even be lost. It is the RECEIVER\'s responsibility to reorder packets and request retransmission of lost ones.')">B)
+          A dedicated circuit is established before transmission</button>
+        <button class="opt"
+          onclick="answer('qs4',2,3,'In datagram switching: (1) each packet is treated independently, (2) packets can take ANY route, (3) they may arrive OUT of order, (4) they may even be lost. It is the RECEIVER\'s responsibility to reorder packets and request retransmission of lost ones.')">C)
+          Packets always arrive in the order they were sent</button>
+        <button class="opt"
+          onclick="answer('qs4',3,3,'In datagram switching: (1) each packet is treated independently, (2) packets can take ANY route, (3) they may arrive OUT of order, (4) they may even be lost. It is the RECEIVER\'s responsibility to reorder packets and request retransmission of lost ones.')">D)
+          Each packet is treated independently and may take different routes</button>
+      </div>
+      <div class="explanation" id="qs4-exp"></div>
+    </div>
+  </div>
+
+  <div id="applayer" class="section">
+    <div class="topic-title">Topic 5: Application Layer & Key Protocols <span class="badge badge-exam">Exam
+        Favorite</span></div>
+
+    <div class="card card-blue">
+      <h3>What is the Application Layer?</h3>
+      <p>The topmost layer — directly interfaces with the user. It's what you SEE and USE. When you open a browser, send
+        an email, or transfer a file, you're using application layer protocols. The application layer is "provided by
+        programs that use TCP/IP communication" — it is a user process cooperating with another process (usually on a
+        different host).</p>
+    </div>
+
+    <h2 class="section-head">Key Application Layer Protocols</h2>
+    <div class="table-wrap">
+      <table>
+        <tr>
+          <th>Protocol</th>
+          <th>Full Name</th>
+          <th>Port</th>
+          <th>Transport</th>
+          <th>Purpose</th>
+        </tr>
+        <tr>
+          <td>HTTP</td>
+          <td>Hypertext Transfer Protocol</td>
+          <td>80</td>
+          <td>TCP</td>
+          <td>Web pages (client-server)</td>
+        </tr>
+        <tr>
+          <td>HTTPS</td>
+          <td>HTTP Secure</td>
+          <td>443</td>
+          <td>TCP</td>
+          <td>Secure web pages</td>
+        </tr>
+        <tr>
+          <td>FTP</td>
+          <td>File Transfer Protocol</td>
+          <td>20 (data), 21 (control)</td>
+          <td>TCP</td>
+          <td>Reliable file transfer</td>
+        </tr>
+        <tr>
+          <td>TFTP</td>
+          <td>Trivial FTP</td>
+          <td>69</td>
+          <td>UDP</td>
+          <td>Simple/small file transfer</td>
+        </tr>
+        <tr>
+          <td>SMTP</td>
+          <td>Simple Mail Transfer Protocol</td>
+          <td>25</td>
+          <td>TCP</td>
+          <td>Sending email</td>
+        </tr>
+        <tr>
+          <td>POP3</td>
+          <td>Post Office Protocol v3</td>
+          <td>110</td>
+          <td>TCP</td>
+          <td>Receiving email (download)</td>
+        </tr>
+        <tr>
+          <td>DNS</td>
+          <td>Domain Name System</td>
+          <td>53</td>
+          <td>UDP (mostly)</td>
+          <td>Name to IP resolution</td>
+        </tr>
+        <tr>
+          <td>Telnet</td>
+          <td>Telnet</td>
+          <td>23</td>
+          <td>TCP</td>
+          <td>Remote login</td>
+        </tr>
+        <tr>
+          <td>SNMP</td>
+          <td>Simple Network Mgmt Protocol</td>
+          <td>161</td>
+          <td>UDP</td>
+          <td>Network management</td>
+        </tr>
+        <tr>
+          <td>SSH</td>
+          <td>Secure Shell</td>
+          <td>22</td>
+          <td>TCP</td>
+          <td>Secure remote access</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card card-green">
+      <h3>DNS — Domain Name System (Very Important)</h3>
+      <ul>
+        <li><strong>Purpose:</strong> Translates human-readable domain names to IP addresses (e.g., www.iitkgp.ac.in →
+          203.xx.xx.xx)</li>
+        <li><strong>Why needed:</strong> Routers understand IP addresses, not names. DNS acts as the "phone book" of the
+          internet.</li>
+        <li><strong>TLD examples:</strong> .in (India), .us (US), .edu (education), .com (commercial), .net (network),
+          .org (organization)</li>
+        <li><strong>Hierarchy:</strong> Root → TLD (.ac) → Domain (iitkgp) → Sub-domain (www)</li>
+        <li><strong>DNS is between</strong> Application and Transport layers — a cross-layer protocol</li>
+        <li><strong>200+ TLDs</strong> exist on the internet</li>
+      </ul>
+    </div>
+
+    <div class="card card-purple">
+      <h3>Sockets — The Communication Endpoint</h3>
+      <ul>
+        <li>A socket = IP address + Port number + Protocol</li>
+        <li>Uniquely identifies a process on the network</li>
+        <li>Server: Always listening on a known port (e.g., HTTP on port 80)</li>
+        <li>Client: Connects to server's IP + port, gets an ephemeral (temporary) port</li>
+        <li>5-tuple identifies a connection: {Protocol, Client IP, Client Port, Server IP, Server Port}</li>
+      </ul>
+    </div>
+
+    <div class="card card-amber">
+      <h3>TCP vs UDP — When to Use Which</h3>
+      <ul>
+        <li><strong>TCP:</strong> Connection-oriented, reliable, ordered, flow control, congestion control. Use for:
+          HTTP, FTP, SMTP, Telnet, SSH</li>
+        <li><strong>UDP:</strong> Connectionless, unreliable (best-effort), faster, lower overhead. Use for: DNS, SNMP,
+          TFTP, streaming, gaming, VoIP</li>
+      </ul>
+    </div>
+
+    <div class="card card-red">
+      <h3>LAN vs WAN</h3>
+      <ul>
+        <li><strong>LAN</strong> (Local Area Network): Covers small area (office, building). Owned by organization.</li>
+        <li><strong>WAN</strong> (Wide Area Network): Covers large geographic area. Connection typically rented from
+          service provider. Connects various sites/offices.</li>
+      </ul>
+    </div>
+
+    <h2 class="section-head">MCQs — Application Layer</h2>
+
+    <div class="mcq-block">
+      <div class="mcq-q">Q1. Which protocol uses UDP as its transport layer protocol for name resolution?</div>
+      <div class="mcq-opts" id="qa1">
+        <button class="opt"
+          onclick="answer('qa1',0,1,'DNS primarily uses UDP (port 53) for name resolution because DNS queries are small and fast, and UDP overhead is lower. FTP, HTTP, and SMTP all use TCP for reliable, connection-oriented transfers.')">A)
+          FTP</button>
+        <button class="opt"
+          onclick="answer('qa1',1,1,'DNS primarily uses UDP (port 53) for name resolution because DNS queries are small and fast, and UDP overhead is lower. FTP, HTTP, and SMTP all use TCP for reliable, connection-oriented transfers.')">B)
+          DNS</button>
+        <button class="opt"
+          onclick="answer('qa1',2,1,'DNS primarily uses UDP (port 53) for name resolution because DNS queries are small and fast, and UDP overhead is lower. FTP, HTTP, and SMTP all use TCP for reliable, connection-oriented transfers.')">C)
+          HTTP</button>
+        <button class="opt"
+          onclick="answer('qa1',3,1,'DNS primarily uses UDP (port 53) for name resolution because DNS queries are small and fast, and UDP overhead is lower. FTP, HTTP, and SMTP all use TCP for reliable, connection-oriented transfers.')">D)
+          SMTP</button>
+      </div>
+      <div class="explanation" id="qa1-exp"></div>
+    </div>
+
+    <div class="mcq-block">
+      <div class="mcq-q">Q2. What is the standard port number for HTTP?</div>
+      <div class="mcq-opts" id="qa2">
+        <button class="opt"
+          onclick="answer('qa2',0,2,'HTTP uses port 80. FTP uses ports 20 (data) and 21 (control). Telnet uses port 23. SMTP uses port 25. Remember: 20/21=FTP, 22=SSH, 23=Telnet, 25=SMTP, 53=DNS, 80=HTTP, 110=POP3, 443=HTTPS')">A)
+          21</button>
+        <button class="opt"
+          onclick="answer('qa2',1,2,'HTTP uses port 80. FTP uses ports 20 (data) and 21 (control). Telnet uses port 23. SMTP uses port 25. Remember: 20/21=FTP, 22=SSH, 23=Telnet, 25=SMTP, 53=DNS, 80=HTTP, 110=POP3, 443=HTTPS')">B)
+          25</button>
+        <button class="opt"
+          onclick="answer('qa2',2,2,'HTTP uses port 80. FTP uses ports 20 (data) and 21 (control). Telnet uses port 23. SMTP uses port 25. Remember: 20/21=FTP, 22=SSH, 23=Telnet, 25=SMTP, 53=DNS, 80=HTTP, 110=POP3, 443=HTTPS')">C)
+          80</button>
+        <button class="opt"
+          onclick="answer('qa2',3,2,'HTTP uses port 80. FTP uses ports 20 (data) and 21 (control). Telnet uses port 23. SMTP uses port 25. Remember: 20/21=FTP, 22=SSH, 23=Telnet, 25=SMTP, 53=DNS, 80=HTTP, 110=POP3, 443=HTTPS')">D)
+          23</button>
+      </div>
+      <div class="explanation" id="qa2-exp"></div>
+    </div>
+
+    <div class="mcq-block">
+      <div class="mcq-q">Q3. In the domain name "www.iitkgp.ac.in", what is the Top-Level Domain (TLD)?</div>
+      <div class="mcq-opts" id="qa3">
+        <button class="opt" onclick="answer('qa3',0,2,'In " www.iitkgp.ac.in" — reading right to left: .in=TLD (India
+          country code), .ac=second-level (academic), iitkgp=third-level (institution), www=sub-domain/hostname. The TLD
+          is the rightmost part after the last dot.')">A) www</button>
+        <button class="opt" onclick="answer('qa3',1,2,'In " www.iitkgp.ac.in" — reading right to left: .in=TLD (India
+          country code), .ac=second-level (academic), iitkgp=third-level (institution), www=sub-domain/hostname. The TLD
+          is the rightmost part after the last dot.')">B) iitkgp</button>
+        <button class="opt" onclick="answer('qa3',2,2,'In " www.iitkgp.ac.in" — reading right to left: .in=TLD (India
+          country code), .ac=second-level (academic), iitkgp=third-level (institution), www=sub-domain/hostname. The TLD
+          is the rightmost part after the last dot.')">C) in</button>
+        <button class="opt" onclick="answer('qa3',3,2,'In " www.iitkgp.ac.in" — reading right to left: .in=TLD (India
+          country code), .ac=second-level (academic), iitkgp=third-level (institution), www=sub-domain/hostname. The TLD
+          is the rightmost part after the last dot.')">D) ac</button>
+      </div>
+      <div class="explanation" id="qa3-exp"></div>
+    </div>
+
+    <div class="mcq-block">
+      <div class="mcq-q">Q4. TFTP (Trivial FTP) differs from FTP primarily in that TFTP:</div>
+      <div class="mcq-opts" id="qa4">
+        <button class="opt"
+          onclick="answer('qa4',0,2,'TFTP uses UDP (connectionless, unreliable) making it simpler and with less overhead. FTP uses TCP (connection-oriented, reliable). TFTP is designed for small, simple transfers (e.g., router firmware/IOS images) where the overhead of TCP is not justified.')">A)
+          Transfers files faster than FTP</button>
+        <button class="opt"
+          onclick="answer('qa4',1,2,'TFTP uses UDP (connectionless, unreliable) making it simpler and with less overhead. FTP uses TCP (connection-oriented, reliable). TFTP is designed for small, simple transfers (e.g., router firmware/IOS images) where the overhead of TCP is not justified.')">B)
+          Uses TCP instead of UDP</button>
+        <button class="opt"
+          onclick="answer('qa4',2,2,'TFTP uses UDP (connectionless, unreliable) making it simpler and with less overhead. FTP uses TCP (connection-oriented, reliable). TFTP is designed for small, simple transfers (e.g., router firmware/IOS images) where the overhead of TCP is not justified.')">C)
+          Uses UDP and is connectionless with less overhead</button>
+        <button class="opt"
+          onclick="answer('qa4',3,2,'TFTP uses UDP (connectionless, unreliable) making it simpler and with less overhead. FTP uses TCP (connection-oriented, reliable). TFTP is designed for small, simple transfers (e.g., router firmware/IOS images) where the overhead of TCP is not justified.')">D)
+          Provides more security than FTP</button>
+      </div>
+      <div class="explanation" id="qa4-exp"></div>
+    </div>
+  </div>
+
+  <div id="revision" class="section">
+    <div class="topic-title">Super Revision Notes — Last Day Before NPTEL Exam</div>
+
+    <div class="card card-red">
+      <h3>MOST FREQUENTLY ASKED IN NPTEL — Memorize These</h3>
+      <ul>
+        <li>Hub = Layer 1 | Bridge/Switch = Layer 2 | Router = Layer 3</li>
+        <li>Router divides BOTH collision domain AND broadcast domain</li>
+        <li>Switch divides collision domain ONLY (same broadcast domain)</li>
+        <li>Tim Berners-Lee = WWW (1989) | ARPANET = 1969 (4 universities) | DNS = 1984</li>
+        <li>Circuit switching = dedicated path, 3 phases, voice networks</li>
+        <li>Packet switching = store-and-forward, datagram/virtual circuit, data networks</li>
+        <li>OSI = 7 layers | TCP/IP = 4 or 5 layers</li>
+        <li>Data unit: Bits (L1) → Frame (L2) → Packet (L3) → Segment (L4)</li>
+      </ul>
+    </div>
+
+    <div class="card card-blue">
+      <h3>Protocol Elements — Remember "SST"</h3>
+      <ul>
+        <li><strong>S</strong>yntax — data format, structure, signal levels</li>
+        <li><strong>S</strong>emantics — control info, error handling, meaning</li>
+        <li><strong>T</strong>iming — speed matching, sequencing, synchronization</li>
+      </ul>
+    </div>
+
+    <div class="card card-green">
+      <h3>Port Numbers — Must Memorize</h3>
+      <div class="table-wrap">
+        <table>
+          <tr>
+            <th>Port</th>
+            <th>Protocol</th>
+            <th>Transport</th>
+          </tr>
+          <tr>
+            <td>20/21</td>
+            <td>FTP (data/control)</td>
+            <td>TCP</td>
+          </tr>
+          <tr>
+            <td>22</td>
+            <td>SSH</td>
+            <td>TCP</td>
+          </tr>
+          <tr>
+            <td>23</td>
+            <td>Telnet</td>
+            <td>TCP</td>
+          </tr>
+          <tr>
+            <td>25</td>
+            <td>SMTP</td>
+            <td>TCP</td>
+          </tr>
+          <tr>
+            <td>53</td>
+            <td>DNS</td>
+            <td>UDP</td>
+          </tr>
+          <tr>
+            <td>69</td>
+            <td>TFTP</td>
+            <td>UDP</td>
+          </tr>
+          <tr>
+            <td>80</td>
+            <td>HTTP</td>
+            <td>TCP</td>
+          </tr>
+          <tr>
+            <td>110</td>
+            <td>POP3</td>
+            <td>TCP</td>
+          </tr>
+          <tr>
+            <td>161</td>
+            <td>SNMP</td>
+            <td>UDP</td>
+          </tr>
+          <tr>
+            <td>443</td>
+            <td>HTTPS</td>
+            <td>TCP</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card card-purple">
+      <h3>Cross-Layer Protocols</h3>
+      <ul>
+        <li>DNS → between Application & Transport</li>
+        <li>SNMP → between Transport & Network</li>
+        <li>ARP, DHCP → between Network & Data Link</li>
+        <li>ICMP → alongside IP at Network layer</li>
+      </ul>
+    </div>
+
+    <div class="card card-amber">
+      <h3>Internet History — Key Facts</h3>
+      <div class="revision-item"><span class="bullet">→</span><span class="revision-text">1836 — Telegraph, Morse Code
+          (dots/dashes = binary analogy)</span></div>
+      <div class="revision-item"><span class="bullet">→</span><span class="revision-text">1962 — ARPANET founded
+          (resilient military network)</span></div>
+      <div class="revision-item"><span class="bullet">→</span><span class="revision-text">1969 — ARPANET commissioned by
+          DoD; 4 universities; first email</span></div>
+      <div class="revision-item"><span class="bullet">→</span><span class="revision-text">1974 — TCP proposed; 1982 —
+          TCP/IP for ARPANET</span></div>
+      <div class="revision-item"><span class="bullet">→</span><span class="revision-text">1983 — Name servers; 1984 —
+          DNS; hosts &gt; 1000</span></div>
+      <div class="revision-item"><span class="bullet">→</span><span class="revision-text">1989 — WWW by Tim Berners-Lee;
+          1990 — ARPANET ceases</span></div>
+      <div class="revision-item"><span class="bullet">→</span><span class="revision-text">1993 — Mosaic browser; hosts
+          &gt; 1 million</span></div>
+      <div class="revision-item"><span class="bullet">→</span><span class="revision-text">1994 — W3C founded; 1998 —
+          Google founded</span></div>
+    </div>
+
+    <div class="card card-blue">
+      <h3>Switching — Quick Comparison</h3>
+      <div class="revision-item"><span class="bullet">→</span><span class="revision-text">Circuit switching: 3 phases
+          (setup → transfer → disconnect), dedicated path, fixed data rate, voice networks</span></div>
+      <div class="revision-item"><span class="bullet">→</span><span class="revision-text">Packet switching:
+          store-and-forward, dynamic bandwidth, variable delay, data networks</span></div>
+      <div class="revision-item"><span class="bullet">→</span><span class="revision-text">Datagram: independent packets,
+          any route, may arrive out-of-order, receiver reorders</span></div>
+      <div class="revision-item"><span class="bullet">→</span><span class="revision-text">Virtual circuit:
+          pre-established path, VCI instead of destination address, ordered delivery</span></div>
+      <div class="revision-item"><span class="bullet">→</span><span class="revision-text">Circuit switching: bandwidth
+          guaranteed but wasted if idle</span></div>
+      <div class="revision-item"><span class="bullet">→</span><span class="revision-text">Packet switching: efficient
+          bandwidth use but possible packet loss/delay</span></div>
+    </div>
+
+    <div class="card card-green">
+      <h3>OSI Layer Mnemonics</h3>
+      <p style="margin-bottom: 6px;"><strong>Top to Bottom:</strong> "All People Seem To Need Data Processing"</p>
+      <p>Application → Presentation → Session → Transport → Network → Data Link → Physical</p>
+      <p style="margin-top: 8px;"><strong>Bottom to Top:</strong> "Please Do Not Throw Sausage Pizza Away"</p>
+      <p>Physical → Data Link → Network → Transport → Session → Presentation → Application</p>
+    </div>
+
+    <div class="card card-red" style="margin-top: 1rem;">
+      <h3>Application Layer Responsibilities (for 5-mark answers)</h3>
+      <ul>
+        <li>Identifying and establishing availability of communication partners</li>
+        <li>Synchronizing cooperating applications</li>
+        <li>Establishing error recovery procedures</li>
+        <li>Controlling data integrity</li>
+        <li>Providing user interface to network services</li>
+      </ul>
+    </div>
+
+    <div
+      style="margin-top: 1.5rem; padding: 1rem; background: #E6F1FB; border-radius: var(--border-radius-lg); border: 0.5px solid #B5D4F4;">
+      <p style="font-size: 14px; font-weight: 500; color: #0C447C; margin-bottom: 6px;">Exam Strategy Tips</p>
+      <ul style="font-size: 13px; color: #185FA5; padding-left: 1.2rem; line-height: 1.8;">
+        <li>For layer questions: Always identify by what the device OPENS the packet up to</li>
+        <li>For switching: Ask — is there a dedicated path? Yes = Circuit. Is data split into packets? Yes = Packet</li>
+        <li>For history: Memorize years in groups — 1960s (ARPANET), 1980s (TCP/IP, DNS), 1990s (WWW, browsers)</li>
+        <li>For port numbers: Know FTP(21), Telnet(23), SMTP(25), DNS(53), HTTP(80) at minimum</li>
+        <li>IETF guides internet standards; W3C guides web standards — do NOT confuse them</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  function show(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  function answer(qid, chosen, correct, explanation) {
+    const opts = document.querySelectorAll('#' + qid + ' .opt');
+    opts.forEach((o, i) => {
+      o.disabled = true;
+      if (i === correct) o.classList.add('correct');
+      else if (i === chosen && chosen !== correct) o.classList.add('wrong');
+    });
+    const exp = document.getElementById(qid + '-exp');
+    exp.textContent = (chosen === correct ? '✓ Correct! ' : '✗ Incorrect. ') + explanation;
+    exp.classList.add('visible');
+  }
+</script>

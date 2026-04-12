@@ -1,0 +1,1358 @@
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0
+    }
+
+    .w {
+        max-width: 900px;
+        padding: 1.5rem 1rem
+    }
+
+    .hero {
+        border-bottom: 0.5px solid var(--color-border-tertiary);
+        padding-bottom: 1.5rem;
+        margin-bottom: 2rem
+    }
+
+    .hero h1 {
+        font-size: 22px;
+        font-weight: 500;
+        color: var(--color-text-primary);
+        margin-bottom: 4px
+    }
+
+    .hero p {
+        font-size: 14px;
+        color: var(--color-text-secondary)
+    }
+
+    .tabs {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-bottom: 2rem
+    }
+
+    .tab {
+        padding: 6px 14px;
+        border: 0.5px solid var(--color-border-secondary);
+        border-radius: var(--border-radius-md);
+        font-size: 13px;
+        cursor: pointer;
+        background: var(--color-background-primary);
+        color: var(--color-text-secondary);
+        transition: all 0.15s
+    }
+
+    .tab:hover {
+        background: var(--color-background-secondary)
+    }
+
+    .tab.on {
+        background: #E6F1FB;
+        color: #0C447C;
+        border-color: #85B7EB;
+        font-weight: 500
+    }
+
+    .sec {
+        display: none
+    }
+
+    .sec.on {
+        display: block
+    }
+
+    .ttl {
+        font-size: 20px;
+        font-weight: 500;
+        color: var(--color-text-primary);
+        margin-bottom: 6px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid #85B7EB
+    }
+
+    .bdg {
+        display: inline-block;
+        font-size: 11px;
+        padding: 2px 8px;
+        border-radius: var(--border-radius-md);
+        margin-left: 8px
+    }
+
+    .bx {
+        border-radius: var(--border-radius-lg);
+        padding: 1rem 1.25rem;
+        margin: 1rem 0
+    }
+
+    .bbl {
+        background: #E6F1FB;
+        border-left: 3px solid #185FA5
+    }
+
+    .bbl h3 {
+        color: #0C447C
+    }
+
+    .bgn {
+        background: #EAF3DE;
+        border-left: 3px solid #3B6D11
+    }
+
+    .bgn h3 {
+        color: #27500A
+    }
+
+    .bamb {
+        background: #FAEEDA;
+        border-left: 3px solid #854F0B
+    }
+
+    .bamb h3 {
+        color: #633806
+    }
+
+    .bred {
+        background: #FCEBEB;
+        border-left: 3px solid #A32D2D
+    }
+
+    .bred h3 {
+        color: #791F1F
+    }
+
+    .bpur {
+        background: #EEEDFE;
+        border-left: 3px solid #534AB7
+    }
+
+    .bpur h3 {
+        color: #3C3489
+    }
+
+    .bteal {
+        background: #E1F5EE;
+        border-left: 3px solid #0F6E56
+    }
+
+    .bteal h3 {
+        color: #085041
+    }
+
+    .bsec {
+        background: var(--color-background-secondary);
+        border-radius: var(--border-radius-lg);
+        padding: 0.5rem 1.25rem;
+        margin: 1rem 0
+    }
+
+    .bx h3 {
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 6px
+    }
+
+    .bx p,
+    .bx li {
+        font-size: 14px;
+        color: var(--color-text-primary);
+        line-height: 1.7
+    }
+
+    .bx ul {
+        padding-left: 1.2rem
+    }
+
+    .pt {
+        display: flex;
+        gap: 10px;
+        padding: 8px 0;
+        border-bottom: 0.5px solid var(--color-border-tertiary)
+    }
+
+    .pt:last-child {
+        border-bottom: none
+    }
+
+    .pn {
+        font-size: 13px;
+        font-weight: 500;
+        color: #185FA5;
+        min-width: 22px
+    }
+
+    .ptx {
+        font-size: 14px;
+        color: var(--color-text-primary);
+        line-height: 1.6
+    }
+
+    .ptx strong {
+        font-weight: 500
+    }
+
+    .tw {
+        overflow-x: auto;
+        margin: 1rem 0
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px
+    }
+
+    th {
+        background: #E6F1FB;
+        color: #0C447C;
+        font-weight: 500;
+        padding: 8px 12px;
+        text-align: left;
+        border: 0.5px solid #B5D4F4
+    }
+
+    td {
+        padding: 8px 12px;
+        border: 0.5px solid var(--color-border-tertiary);
+        color: var(--color-text-primary);
+        vertical-align: top
+    }
+
+    tr:nth-child(even) td {
+        background: var(--color-background-secondary)
+    }
+
+    h2.sh {
+        font-size: 18px;
+        font-weight: 500;
+        color: var(--color-text-primary);
+        margin: 1.5rem 0 0.5rem
+    }
+
+    .mcq {
+        border: 0.5px solid var(--color-border-tertiary);
+        border-radius: var(--border-radius-lg);
+        padding: 1rem 1.25rem;
+        margin: 1rem 0;
+        background: var(--color-background-primary)
+    }
+
+    .mcq-q {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--color-text-primary);
+        margin-bottom: 10px;
+        line-height: 1.6
+    }
+
+    .opts {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 10px
+    }
+
+    .opt {
+        font-size: 13px;
+        padding: 6px 10px;
+        border-radius: var(--border-radius-md);
+        border: 0.5px solid var(--color-border-tertiary);
+        cursor: pointer;
+        color: var(--color-text-primary);
+        background: var(--color-background-primary);
+        text-align: left;
+        transition: background 0.1s
+    }
+
+    .opt:hover {
+        background: var(--color-background-secondary)
+    }
+
+    .opt.ok {
+        background: #EAF3DE;
+        border-color: #639922;
+        color: #27500A
+    }
+
+    .opt.no {
+        background: #FCEBEB;
+        border-color: #A32D2D;
+        color: #791F1F
+    }
+
+    .exp {
+        display: none;
+        font-size: 13px;
+        color: var(--color-text-secondary);
+        background: var(--color-background-secondary);
+        padding: 8px 12px;
+        border-radius: var(--border-radius-md);
+        margin-top: 6px;
+        line-height: 1.6
+    }
+
+    .exp.show {
+        display: block
+    }
+
+    .ri {
+        display: flex;
+        gap: 8px;
+        padding: 6px 0;
+        border-bottom: 0.5px solid var(--color-border-tertiary);
+        align-items: flex-start
+    }
+
+    .ri:last-child {
+        border-bottom: none
+    }
+
+    .rb {
+        font-size: 14px;
+        min-width: 140px;
+        color: #185FA5;
+        font-weight: 500
+    }
+
+    .rt {
+        font-size: 13px;
+        color: var(--color-text-primary);
+        line-height: 1.6
+    }
+
+    .code {
+        background: var(--color-background-secondary);
+        border: 0.5px solid var(--color-border-tertiary);
+        border-radius: var(--border-radius-md);
+        padding: 8px 12px;
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--color-text-primary);
+        margin: 6px 0;
+        line-height: 1.6
+    }
+</style>
+
+<div class="w">
+    <div class="hero">
+        <h1>Computer Networks — Week 7: Internet Quality of Service (QoS)</h1>
+        <p>QoS Introduction · Traffic Types · QoS Metrics · Traffic Shaping · Scheduling · IntServ · DiffServ
+            &nbsp;|&nbsp; NPTEL Exam-Ready Notes</p>
+    </div>
+
+    <div class="tabs">
+        <button class="tab on" onclick="show('intro')">QoS Introduction</button>
+        <button class="tab" onclick="show('traffic')">Traffic Types &amp; Metrics</button>
+        <button class="tab" onclick="show('shaping')">Traffic Shaping</button>
+        <button class="tab" onclick="show('sched')">Scheduling</button>
+        <button class="tab" onclick="show('intserv')">IntServ &amp; DiffServ</button>
+        <button class="tab" onclick="show('rev')">Super Revision</button>
+    </div>
+
+    <!-- ═══════════════ TAB 1: QoS INTRO ═══════════════ -->
+    <div id="intro" class="sec on">
+        <div class="ttl">Topic 1: QoS Introduction — Why It Matters <span class="bdg"
+                style="background:#FAEEDA;color:#633806">High Weightage</span></div>
+        <div class="bx bbl">
+            <h3>What is Quality of Service?</h3>
+            <p><strong>QoS (Quality of Service)</strong> refers to the ability of a network to provide different levels
+                of service to different types of traffic — guaranteeing bandwidth, controlling delay, controlling
+                jitter, and limiting packet loss for specific flows. The internet's original best-effort IP model treats
+                all packets equally. With the explosion of multimedia apps (YouTube, Netflix, VoIP, gaming), best-effort
+                is no longer sufficient for all traffic types.</p>
+        </div>
+
+        <h2 class="sh">Key explanation points — Why QoS is needed</h2>
+        <div class="bsec">
+            <div class="pt"><span class="pn">1</span><span class="ptx"><strong>Best-effort vs QoS:</strong> Traditional
+                    IP = best-effort — all packets treated equally, no guarantees. Routers simply forward packets as
+                    fast as possible. Under congestion, packets are dropped arbitrarily. This is fine for elastic
+                    traffic (file transfer, email) which can tolerate delay and retransmission. But it is unacceptable
+                    for <strong>real-time multimedia traffic</strong> (VoIP, video conferencing) that needs bounded
+                    delay and jitter.</span></div>
+            <div class="pt"><span class="pn">2</span><span class="ptx"><strong>The two traffic worlds:</strong> (1)
+                    <strong>Elastic/Data traffic</strong> — file transfer, web browsing, email. Can adapt to available
+                    bandwidth. TCP handles congestion with slow start. Tolerates delay up to seconds. Can retransmit.
+                    (2) <strong>Real-time/Multimedia traffic</strong> — VoIP, video conferencing, live streaming. Cannot
+                    tolerate delay &gt;150ms (VoIP), or jitter, or packet loss (causes audible/visual glitches). Cannot
+                    retransmit late packets (already due for playback).</span></div>
+            <div class="pt"><span class="pn">3</span><span class="ptx"><strong>Inelastic applications:</strong>
+                    Applications like VoIP, interactive video, teleconferencing are <strong>inelastic</strong> — they
+                    generate traffic at a fixed rate regardless of network congestion. Unlike TCP which backs off when
+                    congested, inelastic apps cannot reduce their rate and continue filling the network. This is
+                    dangerous — they can congest the network and starve other flows.</span></div>
+            <div class="pt"><span class="pn">4</span><span class="ptx"><strong>QoS goals:</strong> (1) <strong>Bandwidth
+                        guarantee</strong> — reserve minimum bandwidth for a high-priority flow. (2) <strong>Delay
+                        bound</strong> — ensure end-to-end delay stays below a threshold (e.g., 150ms for VoIP). (3)
+                    <strong>Jitter bound</strong> — limit the variation in delay across packets in the same flow. (4)
+                    <strong>Loss guarantee</strong> — ensure packet loss rate stays below an acceptable level. Different
+                    apps have different QoS requirements.</span></div>
+            <div class="pt"><span class="pn">5</span><span class="ptx"><strong>QoS approaches:</strong> Two major
+                    approaches: (1) <strong>Fine-grained / per-flow QoS</strong> (Integrated Services / IntServ) —
+                    reserve resources for each individual flow using signaling protocol RSVP. Provides hard guarantees.
+                    Doesn't scale to internet size. (2) <strong>Coarse-grained / aggregate QoS</strong> (Differentiated
+                    Services / DiffServ) — classify traffic into a few classes, treat each class differently. Scales
+                    well. Provides soft (relative) guarantees only.</span></div>
+            <div class="pt"><span class="pn">6</span><span class="ptx"><strong>QoS mechanisms (four building
+                        blocks):</strong> (1) <strong>Traffic classification and marking</strong> — identify and mark
+                    traffic types at ingress. (2) <strong>Traffic shaping / policing</strong> — control the rate at
+                    which traffic enters the network (token bucket, leaky bucket). (3) <strong>Queue scheduling</strong>
+                    — decide which packets to serve first at router queues (priority queuing, fair queuing, WFQ). (4)
+                    <strong>Admission control</strong> — decide whether to accept a new flow (if resources are
+                    insufficient, reject).</span></div>
+            <div class="pt"><span class="pn">7</span><span class="ptx"><strong>Jitter and its impact:</strong> Jitter =
+                    variation in packet arrival delay. Example: packet 1 arrives at t=10ms, packet 2 at t=25ms, packet 3
+                    at t=12ms. The gaps between arrivals are different — this is jitter. For audio, jitter causes uneven
+                    playback timing → choppy sound. Solution: <strong>playout buffer / jitter buffer</strong> at the
+                    receiver — delays playback by a fixed amount to absorb jitter. Trade-off: larger buffer = better
+                    jitter absorption but higher end-to-end delay.</span></div>
+            <div class="pt"><span class="pn">8</span><span class="ptx"><strong>Multimedia streaming vs
+                        interactive:</strong> <strong>Streaming</strong> (YouTube, Netflix) — large pre-buffering at
+                    client, tolerates high delay (seconds). Can adapt quality (adaptive bitrate — ABR).
+                    <strong>Interactive</strong> (VoIP, video call) — cannot pre-buffer, delay must stay &lt;150ms for
+                    natural conversation. Loss &lt;1–5%. Even with FEC (Forward Error Correction), interactive media has
+                    very tight QoS requirements.</span></div>
+        </div>
+
+        <div class="tw">
+            <table>
+                <tr>
+                    <th>Traffic Type</th>
+                    <th>Example</th>
+                    <th>Bandwidth</th>
+                    <th>Delay</th>
+                    <th>Jitter</th>
+                    <th>Loss</th>
+                </tr>
+                <tr>
+                    <td>Interactive Voice (VoIP)</td>
+                    <td>Skype, WhatsApp call</td>
+                    <td>8–64 Kbps</td>
+                    <td>&lt;150ms</td>
+                    <td>&lt;20ms</td>
+                    <td>&lt;1%</td>
+                </tr>
+                <tr>
+                    <td>Video Conferencing</td>
+                    <td>Zoom, Teams</td>
+                    <td>1–10 Mbps</td>
+                    <td>&lt;150ms</td>
+                    <td>&lt;30ms</td>
+                    <td>&lt;1%</td>
+                </tr>
+                <tr>
+                    <td>Streaming Video</td>
+                    <td>Netflix, YouTube</td>
+                    <td>1–50 Mbps</td>
+                    <td>Seconds (buffered)</td>
+                    <td>Tolerable</td>
+                    <td>&lt;0.1%</td>
+                </tr>
+                <tr>
+                    <td>File Transfer</td>
+                    <td>FTP, download</td>
+                    <td>Best effort</td>
+                    <td>Elastic</td>
+                    <td>Irrelevant</td>
+                    <td>Handled by TCP</td>
+                </tr>
+                <tr>
+                    <td>Email / Web</td>
+                    <td>HTTP, SMTP</td>
+                    <td>Best effort</td>
+                    <td>Elastic</td>
+                    <td>Irrelevant</td>
+                    <td>Handled by TCP</td>
+                </tr>
+            </table>
+        </div>
+
+        <h2 class="sh">MCQs — QoS Introduction</h2>
+        <div class="mcq">
+            <div class="mcq-q">Q1. Why is the internet's best-effort model insufficient for VoIP applications?</div>
+            <div class="opts" id="qi1">
+                <button class="opt"
+                    onclick="ans('qi1',0,3,'VoIP requires: (1) Delay ≤ 150ms — beyond this, conversations feel unnatural. (2) Jitter control — variable delay causes choppy audio. (3) Low loss — dropped packets cause audible gaps. Best-effort provides NO guarantees on delay, jitter, or loss. Under congestion, IP drops packets arbitrarily and delays can spike to seconds. VoIP cannot buffer (interactive), cannot retransmit late packets, and cannot adapt rate. QoS is essential.')">A)
+                    VoIP uses UDP which is not supported by best-effort IP</button>
+                <button class="opt"
+                    onclick="ans('qi1',1,3,'VoIP requires: (1) Delay ≤ 150ms — beyond this, conversations feel unnatural. (2) Jitter control — variable delay causes choppy audio. (3) Low loss — dropped packets cause audible gaps. Best-effort provides NO guarantees on delay, jitter, or loss. Under congestion, IP drops packets arbitrarily and delays can spike to seconds. VoIP cannot buffer (interactive), cannot retransmit late packets, and cannot adapt rate. QoS is essential.')">B)
+                    VoIP requires multicast routing which best-effort does not support</button>
+                <button class="opt"
+                    onclick="ans('qi1',2,3,'VoIP requires: (1) Delay ≤ 150ms — beyond this, conversations feel unnatural. (2) Jitter control — variable delay causes choppy audio. (3) Low loss — dropped packets cause audible gaps. Best-effort provides NO guarantees on delay, jitter, or loss. Under congestion, IP drops packets arbitrarily and delays can spike to seconds. VoIP cannot buffer (interactive), cannot retransmit late packets, and cannot adapt rate. QoS is essential.')">C)
+                    Best-effort only supports TCP; VoIP needs UDP</button>
+                <button class="opt"
+                    onclick="ans('qi1',3,3,'VoIP requires: (1) Delay ≤ 150ms — beyond this, conversations feel unnatural. (2) Jitter control — variable delay causes choppy audio. (3) Low loss — dropped packets cause audible gaps. Best-effort provides NO guarantees on delay, jitter, or loss. Under congestion, IP drops packets arbitrarily and delays can spike to seconds. VoIP cannot buffer (interactive), cannot retransmit late packets, and cannot adapt rate. QoS is essential.')">D)
+                    VoIP requires bounded delay (&lt;150ms), low jitter, and low loss — best-effort provides no such
+                    guarantees</button>
+            </div>
+            <div class="exp" id="qi1-e"></div>
+        </div>
+        <div class="mcq">
+            <div class="mcq-q">Q2. What is jitter and how is it handled at the receiver for VoIP?</div>
+            <div class="opts" id="qi2">
+                <button class="opt"
+                    onclick="ans('qi2',0,1,'Jitter = variation in packet inter-arrival delay (not delay itself). Even if average delay is fine, variable delays cause packets to arrive unevenly → choppy playback. Solution: jitter buffer (playout buffer) at receiver — holds incoming packets for a fixed delay before playing, so output is smooth. Trade-off: larger buffer absorbs more jitter but adds more end-to-end delay. Adaptive jitter buffers adjust size dynamically.')">A)
+                    Jitter = total end-to-end delay; fixed by increasing bandwidth</button>
+                <button class="opt"
+                    onclick="ans('qi2',1,1,'Jitter = variation in packet inter-arrival delay (not delay itself). Even if average delay is fine, variable delays cause packets to arrive unevenly → choppy playback. Solution: jitter buffer (playout buffer) at receiver — holds incoming packets for a fixed delay before playing, so output is smooth. Trade-off: larger buffer absorbs more jitter but adds more end-to-end delay. Adaptive jitter buffers adjust size dynamically.')">B)
+                    Jitter = variable inter-packet arrival delay; mitigated by a playout (jitter) buffer at
+                    receiver</button>
+                <button class="opt"
+                    onclick="ans('qi2',2,1,'Jitter = variation in packet inter-arrival delay (not delay itself). Even if average delay is fine, variable delays cause packets to arrive unevenly → choppy playback. Solution: jitter buffer (playout buffer) at receiver — holds incoming packets for a fixed delay before playing, so output is smooth. Trade-off: larger buffer absorbs more jitter but adds more end-to-end delay. Adaptive jitter buffers adjust size dynamically.')">C)
+                    Jitter = packet loss; mitigated by ARQ retransmission</button>
+                <button class="opt"
+                    onclick="ans('qi2',3,1,'Jitter = variation in packet inter-arrival delay (not delay itself). Even if average delay is fine, variable delays cause packets to arrive unevenly → choppy playback. Solution: jitter buffer (playout buffer) at receiver — holds incoming packets for a fixed delay before playing, so output is smooth. Trade-off: larger buffer absorbs more jitter but adds more end-to-end delay. Adaptive jitter buffers adjust size dynamically.')">D)
+                    Jitter = duplicate packets; handled by sequence number checking</button>
+            </div>
+            <div class="exp" id="qi2-e"></div>
+        </div>
+    </div>
+
+    <!-- ═══════════════ TAB 2: TRAFFIC TYPES & METRICS ═══════════════ -->
+    <div id="traffic" class="sec">
+        <div class="ttl">Topic 2: Traffic Types &amp; QoS Metrics <span class="bdg"
+                style="background:#FAEEDA;color:#633806">High Weightage</span></div>
+        <div class="bx bbl">
+            <h3>Understanding traffic characteristics</h3>
+            <p>Different applications generate network traffic with very different statistical patterns. Understanding
+                these patterns is critical for designing QoS mechanisms that can provide the right guarantees for each
+                traffic type without over-provisioning.</p>
+        </div>
+
+        <h2 class="sh">Key explanation points — Traffic Types</h2>
+        <div class="bsec">
+            <div class="pt"><span class="pn">1</span><span class="ptx"><strong>CBR — Constant Bit Rate:</strong> Traffic
+                    is generated at a <strong>fixed, steady rate</strong>. Example: uncompressed voice over VoIP (G.711
+                    codec) — one packet every 20ms, always the same size. Very predictable. Easy to provision bandwidth
+                    — just reserve the fixed rate. Traditional circuit-switched telephone networks were CBR. Simple to
+                    handle with QoS: just guarantee the fixed bandwidth.</span></div>
+            <div class="pt"><span class="pn">2</span><span class="ptx"><strong>VBR — Variable Bit Rate:</strong> Traffic
+                    rate varies over time but within known bounds (peak rate and average rate). Example: compressed
+                    video (H.264) — scenes with little motion → small frames (low rate). Scenes with fast motion → large
+                    frames (high rate). Challenging for QoS: must guarantee <strong>peak rate</strong> (waste if average
+                    is low) OR allow statistical multiplexing (risk: if many flows peak simultaneously →
+                    congestion).</span></div>
+            <div class="pt"><span class="pn">3</span><span class="ptx"><strong>Bursty / Data traffic:</strong> Traffic
+                    arrives in large short bursts separated by long idle periods. Example: web browsing — long pause
+                    (user reading page) → sudden burst (clicking link, downloading page). File transfer — large
+                    sustained burst then nothing. Extremely hard to predict. TCP handles this elastically. No real-time
+                    constraint. Best-effort IP is designed primarily for this type.</span></div>
+            <div class="pt"><span class="pn">4</span><span class="ptx"><strong>On-Off traffic model:</strong> A
+                    simplified model for many real-world sources. Source alternates between <strong>ON periods</strong>
+                    (generating data at rate r for time ton) and <strong>OFF periods</strong> (silent for time toff).
+                    Average rate = r × ton / (ton + toff). During ON: if many sources are ON simultaneously →
+                    congestion. Statistical multiplexing relies on the fact that not all sources are ON at the same
+                    time.</span></div>
+            <div class="pt"><span class="pn">5</span><span class="ptx"><strong>Statistical multiplexing gain:</strong>
+                    If N sources share a link, and each is ON only fraction p of the time, the probability all N are ON
+                    simultaneously is pᴺ (very small for large N). This means link capacity can be set much less than N
+                    × peak rate. The gain = N × peak rate / required link capacity. Example: 100 users each with 1Mbps
+                    peak, ON 10% of time — a 10Mbps link can serve them all since rarely more than 10 are ON at
+                    once.</span></div>
+            <div class="pt"><span class="pn">6</span><span class="ptx"><strong>Traffic descriptor / flow
+                        specification:</strong> To provide QoS guarantees, a flow must describe its traffic to the
+                    network. Common parameters: <strong>Token Bucket params (r, b)</strong>: sustained rate r
+                    (bytes/sec), burst size b (bytes). <strong>Peak rate p</strong>: maximum instantaneous rate.
+                    <strong>Minimum policed unit</strong>: smallest packet size considered. These parameters form the
+                    <strong>flow specification (flowspec)</strong> used in IntServ/RSVP.</span></div>
+        </div>
+
+        <h2 class="sh">Key explanation points — QoS Metrics</h2>
+        <div class="bsec">
+            <div class="pt"><span class="pn">7</span><span class="ptx"><strong>Bandwidth (throughput):</strong> The data
+                    rate available to a flow (bits per second). QoS bandwidth guarantee = the network reserves at least
+                    this rate for the flow. Measured as: goodput (useful data delivered per second), not counting
+                    retransmissions or headers. Different from raw link speed — actual throughput depends on congestion,
+                    protocol overhead.</span></div>
+            <div class="pt"><span class="pn">8</span><span class="ptx"><strong>Delay (latency):</strong> Total time from
+                    packet sent to packet received at destination. Components: (1) <strong>Propagation delay</strong> =
+                    distance / speed of light through medium. (2) <strong>Transmission delay</strong> = packet size /
+                    link bandwidth. (3) <strong>Queuing delay</strong> = time waiting in router buffers. (4)
+                    <strong>Processing delay</strong> = time for router to look up forwarding table. Propagation +
+                    transmission are fixed for a given link. Queuing delay is variable and dominates under
+                    congestion.</span></div>
+            <div class="pt"><span class="pn">9</span><span class="ptx"><strong>Jitter (delay variation):</strong> The
+                    difference in delay between consecutive packets of the same flow. Causes: variable queuing delay at
+                    congested routers. Impact: for real-time streams, high jitter means packets arrive unevenly →
+                    audio/video playback becomes choppy. Measured as: standard deviation of one-way delay across
+                    packets, or max delay minus min delay across a window. Bound by jitter buffer size at
+                    receiver.</span></div>
+            <div class="pt"><span class="pn">10</span><span class="ptx"><strong>Packet loss:</strong> Fraction of
+                    packets that are dropped (never received). Causes: router buffer overflow (most common), bit errors
+                    (rare on wired links), congestion. Impact: TCP handles loss by retransmission (acceptable for data).
+                    For real-time media: loss = missing audio/video frames → gaps/artifacts. Typical tolerable loss:
+                    VoIP &lt;1–3%, video &lt;0.1%. Loss above these thresholds causes perceptible quality
+                    degradation.</span></div>
+            <div class="pt"><span class="pn">11</span><span class="ptx"><strong>QoS parameters summary — ITU-T
+                        G.114:</strong> For VoIP, ITU-T recommends: One-way delay &lt; <strong>150ms</strong>
+                    (preferred) or &lt; 400ms (acceptable). Jitter &lt; <strong>10–20ms</strong>. Packet loss &lt;
+                    <strong>1%</strong>. These are the standard numbers to memorise for exams. Beyond 150ms delay,
+                    callers start using "push-to-talk" style pauses (walkie-talkie effect).</span></div>
+            <div class="pt"><span class="pn">12</span><span class="ptx"><strong>Delay budget:</strong> The total allowed
+                    delay is distributed among network segments. Example: total allowed = 150ms. Propagation (sender to
+                    receiver) may take 50ms. Router queuing may take up to 20ms per hop × 3 hops = 60ms. Jitter buffer
+                    at receiver = 40ms. 50+60+40 = 150ms — the entire budget is consumed. QoS must ensure queuing delays
+                    stay within budget. This is why delay-bound guarantees are needed per hop.</span></div>
+        </div>
+
+        <div class="tw">
+            <table>
+                <tr>
+                    <th>QoS Metric</th>
+                    <th>Definition</th>
+                    <th>Critical for</th>
+                    <th>Key number</th>
+                </tr>
+                <tr>
+                    <td>Bandwidth</td>
+                    <td>Reserved data rate (bps)</td>
+                    <td>All media</td>
+                    <td>VoIP: 64Kbps; HD video: 4Mbps+</td>
+                </tr>
+                <tr>
+                    <td>Delay (one-way)</td>
+                    <td>End-to-end packet delivery time</td>
+                    <td>VoIP, gaming</td>
+                    <td>&lt;150ms (VoIP ITU-T G.114)</td>
+                </tr>
+                <tr>
+                    <td>Jitter</td>
+                    <td>Variation in delay across packets</td>
+                    <td>VoIP, streaming</td>
+                    <td>&lt;10–20ms (VoIP)</td>
+                </tr>
+                <tr>
+                    <td>Packet Loss</td>
+                    <td>Fraction of packets dropped</td>
+                    <td>All media</td>
+                    <td>&lt;1% VoIP, &lt;0.1% video</td>
+                </tr>
+            </table>
+        </div>
+
+        <h2 class="sh">MCQs — Traffic Types &amp; Metrics</h2>
+        <div class="mcq">
+            <div class="mcq-q">Q1. What is statistical multiplexing gain and how does it allow networks to operate
+                efficiently?</div>
+            <div class="opts" id="tm1">
+                <button class="opt"
+                    onclick="ans('tm1',0,2,'Statistical multiplexing exploits the fact that not all users are active simultaneously. If each of N users uses the link only p fraction of the time, the probability all N are active simultaneously is very low (pᴺ). The link capacity can be provisioned for the expected simultaneous users (much less than N × peak rate). Gain = ability to serve more users with less total capacity. TCP\'s elastic behavior supports this — it backs off when others need bandwidth.')">A)
+                    It multiplies bandwidth by N for N users sharing a link</button>
+                <button class="opt"
+                    onclick="ans('tm1',1,2,'Statistical multiplexing exploits the fact that not all users are active simultaneously. If each of N users uses the link only p fraction of the time, the probability all N are active simultaneously is very low (pᴺ). The link capacity can be provisioned for the expected simultaneous users (much less than N × peak rate). Gain = ability to serve more users with less total capacity. TCP\'s elastic behavior supports this — it backs off when others need bandwidth.')">B)
+                    It uses reserved slots in time (like TDM) to avoid collision</button>
+                <button class="opt"
+                    onclick="ans('tm1',2,2,'Statistical multiplexing exploits the fact that not all users are active simultaneously. If each of N users uses the link only p fraction of the time, the probability all N are active simultaneously is very low (pᴺ). The link capacity can be provisioned for the expected simultaneous users (much less than N × peak rate). Gain = ability to serve more users with less total capacity. TCP\'s elastic behavior supports this — it backs off when others need bandwidth.')">C)
+                    Not all sources are active simultaneously — capacity can be shared efficiently; it breaks down when
+                    many inelastic flows peak concurrently</button>
+                <button class="opt"
+                    onclick="ans('tm1',3,2,'Statistical multiplexing exploits the fact that not all users are active simultaneously. If each of N users uses the link only p fraction of the time, the probability all N are active simultaneously is very low (pᴺ). The link capacity can be provisioned for the expected simultaneous users (much less than N × peak rate). Gain = ability to serve more users with less total capacity. TCP\'s elastic behavior supports this — it backs off when others need bandwidth.')">D)
+                    It compresses all traffic into smaller packets to fit more data</button>
+            </div>
+            <div class="exp" id="tm1-e"></div>
+        </div>
+        <div class="mcq">
+            <div class="mcq-q">Q2. A packet experiences 20ms propagation delay, 5ms transmission delay, and 30ms queuing
+                delay. What is the total delay and which component is most variable?</div>
+            <div class="opts" id="tm2">
+                <button class="opt"
+                    onclick="ans('tm2',0,1,'Total = 20 + 5 + 30 = 55ms. Queuing delay is MOST VARIABLE — it depends on how many packets are ahead in the queue, which changes with instantaneous network load. Propagation delay is fixed (depends on physical distance). Transmission delay is fixed for a given packet size and link speed. Under congestion, queuing delay can spike from near-zero to hundreds of milliseconds, causing jitter.')">A)
+                    Total = 55ms; propagation delay is most variable</button>
+                <button class="opt"
+                    onclick="ans('tm2',1,1,'Total = 20 + 5 + 30 = 55ms. Queuing delay is MOST VARIABLE — it depends on how many packets are ahead in the queue, which changes with instantaneous network load. Propagation delay is fixed (depends on physical distance). Transmission delay is fixed for a given packet size and link speed. Under congestion, queuing delay can spike from near-zero to hundreds of milliseconds, causing jitter.')">B)
+                    Total = 55ms; queuing delay is most variable (causes jitter)</button>
+                <button class="opt"
+                    onclick="ans('tm2',2,1,'Total = 20 + 5 + 30 = 55ms. Queuing delay is MOST VARIABLE — it depends on how many packets are ahead in the queue, which changes with instantaneous network load. Propagation delay is fixed (depends on physical distance). Transmission delay is fixed for a given packet size and link speed. Under congestion, queuing delay can spike from near-zero to hundreds of milliseconds, causing jitter.')">C)
+                    Total = 25ms (queuing not counted); transmission delay is variable</button>
+                <button class="opt"
+                    onclick="ans('tm2',3,1,'Total = 20 + 5 + 30 = 55ms. Queuing delay is MOST VARIABLE — it depends on how many packets are ahead in the queue, which changes with instantaneous network load. Propagation delay is fixed (depends on physical distance). Transmission delay is fixed for a given packet size and link speed. Under congestion, queuing delay can spike from near-zero to hundreds of milliseconds, causing jitter.')">D)
+                    Total = 55ms; all components are equally variable</button>
+            </div>
+            <div class="exp" id="tm2-e"></div>
+        </div>
+    </div>
+
+    <!-- ═══════════════ TAB 3: TRAFFIC SHAPING ═══════════════ -->
+    <div id="shaping" class="sec">
+        <div class="ttl">Topic 3: Traffic Shaping — Leaky Bucket &amp; Token Bucket <span class="bdg"
+                style="background:#FCEBEB;color:#791F1F">Most Important</span></div>
+        <div class="bx bbl">
+            <h3>Why shape traffic?</h3>
+            <p>Traffic shaping controls the <strong>rate and burstiness</strong> of traffic entering the network.
+                Without shaping, a bursty source can flood the network with packets, causing congestion and harming
+                other flows. Traffic shaping smooths out bursts to match the contracted rate. Two classic algorithms:
+                <strong>Leaky Bucket</strong> (rigid rate limiting) and <strong>Token Bucket</strong> (allows burstiness
+                up to a limit).
+            </p>
+        </div>
+
+        <h2 class="sh">Key explanation points — Leaky Bucket</h2>
+        <div class="bsec">
+            <div class="pt"><span class="pn">1</span><span class="ptx"><strong>Leaky Bucket concept:</strong> Imagine a
+                    bucket with a small hole at the bottom. Water (packets) poured in from top at any rate — can be
+                    bursty. Water leaks out from the bottom at a <strong>constant, fixed rate</strong> regardless of how
+                    fast it arrives. If bucket fills up → overflow (packets dropped). Result: output is always at a
+                    constant rate (<strong>smoothed/shaped traffic</strong>) even if input is bursty.</span></div>
+            <div class="pt"><span class="pn">2</span><span class="ptx"><strong>Leaky Bucket — network
+                        implementation:</strong> A queue (buffer) acts as the bucket. Incoming packets enter the queue
+                    at any rate. A <strong>constant-rate server</strong> removes packets from the queue and sends them
+                    onto the network at rate <strong>r bytes/sec</strong> (fixed). If the queue is full → new packets
+                    are dropped (overflow). Output: always a steady stream at rate r — burst is
+                    absorbed/eliminated.</span></div>
+            <div class="pt"><span class="pn">3</span><span class="ptx"><strong>Leaky Bucket — limitation:</strong> Even
+                    if the network has spare capacity, leaky bucket <strong>cannot exceed rate r</strong>. Example: user
+                    sends a 10MB file fast (burst). Leaky bucket slows this to rate r even if the link is idle. This is
+                    inflexible — cannot take advantage of momentarily available bandwidth. Good for CBR traffic (voice).
+                    Bad for bursty data where bursts can be accommodated.</span></div>
+            <div class="pt"><span class="pn">4</span><span class="ptx"><strong>Leaky Bucket parameters:</strong> Rate r
+                    (output rate, e.g., bits/sec or packets/sec). Buffer size b (maximum queue length). If arrival rate
+                    &lt; r — queue drains, no congestion. If arrival rate &gt; r for sustained period — queue fills to
+                    capacity b, then packets drop. Maximum output burst in any interval T = r × T (perfectly smooth, no
+                    burst at output).</span></div>
+        </div>
+
+        <h2 class="sh">Key explanation points — Token Bucket</h2>
+        <div class="bsec">
+            <div class="pt"><span class="pn">5</span><span class="ptx"><strong>Token Bucket concept:</strong> A bucket
+                    holds <strong>tokens</strong>. Tokens are added at a constant rate <strong>r tokens/sec</strong>.
+                    Bucket has a maximum capacity of <strong>b tokens</strong> (when full, new tokens are discarded). To
+                    send a packet of size L bytes, the sender must first remove L tokens from the bucket. If
+                    insufficient tokens → packet must wait (or be dropped). Key difference from leaky bucket:
+                    <strong>tokens can accumulate</strong>, allowing a burst when tokens have built up.</span></div>
+            <div class="pt"><span class="pn">6</span><span class="ptx"><strong>Token Bucket — burst capability:</strong>
+                    If the flow is idle, tokens accumulate up to the maximum b. When data arrives, it can consume up to
+                    b tokens all at once → send a burst of up to b bytes instantly. After the burst, tokens must refill
+                    at rate r. This allows <strong>short bursts while maintaining long-term average rate r</strong>.
+                    This is more flexible and realistic than leaky bucket for data traffic.</span></div>
+            <div class="pt"><span class="pn">7</span><span class="ptx"><strong>Token Bucket parameters:</strong> Token
+                    arrival rate = <strong>r</strong> (sustained rate, bytes/sec or packets/sec). Token bucket size =
+                    <strong>b</strong> (maximum burst size in bytes). Maximum burst duration = b/r seconds. In any time
+                    interval T, the maximum bytes that can be sent = <strong>min(b + r×T, peak_rate × T)</strong>
+                    (capped by peak rate if specified).</span></div>
+            <div class="pt"><span class="pn">8</span><span class="ptx"><strong>Token Bucket + Leaky Bucket
+                        combination:</strong> Often used together: Token Bucket allows shaping with controlled bursts. A
+                    downstream Leaky Bucket then smooths out the token-bucket-allowed bursts to a peak rate p. Combined:
+                    guaranteed average rate r, allowed burst b, but peak output rate ≤ p (peak rate limiter). This is
+                    used in ATM traffic shaping (GCRA — Generic Cell Rate Algorithm).</span></div>
+            <div class="pt"><span class="pn">9</span><span class="ptx"><strong>Traffic policing vs Traffic
+                        shaping:</strong> <strong>Shaping</strong>: delay excess packets (buffer them and send later) —
+                    smooths traffic but adds delay. <strong>Policing</strong>: drop or mark (re-mark DSCP) excess
+                    packets that exceed the contract rate — no delay added, but packets may be lost. Policing is done at
+                    the network edge (metering incoming traffic from customers). Shaping is done at the sender side (own
+                    traffic).</span></div>
+            <div class="pt"><span class="pn">10</span><span class="ptx"><strong>Three-color marking
+                        (srTCM/trTCM):</strong> Used in DiffServ policing. Packets are marked Green (within CIR —
+                    Committed Information Rate), Yellow (exceeds CIR but within PBS/EBS), or Red (exceeds all limits).
+                    Green = forward normally. Yellow = forward if possible (drop on congestion). Red = drop. srTCM =
+                    single rate three color marker. trTCM = two rate three color marker (defines both CIR and
+                    PIR).</span></div>
+        </div>
+
+        <div class="tw">
+            <table>
+                <tr>
+                    <th>Feature</th>
+                    <th>Leaky Bucket</th>
+                    <th>Token Bucket</th>
+                </tr>
+                <tr>
+                    <td>Output rate</td>
+                    <td>Always constant rate r (rigid)</td>
+                    <td>Up to burst b, then sustained rate r</td>
+                </tr>
+                <tr>
+                    <td>Burst handling</td>
+                    <td>Absorbs bursts — no burst at output</td>
+                    <td>Allows bursts up to b bytes</td>
+                </tr>
+                <tr>
+                    <td>Idle accumulation</td>
+                    <td>Queue drains — no benefit from idle</td>
+                    <td>Tokens accumulate up to b during idle</td>
+                </tr>
+                <tr>
+                    <td>Use case</td>
+                    <td>CBR traffic (voice), strict rate enforcement</td>
+                    <td>VBR traffic (video, data), flexible shaping</td>
+                </tr>
+                <tr>
+                    <td>Parameters</td>
+                    <td>Rate r, buffer size b</td>
+                    <td>Token rate r, bucket size b [+peak rate p]</td>
+                </tr>
+            </table>
+        </div>
+
+        <h2 class="sh">MCQs — Traffic Shaping</h2>
+        <div class="mcq">
+            <div class="mcq-q">Q1. A token bucket has r = 1 Mbps and b = 2 Mb. The flow has been idle for 4 seconds. How
+                many bits can be sent in a burst immediately?</div>
+            <div class="opts" id="sh1">
+                <button class="opt"
+                    onclick="ans('sh1',0,1,'Tokens accumulate at rate r = 1 Mbps. After 4 seconds idle: tokens accumulated = 4 × 1Mbps = 4 Mb. But bucket size b = 2 Mb — maximum tokens = 2 Mb (bucket is full after 2 seconds idle, and does not overflow further). So maximum burst = b = 2 Mb (not 4 Mb). Token bucket caps accumulation at b. After the 2Mb burst, tokens refill at 1Mbps.')">A)
+                    4 Mb (rate × time = 1Mbps × 4s)</button>
+                <button class="opt"
+                    onclick="ans('sh1',1,1,'Tokens accumulate at rate r = 1 Mbps. After 4 seconds idle: tokens accumulated = 4 × 1Mbps = 4 Mb. But bucket size b = 2 Mb — maximum tokens = 2 Mb (bucket is full after 2 seconds idle, and does not overflow further). So maximum burst = b = 2 Mb (not 4 Mb). Token bucket caps accumulation at b. After the 2Mb burst, tokens refill at 1Mbps.')">B)
+                    2 Mb (bucket is full at b = 2 Mb; tokens do not overflow beyond b)</button>
+                <button class="opt"
+                    onclick="ans('sh1',2,1,'Tokens accumulate at rate r = 1 Mbps. After 4 seconds idle: tokens accumulated = 4 × 1Mbps = 4 Mb. But bucket size b = 2 Mb — maximum tokens = 2 Mb (bucket is full after 2 seconds idle, and does not overflow further). So maximum burst = b = 2 Mb (not 4 Mb). Token bucket caps accumulation at b. After the 2Mb burst, tokens refill at 1Mbps.')">C)
+                    1 Mb (only one second worth of tokens is allowed)</button>
+                <button class="opt"
+                    onclick="ans('sh1',3,1,'Tokens accumulate at rate r = 1 Mbps. After 4 seconds idle: tokens accumulated = 4 × 1Mbps = 4 Mb. But bucket size b = 2 Mb — maximum tokens = 2 Mb (bucket is full after 2 seconds idle, and does not overflow further). So maximum burst = b = 2 Mb (not 4 Mb). Token bucket caps accumulation at b. After the 2Mb burst, tokens refill at 1Mbps.')">D)
+                    Unlimited — token bucket allows any burst as long as flow was idle</button>
+            </div>
+            <div class="exp" id="sh1-e"></div>
+        </div>
+        <div class="mcq">
+            <div class="mcq-q">Q2. What is the key difference between traffic shaping and traffic policing?</div>
+            <div class="opts" id="sh2">
+                <button class="opt"
+                    onclick="ans('sh2',0,2,'Shaping: excess packets are DELAYED (buffered, then sent later at allowed rate). Output is smoothed. Adds latency but no loss. Used by senders/endpoints. Policing: excess packets are DROPPED or RE-MARKED (DSCP changed to lower priority). No buffering, no added delay for conforming traffic. Can cause loss. Used at network ingress (ISP/enterprise boundary) to enforce contracted rates. Shaping is gentler; policing is harsher but simpler.')">A)
+                    Shaping uses leaky bucket; policing uses token bucket</button>
+                <button class="opt"
+                    onclick="ans('sh2',1,2,'Shaping: excess packets are DELAYED (buffered, then sent later at allowed rate). Output is smoothed. Adds latency but no loss. Used by senders/endpoints. Policing: excess packets are DROPPED or RE-MARKED (DSCP changed to lower priority). No buffering, no added delay for conforming traffic. Can cause loss. Used at network ingress (ISP/enterprise boundary) to enforce contracted rates. Shaping is gentler; policing is harsher but simpler.')">B)
+                    Shaping delays excess traffic (smooths); policing drops or re-marks excess traffic (enforces at
+                    edge)</button>
+                <button class="opt"
+                    onclick="ans('sh2',2,2,'Shaping: excess packets are DELAYED (buffered, then sent later at allowed rate). Output is smoothed. Adds latency but no loss. Used by senders/endpoints. Policing: excess packets are DROPPED or RE-MARKED (DSCP changed to lower priority). No buffering, no added delay for conforming traffic. Can cause loss. Used at network ingress (ISP/enterprise boundary) to enforce contracted rates. Shaping is gentler; policing is harsher but simpler.')">C)
+                    Shaping works at Layer 2; policing works at Layer 3</button>
+                <button class="opt"
+                    onclick="ans('sh2',3,2,'Shaping: excess packets are DELAYED (buffered, then sent later at allowed rate). Output is smoothed. Adds latency but no loss. Used by senders/endpoints. Policing: excess packets are DROPPED or RE-MARKED (DSCP changed to lower priority). No buffering, no added delay for conforming traffic. Can cause loss. Used at network ingress (ISP/enterprise boundary) to enforce contracted rates. Shaping is gentler; policing is harsher but simpler.')">D)
+                    They are identical — both buffer and drop excess packets</button>
+            </div>
+            <div class="exp" id="sh2-e"></div>
+        </div>
+    </div>
+
+    <!-- ═══════════════ TAB 4: SCHEDULING ═══════════════ -->
+    <div id="sched" class="sec">
+        <div class="ttl">Topic 4: Queue Scheduling Algorithms <span class="bdg"
+                style="background:#FCEBEB;color:#791F1F">Most Important</span></div>
+        <div class="bx bbl">
+            <h3>Why scheduling matters</h3>
+            <p>When multiple packets are queued at a router's output link, the <strong>scheduling algorithm</strong>
+                determines the order in which they are served (transmitted). Scheduling is the core mechanism for
+                differentiating traffic classes and providing QoS guarantees at routers. Different algorithms give
+                different trade-offs between fairness, delay, and priority.</p>
+        </div>
+
+        <h2 class="sh">Key explanation points — Scheduling Algorithms</h2>
+        <div class="bsec">
+            <div class="pt"><span class="pn">1</span><span class="ptx"><strong>FIFO (First In First Out) /
+                        FCFS:</strong> The default scheduling algorithm. Packets are served in the exact order they
+                    arrive — first packet in queue is first transmitted. Simple and fair in a naive sense. Problem:
+                    <strong>no differentiation</strong> between traffic classes. A large file download's packets and a
+                    VoIP call's packets wait in the same queue — the file download can cause high delay for VoIP. A
+                    single heavy flow can dominate ("head-of-line blocking").</span></div>
+            <div class="pt"><span class="pn">2</span><span class="ptx"><strong>Priority Queuing (PQ):</strong> Multiple
+                    queues, each assigned a <strong>priority level</strong>. Packets are classified into priority queues
+                    (e.g., High, Medium, Low). Scheduler always serves the highest non-empty priority queue first. Only
+                    when the high-priority queue is empty does it serve medium, and so on. Advantage: low-priority
+                    high-priority traffic gets very low delay. Problem: <strong>starvation</strong> — if high-priority
+                    queue is always non-empty, lower queues never get served.</span></div>
+            <div class="pt"><span class="pn">3</span><span class="ptx"><strong>Priority Queuing — preemptive vs
+                        non-preemptive:</strong> Non-preemptive (most common): if a high-priority packet arrives while a
+                    low-priority packet is being transmitted, wait until current transmission finishes, then serve high
+                    priority. Preemptive: interrupt current low-priority transmission immediately and start
+                    high-priority packet (impractical for packets — transmission cannot be interrupted mid-stream on a
+                    shared link).</span></div>
+            <div class="pt"><span class="pn">4</span><span class="ptx"><strong>Round Robin (RR) scheduling:</strong>
+                    Multiple queues. Scheduler cycles through queues in a round-robin fashion — serve one packet from
+                    Queue 1, then one from Queue 2, then one from Queue 3, then back to Queue 1. Skips empty queues.
+                    Fair if all packets are the same size (each flow gets equal number of packets served). Problem:
+                    <strong>not byte-fair</strong> — if one flow sends large packets and another sends small packets,
+                    large-packet flow gets more bytes in each round.</span></div>
+            <div class="pt"><span class="pn">5</span><span class="ptx"><strong>WFQ — Weighted Fair Queuing:</strong>
+                    Extends Round Robin with weights. Each queue Q_i is assigned a weight w_i. In each scheduling round,
+                    queue Q_i gets to send w_i bytes (proportional to its weight). Example: 3 queues with weights 1:2:3
+                    — in each round, Q1 sends 1 unit, Q2 sends 2 units, Q3 sends 3 units. Result: each queue gets
+                    bandwidth proportional to its weight. Provides <strong>weighted fair bandwidth sharing</strong>
+                    while preventing starvation of any flow.</span></div>
+            <div class="pt"><span class="pn">6</span><span class="ptx"><strong>WFQ — delay bound:</strong> With WFQ, if
+                    a flow i has weight w_i and the link rate is R bps, flow i is guaranteed at least bandwidth R × w_i
+                    / (Σw_j). Additionally, if the flow uses a token bucket (r, b), the maximum delay for any packet in
+                    the queue is bounded by: <strong>D_max = b / R_i</strong> where R_i is the guaranteed rate. WFQ
+                    provides both bandwidth and delay guarantees per flow — key for QoS.</span></div>
+            <div class="pt"><span class="pn">7</span><span class="ptx"><strong>GPS — Generalized Processor
+                        Sharing:</strong> An ideal (mathematical) fluid model where all flows are served simultaneously
+                    in proportion to their weights. Physically impossible (you cannot transmit a fraction of a packet).
+                    WFQ is the practical packet-level approximation of GPS. GPS gives the best fairness — WFQ
+                    approximates it and is used in real routers.</span></div>
+            <div class="pt"><span class="pn">8</span><span class="ptx"><strong>Deficit Round Robin (DRR):</strong>
+                    Addresses the packet-size unfairness in Round Robin. Each queue gets a quantum Q bytes per round.
+                    Track "deficit" (leftover bytes from previous round). If a queue's head packet ≤ remaining bytes →
+                    send. Otherwise carry forward the deficit. Result: over multiple rounds, each queue sends exactly Q
+                    bytes on average — truly byte-fair. Efficient (O(1) per packet).</span></div>
+            <div class="pt"><span class="pn">9</span><span class="ptx"><strong>RED — Random Early Detection:</strong>
+                    Active Queue Management (AQM) algorithm. Instead of dropping packets only when queue is full
+                    (tail-drop), RED starts probabilistically dropping packets when queue occupancy exceeds a
+                    <strong>minimum threshold</strong>. Drop probability increases linearly until the queue reaches a
+                    <strong>maximum threshold</strong> (then drop all). Purpose: signal congestion to TCP senders early
+                    → TCP backs off before queue is completely full → prevents queue oscillation and global
+                    synchronisation of TCP flows.</span></div>
+            <div class="pt"><span class="pn">10</span><span class="ptx"><strong>Tail-drop problem:</strong> Default
+                    queue management: drop packets only when queue is completely full (tail-drop). Problem: TCP flows
+                    using the same bottleneck link all detect loss simultaneously → all back off simultaneously → link
+                    goes idle → all increase together → congest again. This is <strong>global synchronisation</strong>.
+                    RED avoids this by staggering drops across different flows before the queue is full.</span></div>
+        </div>
+
+        <div class="tw">
+            <table>
+                <tr>
+                    <th>Algorithm</th>
+                    <th>Mechanism</th>
+                    <th>Advantage</th>
+                    <th>Disadvantage</th>
+                </tr>
+                <tr>
+                    <td>FIFO/FCFS</td>
+                    <td>Serve in arrival order</td>
+                    <td>Simple, no starvation</td>
+                    <td>No QoS differentiation; HoL blocking</td>
+                </tr>
+                <tr>
+                    <td>Priority Queuing</td>
+                    <td>Always serve highest priority queue first</td>
+                    <td>Low delay for high-priority traffic</td>
+                    <td>Starvation of low-priority queues</td>
+                </tr>
+                <tr>
+                    <td>Round Robin</td>
+                    <td>Cycle through queues, one packet each</td>
+                    <td>Fair (packet-wise); no starvation</td>
+                    <td>Not byte-fair for variable packet sizes</td>
+                </tr>
+                <tr>
+                    <td>WFQ</td>
+                    <td>RR with byte weights; proportional bandwidth</td>
+                    <td>Bandwidth + delay guarantees; no starvation</td>
+                    <td>Complex implementation; needs per-flow state</td>
+                </tr>
+                <tr>
+                    <td>DRR</td>
+                    <td>Quantum + deficit tracking</td>
+                    <td>Byte-fair, O(1) per packet</td>
+                    <td>Some implementation complexity</td>
+                </tr>
+            </table>
+        </div>
+
+        <h2 class="sh">MCQs — Scheduling</h2>
+        <div class="mcq">
+            <div class="mcq-q">Q1. A router uses strict Priority Queuing with 3 queues. Queue 1 (Voice) always has
+                packets. What happens to Queue 3 (bulk data)?</div>
+            <div class="opts" id="sc1">
+                <button class="opt"
+                    onclick="ans('sc1',0,2,'Strict Priority Queuing: scheduler ALWAYS serves Queue 1 (highest priority) first. If Queue 1 is NEVER empty, Queue 2 is never served. Queue 3 is even lower priority — it is also never served. Queue 3 traffic experiences STARVATION — infinite delay. This is the fundamental problem with strict priority queuing when high-priority traffic is always present. Solution: use WFQ or limit high-priority traffic with admission control / token bucket.')">A)
+                    Queue 3 gets served when Queue 2 is empty</button>
+                <button class="opt"
+                    onclick="ans('sc1',1,2,'Strict Priority Queuing: scheduler ALWAYS serves Queue 1 (highest priority) first. If Queue 1 is NEVER empty, Queue 2 is never served. Queue 3 is even lower priority — it is also never served. Queue 3 traffic experiences STARVATION — infinite delay. This is the fundamental problem with strict priority queuing when high-priority traffic is always present. Solution: use WFQ or limit high-priority traffic with admission control / token bucket.')">B)
+                    Queue 3 starves — it is never served as long as Queue 1 is non-empty</button>
+                <button class="opt"
+                    onclick="ans('sc1',2,2,'Strict Priority Queuing: scheduler ALWAYS serves Queue 1 (highest priority) first. If Queue 1 is NEVER empty, Queue 2 is never served. Queue 3 is even lower priority — it is also never served. Queue 3 traffic experiences STARVATION — infinite delay. This is the fundamental problem with strict priority queuing when high-priority traffic is always present. Solution: use WFQ or limit high-priority traffic with admission control / token bucket.')">C)
+                    Queue 3 is served in a round-robin fashion with Queue 1</button>
+                <button class="opt"
+                    onclick="ans('sc1',3,2,'Strict Priority Queuing: scheduler ALWAYS serves Queue 1 (highest priority) first. If Queue 1 is NEVER empty, Queue 2 is never served. Queue 3 is even lower priority — it is also never served. Queue 3 traffic experiences STARVATION — infinite delay. This is the fundamental problem with strict priority queuing when high-priority traffic is always present. Solution: use WFQ or limit high-priority traffic with admission control / token bucket.')">D)
+                    Queue 3 packets are automatically upgraded to Queue 1 after waiting too long</button>
+            </div>
+            <div class="exp" id="sc1-e"></div>
+        </div>
+        <div class="mcq">
+            <div class="mcq-q">Q2. Three flows share a WFQ scheduler with weights 1, 2, 3. Link rate = 60 Mbps. What is
+                the guaranteed bandwidth for Flow 2 (weight=2)?</div>
+            <div class="opts" id="sc2">
+                <button class="opt"
+                    onclick="ans('sc2',0,2,'Total weight = 1+2+3 = 6. Flow 2 weight = 2. Guaranteed bandwidth = (w_2 / Σw_i) × R = (2/6) × 60Mbps = 20Mbps. WFQ ensures each flow gets bandwidth proportional to its weight. Flow 1 gets (1/6)×60=10Mbps, Flow 3 gets (3/6)×60=30Mbps. If any flow is idle, its unused bandwidth is shared among active flows proportionally — no waste.')">A)
+                    20 Mbps (weight 2 / total weight 6 × 60 Mbps)</button>
+                <button class="opt"
+                    onclick="ans('sc2',1,2,'Total weight = 1+2+3 = 6. Flow 2 weight = 2. Guaranteed bandwidth = (w_2 / Σw_i) × R = (2/6) × 60Mbps = 20Mbps. WFQ ensures each flow gets bandwidth proportional to its weight. Flow 1 gets (1/6)×60=10Mbps, Flow 3 gets (3/6)×60=30Mbps. If any flow is idle, its unused bandwidth is shared among active flows proportionally — no waste.')">B)
+                    40 Mbps (weight 2 × 20 Mbps base)</button>
+                <button class="opt"
+                    onclick="ans('sc2',2,2,'Total weight = 1+2+3 = 6. Flow 2 weight = 2. Guaranteed bandwidth = (w_2 / Σw_i) × R = (2/6) × 60Mbps = 20Mbps. WFQ ensures each flow gets bandwidth proportional to its weight. Flow 1 gets (1/6)×60=10Mbps, Flow 3 gets (3/6)×60=30Mbps. If any flow is idle, its unused bandwidth is shared among active flows proportionally — no waste.')">C)
+                    20 Mbps for all flows equally</button>
+                <button class="opt"
+                    onclick="ans('sc2',3,2,'Total weight = 1+2+3 = 6. Flow 2 weight = 2. Guaranteed bandwidth = (w_2 / Σw_i) × R = (2/6) × 60Mbps = 20Mbps. WFQ ensures each flow gets bandwidth proportional to its weight. Flow 1 gets (1/6)×60=10Mbps, Flow 3 gets (3/6)×60=30Mbps. If any flow is idle, its unused bandwidth is shared among active flows proportionally — no waste.')">D)
+                    12 Mbps (weight 2/10 of standard share)</button>
+            </div>
+            <div class="exp" id="sc2-e"></div>
+        </div>
+        <div class="mcq">
+            <div class="mcq-q">Q3. Why is RED (Random Early Detection) better than tail-drop queue management?</div>
+            <div class="opts" id="sc3">
+                <button class="opt"
+                    onclick="ans('sc3',0,2,'Tail-drop: drop only when queue is FULL → all TCP flows sharing the bottleneck all detect loss at the same time → all back off simultaneously → link goes idle → all ramp up together → congest again. This global synchronisation causes oscillations and poor utilisation. RED: drops packets probabilistically when queue exceeds min_threshold, before queue is full → different flows get loss signals at different times → staggered backoff → smoother, higher average utilisation → no global synchronisation.')">A)
+                    RED has smaller memory requirements than tail-drop</button>
+                <button class="opt"
+                    onclick="ans('sc3',1,2,'Tail-drop: drop only when queue is FULL → all TCP flows sharing the bottleneck all detect loss at the same time → all back off simultaneously → link goes idle → all ramp up together → congest again. This global synchronisation causes oscillations and poor utilisation. RED: drops packets probabilistically when queue exceeds min_threshold, before queue is full → different flows get loss signals at different times → staggered backoff → smoother, higher average utilisation → no global synchronisation.')">B)
+                    RED signals congestion early to individual flows (probabilistic drop before queue is full) —
+                    avoiding global TCP synchronisation that degrades throughput</button>
+                <button class="opt"
+                    onclick="ans('sc3',2,2,'Tail-drop: drop only when queue is FULL → all TCP flows sharing the bottleneck all detect loss at the same time → all back off simultaneously → link goes idle → all ramp up together → congest again. This global synchronisation causes oscillations and poor utilisation. RED: drops packets probabilistically when queue exceeds min_threshold, before queue is full → different flows get loss signals at different times → staggered backoff → smoother, higher average utilisation → no global synchronisation.')">C)
+                    RED gives priority to voice traffic automatically</button>
+                <button class="opt"
+                    onclick="ans('sc3',3,2,'Tail-drop: drop only when queue is FULL → all TCP flows sharing the bottleneck all detect loss at the same time → all back off simultaneously → link goes idle → all ramp up together → congest again. This global synchronisation causes oscillations and poor utilisation. RED: drops packets probabilistically when queue exceeds min_threshold, before queue is full → different flows get loss signals at different times → staggered backoff → smoother, higher average utilisation → no global synchronisation.')">D)
+                    RED is more fair because it always drops from the largest flow</button>
+            </div>
+            <div class="exp" id="sc3-e"></div>
+        </div>
+    </div>
+
+    <!-- ═══════════════ TAB 5: IntServ & DiffServ ═══════════════ -->
+    <div id="intserv" class="sec">
+        <div class="ttl">Topic 5: Integrated Services (IntServ) &amp; Differentiated Services (DiffServ) <span
+                class="bdg" style="background:#FAEEDA;color:#633806">High Weightage</span></div>
+        <div class="bx bbl">
+            <h3>Two QoS architectures</h3>
+            <p>IntServ provides <strong>per-flow hard QoS guarantees</strong> using resource reservation (RSVP).
+                DiffServ provides <strong>per-class soft QoS</strong> using traffic classification and marking — no
+                per-flow state at interior routers. IntServ is ideal but does not scale to internet size. DiffServ is
+                widely deployed in enterprise and ISP networks today.</p>
+        </div>
+
+        <h2 class="sh">Key explanation points — Integrated Services (IntServ)</h2>
+        <div class="bsec">
+            <div class="pt"><span class="pn">1</span><span class="ptx"><strong>IntServ architecture:</strong> Defined in
+                    RFC 1633. Provides <strong>per-flow QoS guarantees</strong> by reserving resources (bandwidth,
+                    buffer space) at every router along the path before sending data. Three components: (1)
+                    <strong>Admission control</strong> — router decides if resources are available; rejects flow if not.
+                    (2) <strong>RSVP</strong> — Resource Reservation Protocol for signaling. (3) <strong>Per-flow
+                        queuing</strong> — WFQ or similar at each router maintains per-flow state.</span></div>
+            <div class="pt"><span class="pn">2</span><span class="ptx"><strong>RSVP — Resource Reservation
+                        Protocol:</strong> Signaling protocol used by IntServ. Operates out-of-band (separate from data
+                    path). Receiver-initiated reservation (unusual — receiver is often the bottleneck, knows what it can
+                    handle). Steps: (1) Sender sends <strong>PATH message</strong> toward receiver (carries traffic
+                    description — flowspec: token bucket params r, b, peak rate p). (2) Receiver sends <strong>RESV
+                        message</strong> back toward sender, requesting resource reservation along each router. (3) Each
+                    router either accepts and reserves resources, or rejects (and sends error back).</span></div>
+            <div class="pt"><span class="pn">3</span><span class="ptx"><strong>IntServ service classes:</strong> (1)
+                    <strong>Guaranteed Service</strong> — hard bandwidth and delay guarantee. For real-time applications
+                    that absolutely cannot tolerate delay violation (VoIP, teleconferencing). No packet loss (other than
+                    link errors). Delay is strictly bounded. Mathematically provable using network calculus. (2)
+                    <strong>Controlled Load Service</strong> — "best-effort quality under no-load conditions." Emulates
+                    what best-effort gives when the network is lightly loaded. Not a hard guarantee. For tolerant
+                    multimedia apps.</span></div>
+            <div class="pt"><span class="pn">4</span><span class="ptx"><strong>IntServ scalability problem:</strong>
+                    Every router in the internet must maintain state for every active flow passing through it. Internet
+                    has millions of concurrent flows. Per-flow state = massive memory and processing overhead. RSVP soft
+                    state (must be refreshed periodically) → constant signaling traffic. Does not scale to internet
+                    backbone. IntServ is only practical in small/controlled networks (enterprise, research
+                    networks).</span></div>
+            <div class="pt"><span class="pn">5</span><span class="ptx"><strong>RSVP soft state vs hard state:</strong>
+                    RSVP uses <strong>soft state</strong> — reservations are temporary and must be refreshed
+                    periodically by new PATH/RESV messages (typically every 30 seconds). If refresh stops, reservation
+                    automatically expires. Advantage: auto-cleanup when sessions end without explicit teardown.
+                    Disadvantage: constant refresh overhead. Compare: hard state (from TCP SYN → must explicitly tear
+                    down) is stateful and requires explicit cleanup.</span></div>
+        </div>
+
+        <h2 class="sh">Key explanation points — Differentiated Services (DiffServ)</h2>
+        <div class="bsec">
+            <div class="pt"><span class="pn">6</span><span class="ptx"><strong>DiffServ architecture:</strong> Defined
+                    in RFC 2474/2475. Provides <strong>class-based QoS</strong> (not per-flow). Key principle: complex
+                    per-flow processing at the <strong>network edge</strong> (ingress/egress routers); simple aggregate
+                    processing at the <strong>core</strong> (interior routers). Interior routers only look at the DSCP
+                    field in IP header and apply Pre-configured Per-Hop Behaviors (PHBs). No RSVP, no per-flow state at
+                    core routers.</span></div>
+            <div class="pt"><span class="pn">7</span><span class="ptx"><strong>DSCP — Differentiated Services Code
+                        Point:</strong> Top 6 bits of the TOS/DS field in the IP header. Defines 64 possible codepoints.
+                    Packets are marked by ingress edge router (or by the end host) with a DSCP value indicating their
+                    traffic class. Interior routers read the DSCP and apply the corresponding PHB (forwarding
+                    behaviour). DSCP marking is done without any signaling protocol — simple and scalable.</span></div>
+            <div class="pt"><span class="pn">8</span><span class="ptx"><strong>Per-Hop Behavior (PHB):</strong> The
+                    forwarding treatment applied to a packet at each router based on its DSCP marking. Defined by IETF.
+                    Two main PHBs: (1) <strong>EF (Expedited Forwarding)</strong> — for real-time traffic. Provides low
+                    loss, low delay, low jitter. Conceptually: departure rate ≥ arrival rate (queue never grows). When
+                    combined with admission control, guarantees are achieved. (2) <strong>AF (Assured
+                        Forwarding)</strong> — for important but non-real-time traffic. Four AF classes (AF1x–AF4x),
+                    three drop precedences each. Higher drop precedence = first to be dropped under congestion.</span>
+            </div>
+            <div class="pt"><span class="pn">9</span><span class="ptx"><strong>EF PHB (DSCP = 101110 = 46):</strong>
+                    Expedited Forwarding. Provides Premium Service — low delay, low jitter, low loss, assured bandwidth.
+                    Packets with EF DSCP are always prioritised over BE (best-effort). Router must serve EF queue so
+                    that it never accumulates — conceptually, the router's EF departure rate ≥ the configured EF arrival
+                    rate. If admission control ensures EF traffic ≤ reserved rate, the delay bound is provably
+                    small.</span></div>
+            <div class="pt"><span class="pn">10</span><span class="ptx"><strong>AF PHB (DSCP = AFxy):</strong> Assured
+                    Forwarding. x = class (1–4, four queues with different bandwidth allocations). y = drop precedence
+                    (1=low=least dropped, 2=medium, 3=high=first dropped). Example: AF11 (class 1, low drop precedence)
+                    vs AF13 (class 1, high drop precedence). Under congestion, AF13 packets are dropped before AF12,
+                    before AF11. Allows ISPs to offer tiered services within the same class.</span></div>
+            <div class="pt"><span class="pn">11</span><span class="ptx"><strong>DiffServ domains and SLA:</strong>
+                    DiffServ is deployed within a <strong>DiffServ domain</strong> (e.g., an ISP's network). At the
+                    boundary between two domains, edge routers re-mark DSCP values according to the inter-domain
+                    <strong>SLA (Service Level Agreement)</strong>. Edge routers also perform traffic conditioning
+                    (metering, shaping, policing) to ensure traffic conforms to the agreed rate before forwarding into
+                    the domain.</span></div>
+            <div class="pt"><span class="pn">12</span><span class="ptx"><strong>IntServ + DiffServ together:</strong>
+                    Modern networks often use IntServ at the edge (applications signal requirements via RSVP) combined
+                    with DiffServ in the core (routers use DSCP-based PHBs for aggregate handling). This gives the
+                    benefits of both: application-level control at edge, scalable simple processing at core. The edge
+                    router maps RSVP reservations to appropriate DSCP markings for DiffServ processing by core
+                    routers.</span></div>
+        </div>
+
+        <div class="tw">
+            <table>
+                <tr>
+                    <th>Feature</th>
+                    <th>IntServ</th>
+                    <th>DiffServ</th>
+                </tr>
+                <tr>
+                    <td>Granularity</td>
+                    <td>Per-flow</td>
+                    <td>Per-class (aggregate)</td>
+                </tr>
+                <tr>
+                    <td>State at routers</td>
+                    <td>Per-flow state at every router</td>
+                    <td>No per-flow state at core routers (only DSCP)</td>
+                </tr>
+                <tr>
+                    <td>Signaling</td>
+                    <td>RSVP (explicit resource reservation)</td>
+                    <td>None (just DSCP marking)</td>
+                </tr>
+                <tr>
+                    <td>QoS guarantee</td>
+                    <td>Hard guarantee (bounded delay, loss)</td>
+                    <td>Relative/soft (EF gets priority; no math proof)</td>
+                </tr>
+                <tr>
+                    <td>Scalability</td>
+                    <td>Poor — does not scale to internet</td>
+                    <td>Excellent — scales to internet backbone</td>
+                </tr>
+                <tr>
+                    <td>Deployment</td>
+                    <td>Enterprise, research networks</td>
+                    <td>ISP networks, enterprise WAN</td>
+                </tr>
+                <tr>
+                    <td>RFC</td>
+                    <td>RFC 1633</td>
+                    <td>RFC 2474/2475</td>
+                </tr>
+            </table>
+        </div>
+
+        <h2 class="sh">MCQs — IntServ &amp; DiffServ</h2>
+        <div class="mcq">
+            <div class="mcq-q">Q1. Why does IntServ not scale to the internet backbone but DiffServ does?</div>
+            <div class="opts" id="is1">
+                <button class="opt"
+                    onclick="ans('is1',0,2,'IntServ: every router must maintain per-flow state for all active flows passing through it. Internet has millions of concurrent flows → enormous memory and CPU burden. RSVP must continuously refresh state with periodic PATH/RESV messages → massive signaling overhead. DiffServ: core routers maintain NO per-flow state — only read 6-bit DSCP field and apply pre-configured PHB. All per-flow processing happens only at edge routers. This two-level architecture scales to internet scale.')">A)
+                    IntServ requires more bandwidth per packet (larger headers)</button>
+                <button class="opt"
+                    onclick="ans('is1',1,2,'IntServ: every router must maintain per-flow state for all active flows passing through it. Internet has millions of concurrent flows → enormous memory and CPU burden. RSVP must continuously refresh state with periodic PATH/RESV messages → massive signaling overhead. DiffServ: core routers maintain NO per-flow state — only read 6-bit DSCP field and apply pre-configured PHB. All per-flow processing happens only at edge routers. This two-level architecture scales to internet scale.')">B)
+                    IntServ requires per-flow state at every router (millions of flows) + RSVP signaling overhead;
+                    DiffServ uses aggregate classes with DSCP — no per-flow state at core</button>
+                <button class="opt"
+                    onclick="ans('is1',2,2,'IntServ: every router must maintain per-flow state for all active flows passing through it. Internet has millions of concurrent flows → enormous memory and CPU burden. RSVP must continuously refresh state with periodic PATH/RESV messages → massive signaling overhead. DiffServ: core routers maintain NO per-flow state — only read 6-bit DSCP field and apply pre-configured PHB. All per-flow processing happens only at edge routers. This two-level architecture scales to internet scale.')">C)
+                    DiffServ is a newer standard and has faster routers</button>
+                <button class="opt"
+                    onclick="ans('is1',3,2,'IntServ: every router must maintain per-flow state for all active flows passing through it. Internet has millions of concurrent flows → enormous memory and CPU burden. RSVP must continuously refresh state with periodic PATH/RESV messages → massive signaling overhead. DiffServ: core routers maintain NO per-flow state — only read 6-bit DSCP field and apply pre-configured PHB. All per-flow processing happens only at edge routers. This two-level architecture scales to internet scale.')">D)
+                    IntServ uses UDP which is unreliable; DiffServ uses TCP for reliable signaling</button>
+            </div>
+            <div class="exp" id="is1-e"></div>
+        </div>
+        <div class="mcq">
+            <div class="mcq-q">Q2. In DiffServ, packets marked AF13 and AF11 belong to the same class (class 1). Under
+                congestion at a router, which is dropped first?</div>
+            <div class="opts" id="is2">
+                <button class="opt"
+                    onclick="ans('is2',0,2,'In AF PHB: AFxy. x = class (1–4). y = drop precedence (1=low=least likely dropped, 2=medium, 3=high=most likely dropped). AF13 has drop precedence 3 (highest). AF11 has drop precedence 1 (lowest). Under congestion, the router drops AF13 packets FIRST before AF11 packets. This allows ISPs to offer tiered service: AF11 = premium (conforming traffic), AF13 = excess (out-of-contract) traffic, which is first to be discarded under congestion.')">A)
+                    AF11 — lower number = lower priority</button>
+                <button class="opt"
+                    onclick="ans('is2',1,2,'In AF PHB: AFxy. x = class (1–4). y = drop precedence (1=low=least likely dropped, 2=medium, 3=high=most likely dropped). AF13 has drop precedence 3 (highest). AF11 has drop precedence 1 (lowest). Under congestion, the router drops AF13 packets FIRST before AF11 packets. This allows ISPs to offer tiered service: AF11 = premium (conforming traffic), AF13 = excess (out-of-contract) traffic, which is first to be discarded under congestion.')">B)
+                    AF13 — higher drop precedence (3) means dropped first under congestion</button>
+                <button class="opt"
+                    onclick="ans('is2',2,2,'In AF PHB: AFxy. x = class (1–4). y = drop precedence (1=low=least likely dropped, 2=medium, 3=high=most likely dropped). AF13 has drop precedence 3 (highest). AF11 has drop precedence 1 (lowest). Under congestion, the router drops AF13 packets FIRST before AF11 packets. This allows ISPs to offer tiered service: AF11 = premium (conforming traffic), AF13 = excess (out-of-contract) traffic, which is first to be discarded under congestion.')">C)
+                    Both are dropped equally (same class)</button>
+                <button class="opt"
+                    onclick="ans('is2',3,2,'In AF PHB: AFxy. x = class (1–4). y = drop precedence (1=low=least likely dropped, 2=medium, 3=high=most likely dropped). AF13 has drop precedence 3 (highest). AF11 has drop precedence 1 (lowest). Under congestion, the router drops AF13 packets FIRST before AF11 packets. This allows ISPs to offer tiered service: AF11 = premium (conforming traffic), AF13 = excess (out-of-contract) traffic, which is first to be discarded under congestion.')">D)
+                    Neither is dropped — AF class is never subject to congestion</button>
+            </div>
+            <div class="exp" id="is2-e"></div>
+        </div>
+        <div class="mcq">
+            <div class="mcq-q">Q3. RSVP PATH messages travel from sender to receiver, but RESV messages travel from
+                receiver to sender. Why is reservation receiver-initiated?</div>
+            <div class="opts" id="is3">
+                <button class="opt"
+                    onclick="ans('is3',0,3,'The receiver is often the one who knows what it can HANDLE — its buffer size, processing capability, and required QoS. In multicast scenarios, a single sender may reach many receivers with different capabilities — each receiver requests exactly what it needs via RESV. This allows heterogeneous receivers (e.g., one with a fast connection, another with a slow connection) to each reserve appropriate resources along their individual paths. Sender-initiated reservation would need to know all receiver capabilities in advance — impractical for multicast.')">A)
+                    Routers can only process messages coming from the receiver direction</button>
+                <button class="opt"
+                    onclick="ans('is3',1,3,'The receiver is often the one who knows what it can HANDLE — its buffer size, processing capability, and required QoS. In multicast scenarios, a single sender may reach many receivers with different capabilities — each receiver requests exactly what it needs via RESV. This allows heterogeneous receivers (e.g., one with a fast connection, another with a slow connection) to each reserve appropriate resources along their individual paths. Sender-initiated reservation would need to know all receiver capabilities in advance — impractical for multicast.')">B)
+                    RSVP was designed for IPv6 which uses reverse paths</button>
+                <button class="opt"
+                    onclick="ans('is3',2,3,'The receiver is often the one who knows what it can HANDLE — its buffer size, processing capability, and required QoS. In multicast scenarios, a single sender may reach many receivers with different capabilities — each receiver requests exactly what it needs via RESV. This allows heterogeneous receivers (e.g., one with a fast connection, another with a slow connection) to each reserve appropriate resources along their individual paths. Sender-initiated reservation would need to know all receiver capabilities in advance — impractical for multicast.')">C)
+                    Path messages always fail and RESV is a backup mechanism</button>
+                <button class="opt"
+                    onclick="ans('is3',3,3,'The receiver is often the one who knows what it can HANDLE — its buffer size, processing capability, and required QoS. In multicast scenarios, a single sender may reach many receivers with different capabilities — each receiver requests exactly what it needs via RESV. This allows heterogeneous receivers (e.g., one with a fast connection, another with a slow connection) to each reserve appropriate resources along their individual paths. Sender-initiated reservation would need to know all receiver capabilities in advance — impractical for multicast.')">D)
+                    Receiver-initiated — receiver knows its own capability; supports heterogeneous multicast receivers
+                    each requesting different resource amounts</button>
+            </div>
+            <div class="exp" id="is3-e"></div>
+        </div>
+    </div>
+
+    <!-- ═══════════════ TAB 6: SUPER REVISION ═══════════════ -->
+    <div id="rev" class="sec">
+        <div class="ttl">Super Revision Notes — Week 7 (Last-Day Study)</div>
+
+        <div class="bx bred">
+            <h3>Absolute must-know facts</h3>
+            <ul>
+                <li>QoS needed for real-time traffic: VoIP, video conf, gaming — best-effort fails these</li>
+                <li>Elastic traffic (TCP): adapts to congestion. Inelastic traffic (VoIP): cannot adapt rate</li>
+                <li>VoIP requirements: delay &lt;<strong>150ms</strong>, jitter &lt;20ms, loss &lt;1% (ITU-T G.114)</li>
+                <li>Jitter = variation in packet inter-arrival delay. Absorbed by <strong>jitter buffer (playout
+                        buffer)</strong> at receiver</li>
+                <li>CBR: fixed rate (e.g., uncompressed voice). VBR: variable rate (compressed video). Bursty: web/data
+                    traffic</li>
+                <li>Delay components: propagation + transmission + queuing + processing. <strong>Queuing delay is most
+                        variable</strong> (causes jitter)</li>
+                <li><strong>Leaky Bucket</strong>: constant output rate r. Absorbs bursts entirely. Output always smooth
+                </li>
+                <li><strong>Token Bucket</strong>: tokens accumulate at rate r, bucket size b. Allows burst up to b
+                    bytes. Average rate = r</li>
+                <li>Token Bucket max burst = b (bucket capacity). Tokens do NOT overflow beyond b</li>
+                <li>Shaping = delay excess packets (buffer). Policing = drop/re-mark excess packets</li>
+                <li>FIFO: no QoS differentiation, head-of-line blocking</li>
+                <li>Priority Queuing: high priority first → starvation of low-priority queues if high is always busy
+                </li>
+                <li>Round Robin: packet-fair but NOT byte-fair</li>
+                <li><strong>WFQ</strong>: proportional bandwidth sharing = w_i / Σw_j × R. No starvation. Delay bound =
+                    b/R_i</li>
+                <li>RED: probabilistic drop before queue full → prevents global TCP synchronisation. Better than
+                    tail-drop</li>
+                <li><strong>IntServ</strong>: per-flow reservation via RSVP. Hard guarantees. Does NOT scale (per-flow
+                    state at every router)</li>
+                <li>RSVP: PATH (sender → receiver), RESV (receiver → sender, reserves resources). Soft state (must
+                    refresh every ~30s)</li>
+                <li>IntServ service classes: Guaranteed Service (hard bounds) and Controlled Load Service (no-load-like)
+                </li>
+                <li><strong>DiffServ</strong>: per-class. Uses DSCP (6 bits of TOS field). PHBs at each router. No
+                    per-flow state at core</li>
+                <li><strong>EF PHB</strong> (DSCP=46): Expedited Forwarding — low delay, low jitter, low loss. For
+                    real-time traffic</li>
+                <li><strong>AF PHB</strong>: AFxy. x=class(1–4), y=drop precedence(1=least dropped, 3=most dropped).
+                    AF13 dropped before AF11</li>
+                <li>DSCP = top 6 bits of TOS/DS field. ECN = bottom 2 bits</li>
+                <li>IntServ + DiffServ combined: RSVP at edge → maps to DSCP → DiffServ in core</li>
+                <li>Statistical multiplexing gain: not all users active simultaneously → capacity &lt; sum of peak rates
+                </li>
+            </ul>
+        </div>
+
+        <div class="bx bpur">
+            <h3>Token Bucket vs Leaky Bucket — formula quick ref</h3>
+            <div class="ri"><span class="rb">Leaky Bucket output</span><span class="rt">Always at rate r. Max output in
+                    time T = r × T. No burst at output</span></div>
+            <div class="ri"><span class="rb">Token Bucket max burst</span><span class="rt">b bytes (bucket capacity).
+                    Tokens accumulate idle → burst up to b, then rate r</span></div>
+            <div class="ri"><span class="rb">Token Bucket max bytes in T</span><span class="rt">min(b + r×T, peak_rate ×
+                    T) — whichever is less</span></div>
+            <div class="ri"><span class="rb">WFQ guaranteed BW</span><span class="rt">R_i = (w_i / Σw_j) × R_link</span>
+            </div>
+            <div class="ri"><span class="rb">WFQ max delay bound</span><span class="rt">D_max = b / R_i where b = token
+                    bucket size, R_i = guaranteed rate</span></div>
+            <div class="ri"><span class="rb">RED drop threshold</span><span class="rt">min_th &lt; avg_queue &lt; max_th
+                    → drop with probability p. Beyond max_th → drop all</span></div>
+        </div>
+
+        <div class="bx bgn">
+            <h3>DiffServ PHB quick reference</h3>
+            <div class="ri"><span class="rb">Default (BE)</span><span class="rt">DSCP = 000000. Best-effort forwarding.
+                    Lowest priority</span></div>
+            <div class="ri"><span class="rb">EF</span><span class="rt">DSCP = 101110 (46). Expedited Forwarding. Low
+                    delay/jitter/loss. For VoIP, real-time video</span></div>
+            <div class="ri"><span class="rb">AF11/AF12/AF13</span><span class="rt">Class 1, drop precedence 1/2/3. AF13
+                    dropped first (highest drop precedence)</span></div>
+            <div class="ri"><span class="rb">AF21/AF22/AF23</span><span class="rt">Class 2, drop precedence 1/2/3</span>
+            </div>
+            <div class="ri"><span class="rb">AF31/AF32/AF33</span><span class="rt">Class 3, drop precedence 1/2/3</span>
+            </div>
+            <div class="ri"><span class="rb">AF41/AF42/AF43</span><span class="rt">Class 4 (highest AF class), drop
+                    precedence 1/2/3</span></div>
+            <div class="ri"><span class="rb">CS1–CS7</span><span class="rt">Class Selector — backward compatible with IP
+                    Precedence (old ToS bits)</span></div>
+        </div>
+
+        <div class="bx bamb">
+            <h3>Tricky NPTEL MCQ traps — don't get these wrong</h3>
+            <div class="ri"><span class="rb">1</span><span class="rt">Leaky bucket: output is ALWAYS at rate r. Even if
+                    nothing is in the bucket, output = 0 (not r). Output = min(current_data, r×dt)</span></div>
+            <div class="ri"><span class="rb">2</span><span class="rt">Token bucket: tokens overflow (capped at b). If
+                    sender is idle 100 seconds, max burst is still only b, NOT r×100</span></div>
+            <div class="ri"><span class="rb">3</span><span class="rt">Starvation: happens in Priority Queuing, NOT in
+                    WFQ or Round Robin</span></div>
+            <div class="ri"><span class="rb">4</span><span class="rt">WFQ: bandwidth proportional to WEIGHT, not
+                    inversely. Higher weight = MORE bandwidth</span></div>
+            <div class="ri"><span class="rb">5</span><span class="rt">RSVP PATH goes sender → receiver. RESV goes
+                    receiver → sender (reservation is receiver-initiated)</span></div>
+            <div class="ri"><span class="rb">6</span><span class="rt">IntServ = per-flow guarantees. DiffServ =
+                    per-class (aggregate). DiffServ scales; IntServ does not</span></div>
+            <div class="ri"><span class="rb">7</span><span class="rt">EF DSCP = 46 (101110 binary). AF drop precedence:
+                    1=least dropped, 3=MOST dropped</span></div>
+            <div class="ri"><span class="rb">8</span><span class="rt">DiffServ DOES NOT use RSVP. RSVP is IntServ's
+                    signaling protocol</span></div>
+            <div class="ri"><span class="rb">9</span><span class="rt">RED drops probabilistically BEFORE queue is full
+                    (signals congestion early). Tail-drop waits until FULL</span></div>
+            <div class="ri"><span class="rb">10</span><span class="rt">Queuing delay is the MOST VARIABLE component of
+                    total delay — causes jitter under congestion</span></div>
+            <div class="ri"><span class="rb">11</span><span class="rt">RSVP uses SOFT STATE (expires if not refreshed).
+                    TCP uses hard state (requires explicit teardown)</span></div>
+            <div class="ri"><span class="rb">12</span><span class="rt">VoIP recommended delay: &lt;150ms (preferred),
+                    &lt;400ms (absolute max). Source: ITU-T G.114</span></div>
+        </div>
+
+        <div
+            style="margin-top:1.5rem;padding:1rem;background:#E6F1FB;border-radius:var(--border-radius-lg);border:0.5px solid #B5D4F4">
+            <p style="font-size:14px;font-weight:500;color:#0C447C;margin-bottom:8px">Exam strategy — Week 7</p>
+            <ul style="font-size:13px;color:#185FA5;padding-left:1.2rem;line-height:1.9">
+                <li>QoS requirements: memorise VoIP numbers — 150ms delay, 20ms jitter, 1% loss. These appear in
+                    numerical MCQs</li>
+                <li>Leaky vs Token bucket: core exam topic. Know the burst behaviour difference. Practice the token
+                    accumulation calculation</li>
+                <li>WFQ bandwidth calculation: guaranteed BW = (w_i / Σw_j) × R. Very likely to appear as a numeric MCQ
+                </li>
+                <li>Priority Queuing: always leads to starvation of low queues if high queue is busy. Know why WFQ fixes
+                    this</li>
+                <li>RED vs tail-drop: RED = probabilistic early drop = avoid global synchronisation. Tail-drop = drop
+                    when full = oscillation</li>
+                <li>IntServ vs DiffServ comparison table: per-flow vs per-class, RSVP vs DSCP, scales? (IntServ NO,
+                    DiffServ YES)</li>
+                <li>RSVP: PATH direction (→ receiver), RESV direction (← sender). Soft state = must refresh periodically
+                </li>
+                <li>DiffServ EF: low delay/jitter. AF: four classes, three drop precedences within each. Higher drop
+                    precedence → dropped first</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    function show(id) {
+        document.querySelectorAll('.sec').forEach(s => s.classList.remove('on'));
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+        document.getElementById(id).classList.add('on');
+        event.target.classList.add('on');
+    }
+    function ans(qid, chosen, correct, explanation) {
+        const opts = document.querySelectorAll('#' + qid + ' .opt');
+        opts.forEach((o, i) => {
+            o.disabled = true;
+            if (i === correct) o.classList.add('ok');
+            else if (i === chosen && chosen !== correct) o.classList.add('no');
+        });
+        const exp = document.getElementById(qid + '-e');
+        exp.textContent = (chosen === correct ? 'Correct! ' : 'Incorrect. ') + explanation;
+        exp.classList.add('show');
+    }
+</script>

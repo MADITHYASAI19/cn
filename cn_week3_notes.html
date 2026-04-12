@@ -1,0 +1,1488 @@
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0
+    }
+
+    .w {
+        max-width: 900px;
+        padding: 1.5rem 1rem
+    }
+
+    .hero {
+        border-bottom: 0.5px solid var(--color-border-tertiary);
+        padding-bottom: 1.5rem;
+        margin-bottom: 2rem
+    }
+
+    .hero h1 {
+        font-size: 22px;
+        font-weight: 500;
+        color: var(--color-text-primary);
+        margin-bottom: 4px
+    }
+
+    .hero p {
+        font-size: 14px;
+        color: var(--color-text-secondary)
+    }
+
+    .tabs {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-bottom: 2rem
+    }
+
+    .tab {
+        padding: 6px 14px;
+        border: 0.5px solid var(--color-border-secondary);
+        border-radius: var(--border-radius-md);
+        font-size: 13px;
+        cursor: pointer;
+        background: var(--color-background-primary);
+        color: var(--color-text-secondary);
+        transition: all 0.15s
+    }
+
+    .tab:hover {
+        background: var(--color-background-secondary)
+    }
+
+    .tab.on {
+        background: #E6F1FB;
+        color: #0C447C;
+        border-color: #85B7EB;
+        font-weight: 500
+    }
+
+    .sec {
+        display: none
+    }
+
+    .sec.on {
+        display: block
+    }
+
+    .ttl {
+        font-size: 20px;
+        font-weight: 500;
+        color: var(--color-text-primary);
+        margin-bottom: 6px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid #85B7EB
+    }
+
+    .bdg {
+        display: inline-block;
+        font-size: 11px;
+        padding: 2px 8px;
+        border-radius: var(--border-radius-md);
+        margin-left: 8px
+    }
+
+    .bx {
+        border-radius: var(--border-radius-lg);
+        padding: 1rem 1.25rem;
+        margin: 1rem 0
+    }
+
+    .bbl {
+        background: #E6F1FB;
+        border-left: 3px solid #185FA5
+    }
+
+    .bbl h3 {
+        color: #0C447C
+    }
+
+    .bgn {
+        background: #EAF3DE;
+        border-left: 3px solid #3B6D11
+    }
+
+    .bgn h3 {
+        color: #27500A
+    }
+
+    .bamb {
+        background: #FAEEDA;
+        border-left: 3px solid #854F0B
+    }
+
+    .bamb h3 {
+        color: #633806
+    }
+
+    .bred {
+        background: #FCEBEB;
+        border-left: 3px solid #A32D2D
+    }
+
+    .bred h3 {
+        color: #791F1F
+    }
+
+    .bpur {
+        background: #EEEDFE;
+        border-left: 3px solid #534AB7
+    }
+
+    .bpur h3 {
+        color: #3C3489
+    }
+
+    .bteal {
+        background: #E1F5EE;
+        border-left: 3px solid #0F6E56
+    }
+
+    .bteal h3 {
+        color: #085041
+    }
+
+    .bsec {
+        background: var(--color-background-secondary);
+        border-radius: var(--border-radius-lg);
+        padding: 0.5rem 1.25rem;
+        margin: 1rem 0
+    }
+
+    .bx h3 {
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 6px
+    }
+
+    .bx p,
+    .bx li {
+        font-size: 14px;
+        color: var(--color-text-primary);
+        line-height: 1.7
+    }
+
+    .bx ul {
+        padding-left: 1.2rem
+    }
+
+    .pt {
+        display: flex;
+        gap: 10px;
+        padding: 8px 0;
+        border-bottom: 0.5px solid var(--color-border-tertiary)
+    }
+
+    .pt:last-child {
+        border-bottom: none
+    }
+
+    .pn {
+        font-size: 13px;
+        font-weight: 500;
+        color: #185FA5;
+        min-width: 22px
+    }
+
+    .ptx {
+        font-size: 14px;
+        color: var(--color-text-primary);
+        line-height: 1.6
+    }
+
+    .ptx strong {
+        font-weight: 500
+    }
+
+    .tw {
+        overflow-x: auto;
+        margin: 1rem 0
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px
+    }
+
+    th {
+        background: #E6F1FB;
+        color: #0C447C;
+        font-weight: 500;
+        padding: 8px 12px;
+        text-align: left;
+        border: 0.5px solid #B5D4F4
+    }
+
+    td {
+        padding: 8px 12px;
+        border: 0.5px solid var(--color-border-tertiary);
+        color: var(--color-text-primary);
+        vertical-align: top
+    }
+
+    tr:nth-child(even) td {
+        background: var(--color-background-secondary)
+    }
+
+    h2.sh {
+        font-size: 18px;
+        font-weight: 500;
+        color: var(--color-text-primary);
+        margin: 1.5rem 0 0.5rem
+    }
+
+    .mcq {
+        border: 0.5px solid var(--color-border-tertiary);
+        border-radius: var(--border-radius-lg);
+        padding: 1rem 1.25rem;
+        margin: 1rem 0;
+        background: var(--color-background-primary)
+    }
+
+    .mcq-q {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--color-text-primary);
+        margin-bottom: 10px;
+        line-height: 1.6
+    }
+
+    .opts {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 10px
+    }
+
+    .opt {
+        font-size: 13px;
+        padding: 6px 10px;
+        border-radius: var(--border-radius-md);
+        border: 0.5px solid var(--color-border-tertiary);
+        cursor: pointer;
+        color: var(--color-text-primary);
+        background: var(--color-background-primary);
+        text-align: left;
+        transition: background 0.1s
+    }
+
+    .opt:hover {
+        background: var(--color-background-secondary)
+    }
+
+    .opt.ok {
+        background: #EAF3DE;
+        border-color: #639922;
+        color: #27500A
+    }
+
+    .opt.no {
+        background: #FCEBEB;
+        border-color: #A32D2D;
+        color: #791F1F
+    }
+
+    .exp {
+        display: none;
+        font-size: 13px;
+        color: var(--color-text-secondary);
+        background: var(--color-background-secondary);
+        padding: 8px 12px;
+        border-radius: var(--border-radius-md);
+        margin-top: 6px;
+        line-height: 1.6
+    }
+
+    .exp.show {
+        display: block
+    }
+
+    .ri {
+        display: flex;
+        gap: 8px;
+        padding: 6px 0;
+        border-bottom: 0.5px solid var(--color-border-tertiary);
+        align-items: flex-start
+    }
+
+    .ri:last-child {
+        border-bottom: none
+    }
+
+    .rb {
+        font-size: 14px;
+        min-width: 18px;
+        color: #185FA5;
+        font-weight: 500
+    }
+
+    .rt {
+        font-size: 13px;
+        color: var(--color-text-primary);
+        line-height: 1.6
+    }
+
+    .flow {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        align-items: center;
+        margin: 1rem 0
+    }
+
+    .fbox {
+        background: #E6F1FB;
+        border: 0.5px solid #B5D4F4;
+        border-radius: var(--border-radius-md);
+        padding: 6px 12px;
+        font-size: 13px;
+        color: #0C447C;
+        font-weight: 500
+    }
+
+    .farr {
+        font-size: 16px;
+        color: var(--color-text-secondary)
+    }
+
+    .code {
+        background: var(--color-background-secondary);
+        border: 0.5px solid var(--color-border-tertiary);
+        border-radius: var(--border-radius-md);
+        padding: 8px 12px;
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--color-text-primary);
+        margin: 6px 0;
+        line-height: 1.6
+    }
+</style>
+
+<div class="w">
+    <div class="hero">
+        <h1>Computer Networks — Week 3: Transport Layer</h1>
+        <p>Transport Services · TCP vs UDP · Connection Establishment · Flow Control · ARQ &nbsp;|&nbsp; NPTEL
+            Exam-Ready Notes</p>
+    </div>
+
+    <div class="tabs">
+        <button class="tab on" onclick="show('tl')">Transport Layer</button>
+        <button class="tab" onclick="show('tcpudp')">TCP vs UDP</button>
+        <button class="tab" onclick="show('conn')">Connection Establishment</button>
+        <button class="tab" onclick="show('rel')">Connection Release</button>
+        <button class="tab" onclick="show('flow')">Flow Control & ARQ</button>
+        <button class="tab" onclick="show('rev')">Super Revision</button>
+    </div>
+
+    <!-- ───────── TAB 1: TRANSPORT LAYER ───────── -->
+    <div id="tl" class="sec on">
+        <div class="ttl">Topic 1: Transport Layer — Role & Implementation <span class="bdg"
+                style="background:#FAEEDA;color:#633806">Very High Weightage</span></div>
+
+        <div class="bx bbl">
+            <h3>What is the Transport Layer?</h3>
+            <p>The Transport Layer is the 4th layer of the TCP/IP protocol stack. It sits on top of the Network Layer
+                and provides <strong>end-to-end connectivity between two host machines</strong>. Unlike all lower layers
+                which work hop-by-hop, the transport layer is <strong>only present at the two end hosts</strong> — never
+                in intermediate routers or switches.</p>
+        </div>
+
+        <h2 class="sh">Key explanation points</h2>
+        <div class="bsec">
+            <div class="pt"><span class="pn">1</span><span class="ptx"><strong>End host vs intermediate
+                        devices:</strong> Both end hosts have all 5 layers (Application → Physical). Layer 2 switches
+                    only have up to Data Link layer. Layer 3 switches and Routers have up to Network layer. The
+                    Transport layer is exclusively at end hosts.</span></div>
+            <div class="pt"><span class="pn">2</span><span class="ptx"><strong>Hardware layer (Physical):</strong>
+                    Implemented in the NIC (Network Interface Card). The NIC provides hardware-level signaling,
+                    modulation, and coding. Physical layer = fully in hardware.</span></div>
+            <div class="pt"><span class="pn">3</span><span class="ptx"><strong>Firmware / Device Driver (Data
+                        Link):</strong> The device driver you install for your NIC. Contains the MAC layer (Media Access
+                    Control) implementation. In wireless networks, parts of the Data Link layer may also be in hardware
+                    for performance. The upper part — LLC (Logical Link Control) — is in software.</span></div>
+            <div class="pt"><span class="pn">4</span><span class="ptx"><strong>Kernel software (Network +
+                        Transport):</strong> In Unix-type OS, the Network layer (IP) and Transport layer (TCP, UDP) are
+                    implemented inside the operating system kernel. Applications talk to transport through the kernel
+                    interface (sockets).</span></div>
+            <div class="pt"><span class="pn">5</span><span class="ptx"><strong>Application layer:</strong> Runs on top
+                    of the kernel. Includes browser apps, chat apps, social media apps (Facebook, YouTube, Twitter).
+                    Each is designed by application developers using socket programming APIs to communicate over the
+                    network.</span></div>
+            <div class="pt"><span class="pn">6</span><span class="ptx"><strong>Encapsulation — how headers are
+                        added:</strong> Application generates data → Transport Layer adds TCP/UDP header → Network Layer
+                    adds IP header → Data Link adds MAC header → Physical converts to bits and transmits. At receiver
+                    side, each layer strips its own header (decapsulation).</span></div>
+            <div class="pt"><span class="pn">7</span><span class="ptx"><strong>Why Transport Layer is needed:</strong>
+                    The Network Layer (IP) provides only <strong>unreliable datagram delivery</strong>. Intermediate
+                    routers have finite buffers that can overflow, causing packet loss. Physical channels can corrupt
+                    data. Transport Layer sits on this unreliable base and provides reliable, ordered, flow-controlled
+                    end-to-end delivery.</span></div>
+            <div class="pt"><span class="pn">8</span><span class="ptx"><strong>Socket programming:</strong> You can
+                    write your own programs to configure and use the transport layer to make two end devices
+                    communicate. This is done via the socket API — we will look at socket programming in subsequent
+                    classes.</span></div>
+        </div>
+
+        <div class="bx bgn">
+            <h3>Encapsulation flow (sender side)</h3>
+            <div class="flow">
+                <div class="fbox">HTTP Data</div>
+                <div class="farr">→</div>
+                <div class="fbox">+ HTTP Header</div>
+                <div class="farr">→</div>
+                <div class="fbox">+ TCP/UDP Header → Segment</div>
+                <div class="farr">→</div>
+                <div class="fbox">+ IP Header → Packet</div>
+                <div class="farr">→</div>
+                <div class="fbox">+ MAC Header → Frame</div>
+                <div class="farr">→</div>
+                <div class="fbox">Bits (Physical)</div>
+            </div>
+        </div>
+
+        <div class="tw">
+            <table>
+                <tr>
+                    <th>Device</th>
+                    <th>Layers present</th>
+                    <th>Role</th>
+                </tr>
+                <tr>
+                    <td>End Host (PC/Server)</td>
+                    <td>All 5 layers</td>
+                    <td>Source and destination of data</td>
+                </tr>
+                <tr>
+                    <td>Layer 2 Switch</td>
+                    <td>Physical + Data Link</td>
+                    <td>Separates collision domains, same broadcast domain</td>
+                </tr>
+                <tr>
+                    <td>Router / Layer 3 Switch</td>
+                    <td>Physical + Data Link + Network</td>
+                    <td>Routes packets, separates both domains</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="bx bamb">
+            <h3>Common mistakes</h3>
+            <ul>
+                <li>Thinking routers have a Transport layer — they do NOT</li>
+                <li>Confusing the Transport layer with the Network layer — Network = hop-by-hop, Transport = end-to-end
+                </li>
+                <li>Thinking the Physical layer is in software — it is in hardware (NIC)</li>
+                <li>Forgetting that LLC (upper Data Link) is in kernel software, while MAC can be in hardware or driver
+                </li>
+            </ul>
+        </div>
+
+        <h2 class="sh">MCQs — Transport Layer Fundamentals</h2>
+
+        <div class="mcq">
+            <div class="mcq-q">Q1. The Transport Layer of the TCP/IP stack is present in which devices?</div>
+            <div class="opts" id="tl1">
+                <button class="opt"
+                    onclick="ans('tl1',0,2,'The Transport Layer is ONLY present at the two end hosts. Routers implement only up to the Network (Layer 3). Layer 2 switches implement only up to Data Link (Layer 2). No intermediate device has the Transport layer.')">A)
+                    All routers and switches</button>
+                <button class="opt"
+                    onclick="ans('tl1',1,2,'The Transport Layer is ONLY present at the two end hosts. Routers implement only up to the Network (Layer 3). Layer 2 switches implement only up to Data Link (Layer 2). No intermediate device has the Transport layer.')">B)
+                    Only Layer 3 switches</button>
+                <button class="opt"
+                    onclick="ans('tl1',2,2,'The Transport Layer is ONLY present at the two end hosts. Routers implement only up to the Network (Layer 3). Layer 2 switches implement only up to Data Link (Layer 2). No intermediate device has the Transport layer.')">C)
+                    Only at end hosts (source and destination)</button>
+                <button class="opt"
+                    onclick="ans('tl1',3,2,'The Transport Layer is ONLY present at the two end hosts. Routers implement only up to the Network (Layer 3). Layer 2 switches implement only up to Data Link (Layer 2). No intermediate device has the Transport layer.')">D)
+                    Routers and end hosts</button>
+            </div>
+            <div class="exp" id="tl1-e"></div>
+        </div>
+
+        <div class="mcq">
+            <div class="mcq-q">Q2. In a Unix-type OS, which layers are implemented inside the kernel?</div>
+            <div class="opts" id="tl2">
+                <button class="opt"
+                    onclick="ans('tl2',0,2,'In Unix, the kernel implements the upper Data Link (LLC), entire Network (IP) layer, and entire Transport layer. Physical layer is in NIC hardware, lower MAC is in device driver/firmware. Applications run above the kernel.')">A)
+                    Only the Physical and Data Link layers</button>
+                <button class="opt"
+                    onclick="ans('tl2',1,2,'In Unix, the kernel implements the upper Data Link (LLC), entire Network (IP) layer, and entire Transport layer. Physical layer is in NIC hardware, lower MAC is in device driver/firmware. Applications run above the kernel.')">B)
+                    Only the Application layer</button>
+                <button class="opt"
+                    onclick="ans('tl2',2,2,'In Unix, the kernel implements the upper Data Link (LLC), entire Network (IP) layer, and entire Transport layer. Physical layer is in NIC hardware, lower MAC is in device driver/firmware. Applications run above the kernel.')">C)
+                    Network layer (IP) and Transport layer (TCP/UDP)</button>
+                <button class="opt"
+                    onclick="ans('tl2',3,2,'In Unix, the kernel implements the upper Data Link (LLC), entire Network (IP) layer, and entire Transport layer. Physical layer is in NIC hardware, lower MAC is in device driver/firmware. Applications run above the kernel.')">D)
+                    All 5 layers are in the kernel</button>
+            </div>
+            <div class="exp" id="tl2-e"></div>
+        </div>
+
+        <div class="mcq">
+            <div class="mcq-q">Q3. Why does the network layer provide "unreliable" datagram delivery?</div>
+            <div class="opts" id="tl3">
+                <button class="opt"
+                    onclick="ans('tl3',0,1,'Intermediate routers have finite buffers. Under high network load, buffers fill up and incoming packets get DROPPED (buffer overflow). Additionally, physical channel errors and interference can corrupt packets. There is NO guarantee a packet will reach its destination.')">A)
+                    Because routers are too slow</button>
+                <button class="opt"
+                    onclick="ans('tl3',1,1,'Intermediate routers have finite buffers. Under high network load, buffers fill up and incoming packets get DROPPED (buffer overflow). Additionally, physical channel errors and interference can corrupt packets. There is NO guarantee a packet will reach its destination.')">B)
+                    Because intermediate router buffers can overflow, causing packet loss</button>
+                <button class="opt"
+                    onclick="ans('tl3',2,1,'Intermediate routers have finite buffers. Under high network load, buffers fill up and incoming packets get DROPPED (buffer overflow). Additionally, physical channel errors and interference can corrupt packets. There is NO guarantee a packet will reach its destination.')">C)
+                    Because IP addresses can be wrong</button>
+                <button class="opt"
+                    onclick="ans('tl3',3,1,'Intermediate routers have finite buffers. Under high network load, buffers fill up and incoming packets get DROPPED (buffer overflow). Additionally, physical channel errors and interference can corrupt packets. There is NO guarantee a packet will reach its destination.')">D)
+                    Because the network layer skips error checking</button>
+            </div>
+            <div class="exp" id="tl3-e"></div>
+        </div>
+    </div>
+
+    <!-- ───────── TAB 2: TCP vs UDP ───────── -->
+    <div id="tcpudp" class="sec">
+        <div class="ttl">Topic 2: Transport Services — TCP vs UDP <span class="bdg"
+                style="background:#FAEEDA;color:#633806">Very High Weightage</span></div>
+
+        <div class="bx bbl">
+            <h3>Services provided by the Transport Layer</h3>
+            <p>The Transport Layer must provide services on top of the unreliable Network Layer. These services ensure
+                that application data is delivered correctly, in order, and efficiently between two remote hosts — even
+                if those hosts are in different countries (e.g., IIT Kharagpur to Google USA).</p>
+        </div>
+
+        <h2 class="sh">Key explanation points</h2>
+        <div class="bsec">
+            <div class="pt"><span class="pn">1</span><span class="ptx"><strong>Connection Establishment:</strong>
+                    Setting up a logical "pipe" between two end hosts before sending data. Like saying "Hello" on a
+                    phone call to confirm the other side is alive and ready to receive. The other end must acknowledge
+                    the hello before data transfer begins.</span></div>
+            <div class="pt"><span class="pn">2</span><span class="ptx"><strong>Reliable Data Delivery:</strong> The
+                    Transport layer monitors whether data sent is received at the other end. If not received (detected
+                    via timeout), it retransmits. Eventually, every message sent by the application is guaranteed to be
+                    delivered to the receiver.</span></div>
+            <div class="pt"><span class="pn">3</span><span class="ptx"><strong>Flow Control:</strong> Ensures the sender
+                    does not overwhelm the receiver. Example: if Transmitter (T) sends at 10 Mbps but Receiver (R) can
+                    only accept at 1 Mbps, T must slow down to 1 Mbps. Without flow control, excess data overloads the
+                    network and gets dropped — wasting resources.</span></div>
+            <div class="pt"><span class="pn">4</span><span class="ptx"><strong>Congestion Control:</strong> Prevents the
+                    entire network from becoming congested. Like road traffic management at a junction where vehicles
+                    come from multiple roads. If data from multiple sources floods an intermediate router, it congests
+                    and drops packets. Transport layer signals senders to slow down.</span></div>
+            <div class="pt"><span class="pn">5</span><span class="ptx"><strong>Ordered Packet Delivery:</strong> Packets
+                    may travel different paths through the network and arrive out of order (e.g., Packet 3 arrives
+                    before Packet 2). The Transport layer buffers and re-orders packets before delivering to the
+                    application — so application always sees data in the correct sequence.</span></div>
+            <div class="pt"><span class="pn">6</span><span class="ptx"><strong>UDP — User Datagram Protocol:</strong>
+                    Works as a simple wrapper over the IP layer. Does NOT provide connection establishment, reliability,
+                    flow control, congestion control, or ordered delivery. Best for applications where real-time
+                    delivery matters more than reliability (e.g., video streaming, VoIP, DNS, gaming). Tolerates some
+                    packet loss.</span></div>
+            <div class="pt"><span class="pn">7</span><span class="ptx"><strong>TCP — Transmission Control
+                        Protocol:</strong> Provides ALL transport services: connection establishment, reliable delivery,
+                    flow control, congestion control, and ordered packet delivery. Used for HTTP, FTP, SMTP —
+                    applications where every byte must arrive correctly. Introduces processing delay compared to
+                    UDP.</span></div>
+            <div class="pt"><span class="pn">8</span><span class="ptx"><strong>Why multimedia uses UDP:</strong> In
+                    video/audio streaming, if a frame is lost, the player can interpolate (average frame 1 and frame 3
+                    to reconstruct frame 2). Retransmitting a lost frame takes extra time, making the experience worse.
+                    So delay tolerance (UDP) is preferred over reliability (TCP) for multimedia.</span></div>
+        </div>
+
+        <div class="tw">
+            <table>
+                <tr>
+                    <th>Service</th>
+                    <th>TCP</th>
+                    <th>UDP</th>
+                </tr>
+                <tr>
+                    <td>Connection Establishment</td>
+                    <td>Yes (3-way handshake)</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td>Reliable Data Delivery</td>
+                    <td>Yes (retransmits lost packets)</td>
+                    <td>No (best-effort)</td>
+                </tr>
+                <tr>
+                    <td>Flow Control</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td>Congestion Control</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td>Ordered Packet Delivery</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td>Overhead / Delay</td>
+                    <td>Higher</td>
+                    <td>Lower</td>
+                </tr>
+                <tr>
+                    <td>Use Case</td>
+                    <td>HTTP, FTP, SMTP, SSH, Telnet</td>
+                    <td>DNS, SNMP, Video streaming, VoIP, Gaming</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="bx bamb">
+            <h3>Common mistakes</h3>
+            <ul>
+                <li>Thinking UDP is "broken" — it is intentionally simple for performance-critical apps</li>
+                <li>Thinking TCP is always better — TCP adds delay which is unacceptable for real-time applications</li>
+                <li>Confusing Flow Control (sender vs receiver) with Congestion Control (sender vs network)</li>
+                <li>Forgetting that DNS uses UDP — it is a very small query/response, UDP overhead is sufficient</li>
+            </ul>
+        </div>
+
+        <h2 class="sh">MCQs — TCP vs UDP</h2>
+
+        <div class="mcq">
+            <div class="mcq-q">Q1. Which transport layer protocol provides ordered packet delivery and flow control?
+            </div>
+            <div class="opts" id="tu1">
+                <button class="opt"
+                    onclick="ans('tu1',0,0,'TCP (Transmission Control Protocol) provides ALL services: connection establishment, reliable delivery, ordered delivery, flow control, and congestion control. UDP only wraps IP data and delivers it to the application without any of these services.')">A)
+                    TCP</button>
+                <button class="opt"
+                    onclick="ans('tu1',1,0,'TCP (Transmission Control Protocol) provides ALL services: connection establishment, reliable delivery, ordered delivery, flow control, and congestion control. UDP only wraps IP data and delivers it to the application without any of these services.')">B)
+                    UDP</button>
+                <button class="opt"
+                    onclick="ans('tu1',2,0,'TCP (Transmission Control Protocol) provides ALL services: connection establishment, reliable delivery, ordered delivery, flow control, and congestion control. UDP only wraps IP data and delivers it to the application without any of these services.')">C)
+                    IP</button>
+                <button class="opt"
+                    onclick="ans('tu1',3,0,'TCP (Transmission Control Protocol) provides ALL services: connection establishment, reliable delivery, ordered delivery, flow control, and congestion control. UDP only wraps IP data and delivers it to the application without any of these services.')">D)
+                    ICMP</button>
+            </div>
+            <div class="exp" id="tu1-e"></div>
+        </div>
+
+        <div class="mcq">
+            <div class="mcq-q">Q2. Why do multimedia streaming applications prefer UDP over TCP?</div>
+            <div class="opts" id="tu2">
+                <button class="opt"
+                    onclick="ans('tu2',0,2,'Multimedia apps can interpolate (reconstruct) missing frames from adjacent ones. Retransmitting a lost frame via TCP takes extra time, causing more noticeable delay than the loss itself. So getting data on time (UDP) is more important than getting every byte (TCP).')">A)
+                    UDP provides better security for streams</button>
+                <button class="opt"
+                    onclick="ans('tu2',1,2,'Multimedia apps can interpolate (reconstruct) missing frames from adjacent ones. Retransmitting a lost frame via TCP takes extra time, causing more noticeable delay than the loss itself. So getting data on time (UDP) is more important than getting every byte (TCP).')">B)
+                    UDP is more reliable than TCP for video</button>
+                <button class="opt"
+                    onclick="ans('tu2',2,2,'Multimedia apps can interpolate (reconstruct) missing frames from adjacent ones. Retransmitting a lost frame via TCP takes extra time, causing more noticeable delay than the loss itself. So getting data on time (UDP) is more important than getting every byte (TCP).')">C)
+                    Timely delivery is more important than reliability; some loss is tolerable</button>
+                <button class="opt"
+                    onclick="ans('tu2',3,2,'Multimedia apps can interpolate (reconstruct) missing frames from adjacent ones. Retransmitting a lost frame via TCP takes extra time, causing more noticeable delay than the loss itself. So getting data on time (UDP) is more important than getting every byte (TCP).')">D)
+                    UDP supports more simultaneous connections</button>
+            </div>
+            <div class="exp" id="tu2-e"></div>
+        </div>
+
+        <div class="mcq">
+            <div class="mcq-q">Q3. Flow control at the transport layer ensures that:</div>
+            <div class="opts" id="tu3">
+                <button class="opt"
+                    onclick="ans('tu3',0,1,'Flow control coordinates the SENDER and RECEIVER rates. If Sender can push 10 Mbps but Receiver can only accept 1 Mbps, flow control signals the sender to slow down to 1 Mbps. Without it, excess data fills network buffers and gets dropped — wasted effort.')">A)
+                    Packets take the shortest path in the network</button>
+                <button class="opt"
+                    onclick="ans('tu3',1,1,'Flow control coordinates the SENDER and RECEIVER rates. If Sender can push 10 Mbps but Receiver can only accept 1 Mbps, flow control signals the sender to slow down to 1 Mbps. Without it, excess data fills network buffers and gets dropped — wasted effort.')">B)
+                    The sender does not send faster than the receiver can receive</button>
+                <button class="opt"
+                    onclick="ans('tu3',2,1,'Flow control coordinates the SENDER and RECEIVER rates. If Sender can push 10 Mbps but Receiver can only accept 1 Mbps, flow control signals the sender to slow down to 1 Mbps. Without it, excess data fills network buffers and gets dropped — wasted effort.')">C)
+                    The network is not congested at routers</button>
+                <button class="opt"
+                    onclick="ans('tu3',3,1,'Flow control coordinates the SENDER and RECEIVER rates. If Sender can push 10 Mbps but Receiver can only accept 1 Mbps, flow control signals the sender to slow down to 1 Mbps. Without it, excess data fills network buffers and gets dropped — wasted effort.')">D)
+                    Packets are encrypted before transmission</button>
+            </div>
+            <div class="exp" id="tu3-e"></div>
+        </div>
+
+        <div class="mcq">
+            <div class="mcq-q">Q4. Which of these application layer protocols uses TCP at the transport layer?</div>
+            <div class="opts" id="tu4">
+                <button class="opt"
+                    onclick="ans('tu4',0,2,'HTTP, FTP, SMTP, Telnet, SSH all use TCP because they require reliable, ordered delivery of every byte. DNS uses UDP (small query-response, speed matters). SNMP uses UDP. TFTP uses UDP.')">A)
+                    DNS</button>
+                <button class="opt"
+                    onclick="ans('tu4',1,2,'HTTP, FTP, SMTP, Telnet, SSH all use TCP because they require reliable, ordered delivery of every byte. DNS uses UDP (small query-response, speed matters). SNMP uses UDP. TFTP uses UDP.')">B)
+                    SNMP</button>
+                <button class="opt"
+                    onclick="ans('tu4',2,2,'HTTP, FTP, SMTP, Telnet, SSH all use TCP because they require reliable, ordered delivery of every byte. DNS uses UDP (small query-response, speed matters). SNMP uses UDP. TFTP uses UDP.')">C)
+                    HTTP</button>
+                <button class="opt"
+                    onclick="ans('tu4',3,2,'HTTP, FTP, SMTP, Telnet, SSH all use TCP because they require reliable, ordered delivery of every byte. DNS uses UDP (small query-response, speed matters). SNMP uses UDP. TFTP uses UDP.')">D)
+                    TFTP</button>
+            </div>
+            <div class="exp" id="tu4-e"></div>
+        </div>
+    </div>
+
+    <!-- ───────── TAB 3: CONNECTION ESTABLISHMENT ───────── -->
+    <div id="conn" class="sec">
+        <div class="ttl">Topic 3: Connection Establishment <span class="bdg"
+                style="background:#FCEBEB;color:#791F1F">Most Important</span></div>
+
+        <div class="bx bbl">
+            <h3>What is Connection Establishment?</h3>
+            <p>Before sending data, the two end hosts must confirm that each is alive and ready to receive. This is like
+                saying "Hello" on a phone call. In a circuit-switched telephone network this is trivial, but in a
+                <strong>packet-switched network it is non-trivial</strong> due to packet loss, delays, and duplicate
+                packets.</p>
+        </div>
+
+        <h2 class="sh">Key explanation points</h2>
+        <div class="bsec">
+            <div class="pt"><span class="pn">1</span><span class="ptx"><strong>Problems in packet switching (why simple
+                        hello fails):</strong> (a) Packets can be LOST (buffer overflow). (b) Packets can be arbitrarily
+                    DELAYED (congestion). (c) DUPLICATE packets can appear — sender retransmits thinking a packet was
+                    lost, but the original was just stuck in a queue and arrives later. All of these create confusion
+                    during connection setup.</span></div>
+            <div class="pt"><span class="pn">2</span><span class="ptx"><strong>2-way handshake problem:</strong> Client
+                    sends CR (Connection Request), Server replies with CA (Connection Acknowledgement). This naive
+                    protocol FAILS because a delayed duplicate CR from an old crashed session can fool the server into
+                    thinking a new connection is being requested.</span></div>
+            <div class="pt"><span class="pn">3</span><span class="ptx"><strong>Solution 1 — Throwaway transport
+                        addresses (port numbers):</strong> If a machine crashes, restart using a NEW port number. The
+                    old delayed duplicate will arrive on the old port which no longer exists, so it is discarded.
+                    PROBLEM: We have a finite number of port numbers (0–65535). You cannot throw away a port forever —
+                    not feasible.</span></div>
+            <div class="pt"><span class="pn">4</span><span class="ptx"><strong>Solution 2 — Unique connection
+                        identifiers:</strong> Give each connection a globally unique ID, put it in every packet.
+                    PROBLEM: Ensuring global uniqueness is complex, especially across restarts. Requires special
+                    hardware/algorithms and adds significant overhead.</span></div>
+            <div class="pt"><span class="pn">5</span><span class="ptx"><strong>Solution 3 — Restrict packet lifetime
+                        (BEST):</strong> Associate a maximum lifetime T with every packet. Once a packet's lifetime
+                    expires it is automatically removed from the network. This eliminates the possibility of having
+                    delayed duplicates — the old packet is guaranteed dead before a new connection starts. This is the
+                    feasible solution used in practice.</span></div>
+            <div class="pt"><span class="pn">6</span><span class="ptx"><strong>3 methods to restrict packet
+                        lifetime:</strong> (a) Restricted network design — prevent looping; set max queuing delay per
+                    packet. (b) Hop count (TTL) — each router decrements a hop count field; when it reaches 0, the
+                    packet is dropped. This is what Internet uses today (TTL in IP header). (c) Timestamp — attach a
+                    lifetime timestamp; expired packets are dropped. Requires clock synchronization across all devices —
+                    impractical at internet scale.</span></div>
+            <div class="pt"><span class="pn">7</span><span class="ptx"><strong>Tomlinson's 2 requirements (1975) —
+                        "Selecting Sequence Numbers":</strong> Requirement 1: A sequence number must never refer to more
+                    than one byte at any time (using BYTE sequence numbers, not packet sequence numbers). Requirement 2:
+                    The valid range of sequence numbers must be positively synchronized between sender and receiver —
+                    handled by the flow control algorithm.</span></div>
+            <div class="pt"><span class="pn">8</span><span class="ptx"><strong>Byte sequence numbers vs packet sequence
+                        numbers:</strong> TCP uses BYTE sequence numbers — every individual byte gets a unique sequence
+                    number. A packet header contains: Sequence Number (e.g., 500) + Length (e.g., 100 bytes) → means
+                    bytes 501–600 are in this packet. This allows exact byte-level identification and ordered
+                    delivery.</span></div>
+            <div class="pt"><span class="pn">9</span><span class="ptx"><strong>Forbidden Region:</strong> Once a
+                    sequence number is used in a connection, that same sequence number must NOT be reused within the
+                    maximum packet lifetime T. The range of sequence numbers that are "in use" (including their lifetime
+                    T) is called the Forbidden Region. New connections must use sequence numbers OUTSIDE the forbidden
+                    region of old connections.</span></div>
+            <div class="pt"><span class="pn">10</span><span class="ptx"><strong>Initial Sequence Number (ISN) selection
+                        — 2 strategies:</strong> (a) Wait for duration T before starting a new connection — ensures all
+                    old packets with old sequence numbers are dead. (b) Choose a new ISN that is HIGH ENOUGH above the
+                    previous sequence number — sequence number spaces of two connections don't overlap.</span></div>
+            <div class="pt"><span class="pn">11</span><span class="ptx"><strong>Bounded rate requirement:</strong>
+                    Sequence numbers must be generated at a BOUNDED rate — not too fast (might wrap around and re-enter
+                    old forbidden region) and not too slow (new connection overlaps old slow connection). TCP uses a
+                    self-clocking mechanism: generate a new sequence number only when an ACK is received, keeping rate
+                    bounded.</span></div>
+            <div class="pt"><span class="pn">12</span><span class="ptx"><strong>TCP uses 32-bit sequence
+                        numbers:</strong> Can represent 2^32 ≈ 4 billion unique sequence numbers. Must ensure these
+                    don't "wrap around" too quickly. At high data rates, the 32-bit space can wrap within the lifetime T
+                    — this would cause confusion. Rate control prevents wrap-around within T.</span></div>
+        </div>
+
+        <div class="bx bgn">
+            <h3>3-Way Handshake — How it works</h3>
+            <div class="flow">
+                <div class="fbox">Host 1 → CR (SEQ=x)</div>
+                <div class="farr">→</div>
+                <div class="fbox">Host 2 → ACK(x) + CR (SEQ=y)</div>
+                <div class="farr">→</div>
+                <div class="fbox">Host 1 → ACK(y) + DATA</div>
+            </div>
+            <p style="margin-top:8px;font-size:14px">Host 1 validates the ACK: if the sequence number x in the ACK
+                matches the CR it sent, the connection is genuine. If different, it was a delayed duplicate — Host 1
+                sends REJECT. Host 2 validates: if ACK number from Host 1 matches y it proposed, genuine; if not,
+                delayed duplicate — discard.</p>
+        </div>
+
+        <div class="bx bpur">
+            <h3>Handling delayed duplicates with 3-Way Handshake</h3>
+            <ul>
+                <li><strong>Case 1 — CR is delayed duplicate:</strong> Host 2 receives old CR with seq x. Sends ACK(x).
+                    Host 1 sees ACK for x but never intended to connect — sends REJECT. Host 2 receives REJECT —
+                    abandons connection. ✓ Correctly handled.</li>
+                <li><strong>Case 2 — Both CR and ACK are delayed duplicates:</strong> Host 2 receives delayed duplicate
+                    CR, sends ACK(x)+proposes y. Later gets a different ACK with wrong acknowledgement number (z ≠ y).
+                    Host 2 discards the mismatched ACK. Host 1 sends REJECT for its part. ✓ Correctly handled.</li>
+            </ul>
+        </div>
+
+        <div class="bx bamb">
+            <h3>Common mistakes</h3>
+            <ul>
+                <li>Thinking 2-way handshake is sufficient — it cannot handle delayed duplicates in packet-switched
+                    networks</li>
+                <li>Confusing packet sequence numbers with byte sequence numbers — TCP uses BYTE sequence numbers</li>
+                <li>Forgetting that throwaway port solution is NOT feasible — finite port space</li>
+                <li>Thinking timestamp-based lifetime is practical — it requires clock synchronization which is very
+                    difficult</li>
+                <li>Thinking the forbidden region problem only arises from crashes — fast or slow data rates can also
+                    cause overlap</li>
+            </ul>
+        </div>
+
+        <h2 class="sh">MCQs — Connection Establishment</h2>
+
+        <div class="mcq">
+            <div class="mcq-q">Q1. What is the "delayed duplicate" problem in connection establishment?</div>
+            <div class="opts" id="ce1">
+                <button class="opt"
+                    onclick="ans('ce1',0,2,'A delayed duplicate is an old packet that was stuck in the network (due to congestion) and arrives much later. The server cannot tell if this is a NEW connection request or just an old delayed duplicate from a previous (possibly crashed) session — causing confusion.')">A)
+                    Two packets arriving at the same time</button>
+                <button class="opt"
+                    onclick="ans('ce1',1,2,'A delayed duplicate is an old packet that was stuck in the network (due to congestion) and arrives much later. The server cannot tell if this is a NEW connection request or just an old delayed duplicate from a previous (possibly crashed) session — causing confusion.')">B)
+                    A packet being corrupted during transmission</button>
+                <button class="opt"
+                    onclick="ans('ce1',2,2,'A delayed duplicate is an old packet that was stuck in the network (due to congestion) and arrives much later. The server cannot tell if this is a NEW connection request or just an old delayed duplicate from a previous (possibly crashed) session — causing confusion.')">C)
+                    An old packet delayed in the network arriving late and being mistaken for a new connection
+                    request</button>
+                <button class="opt"
+                    onclick="ans('ce1',3,2,'A delayed duplicate is an old packet that was stuck in the network (due to congestion) and arrives much later. The server cannot tell if this is a NEW connection request or just an old delayed duplicate from a previous (possibly crashed) session — causing confusion.')">D)
+                    Two clients connecting to the same server simultaneously</button>
+            </div>
+            <div class="exp" id="ce1-e"></div>
+        </div>
+
+        <div class="mcq">
+            <div class="mcq-q">Q2. The practical method to restrict packet lifetime in today's internet is:</div>
+            <div class="opts" id="ce2">
+                <button class="opt"
+                    onclick="ans('ce2',0,1,'The TTL (Time To Live) field in the IP header acts as a hop count. Every router that forwards the packet decrements TTL by 1. When TTL reaches 0, the packet is dropped. This prevents packets from circulating forever. Timestamp-based approach requires clock sync which is impractical.')">A)
+                    Attaching a physical timestamp to each packet</button>
+                <button class="opt"
+                    onclick="ans('ce2',1,1,'The TTL (Time To Live) field in the IP header acts as a hop count. Every router that forwards the packet decrements TTL by 1. When TTL reaches 0, the packet is dropped. This prevents packets from circulating forever. Timestamp-based approach requires clock sync which is impractical.')">B)
+                    Hop count (TTL) — each router decrements; dropped when reaches 0</button>
+                <button class="opt"
+                    onclick="ans('ce2',2,1,'The TTL (Time To Live) field in the IP header acts as a hop count. Every router that forwards the packet decrements TTL by 1. When TTL reaches 0, the packet is dropped. This prevents packets from circulating forever. Timestamp-based approach requires clock sync which is impractical.')">C)
+                    Assigning infinite sequence numbers</button>
+                <button class="opt"
+                    onclick="ans('ce2',3,1,'The TTL (Time To Live) field in the IP header acts as a hop count. Every router that forwards the packet decrements TTL by 1. When TTL reaches 0, the packet is dropped. This prevents packets from circulating forever. Timestamp-based approach requires clock sync which is impractical.')">D)
+                    Using globally synchronized hardware clocks</button>
+            </div>
+            <div class="exp" id="ce2-e"></div>
+        </div>
+
+        <div class="mcq">
+            <div class="mcq-q">Q3. In the 3-way handshake, if Host 1 receives an ACK with a sequence number it does not
+                recognize, it should:</div>
+            <div class="opts" id="ce3">
+                <button class="opt"
+                    onclick="ans('ce3',0,2,'If Host 1 receives an ACK with an unrecognized sequence number, it means the ACK is a response to a delayed duplicate connection request — not a current one. Host 1 sends a REJECT message. Host 2 sees the REJECT and stops trying to establish the connection.')">A)
+                    Accept the connection anyway</button>
+                <button class="opt"
+                    onclick="ans('ce3',1,2,'If Host 1 receives an ACK with an unrecognized sequence number, it means the ACK is a response to a delayed duplicate connection request — not a current one. Host 1 sends a REJECT message. Host 2 sees the REJECT and stops trying to establish the connection.')">B)
+                    Retransmit its connection request</button>
+                <button class="opt"
+                    onclick="ans('ce3',2,2,'If Host 1 receives an ACK with an unrecognized sequence number, it means the ACK is a response to a delayed duplicate connection request — not a current one. Host 1 sends a REJECT message. Host 2 sees the REJECT and stops trying to establish the connection.')">C)
+                    Send a REJECT message — it is a delayed duplicate ACK</button>
+                <button class="opt"
+                    onclick="ans('ce3',3,2,'If Host 1 receives an ACK with an unrecognized sequence number, it means the ACK is a response to a delayed duplicate connection request — not a current one. Host 1 sends a REJECT message. Host 2 sees the REJECT and stops trying to establish the connection.')">D)
+                    Wait silently for a timeout</button>
+            </div>
+            <div class="exp" id="ce3-e"></div>
+        </div>
+
+        <div class="mcq">
+            <div class="mcq-q">Q4. Tomlinson's first requirement (1975) for sequence numbers states that:</div>
+            <div class="opts" id="ce4">
+                <button class="opt"
+                    onclick="ans('ce4',0,1,'Tomlinson required that each sequence number refers to AT MOST ONE BYTE at any time. This means two packets with the same sequence number must not coexist in the network for the same source-destination pair. This is why TCP uses BYTE sequence numbers, not packet sequence numbers.')">A)
+                    Sequence numbers must restart from 0 on each new connection</button>
+                <button class="opt"
+                    onclick="ans('ce4',1,1,'Tomlinson required that each sequence number refers to AT MOST ONE BYTE at any time. This means two packets with the same sequence number must not coexist in the network for the same source-destination pair. This is why TCP uses BYTE sequence numbers, not packet sequence numbers.')">B)
+                    A sequence number must never refer to more than one byte in the network at any time</button>
+                <button class="opt"
+                    onclick="ans('ce4',2,1,'Tomlinson required that each sequence number refers to AT MOST ONE BYTE at any time. This means two packets with the same sequence number must not coexist in the network for the same source-destination pair. This is why TCP uses BYTE sequence numbers, not packet sequence numbers.')">C)
+                    Sequence numbers must be globally unique across all connections worldwide</button>
+                <button class="opt"
+                    onclick="ans('ce4',3,1,'Tomlinson required that each sequence number refers to AT MOST ONE BYTE at any time. This means two packets with the same sequence number must not coexist in the network for the same source-destination pair. This is why TCP uses BYTE sequence numbers, not packet sequence numbers.')">D)
+                    Sequence numbers must be chosen randomly for each packet</button>
+            </div>
+            <div class="exp" id="ce4-e"></div>
+        </div>
+
+        <div class="mcq">
+            <div class="mcq-q">Q5. The "Forbidden Region" in the context of sequence number selection means:</div>
+            <div class="opts" id="ce5">
+                <button class="opt"
+                    onclick="ans('ce5',0,2,'The Forbidden Region is the range of sequence numbers currently " in use" by
+                    an existing connection (including their maximum lifetime T). A NEW connection must not pick an ISN
+                    from this range — otherwise packets from the old and new connection could be confused since they
+                    share the same sequence numbers.')">A) Sequence numbers reserved for system use only</button>
+                <button class="opt"
+                    onclick="ans('ce5',1,2,'The Forbidden Region is the range of sequence numbers currently " in use" by
+                    an existing connection (including their maximum lifetime T). A NEW connection must not pick an ISN
+                    from this range — otherwise packets from the old and new connection could be confused since they
+                    share the same sequence numbers.')">B) Ports that cannot be used by user applications</button>
+                <button class="opt"
+                    onclick="ans('ce5',2,2,'The Forbidden Region is the range of sequence numbers currently " in use" by
+                    an existing connection (including their maximum lifetime T). A NEW connection must not pick an ISN
+                    from this range — otherwise packets from the old and new connection could be confused since they
+                    share the same sequence numbers.')">C) Sequence numbers still in use by a previous connection that
+                    must not be reused</button>
+                <button class="opt"
+                    onclick="ans('ce5',3,2,'The Forbidden Region is the range of sequence numbers currently " in use" by
+                    an existing connection (including their maximum lifetime T). A NEW connection must not pick an ISN
+                    from this range — otherwise packets from the old and new connection could be confused since they
+                    share the same sequence numbers.')">D) IP address ranges blocked by a firewall</button>
+            </div>
+            <div class="exp" id="ce5-e"></div>
+        </div>
+    </div>
+
+    <!-- ───────── TAB 4: CONNECTION RELEASE ───────── -->
+    <div id="rel" class="sec">
+        <div class="ttl">Topic 4: Connection Release <span class="bdg"
+                style="background:#E1F5EE;color:#085041">Important</span></div>
+
+        <div class="bx bbl">
+            <h3>What is Connection Release?</h3>
+            <p>After data transfer is complete, the logical connection between two hosts must be released. Connection
+                release is simpler than connection establishment (no sequence number problem), but introduces its own
+                challenge — ensuring both sides agree to close without data loss over an unreliable channel.</p>
+        </div>
+
+        <h2 class="sh">Key explanation points</h2>
+        <div class="bsec">
+            <div class="pt"><span class="pn">1</span><span class="ptx"><strong>Asymmetric Release:</strong> One party
+                    simply hangs up (sends a connection release message) and the connection is broken immediately.
+                    Simple, but DANGEROUS — if Host 1 closes while Host 2 still has data to send, that data is LOST.
+                    Like hanging up a phone call while the other person is still speaking. Leads to data loss.</span>
+            </div>
+            <div class="pt"><span class="pn">2</span><span class="ptx"><strong>Symmetric Release:</strong> Treats the
+                    connection as TWO separate unidirectional connections. Each direction must be released
+                    independently. Host 1 sends DR (Disconnect Request) for Host1→Host2 direction; Host 2 sends DR for
+                    Host2→Host1 direction. Only when BOTH sides have sent and acknowledged DR is the connection fully
+                    closed. Avoids data loss.</span></div>
+            <div class="pt"><span class="pn">3</span><span class="ptx"><strong>The Two-Army Problem:</strong> Two armies
+                    (Blue) are on two hills, separated by a valley controlled by the White army. Blue Army 1 wants to
+                    coordinate a simultaneous attack with Blue Army 2. Any messenger crossing the valley may be captured
+                    (message lost). The problem proves: <strong>no protocol can guarantee consensus over an unreliable
+                        channel</strong>. This is directly analogous to the symmetric release problem.</span></div>
+            <div class="pt"><span class="pn">4</span><span class="ptx"><strong>Why Two-Army Problem applies:</strong> In
+                    symmetric release, each side needs to be sure the other side received the DR and agreed to close.
+                    But since the final ACK can always be lost, the sender can never be 100% sure. The Two-Army Problem
+                    proves this is theoretically unsolvable with perfect correctness.</span></div>
+            <div class="pt"><span class="pn">5</span><span class="ptx"><strong>Practical solution — Timers:</strong>
+                    Each host sends a DR and starts a timer. If ACK is received within the timeout, release the
+                    connection. If not, retransmit DR. After N retries without success, forcefully release the
+                    connection. This is not 100% correct but is the best practical approach — there is always a tradeoff
+                    between correctness and performance.</span></div>
+            <div class="pt"><span class="pn">6</span><span class="ptx"><strong>Lost ACK scenario:</strong> Host 2 sends
+                    DR, Host 1 receives DR, sends ACK, but ACK is lost. Host 2 times out → retransmits DR. Host 1
+                    receives another DR, resends ACK, releases. Host 2 gets ACK → releases. Works correctly via
+                    retransmission.</span></div>
+            <div class="pt"><span class="pn">7</span><span class="ptx"><strong>Both DR and ACK lost scenario:</strong>
+                    Both hosts will eventually time out after N retries and independently release the connection. There
+                    is a small possibility of data loss in this corner case. This is accepted as the practical tradeoff
+                    — correctness vs. performance.</span></div>
+        </div>
+
+        <div class="tw">
+            <table>
+                <tr>
+                    <th>Property</th>
+                    <th>Asymmetric Release</th>
+                    <th>Symmetric Release</th>
+                </tr>
+                <tr>
+                    <td>Who closes</td>
+                    <td>One party unilaterally</td>
+                    <td>Both parties independently</td>
+                </tr>
+                <tr>
+                    <td>Data loss risk</td>
+                    <td>High — other side may still be sending</td>
+                    <td>Low — both sides finish before closing</td>
+                </tr>
+                <tr>
+                    <td>Protocol complexity</td>
+                    <td>Simple</td>
+                    <td>More complex</td>
+                </tr>
+                <tr>
+                    <td>Correct over unreliable channel</td>
+                    <td>No</td>
+                    <td>No (Two-Army Problem) — but better</td>
+                </tr>
+                <tr>
+                    <td>Used in practice</td>
+                    <td>Rarely preferred</td>
+                    <td>Yes (with timers) — used in TCP FIN handshake</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="bx bamb">
+            <h3>Common mistakes</h3>
+            <ul>
+                <li>Thinking symmetric release is 100% correct — it is NOT (Two-Army Problem)</li>
+                <li>Confusing asymmetric and symmetric release — asymmetric = one hangs up; symmetric = both
+                    independently close</li>
+                <li>Forgetting that after N timeouts, the host forcefully releases — there is always a small data loss
+                    risk</li>
+                <li>Thinking Two-Army Problem applies only to military scenarios — it is a formal proof about any
+                    unreliable channel</li>
+            </ul>
+        </div>
+
+        <h2 class="sh">MCQs — Connection Release</h2>
+
+        <div class="mcq">
+            <div class="mcq-q">Q1. What is the main disadvantage of asymmetric connection release?</div>
+            <div class="opts" id="cr1">
+                <button class="opt"
+                    onclick="ans('cr1',0,1,'When one party abruptly closes (asymmetric release), the other party may still have data to send. That unsent data is permanently lost because the connection is broken before it could be transmitted. This is why symmetric release is preferred.')">A)
+                    It requires more sequence numbers</button>
+                <button class="opt"
+                    onclick="ans('cr1',1,1,'When one party abruptly closes (asymmetric release), the other party may still have data to send. That unsent data is permanently lost because the connection is broken before it could be transmitted. This is why symmetric release is preferred.')">B)
+                    It can cause data loss if one side still has data to send</button>
+                <button class="opt"
+                    onclick="ans('cr1',2,1,'When one party abruptly closes (asymmetric release), the other party may still have data to send. That unsent data is permanently lost because the connection is broken before it could be transmitted. This is why symmetric release is preferred.')">C)
+                    It requires a 3-way handshake to close</button>
+                <button class="opt"
+                    onclick="ans('cr1',3,1,'When one party abruptly closes (asymmetric release), the other party may still have data to send. That unsent data is permanently lost because the connection is broken before it could be transmitted. This is why symmetric release is preferred.')">D)
+                    It is too slow for modern networks</button>
+            </div>
+            <div class="exp" id="cr1-e"></div>
+        </div>
+
+        <div class="mcq">
+            <div class="mcq-q">Q2. The Two-Army Problem proves that:</div>
+            <div class="opts" id="cr2">
+                <button class="opt"
+                    onclick="ans('cr2',0,2,'The Two-Army Problem is a formal proof that PERFECT consensus (agreement) is impossible over an unreliable communication channel where messages can be lost. Applying this to networking: you can never be 100% certain both sides agree to close a connection — the final ACK can always be lost.')">A)
+                    Military networks are more reliable than civilian networks</button>
+                <button class="opt"
+                    onclick="ans('cr2',1,2,'The Two-Army Problem is a formal proof that PERFECT consensus (agreement) is impossible over an unreliable communication channel where messages can be lost. Applying this to networking: you can never be 100% certain both sides agree to close a connection — the final ACK can always be lost.')">B)
+                    UDP is better than TCP for coordination</button>
+                <button class="opt"
+                    onclick="ans('cr2',2,2,'The Two-Army Problem is a formal proof that PERFECT consensus (agreement) is impossible over an unreliable communication channel where messages can be lost. Applying this to networking: you can never be 100% certain both sides agree to close a connection — the final ACK can always be lost.')">C)
+                    Perfect consensus is impossible over an unreliable channel</button>
+                <button class="opt"
+                    onclick="ans('cr2',3,2,'The Two-Army Problem is a formal proof that PERFECT consensus (agreement) is impossible over an unreliable communication channel where messages can be lost. Applying this to networking: you can never be 100% certain both sides agree to close a connection — the final ACK can always be lost.')">D)
+                    Synchronized attacks always succeed in military strategy</button>
+            </div>
+            <div class="exp" id="cr2-e"></div>
+        </div>
+
+        <div class="mcq">
+            <div class="mcq-q">Q3. In the practical symmetric release protocol with timers, if the final ACK is lost:
+            </div>
+            <div class="opts" id="cr3">
+                <button class="opt"
+                    onclick="ans('cr3',0,2,'If the final ACK is lost, the sender of the DR will not receive an ACK within the timeout. The timer fires, and the DR is retransmitted. The other side receives the retransmitted DR, resends the ACK. Once the ACK is received, the connection is released. N retries are allowed before forceful release.')">A)
+                    The connection stays open forever</button>
+                <button class="opt"
+                    onclick="ans('cr3',1,2,'If the final ACK is lost, the sender of the DR will not receive an ACK within the timeout. The timer fires, and the DR is retransmitted. The other side receives the retransmitted DR, resends the ACK. Once the ACK is received, the connection is released. N retries are allowed before forceful release.')">B)
+                    Both sides immediately terminate without retrying</button>
+                <button class="opt"
+                    onclick="ans('cr3',2,2,'If the final ACK is lost, the sender of the DR will not receive an ACK within the timeout. The timer fires, and the DR is retransmitted. The other side receives the retransmitted DR, resends the ACK. Once the ACK is received, the connection is released. N retries are allowed before forceful release.')">C)
+                    The sender times out and retransmits the DR; retries up to N times then forcefully releases</button>
+                <button class="opt"
+                    onclick="ans('cr3',3,2,'If the final ACK is lost, the sender of the DR will not receive an ACK within the timeout. The timer fires, and the DR is retransmitted. The other side receives the retransmitted DR, resends the ACK. Once the ACK is received, the connection is released. N retries are allowed before forceful release.')">D)
+                    A new 3-way handshake is initiated for release</button>
+            </div>
+            <div class="exp" id="cr3-e"></div>
+        </div>
+    </div>
+
+    <!-- ───────── TAB 5: FLOW CONTROL & ARQ ───────── -->
+    <div id="flow" class="sec">
+        <div class="ttl">Topic 5: Flow Control, Reliability & ARQ <span class="bdg"
+                style="background:#FAEEDA;color:#633806">High Weightage</span></div>
+
+        <div class="bx bbl">
+            <h3>Why Flow Control AND Reliability at Transport Layer?</h3>
+            <p>Flow control and reliability are implemented at BOTH the Data Link layer (hop-by-hop) AND the Transport
+                layer (end-to-end). They serve different purposes and neither alone is sufficient. The key paper
+                motivating end-to-end protocols is by Saltzer, Reed, and Clark — foundational reading for networking
+                principles.</p>
+        </div>
+
+        <h2 class="sh">Key explanation points</h2>
+        <div class="bsec">
+            <div class="pt"><span class="pn">1</span><span class="ptx"><strong>Why hop-by-hop flow control alone is
+                        insufficient:</strong> Say link S→R1=10Mbps, R1→R2=5Mbps, R2→R3=3Mbps, R3→D=1Mbps. Source S
+                    pushes 10 Mbps. Even with hop-by-hop control, packets accumulate at R1 (can only forward at 5 Mbps).
+                    Buffer overflows, packets drop. An end-to-end control is needed to tell S to send at only 1 Mbps
+                    (the bottleneck rate).</span></div>
+            <div class="pt"><span class="pn">2</span><span class="ptx"><strong>Why end-to-end flow control alone is
+                        insufficient:</strong> Even if S and D agree on 1 Mbps, multiple sources may converge at one
+                    router from different links. If total incoming rate exceeds outgoing capacity, packets are dropped.
+                    Hop-by-hop flow control reduces congestion at individual routers, complementing the end-to-end
+                    mechanism.</span></div>
+            <div class="pt"><span class="pn">3</span><span class="ptx"><strong>Summary:</strong> Flow control/error
+                    control at Transport layer = ESSENTIAL for correctness. Flow control/error control at Data Link
+                    layer = IMPROVES performance. Both are needed and serve complementary roles.</span></div>
+            <div class="pt"><span class="pn">4</span><span class="ptx"><strong>Stop-and-Wait Flow Control (error-free
+                        channel):</strong> Simplest protocol. Sender sends ONE frame, waits for ACK before sending the
+                    next. Sender only sends Frame N+1 after receiving ACK for Frame N. Works perfectly on error-free
+                    channel. Major disadvantage: very low utilization — link is idle while waiting for ACK.</span></div>
+            <div class="pt"><span class="pn">5</span><span class="ptx"><strong>Stop-and-Wait ARQ (noisy
+                        channel):</strong> Same as Stop-and-Wait but adds sequence numbers (0 and 1 only — 1-bit
+                    sequence number is enough because only one outstanding frame). If a frame is lost or corrupted,
+                    sender times out and retransmits. If ACK is lost, sender retransmits and receiver uses sequence
+                    number to detect duplicate. ARQ = Automatic Repeat Request.</span></div>
+            <div class="pt"><span class="pn">6</span><span class="ptx"><strong>Stop-and-Wait sequence numbers — why
+                        1-bit is enough:</strong> At any time, only ONE frame is outstanding in the network. Sequence
+                    numbers alternate: 0, 1, 0, 1... An ACK of 1 means "I received frame 0, expecting frame 1." At most
+                    2 distinct sequence numbers needed → 1 bit suffices.</span></div>
+            <div class="pt"><span class="pn">7</span><span class="ptx"><strong>Problem with Stop-and-Wait:</strong> For
+                    every packet sent, sender must wait for ACK before sending next. If the link has high
+                    bandwidth-delay product, the link is mostly idle. Example: 1 Gbps link, 100ms RTT → sender can only
+                    pipeline one packet every 100ms — extremely wasteful. This leads to Sliding Window protocols.</span>
+            </div>
+            <div class="pt"><span class="pn">8</span><span class="ptx"><strong>Sliding Window Protocol — broad
+                        idea:</strong> Sender maintains a SENDING WINDOW — a set of sequence numbers it is permitted to
+                    send without waiting for ACK. Receiver maintains a RECEIVING WINDOW — a set of sequence numbers it
+                    is permitted to accept. Multiple frames are sent in a pipeline fashion. ACKs arrive parallelly.
+                    Window slides forward as ACKs are received.</span></div>
+            <div class="pt"><span class="pn">9</span><span class="ptx"><strong>Sliding Window — how it works:</strong>
+                    Say sender window size = 7. Sender can send frames 0–6 without waiting. When ACK for frame 0
+                    arrives, window slides to 1–7 (can now send frame 7). Both sending window and receiving window slide
+                    as ACKs arrive. This "pipeline" fully utilizes the link capacity.</span></div>
+            <div class="pt"><span class="pn">10</span><span class="ptx"><strong>Piggybacking:</strong> In a
+                    bidirectional connection, instead of sending ACK as a separate message, the ACK is included
+                    ("piggybacked") into the data frame being sent in the reverse direction. This reduces overhead by
+                    combining data + ACK into one packet.</span></div>
+        </div>
+
+        <div class="tw">
+            <table>
+                <tr>
+                    <th>Feature</th>
+                    <th>Stop-and-Wait ARQ</th>
+                    <th>Sliding Window Protocol</th>
+                </tr>
+                <tr>
+                    <td>Outstanding frames at once</td>
+                    <td>1</td>
+                    <td>Window size W (can be many)</td>
+                </tr>
+                <tr>
+                    <td>Sequence number bits needed</td>
+                    <td>1 bit (0 or 1)</td>
+                    <td>n bits (2^n window size)</td>
+                </tr>
+                <tr>
+                    <td>Link utilization</td>
+                    <td>Very low on high-delay links</td>
+                    <td>High — pipelined</td>
+                </tr>
+                <tr>
+                    <td>Complexity</td>
+                    <td>Simple</td>
+                    <td>More complex</td>
+                </tr>
+                <tr>
+                    <td>Suitable for</td>
+                    <td>Low bandwidth-delay links</td>
+                    <td>High bandwidth or high delay links</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="bx bgn">
+            <h3>Sliding Window — growing window example</h3>
+            <div class="flow">
+                <div class="fbox">Send frame 0</div>
+                <div class="farr">→</div>
+                <div class="fbox">Recv ACK(0) → send 1,2,3</div>
+                <div class="farr">→</div>
+                <div class="fbox">Recv ACK(1,2,3) → send 4,5,6,7</div>
+                <div class="farr">→</div>
+                <div class="fbox">Window grows with ACKs</div>
+            </div>
+        </div>
+
+        <div class="bx bamb">
+            <h3>Common mistakes</h3>
+            <ul>
+                <li>Thinking flow control at Data Link layer alone is enough — it handles only hop-by-hop, not
+                    end-to-end rate mismatch</li>
+                <li>Thinking Stop-and-Wait uses more than 1-bit sequence number — only 1 bit (0 and 1) needed</li>
+                <li>Confusing Stop-and-Wait with Go-Back-N or Selective Repeat (those are specific Sliding Window
+                    variants)</li>
+                <li>Forgetting that ARQ = Automatic Repeat reQuest — the reliability mechanism for noisy channels</li>
+                <li>Thinking piggybacking means sending the same data twice — it means attaching ACK to data going in
+                    reverse direction</li>
+            </ul>
+        </div>
+
+        <h2 class="sh">MCQs — Flow Control & ARQ</h2>
+
+        <div class="mcq">
+            <div class="mcq-q">Q1. Why is hop-by-hop (Data Link layer) flow control NOT sufficient by itself?</div>
+            <div class="opts" id="fc1">
+                <button class="opt"
+                    onclick="ans('fc1',0,2,'Hop-by-hop control cannot tell the SOURCE how fast to send end-to-end. Example: S→R1=10Mbps, R1→R2=5Mbps, R2→R3=3Mbps, R3→D=1Mbps. Even with hop-by-hop, S pushes 10Mbps — data accumulates and drops at R1. Only end-to-end control can tell S to limit to 1Mbps.')">A)
+                    Because it introduces too much delay</button>
+                <button class="opt"
+                    onclick="ans('fc1',1,2,'Hop-by-hop control cannot tell the SOURCE how fast to send end-to-end. Example: S→R1=10Mbps, R1→R2=5Mbps, R2→R3=3Mbps, R3→D=1Mbps. Even with hop-by-hop, S pushes 10Mbps — data accumulates and drops at R1. Only end-to-end control can tell S to limit to 1Mbps.')">B)
+                    Because it doesn't support wireless links</button>
+                <button class="opt"
+                    onclick="ans('fc1',2,2,'Hop-by-hop control cannot tell the SOURCE how fast to send end-to-end. Example: S→R1=10Mbps, R1→R2=5Mbps, R2→R3=3Mbps, R3→D=1Mbps. Even with hop-by-hop, S pushes 10Mbps — data accumulates and drops at R1. Only end-to-end control can tell S to limit to 1Mbps.')">C)
+                    It cannot prevent the source from sending faster than the bottleneck end-to-end rate</button>
+                <button class="opt"
+                    onclick="ans('fc1',3,2,'Hop-by-hop control cannot tell the SOURCE how fast to send end-to-end. Example: S→R1=10Mbps, R1→R2=5Mbps, R2→R3=3Mbps, R3→D=1Mbps. Even with hop-by-hop, S pushes 10Mbps — data accumulates and drops at R1. Only end-to-end control can tell S to limit to 1Mbps.')">D)
+                    Because TCP already handles it</button>
+            </div>
+            <div class="exp" id="fc1-e"></div>
+        </div>
+
+        <div class="mcq">
+            <div class="mcq-q">Q2. In Stop-and-Wait ARQ, what is the maximum number of frames outstanding in the network
+                at any time?</div>
+            <div class="opts" id="fc2">
+                <button class="opt"
+                    onclick="ans('fc2',0,0,'Stop-and-Wait means exactly what it says — you STOP after sending one frame and WAIT for ACK before sending the next. Only 1 frame can be outstanding (unacknowledged) at any time. This is why only a 1-bit sequence number (0 and 1) is needed.')">A)
+                    1</button>
+                <button class="opt"
+                    onclick="ans('fc2',1,0,'Stop-and-Wait means exactly what it says — you STOP after sending one frame and WAIT for ACK before sending the next. Only 1 frame can be outstanding (unacknowledged) at any time. This is why only a 1-bit sequence number (0 and 1) is needed.')">B)
+                    2</button>
+                <button class="opt"
+                    onclick="ans('fc2',2,0,'Stop-and-Wait means exactly what it says — you STOP after sending one frame and WAIT for ACK before sending the next. Only 1 frame can be outstanding (unacknowledged) at any time. This is why only a 1-bit sequence number (0 and 1) is needed.')">C)
+                    Window size</button>
+                <button class="opt"
+                    onclick="ans('fc2',3,0,'Stop-and-Wait means exactly what it says — you STOP after sending one frame and WAIT for ACK before sending the next. Only 1 frame can be outstanding (unacknowledged) at any time. This is why only a 1-bit sequence number (0 and 1) is needed.')">D)
+                    Unlimited</button>
+            </div>
+            <div class="exp" id="fc2-e"></div>
+        </div>
+
+        <div class="mcq">
+            <div class="mcq-q">Q3. The Sliding Window protocol improves upon Stop-and-Wait by:</div>
+            <div class="opts" id="fc3">
+                <button class="opt"
+                    onclick="ans('fc3',0,2,'The Sliding Window protocol allows MULTIPLE frames to be in transit simultaneously (pipelining). The sender can send up to W frames before needing an ACK. As ACKs arrive, the window slides forward. This keeps the link fully utilized, unlike Stop-and-Wait which wastes link time waiting.')">A)
+                    Removing the need for sequence numbers</button>
+                <button class="opt"
+                    onclick="ans('fc3',1,2,'The Sliding Window protocol allows MULTIPLE frames to be in transit simultaneously (pipelining). The sender can send up to W frames before needing an ACK. As ACKs arrive, the window slides forward. This keeps the link fully utilized, unlike Stop-and-Wait which wastes link time waiting.')">B)
+                    Encrypting data in transit</button>
+                <button class="opt"
+                    onclick="ans('fc3',2,2,'The Sliding Window protocol allows MULTIPLE frames to be in transit simultaneously (pipelining). The sender can send up to W frames before needing an ACK. As ACKs arrive, the window slides forward. This keeps the link fully utilized, unlike Stop-and-Wait which wastes link time waiting.')">C)
+                    Allowing multiple frames to be in transit simultaneously (pipelining)</button>
+                <button class="opt"
+                    onclick="ans('fc3',3,2,'The Sliding Window protocol allows MULTIPLE frames to be in transit simultaneously (pipelining). The sender can send up to W frames before needing an ACK. As ACKs arrive, the window slides forward. This keeps the link fully utilized, unlike Stop-and-Wait which wastes link time waiting.')">D)
+                    Eliminating the need for acknowledgements</button>
+            </div>
+            <div class="exp" id="fc3-e"></div>
+        </div>
+
+        <div class="mcq">
+            <div class="mcq-q">Q4. "Piggybacking" in a bidirectional connection means:</div>
+            <div class="opts" id="fc4">
+                <button class="opt"
+                    onclick="ans('fc4',0,1,'In piggybacking, when Host B wants to send a data frame to Host A in the reverse direction, it includes (piggybacks) the ACK for A\'s previous data frame inside that data frame. This way, one packet carries both data AND acknowledgement — saving bandwidth compared to sending separate ACK packets.')">A)
+                    Sending two copies of the same data for redundancy</button>
+                <button class="opt"
+                    onclick="ans('fc4',1,1,'In piggybacking, when Host B wants to send a data frame to Host A in the reverse direction, it includes (piggybacks) the ACK for A\'s previous data frame inside that data frame. This way, one packet carries both data AND acknowledgement — saving bandwidth compared to sending separate ACK packets.')">B)
+                    Including ACK for received data inside a data frame going in the reverse direction</button>
+                <button class="opt"
+                    onclick="ans('fc4',2,1,'In piggybacking, when Host B wants to send a data frame to Host A in the reverse direction, it includes (piggybacks) the ACK for A\'s previous data frame inside that data frame. This way, one packet carries both data AND acknowledgement — saving bandwidth compared to sending separate ACK packets.')">C)
+                    Adding encryption to data packets</button>
+                <button class="opt"
+                    onclick="ans('fc4',3,1,'In piggybacking, when Host B wants to send a data frame to Host A in the reverse direction, it includes (piggybacks) the ACK for A\'s previous data frame inside that data frame. This way, one packet carries both data AND acknowledgement — saving bandwidth compared to sending separate ACK packets.')">D)
+                    Splitting a large frame into smaller segments</button>
+            </div>
+            <div class="exp" id="fc4-e"></div>
+        </div>
+    </div>
+
+    <!-- ───────── TAB 6: SUPER REVISION ───────── -->
+    <div id="rev" class="sec">
+        <div class="ttl">Super Revision Notes — Week 3 (Last-Day Study)</div>
+
+        <div class="bx bred">
+            <h3>Absolute must-know facts for NPTEL</h3>
+            <ul>
+                <li>Transport Layer is ONLY at end hosts — NOT in routers or switches</li>
+                <li>Network Layer = unreliable datagram delivery. Transport Layer = reliable end-to-end delivery on top
+                    of it</li>
+                <li>TCP = connection-oriented, reliable, ordered, flow controlled, congestion controlled</li>
+                <li>UDP = connectionless, unreliable, fast, low overhead — for DNS, SNMP, streaming, VoIP</li>
+                <li>3-Way Handshake: CR(x) → ACK(x)+CR(y) → ACK(y)+DATA — solves delayed duplicate problem</li>
+                <li>Tomlinson's requirements (1975): seq num = max 1 byte at any time + positive synchronization</li>
+                <li>TCP uses BYTE sequence numbers (not packet), 32-bit field = 2^32 sequence numbers</li>
+                <li>Forbidden Region = sequence numbers in use by old connection that must NOT be reused</li>
+                <li>TTL (Time To Live) = hop count in IP header to limit packet lifetime in the network</li>
+                <li>Asymmetric Release = abrupt, risk of data loss. Symmetric Release = graceful, both sides close
+                    independently</li>
+                <li>Two-Army Problem = proves perfect consensus impossible over unreliable channel</li>
+                <li>Stop-and-Wait ARQ: 1 frame outstanding, 1-bit sequence number (0 and 1 alternate)</li>
+                <li>Sliding Window = pipeline protocol, multiple frames outstanding, window slides with ACKs</li>
+                <li>Flow control at Transport = essential for correctness. At Data Link = improves performance</li>
+            </ul>
+        </div>
+
+        <h2 class="sh">Transport Layer Services — comparison</h2>
+        <div class="tw">
+            <table>
+                <tr>
+                    <th>Concept</th>
+                    <th>TCP</th>
+                    <th>UDP</th>
+                </tr>
+                <tr>
+                    <td>Connection setup</td>
+                    <td>3-way handshake</td>
+                    <td>None</td>
+                </tr>
+                <tr>
+                    <td>Reliability</td>
+                    <td>Yes (ACK + retransmit)</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td>Ordering</td>
+                    <td>Yes (sequence numbers)</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td>Flow Control</td>
+                    <td>Yes (sliding window)</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td>Congestion Control</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td>Overhead</td>
+                    <td>Higher</td>
+                    <td>Minimal</td>
+                </tr>
+                <tr>
+                    <td>Apps</td>
+                    <td>HTTP, FTP, SMTP, SSH, Telnet</td>
+                    <td>DNS, SNMP, TFTP, Video/Audio streaming</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="bx bpur">
+            <h3>Connection Establishment — key sequence</h3>
+            <div class="ri"><span class="rb">1</span><span class="rt">2-way handshake FAILS in packet switching —
+                    delayed duplicates fool the server</span></div>
+            <div class="ri"><span class="rb">2</span><span class="rt">Solution: restrict packet lifetime using TTL (hop
+                    count) field in IP header</span></div>
+            <div class="ri"><span class="rb">3</span><span class="rt">Tomlinson (1975): choose ISN such that seq no. not
+                    reused within max packet lifetime T</span></div>
+            <div class="ri"><span class="rb">4</span><span class="rt">Forbidden Region = old connection's seq no. space
+                    (with lifetime T) — new connection must avoid this</span></div>
+            <div class="ri"><span class="rb">5</span><span class="rt">3-Way Handshake: CR(x) → ACK(x)+CR(y) → ACK(y) —
+                    validates ISN at both ends</span></div>
+            <div class="ri"><span class="rb">6</span><span class="rt">Delayed duplicate detected: mismatched seq number
+                    → REJECT sent → connection aborted safely</span></div>
+        </div>
+
+        <div class="bx bgn">
+            <h3>ARQ Protocols — quick summary</h3>
+            <div class="ri"><span class="rb">S&amp;W</span><span class="rt">Stop-and-Wait: 1 frame at a time, wait for
+                    ACK, 1-bit seq (0/1), simple but inefficient</span></div>
+            <div class="ri"><span class="rb">SW</span><span class="rt">Sliding Window: W frames outstanding, window
+                    slides as ACKs arrive, pipeline = high efficiency</span></div>
+            <div class="ri"><span class="rb">ARQ</span><span class="rt">ARQ = Automatic Repeat reQuest — retransmit
+                    lost/corrupted frames after timeout</span></div>
+            <div class="ri"><span class="rb">PB</span><span class="rt">Piggybacking: ACK embedded in reverse-direction
+                    data frame — reduces overhead</span></div>
+            <div class="ri"><span class="rb">GB-N</span><span class="rt">Go-Back-N: on error, retransmit from erred
+                    frame and all after it (coming in next lectures)</span></div>
+            <div class="ri"><span class="rb">SR</span><span class="rt">Selective Repeat: retransmit ONLY the erred
+                    frame, receiver buffers rest (coming in next lectures)</span></div>
+        </div>
+
+        <div class="bx bamb">
+            <h3>Connection Release — key facts</h3>
+            <div class="ri"><span class="rb">→</span><span class="rt">Asymmetric Release: one side hangs up → risk of
+                    data loss</span></div>
+            <div class="ri"><span class="rb">→</span><span class="rt">Symmetric Release: both sides independently send
+                    DR + wait for ACK</span></div>
+            <div class="ri"><span class="rb">→</span><span class="rt">Two-Army Problem: proves 100% correct consensus is
+                    impossible on unreliable channel</span></div>
+            <div class="ri"><span class="rb">→</span><span class="rt">Practical solution: retry N times with timer;
+                    after N failures → forceful close (small data loss risk)</span></div>
+            <div class="ri"><span class="rb">→</span><span class="rt">Always a tradeoff: correctness vs performance — we
+                    accept small data loss for practical protocol</span></div>
+        </div>
+
+        <div class="bx bbl">
+            <h3>Tricky NPTEL MCQ facts — don't get these wrong</h3>
+            <div class="ri"><span class="rb">1</span><span class="rt">Transport layer is NOT in routers — only at end
+                    hosts</span></div>
+            <div class="ri"><span class="rb">2</span><span class="rt">UDP does NOT guarantee delivery — best-effort only
+                    like IP</span></div>
+            <div class="ri"><span class="rb">3</span><span class="rt">Throwaway ports (Solution 1) is NOT feasible —
+                    finite port space (0–65535)</span></div>
+            <div class="ri"><span class="rb">4</span><span class="rt">Timestamp-based lifetime is NOT practical —
+                    requires clock sync across all devices</span></div>
+            <div class="ri"><span class="rb">5</span><span class="rt">TCP uses 32-bit BYTE sequence numbers, not packet
+                    sequence numbers</span></div>
+            <div class="ri"><span class="rb">6</span><span class="rt">Stop-and-Wait needs only 1-bit seq number — only 0
+                    and 1, alternating</span></div>
+            <div class="ri"><span class="rb">7</span><span class="rt">Sliding window DOES NOT eliminate retransmissions
+                    — just pipelines them</span></div>
+            <div class="ri"><span class="rb">8</span><span class="rt">Symmetric release can STILL have data loss —
+                    Two-Army Problem makes 100% correctness impossible</span></div>
+            <div class="ri"><span class="rb">9</span><span class="rt">Flow control at Data Link layer improves
+                    performance — but Transport layer flow control is ESSENTIAL</span></div>
+            <div class="ri"><span class="rb">10</span><span class="rt">Congestion control ≠ flow control. Flow = sender
+                    vs receiver. Congestion = sender vs network.</span></div>
+        </div>
+
+        <div
+            style="margin-top:1.5rem;padding:1rem;background:#E6F1FB;border-radius:var(--border-radius-lg);border:0.5px solid #B5D4F4">
+            <p style="font-size:14px;font-weight:500;color:#0C447C;margin-bottom:8px">Exam strategy for Week 3</p>
+            <ul style="font-size:13px;color:#185FA5;padding-left:1.2rem;line-height:1.9">
+                <li>Transport Layer questions: Focus on what IS and IS NOT in routers. Know the 5 TCP services vs UDP =
+                    none</li>
+                <li>Connection Establishment: Know WHY 2-way fails, 3 solutions (throwaway, unique ID, packet lifetime),
+                    why TTL is used</li>
+                <li>3-Way Handshake: Know the exact 3 steps (CR(x) → ACK(x)+CR(y) → ACK(y)+DATA)</li>
+                <li>Forbidden Region: Understand why ISN must avoid old connection's sequence number space</li>
+                <li>Connection Release: Know asymmetric vs symmetric, Two-Army Problem analogy, and timer-based solution
+                </li>
+                <li>ARQ/Flow Control: Know Stop-and-Wait (1 bit, 1 frame) vs Sliding Window (W frames, pipelined)</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    function show(id) {
+        document.querySelectorAll('.sec').forEach(s => s.classList.remove('on'));
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+        document.getElementById(id).classList.add('on');
+        event.target.classList.add('on');
+    }
+    function ans(qid, chosen, correct, explanation) {
+        const opts = document.querySelectorAll('#' + qid + ' .opt');
+        opts.forEach((o, i) => {
+            o.disabled = true;
+            if (i === correct) o.classList.add('ok');
+            else if (i === chosen && chosen !== correct) o.classList.add('no');
+        });
+        const exp = document.getElementById(qid + '-e');
+        exp.textContent = (chosen === correct ? 'Correct! ' : 'Incorrect. ') + explanation;
+        exp.classList.add('show');
+    }
+</script>

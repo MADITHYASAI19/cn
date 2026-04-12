@@ -1,0 +1,814 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); }
+.container { max-width: 900px; padding: 1.5rem 1rem; }
+.hero { border-bottom: 0.5px solid var(--color-border-tertiary); padding-bottom: 1.5rem; margin-bottom: 2rem; }
+.hero h1 { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 4px; }
+.hero p { font-size: 14px; color: var(--color-text-secondary); }
+.tab-bar { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 2rem; }
+.tab { padding: 6px 14px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); font-size: 13px; cursor: pointer; background: var(--color-background-primary); color: var(--color-text-secondary); transition: all 0.15s; }
+.tab:hover { background: var(--color-background-secondary); }
+.tab.active { background: #E6F1FB; color: #0C447C; border-color: #85B7EB; font-weight: 500; }
+.section { display: none; }
+.section.active { display: block; }
+.topic-title { font-size: 20px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; padding-bottom: 8px; border-bottom: 2px solid #85B7EB; }
+.badge { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: var(--border-radius-md); margin-left: 8px; }
+.badge-exam { background: #FAEEDA; color: #633806; }
+.badge-imp { background: #E1F5EE; color: #085041; }
+.card { background: var(--color-background-secondary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; margin: 1rem 0; }
+.card-blue { background: #E6F1FB; border-left: 3px solid #185FA5; }
+.card-green { background: #EAF3DE; border-left: 3px solid #3B6D11; }
+.card-amber { background: #FAEEDA; border-left: 3px solid #854F0B; }
+.card-red { background: #FCEBEB; border-left: 3px solid #A32D2D; }
+.card-purple { background: #EEEDFE; border-left: 3px solid #534AB7; }
+.card h3 { font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+.card-blue h3 { color: #0C447C; }
+.card-green h3 { color: #27500A; }
+.card-amber h3 { color: #633806; }
+.card-red h3 { color: #791F1F; }
+.card-purple h3 { color: #3C3489; }
+.card p, .card li { font-size: 14px; color: var(--color-text-primary); line-height: 1.7; }
+.card ul { padding-left: 1.2rem; }
+.point { display: flex; gap: 10px; padding: 8px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.point:last-child { border-bottom: none; }
+.point-num { font-size: 13px; font-weight: 500; color: #185FA5; min-width: 22px; }
+.point-text { font-size: 14px; color: var(--color-text-primary); line-height: 1.6; }
+.point-text strong { font-weight: 500; color: var(--color-text-primary); }
+.mcq-block { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; margin: 1rem 0; background: var(--color-background-primary); }
+.mcq-q { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 10px; line-height: 1.6; }
+.mcq-opts { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+.opt { font-size: 13px; padding: 6px 10px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-tertiary); cursor: pointer; color: var(--color-text-primary); background: var(--color-background-primary); text-align: left; transition: background 0.1s; }
+.opt:hover { background: var(--color-background-secondary); }
+.opt.correct { background: #EAF3DE; border-color: #639922; color: #27500A; }
+.opt.wrong { background: #FCEBEB; border-color: #A32D2D; color: #791F1F; }
+.explanation { display: none; font-size: 13px; color: var(--color-text-secondary); background: var(--color-background-secondary); padding: 8px 12px; border-radius: var(--border-radius-md); margin-top: 6px; line-height: 1.6; }
+.explanation.visible { display: block; }
+.table-wrap { overflow-x: auto; margin: 1rem 0; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { background: #E6F1FB; color: #0C447C; font-weight: 500; padding: 8px 12px; text-align: left; border: 0.5px solid #B5D4F4; }
+td { padding: 8px 12px; border: 0.5px solid var(--color-border-tertiary); color: var(--color-text-primary); vertical-align: top; }
+tr:nth-child(even) td { background: var(--color-background-secondary); }
+.revision-item { display: flex; gap: 8px; padding: 6px 0; border-bottom: 0.5px solid var(--color-border-tertiary); align-items: flex-start; }
+.revision-item:last-child { border-bottom: none; }
+.bullet { font-size: 16px; min-width: 20px; }
+.revision-text { font-size: 13px; color: var(--color-text-primary); line-height: 1.6; }
+h2.section-head { font-size: 18px; font-weight: 500; color: var(--color-text-primary); margin: 1.5rem 0 0.5rem; }
+.tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 99px; margin: 2px; }
+.tag-blue { background: #E6F1FB; color: #185FA5; }
+.tag-green { background: #EAF3DE; color: #3B6D11; }
+.tag-red { background: #FCEBEB; color: #A32D2D; }
+</style>
+
+<div class="container">
+<div class="hero">
+  <h1>Computer Networks &amp; Internet Protocols — Week 11</h1>
+  <p>NPTEL Exam-Ready Notes &nbsp;|&nbsp; IIT Kharagpur &nbsp;|&nbsp; ARP, RARP, DHCP, VLANs, STP &amp; Wireless LAN</p>
+</div>
+
+<div class="tab-bar">
+  <button class="tab active" onclick="show('arp')">ARP &amp; RARP</button>
+  <button class="tab" onclick="show('dhcp')">BOOTP &amp; DHCP</button>
+  <button class="tab" onclick="show('proxy_arp')">Proxy ARP</button>
+  <button class="tab" onclick="show('switching_l2')">L2 Switching &amp; STP</button>
+  <button class="tab" onclick="show('vlan')">VLANs</button>
+  <button class="tab" onclick="show('wireless')">Wireless LAN</button>
+  <button class="tab" onclick="show('revision11')">Super Revision</button>
+</div>
+
+<!-- SECTION 1: ARP & RARP -->
+<div id="arp" class="section active">
+  <div class="topic-title">Topic 1: ARP &amp; RARP — Address Resolution <span class="badge badge-exam">Most Important</span></div>
+
+  <div class="card card-blue">
+    <h3>The Address Resolution Problem</h3>
+    <p>IP (Layer 3) operates with IP addresses. Ethernet/Wi-Fi (Layer 2) operates with MAC addresses. To send a packet, the sender needs the NEXT HOP's MAC address, not its IP address. ARP solves: "I know the IP address — what is the MAC address?"</p>
+  </div>
+
+  <h2 class="section-head">ARP — Step-by-Step Working</h2>
+  <div class="card" style="padding: 0.5rem 1.25rem;">
+    <div class="point"><span class="point-num">1</span><span class="point-text"><strong>Purpose:</strong> Maps an IP address (Layer 3) to a MAC address (Layer 2) on the same local network segment.</span></div>
+    <div class="point"><span class="point-num">2</span><span class="point-text"><strong>Check ARP Cache:</strong> The sender first checks its local ARP table for a cached IP→MAC mapping. If found and not expired, use it directly — no broadcast needed.</span></div>
+    <div class="point"><span class="point-num">3</span><span class="point-text"><strong>ARP Request (Cache Miss):</strong> Broadcast frame (MAC: FF:FF:FF:FF:FF:FF, EtherType: 0x0806). "Who has IP address X.X.X.X? Tell me your MAC." All stations on the LAN receive this frame.</span></div>
+    <div class="point"><span class="point-num">4</span><span class="point-text"><strong>ARP Reply:</strong> Unicast frame sent ONLY to the requester. "IP X.X.X.X is at MAC AA:BB:CC:DD:EE:FF." Only the host with that IP replies. All others ignore it.</span></div>
+    <div class="point"><span class="point-num">5</span><span class="point-text"><strong>ARP Cache Update:</strong> Requester stores the new IP→MAC mapping in its ARP table with a TTL (typically 20 minutes). Saves repeated broadcasts for the same destination.</span></div>
+    <div class="point"><span class="point-num">6</span><span class="point-text"><strong>Cross-layer position:</strong> ARP sits between Layer 2 (Data Link) and Layer 3 (Network). ARP packets are encapsulated directly in Ethernet frames (EtherType = 0x0806). ARP does NOT use IP headers.</span></div>
+    <div class="point"><span class="point-num">7</span><span class="point-text"><strong>Gratuitous ARP:</strong> A host sends an ARP request for its OWN IP address. Used to: (a) detect IP conflicts — if someone replies, there's a conflict; (b) update other hosts' ARP caches when a MAC changes (e.g., NIC replacement); (c) used in HSRP/VRRP failover to announce new active router.</span></div>
+  </div>
+
+  <div class="card card-amber">
+    <h3>ARP Packet Format — Key Fields</h3>
+    <ul>
+      <li><strong>Hardware Type:</strong> 1 = Ethernet</li>
+      <li><strong>Protocol Type:</strong> 0x0800 = IPv4</li>
+      <li><strong>Hardware Address Length:</strong> 6 (MAC = 6 bytes)</li>
+      <li><strong>Protocol Address Length:</strong> 4 (IP = 4 bytes)</li>
+      <li><strong>Operation:</strong> 1 = ARP Request; 2 = ARP Reply</li>
+      <li><strong>Sender MAC and IP; Target MAC and IP</strong></li>
+      <li>In ARP Request: Target MAC field = 00:00:00:00:00:00 (unknown — that's what we're asking for)</li>
+    </ul>
+  </div>
+
+  <h2 class="section-head">RARP — Reverse ARP</h2>
+  <div class="card card-purple">
+    <h3>RARP: From MAC → IP Address</h3>
+    <ul>
+      <li>RARP solves the REVERSE problem: "I know my MAC address — what is my IP address?"</li>
+      <li><strong>Used by:</strong> Diskless workstations that do NOT have persistent storage (no hard disk) to remember their IP address. On every boot, they ask the network for their IP using their MAC address as the only identity.</li>
+      <li>A RARP server on the network maintains a static table of MAC→IP mappings (configured by admin).</li>
+      <li>Client broadcasts a RARP request with its own MAC address as the target MAC.</li>
+      <li>RARP server looks up the MAC in its table and responds with the IP address.</li>
+      <li><strong>Limitations:</strong> (1) Requires a RARP server on EACH subnet — RARP is broadcast-based, cannot cross routers. (2) Provides IP address only — no subnet mask, default gateway, or DNS info. (3) Static configuration — admin must manually enter each MAC→IP binding.</li>
+      <li>RARP is now entirely obsolete — replaced by BOOTP, then DHCP.</li>
+    </ul>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <tr><th>Protocol</th><th>Direction</th><th>Purpose</th><th>Cross-Router?</th><th>Status</th></tr>
+      <tr><td>ARP</td><td>IP → MAC</td><td>Find MAC for given IP on local subnet</td><td>No (broadcast)</td><td>Essential — still used</td></tr>
+      <tr><td>RARP</td><td>MAC → IP</td><td>Diskless host gets its IP from server</td><td>No (broadcast)</td><td>Obsolete</td></tr>
+      <tr><td>BOOTP</td><td>MAC → IP + config</td><td>Diskless host gets IP + gateway via server</td><td>Yes (relay agent)</td><td>Legacy</td></tr>
+      <tr><td>DHCP</td><td>MAC → IP + full config</td><td>Dynamic IP allocation with lease</td><td>Yes (relay agent)</td><td>Current standard</td></tr>
+    </table>
+  </div>
+
+  <h2 class="section-head">MCQs — ARP &amp; RARP</h2>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q1. An ARP request is sent as a _________ frame, while an ARP reply is sent as a _________ frame.</div>
+    <div class="mcq-opts" id="w11q1">
+      <button class="opt" onclick="answer('w11q1',0,2,'ARP Request is BROADCAST (MAC: FF:FF:FF:FF:FF:FF) because the sender does not know the target MAC address yet. ARP Reply is UNICAST sent directly back to the requester — the replying host DOES know who asked (from the ARP request sender fields).')">A) Unicast; Broadcast</button>
+      <button class="opt" onclick="answer('w11q1',1,2,'ARP Request is BROADCAST (MAC: FF:FF:FF:FF:FF:FF) because the sender does not know the target MAC address yet. ARP Reply is UNICAST sent directly back to the requester — the replying host DOES know who asked (from the ARP request sender fields).')">B) Multicast; Unicast</button>
+      <button class="opt" onclick="answer('w11q1',2,2,'ARP Request is BROADCAST (MAC: FF:FF:FF:FF:FF:FF) because the sender does not know the target MAC address yet. ARP Reply is UNICAST sent directly back to the requester — the replying host DOES know who asked (from the ARP request sender fields).')">C) Broadcast; Unicast</button>
+      <button class="opt" onclick="answer('w11q1',3,2,'ARP Request is BROADCAST (MAC: FF:FF:FF:FF:FF:FF) because the sender does not know the target MAC address yet. ARP Reply is UNICAST sent directly back to the requester — the replying host DOES know who asked (from the ARP request sender fields).')">D) Broadcast; Multicast</button>
+    </div>
+    <div class="explanation" id="w11q1-exp"></div>
+  </div>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q2. ARP is classified as operating between which two layers of the protocol stack?</div>
+    <div class="mcq-opts" id="w11q2">
+      <button class="opt" onclick="answer('w11q2',0,2,'ARP operates between Layer 2 (Data Link/MAC) and Layer 3 (Network/IP). ARP packets are encapsulated directly in Ethernet frames (EtherType 0x0806), but they resolve IP (L3) addresses to MAC (L2) addresses. This is why ARP is called a cross-layer glue protocol.')">A) Application and Transport layers</button>
+      <button class="opt" onclick="answer('w11q2',1,2,'ARP operates between Layer 2 (Data Link/MAC) and Layer 3 (Network/IP). ARP packets are encapsulated directly in Ethernet frames (EtherType 0x0806), but they resolve IP (L3) addresses to MAC (L2) addresses. This is why ARP is called a cross-layer glue protocol.')">B) Transport and Network layers</button>
+      <button class="opt" onclick="answer('w11q2',2,2,'ARP operates between Layer 2 (Data Link/MAC) and Layer 3 (Network/IP). ARP packets are encapsulated directly in Ethernet frames (EtherType 0x0806), but they resolve IP (L3) addresses to MAC (L2) addresses. This is why ARP is called a cross-layer glue protocol.')">C) Network (IP) and Data Link (MAC) layers</button>
+      <button class="opt" onclick="answer('w11q2',3,2,'ARP operates between Layer 2 (Data Link/MAC) and Layer 3 (Network/IP). ARP packets are encapsulated directly in Ethernet frames (EtherType 0x0806), but they resolve IP (L3) addresses to MAC (L2) addresses. This is why ARP is called a cross-layer glue protocol.')">D) Data Link and Physical layers</button>
+    </div>
+    <div class="explanation" id="w11q2-exp"></div>
+  </div>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q3. RARP was replaced by DHCP primarily because RARP:</div>
+    <div class="mcq-opts" id="w11q3">
+      <button class="opt" onclick="answer('w11q3',0,3,'RARP only provided an IP address, required a RARP server on each subnet (cannot cross routers because it uses broadcasts), and provided no other network configuration (no subnet mask, gateway, DNS). DHCP overcomes all these limitations and can work across subnets via DHCP relay agents.')">A) Was too fast for modern networks</button>
+      <button class="opt" onclick="answer('w11q3',1,3,'RARP only provided an IP address, required a RARP server on each subnet (cannot cross routers because it uses broadcasts), and provided no other network configuration (no subnet mask, gateway, DNS). DHCP overcomes all these limitations and can work across subnets via DHCP relay agents.')">B) Required clients to have a static MAC address</button>
+      <button class="opt" onclick="answer('w11q3',2,3,'RARP only provided an IP address, required a RARP server on each subnet (cannot cross routers because it uses broadcasts), and provided no other network configuration (no subnet mask, gateway, DNS). DHCP overcomes all these limitations and can work across subnets via DHCP relay agents.')">C) Only worked on Token Ring networks</button>
+      <button class="opt" onclick="answer('w11q3',3,3,'RARP only provided an IP address, required a RARP server on each subnet (cannot cross routers because it uses broadcasts), and provided no other network configuration (no subnet mask, gateway, DNS). DHCP overcomes all these limitations and can work across subnets via DHCP relay agents.')">D) Only provided IP address; required a server per subnet; no subnet mask/gateway/DNS</button>
+    </div>
+    <div class="explanation" id="w11q3-exp"></div>
+  </div>
+</div>
+
+<!-- SECTION 2: BOOTP & DHCP -->
+<div id="dhcp" class="section">
+  <div class="topic-title">Topic 2: BOOTP &amp; DHCP — Dynamic IP Configuration <span class="badge badge-exam">Very Important</span></div>
+
+  <div class="card card-blue">
+    <h3>The Problem: Automatic Network Configuration</h3>
+    <p>When a new host joins a network, it needs: IP address, Subnet mask, Default gateway (router IP), DNS server IP, domain name, and more. Manually configuring each host is impractical in large networks. BOOTP and DHCP automate this process.</p>
+  </div>
+
+  <h2 class="section-head">BOOTP — Bootstrap Protocol</h2>
+  <div class="card card-green">
+    <h3>BOOTP (RFC 951)</h3>
+    <ul>
+      <li>An improvement over RARP — provides more information: IP address, subnet mask, gateway IP, and a server filename for booting (TFTP boot file).</li>
+      <li>Uses UDP (port 67 for server, port 68 for client). Can cross routers via BOOTP Relay Agents — a major advantage over RARP.</li>
+      <li>Client sends broadcast request; BOOTP server responds with configuration.</li>
+      <li><strong>Limitation:</strong> BOOTP bindings are STATIC — MAC→IP mapping must be pre-configured by admin. No dynamic/temporary allocation. Cannot reclaim and reuse IP addresses when a device leaves the network.</li>
+      <li>BOOTP was widely used for diskless workstations and network booting (PXE boot still uses BOOTP/DHCP protocol messages).</li>
+    </ul>
+  </div>
+
+  <h2 class="section-head">DHCP — Dynamic Host Configuration Protocol</h2>
+  <div class="card card-purple">
+    <h3>DHCP (RFC 2131) — The Current Standard</h3>
+    <ul>
+      <li>An extension of BOOTP — backward compatible. Uses same ports (UDP 67/68).</li>
+      <li>Provides DYNAMIC IP address allocation with a configurable <strong>LEASE TIME</strong> — the IP is borrowed for a specific duration.</li>
+      <li>After lease expires, client must renew or release the IP. The IP pool (scope) is reused efficiently as devices join and leave the network.</li>
+      <li>Provides: IP address, Subnet mask, Default gateway, DNS server IPs, lease duration, domain name, NTP server, and more via DHCP options.</li>
+      <li><strong>DHCP Scope:</strong> A configured pool (range) of IP addresses on the DHCP server that it is allowed to assign. For example: 192.168.1.100 – 192.168.1.200. The scope defines the available pool and can include exclusions (reserved addresses).</li>
+      <li><strong>Lease Concept:</strong> Like renting an IP address — the client uses it for the lease duration (e.g., 24 hours). Before expiry, the client can renew. After expiry without renewal, the IP returns to the pool for reassignment.</li>
+    </ul>
+  </div>
+
+  <h2 class="section-head">DHCP DORA Process — 4-Step Handshake <span class="badge badge-exam">Frequently Asked</span></h2>
+  <div class="card card-amber">
+    <h3>D-O-R-A: Discover → Offer → Request → Acknowledge</h3>
+    <div class="point"><span class="point-num">D</span><span class="point-text"><strong>DHCPDISCOVER:</strong> Client has no IP. Broadcasts to 255.255.255.255 (src IP = 0.0.0.0). "Is there a DHCP server? I need an IP address." All DHCP servers on the subnet (and via relay agents) receive this broadcast.</span></div>
+    <div class="point"><span class="point-num">O</span><span class="point-text"><strong>DHCPOFFER:</strong> One or more DHCP servers respond with an offer: proposed IP address, lease time, subnet mask, default gateway, DNS servers. May be broadcast (if client has no IP yet) or unicast if client set the broadcast flag to 0. Server tentatively reserves the offered IP.</span></div>
+    <div class="point"><span class="point-num">R</span><span class="point-text"><strong>DHCPREQUEST:</strong> Client broadcasts its acceptance of ONE server's offer (even if multiple servers replied). This broadcast tells all servers which offer was accepted — declined servers release their reserved IPs. Client also echoes back the offered IP to allow the server to verify.</span></div>
+    <div class="point"><span class="point-num">A</span><span class="point-text"><strong>DHCPACK:</strong> Winning server confirms the allocation with an acknowledgment containing the final configuration. Client now officially has its IP and all network parameters and can begin communicating. Lease timer starts.</span></div>
+  </div>
+
+  <div class="card card-blue">
+    <h3>DHCP Lease Renewal Process</h3>
+    <ul>
+      <li><strong>At 50% of lease time (T1):</strong> Client unicasts DHCPREQUEST to the original server to renew. If server responds with DHCPACK, lease is renewed. This is the preferred renewal path.</li>
+      <li><strong>At 87.5% of lease time (T2):</strong> If the original server did not respond at T1, client now broadcasts DHCPREQUEST to ANY available DHCP server. This allows failover to a backup server.</li>
+      <li><strong>At 100% expiry:</strong> Client has NOT renewed successfully. Client loses its IP address and must restart the entire DORA process from DHCPDISCOVER.</li>
+      <li><strong>DHCPNAK:</strong> Server tells client the requested IP is invalid (e.g., client moved to a new subnet). Client must restart DORA.</li>
+      <li><strong>DHCPRELEASE:</strong> Client voluntarily releases its IP before lease expires (e.g., when shutting down gracefully). IP immediately returns to the pool.</li>
+      <li><strong>DHCPINFORM:</strong> Client already has a static IP but wants other config parameters (gateway, DNS) from the DHCP server.</li>
+      <li><strong>DHCP Relay Agent:</strong> A router configured to forward DHCP broadcasts to DHCP server on another subnet, converting broadcast to unicast. Allows ONE DHCP server to serve MANY subnets.</li>
+    </ul>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <tr><th>Feature</th><th>RARP</th><th>BOOTP</th><th>DHCP</th></tr>
+      <tr><td>IP assignment type</td><td>Static per MAC</td><td>Static per MAC</td><td>Dynamic (leases) or static reservation</td></tr>
+      <tr><td>Info provided</td><td>IP only</td><td>IP, Gateway, Boot file</td><td>IP, mask, GW, DNS, NTP, lease, options...</td></tr>
+      <tr><td>Cross-router support</td><td>No (broadcasts only)</td><td>Yes (relay agents)</td><td>Yes (relay agents)</td></tr>
+      <tr><td>Transport</td><td>Direct Ethernet frame</td><td>UDP port 67/68</td><td>UDP port 67/68</td></tr>
+      <tr><td>IP address reuse</td><td>No</td><td>No</td><td>Yes (lease expiry reclaims IP)</td></tr>
+      <tr><td>Dynamic allocation?</td><td>No</td><td>No</td><td>Yes — IP from scope pool</td></tr>
+      <tr><td>DORA handshake?</td><td>No</td><td>No (2-step)</td><td>Yes — D, O, R, A</td></tr>
+      <tr><td>Status</td><td>Obsolete</td><td>Legacy</td><td>Current standard</td></tr>
+    </table>
+  </div>
+
+  <h2 class="section-head">MCQs — BOOTP &amp; DHCP</h2>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q1. What is the correct order of DHCP messages when a client gets a new IP address? (DORA)</div>
+    <div class="mcq-opts" id="w11q4">
+      <button class="opt" onclick="answer('w11q4',0,0,'DORA: Discover → Offer → Request → Acknowledge. Client broadcasts Discover → Server offers an IP → Client broadcasts Request to accept one offer (informing all servers) → Server sends ACK with final config. All four steps are needed.')">A) Discover → Offer → Request → Acknowledge</button>
+      <button class="opt" onclick="answer('w11q4',1,0,'DORA: Discover → Offer → Request → Acknowledge. Client broadcasts Discover → Server offers an IP → Client broadcasts Request to accept one offer (informing all servers) → Server sends ACK with final config. All four steps are needed.')">B) Offer → Discover → Acknowledge → Request</button>
+      <button class="opt" onclick="answer('w11q4',2,0,'DORA: Discover → Offer → Request → Acknowledge. Client broadcasts Discover → Server offers an IP → Client broadcasts Request to accept one offer (informing all servers) → Server sends ACK with final config. All four steps are needed.')">C) Request → Offer → Acknowledge → Discover</button>
+      <button class="opt" onclick="answer('w11q4',3,0,'DORA: Discover → Offer → Request → Acknowledge. Client broadcasts Discover → Server offers an IP → Client broadcasts Request to accept one offer (informing all servers) → Server sends ACK with final config. All four steps are needed.')">D) Discover → Request → Offer → Acknowledge</button>
+    </div>
+    <div class="explanation" id="w11q4-exp"></div>
+  </div>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q2. DHCP uses which transport protocol and port numbers?</div>
+    <div class="mcq-opts" id="w11q5">
+      <button class="opt" onclick="answer('w11q5',0,2,'DHCP uses UDP — port 67 for the server and port 68 for the client. UDP is used because DHCP clients do not yet have an IP address when they start, so a lightweight, broadcast-capable transport is needed. TCP would require an established connection first.')">A) TCP, ports 80 and 8080</button>
+      <button class="opt" onclick="answer('w11q5',1,2,'DHCP uses UDP — port 67 for the server and port 68 for the client. UDP is used because DHCP clients do not yet have an IP address when they start, so a lightweight, broadcast-capable transport is needed. TCP would require an established connection first.')">B) TCP, ports 67 and 68</button>
+      <button class="opt" onclick="answer('w11q5',2,2,'DHCP uses UDP — port 67 for the server and port 68 for the client. UDP is used because DHCP clients do not yet have an IP address when they start, so a lightweight, broadcast-capable transport is needed. TCP would require an established connection first.')">C) UDP, port 67 (server) and port 68 (client)</button>
+      <button class="opt" onclick="answer('w11q5',3,2,'DHCP uses UDP — port 67 for the server and port 68 for the client. UDP is used because DHCP clients do not yet have an IP address when they start, so a lightweight, broadcast-capable transport is needed. TCP would require an established connection first.')">D) UDP, port 53 (server) and port 69 (client)</button>
+    </div>
+    <div class="explanation" id="w11q5-exp"></div>
+  </div>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q3. A DHCP Relay Agent is configured on a router because:</div>
+    <div class="mcq-opts" id="w11q6">
+      <button class="opt" onclick="answer('w11q6',0,3,'DHCP uses broadcasts (255.255.255.255). Routers do NOT forward broadcasts between subnets by default. A DHCP Relay Agent intercepts the local broadcast, converts it to a unicast packet, and forwards it to the DHCP server on another subnet. This allows ONE DHCP server to serve MULTIPLE subnets.')">A) DHCP is not secure enough to run without a relay</button>
+      <button class="opt" onclick="answer('w11q6',1,3,'DHCP uses broadcasts (255.255.255.255). Routers do NOT forward broadcasts between subnets by default. A DHCP Relay Agent intercepts the local broadcast, converts it to a unicast packet, and forwards it to the DHCP server on another subnet. This allows ONE DHCP server to serve MULTIPLE subnets.')">B) DHCP packets are too large to fit in a single frame</button>
+      <button class="opt" onclick="answer('w11q6',2,3,'DHCP uses broadcasts (255.255.255.255). Routers do NOT forward broadcasts between subnets by default. A DHCP Relay Agent intercepts the local broadcast, converts it to a unicast packet, and forwards it to the DHCP server on another subnet. This allows ONE DHCP server to serve MULTIPLE subnets.')">C) DHCP needs TCP but routers only support UDP</button>
+      <button class="opt" onclick="answer('w11q6',3,3,'DHCP uses broadcasts (255.255.255.255). Routers do NOT forward broadcasts between subnets by default. A DHCP Relay Agent intercepts the local broadcast, converts it to a unicast packet, and forwards it to the DHCP server on another subnet. This allows ONE DHCP server to serve MULTIPLE subnets.')">D) Routers do not forward broadcasts; relay forwards DHCP to server on another subnet</button>
+    </div>
+    <div class="explanation" id="w11q6-exp"></div>
+  </div>
+</div>
+
+<!-- SECTION 3: Proxy ARP -->
+<div id="proxy_arp" class="section">
+  <div class="topic-title">Topic 3: Proxy ARP &amp; Gratuitous ARP <span class="badge badge-imp">Important</span></div>
+
+  <div class="card card-blue">
+    <h3>What is Proxy ARP?</h3>
+    <p>Proxy ARP is a technique where a router responds to ARP requests on behalf of a host on a DIFFERENT subnet. The router "pretends" to be the target by replying with its OWN MAC address. The sending host then sends frames to the router, which forwards the packet to the actual destination.</p>
+  </div>
+
+  <h2 class="section-head">Proxy ARP — Detailed Operation</h2>
+  <div class="card" style="padding: 0.5rem 1.25rem;">
+    <div class="point"><span class="point-num">1</span><span class="point-text"><strong>When Used:</strong> Host A (192.168.1.10) wants to reach Host B (192.168.2.20). Host A incorrectly believes both are on the same subnet (wrong subnet mask configured). Host A sends an ARP request for 192.168.2.20.</span></div>
+    <div class="point"><span class="point-num">2</span><span class="point-text"><strong>Router Intervenes:</strong> The router between the two subnets receives the ARP request. The router knows it has a route to 192.168.2.20. It replies with its OWN MAC address in the ARP reply.</span></div>
+    <div class="point"><span class="point-num">3</span><span class="point-text"><strong>Host A's Behavior:</strong> Host A thinks it found the MAC of 192.168.2.20 (actually got the router's MAC). Host A sends frames to the router. The router routes the packet to the correct subnet and Host B.</span></div>
+    <div class="point"><span class="point-num">4</span><span class="point-text"><strong>Advantages:</strong> Works without any reconfiguration of hosts. Useful when hosts are misconfigured with wrong subnet mask. Transparent to applications.</span></div>
+    <div class="point"><span class="point-num">5</span><span class="point-text"><strong>Disadvantages:</strong> Increases ARP table size on hosts. Router must answer EVERY ARP request — overhead. Does not scale well. Security risk: can mask configuration errors that should be corrected.</span></div>
+  </div>
+
+  <div class="card card-amber">
+    <h3>Gratuitous ARP — Self-Announcement</h3>
+    <ul>
+      <li>A host sends an ARP request for its OWN IP address (sender IP = target IP).</li>
+      <li>No one should reply (the IP should be unique). If someone replies → IP address conflict detected!</li>
+      <li><strong>Use cases:</strong> IP conflict detection at boot, announcing MAC change (NIC replacement), HSRP/VRRP failover, load balancer failover.</li>
+    </ul>
+  </div>
+
+  <div class="card card-red">
+    <h3>ARP Poisoning / ARP Spoofing — Security Issue</h3>
+    <ul>
+      <li>ARP has NO authentication. Any host can send fake ARP replies.</li>
+      <li>Attacker sends unsolicited ARP replies mapping a legitimate IP to the attacker's MAC address.</li>
+      <li>Other hosts update their ARP caches with the poisoned entry → man-in-the-middle attack.</li>
+      <li>Solution: Dynamic ARP Inspection (DAI) on switches — validates ARP packets against DHCP snooping binding table.</li>
+    </ul>
+  </div>
+
+  <h2 class="section-head">MCQs — Proxy ARP</h2>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q1. In Proxy ARP, when a router responds to an ARP request on behalf of a remote host, it uses which MAC address in the ARP reply?</div>
+    <div class="mcq-opts" id="w11q7">
+      <button class="opt" onclick="answer('w11q7',0,2,'In Proxy ARP, the router replies with its OWN MAC address (the MAC of its interface on the local subnet). This causes the requesting host to send frames to the router. The router then routes the packet to the actual remote destination.')">A) The MAC address of the final destination host</button>
+      <button class="opt" onclick="answer('w11q7',1,2,'In Proxy ARP, the router replies with its OWN MAC address (the MAC of its interface on the local subnet). This causes the requesting host to send frames to the router. The router then routes the packet to the actual remote destination.')">B) The broadcast MAC address (FF:FF:FF:FF:FF:FF)</button>
+      <button class="opt" onclick="answer('w11q7',2,2,'In Proxy ARP, the router replies with its OWN MAC address (the MAC of its interface on the local subnet). This causes the requesting host to send frames to the router. The router then routes the packet to the actual remote destination.')">C) Its own MAC address (the router's local interface MAC)</button>
+      <button class="opt" onclick="answer('w11q7',3,2,'In Proxy ARP, the router replies with its OWN MAC address (the MAC of its interface on the local subnet). This causes the requesting host to send frames to the router. The router then routes the packet to the actual remote destination.')">D) All zeros (00:00:00:00:00:00)</button>
+    </div>
+    <div class="explanation" id="w11q7-exp"></div>
+  </div>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q2. A host sends a Gratuitous ARP request. What is the PRIMARY use of this?</div>
+    <div class="mcq-opts" id="w11q8">
+      <button class="opt" onclick="answer('w11q8',0,2,'Gratuitous ARP (host ARPs for its own IP) is used to: (1) detect IP address conflicts — if someone replies, there is a conflict; (2) notify other hosts to update their ARP caches when the sender\'s MAC changes (e.g., NIC replacement or failover).')">A) To find the default gateway MAC address</button>
+      <button class="opt" onclick="answer('w11q8',1,2,'Gratuitous ARP (host ARPs for its own IP) is used to: (1) detect IP address conflicts — if someone replies, there is a conflict; (2) notify other hosts to update their ARP caches when the sender\'s MAC changes (e.g., NIC replacement or failover).')">B) To speed up DNS resolution</button>
+      <button class="opt" onclick="answer('w11q8',2,2,'Gratuitous ARP (host ARPs for its own IP) is used to: (1) detect IP address conflicts — if someone replies, there is a conflict; (2) notify other hosts to update their ARP caches when the sender\'s MAC changes (e.g., NIC replacement or failover).')">C) To detect IP address conflicts and update ARP caches on MAC change</button>
+      <button class="opt" onclick="answer('w11q8',3,2,'Gratuitous ARP (host ARPs for its own IP) is used to: (1) detect IP address conflicts — if someone replies, there is a conflict; (2) notify other hosts to update their ARP caches when the sender\'s MAC changes (e.g., NIC replacement or failover).')">D) To release a DHCP lease early</button>
+    </div>
+    <div class="explanation" id="w11q8-exp"></div>
+  </div>
+</div>
+
+<!-- SECTION 4: L2 Switching & STP -->
+<div id="switching_l2" class="section">
+  <div class="topic-title">Topic 4: Layer 2 Switching &amp; STP <span class="badge badge-exam">Exam Favorite</span></div>
+
+  <div class="card card-blue">
+    <h3>Layer 2 Switch Operation</h3>
+    <p>An Ethernet switch forwards frames based on MAC addresses. Unlike a hub (which broadcasts to all ports), a switch selectively sends frames only to the port where the destination device is connected. Switches maintain a MAC Address Table (CAM table) to make forwarding decisions.</p>
+  </div>
+
+  <h2 class="section-head">Switch MAC Table Operation</h2>
+  <div class="card" style="padding: 0.5rem 1.25rem;">
+    <div class="point"><span class="point-num">1</span><span class="point-text"><strong>Learning (Source Learning):</strong> When a frame arrives, the switch records the SOURCE MAC address and the incoming port in the MAC table (CAM table). This builds the table dynamically over time.</span></div>
+    <div class="point"><span class="point-num">2</span><span class="point-text"><strong>Forwarding (Destination Lookup):</strong> Switch looks up the DESTINATION MAC in the MAC table:<br>• Found → forward frame ONLY to the specific port (unicast forwarding).<br>• NOT found → FLOOD frame to ALL ports except the incoming port (unknown unicast flooding).</span></div>
+    <div class="point"><span class="point-num">3</span><span class="point-text"><strong>Filtering:</strong> If src and dst are on the SAME port (same segment), the frame is filtered (dropped) — no need to forward.</span></div>
+    <div class="point"><span class="point-num">4</span><span class="point-text"><strong>Aging:</strong> MAC table entries age out after a timeout (default 300 seconds = 5 minutes). If no frame is seen from a MAC within the timeout, the entry is deleted to keep the table current.</span></div>
+  </div>
+
+  <h2 class="section-head">STP — Root Cause and Solution <span class="badge badge-exam">Root Cause Often Missed</span></h2>
+  <div class="card card-red">
+    <h3>Why Layer 2 Loops are Catastrophic — Root Cause</h3>
+    <p style="margin-bottom: 8px;"><strong>The core problem:</strong> Ethernet frames have <em>no TTL field</em> (unlike IP packets). A router discards a packet after its TTL reaches 0, preventing infinite loops. But an Ethernet switch has no such mechanism — it will forward a frame forever if a loop exists.</p>
+    <p style="font-weight: 500; margin-bottom: 6px; font-size: 14px; color: #791F1F;">When a loop exists in a switched network, three catastrophic events happen simultaneously:</p>
+    <ul>
+      <li><strong>Broadcast Storm:</strong> A single broadcast frame (e.g., ARP request) enters a loop. Each switch forwards it out all ports → the frame traverses the loop → re-enters the switches → forwarded again → the frame multiplies exponentially. Within seconds, thousands of copies flood the network, consuming 100% of bandwidth. The network becomes completely unusable.</li>
+      <li><strong>Duplicate Frame Delivery:</strong> A unicast frame loops around and arrives at the destination MULTIPLE TIMES. The upper-layer protocol (IP, TCP) must deal with the duplicates — wasting processing power and potentially causing application errors.</li>
+      <li><strong>MAC Table Instability (MAC Flapping):</strong> The same source MAC address keeps arriving on different ports as frames loop. The switch continuously updates its MAC table with conflicting port information for the same MAC — the table oscillates, making forwarding decisions unreliable. Also called "MAC flapping."</li>
+    </ul>
+    <p style="margin-top: 8px; font-size: 14px; color: var(--color-text-primary);"><strong>Why loops are introduced:</strong> Network admins add redundant physical links between switches for high availability — if one link fails, the other keeps the network up. But these redundant links create physical loops if not managed.</p>
+  </div>
+
+  <div class="card card-amber">
+    <h3>STP — Spanning Tree Protocol (IEEE 802.1D) — How It Solves Loops</h3>
+    <ul>
+      <li><strong>STP Solution:</strong> STP logically BLOCKS redundant ports to create a loop-free spanning TREE topology, while keeping the redundant links physically connected. If the active path fails, STP unblocks the redundant path (failover).</li>
+      <li><strong>Root Bridge Election:</strong> The switch with the lowest Bridge ID (priority field + MAC address) is elected as the root bridge. All topology decisions are made relative to the root bridge. Default priority = 32768; can be manually set lower to force a specific switch to be root.</li>
+      <li><strong>Port Roles:</strong>
+        <ul>
+          <li>Root Port: The port on each non-root switch with the lowest cost path to the root bridge. One per switch.</li>
+          <li>Designated Port: The forwarding port on each network segment (link). One per segment.</li>
+          <li>Blocked Port: All other ports — logically disabled to prevent loops. Still receives BPDUs.</li>
+        </ul>
+      </li>
+      <li><strong>Port States (STP Convergence):</strong> Blocking → Listening → Learning → Forwarding → Disabled. Default convergence time: 30–50 seconds (too slow for modern networks).</li>
+      <li><strong>RSTP (IEEE 802.1w):</strong> Rapid STP — converges in under 1 second. Modern standard. Uses Proposal/Agreement mechanism instead of fixed timers.</li>
+      <li><strong>BPDU (Bridge Protocol Data Unit):</strong> STP control messages exchanged between switches to elect root bridge, determine port roles, and detect topology changes.</li>
+    </ul>
+  </div>
+
+  <h2 class="section-head">MCQs — L2 Switching &amp; STP</h2>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q1. A Layer 2 switch receives a frame with a destination MAC address that is NOT in its MAC table. What does it do?</div>
+    <div class="mcq-opts" id="w11q9">
+      <button class="opt" onclick="answer('w11q9',0,2,'When the destination MAC is unknown (not in the MAC table), the switch FLOODS the frame out ALL ports EXCEPT the port the frame arrived on. This is unknown unicast flooding. If the destination device is reachable, it will reply, and the switch will LEARN its MAC address.')">A) Drops the frame immediately</button>
+      <button class="opt" onclick="answer('w11q9',1,2,'When the destination MAC is unknown (not in the MAC table), the switch FLOODS the frame out ALL ports EXCEPT the port the frame arrived on. This is unknown unicast flooding. If the destination device is reachable, it will reply, and the switch will LEARN its MAC address.')">B) Sends an ARP request to find the destination</button>
+      <button class="opt" onclick="answer('w11q9',2,2,'When the destination MAC is unknown (not in the MAC table), the switch FLOODS the frame out ALL ports EXCEPT the port the frame arrived on. This is unknown unicast flooding. If the destination device is reachable, it will reply, and the switch will LEARN its MAC address.')">C) Floods the frame out all ports except the incoming port</button>
+      <button class="opt" onclick="answer('w11q9',3,2,'When the destination MAC is unknown (not in the MAC table), the switch FLOODS the frame out ALL ports EXCEPT the port the frame arrived on. This is unknown unicast flooding. If the destination device is reachable, it will reply, and the switch will LEARN its MAC address.')">D) Sends the frame only to port 1 (default)</button>
+    </div>
+    <div class="explanation" id="w11q9-exp"></div>
+  </div>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q2. The root cause of Layer 2 broadcast storms in redundant switch topologies is:</div>
+    <div class="mcq-opts" id="w11q10">
+      <button class="opt" onclick="answer('w11q10',0,2,'Ethernet frames have NO TTL field — unlike IP packets where routers discard packets when TTL reaches 0. A broadcast frame in a loop is forwarded indefinitely by switches, multiplying exponentially (broadcast storm). STP prevents this by logically blocking redundant ports.')">A) Switch MAC tables fill up too quickly</button>
+      <button class="opt" onclick="answer('w11q10',1,2,'Ethernet frames have NO TTL field — unlike IP packets where routers discard packets when TTL reaches 0. A broadcast frame in a loop is forwarded indefinitely by switches, multiplying exponentially (broadcast storm). STP prevents this by logically blocking redundant ports.')">B) Switches run out of memory for frame buffers</button>
+      <button class="opt" onclick="answer('w11q10',2,2,'Ethernet frames have NO TTL field — unlike IP packets where routers discard packets when TTL reaches 0. A broadcast frame in a loop is forwarded indefinitely by switches, multiplying exponentially (broadcast storm). STP prevents this by logically blocking redundant ports.')">C) Ethernet frames have no TTL — frames loop forever in a redundant topology</button>
+      <button class="opt" onclick="answer('w11q10',3,2,'Ethernet frames have NO TTL field — unlike IP packets where routers discard packets when TTL reaches 0. A broadcast frame in a loop is forwarded indefinitely by switches, multiplying exponentially (broadcast storm). STP prevents this by logically blocking redundant ports.')">D) Switches use different VLAN IDs causing forwarding conflicts</button>
+    </div>
+    <div class="explanation" id="w11q10-exp"></div>
+  </div>
+</div>
+
+<!-- SECTION 5: VLANs -->
+<div id="vlan" class="section">
+  <div class="topic-title">Topic 5: VLANs — Virtual Local Area Networks <span class="badge badge-exam">High Weightage</span></div>
+
+  <div class="card card-blue">
+    <h3>What is a VLAN?</h3>
+    <p>A VLAN (Virtual LAN) is a logical grouping of network devices that behaves as if they are on the same physical network segment, regardless of their actual physical location. VLANs allow a single physical switch to be divided into multiple isolated logical broadcast domains.</p>
+  </div>
+
+  <h2 class="section-head">Why VLANs? — Benefits</h2>
+  <div class="card" style="padding: 0.5rem 1.25rem;">
+    <div class="point"><span class="point-num">1</span><span class="point-text"><strong>Broadcast Domain Control:</strong> Each VLAN is its own broadcast domain. Broadcasts are confined within the VLAN — reduces unnecessary broadcast traffic across the entire network.</span></div>
+    <div class="point"><span class="point-num">2</span><span class="point-text"><strong>Security (Traffic Isolation):</strong> Devices in different VLANs cannot communicate directly — they must go through a router (Layer 3). This provides logical separation for sensitive departments (Finance, HR, R&amp;D) even on the same physical switch.</span></div>
+    <div class="point"><span class="point-num">3</span><span class="point-text"><strong>Flexibility:</strong> A department can span multiple physical switches, or multiple departments can share a physical switch — all without physical rewiring. VLANs follow the user, not the port.</span></div>
+    <div class="point"><span class="point-num">4</span><span class="point-text"><strong>Performance:</strong> Smaller broadcast domains → less broadcast traffic → better performance for each VLAN group.</span></div>
+  </div>
+
+  <h2 class="section-head">VLAN Host Assignment — Two-Step Requirement <span class="badge badge-exam">Important Concept</span></h2>
+  <div class="card card-green">
+    <h3>Correctly Assigning a Host to a VLAN</h3>
+    <p style="margin-bottom: 8px;">Assigning a host to a VLAN correctly requires TWO things to both be correct simultaneously:</p>
+    <div class="point"><span class="point-num">1</span><span class="point-text"><strong>Switch Port Assignment:</strong> The switch port that the host is physically connected to must be configured as an <em>access port</em> for the correct VLAN (e.g., <code>switchport access vlan 20</code>). This places the host's traffic in VLAN 20 at Layer 2.</span></div>
+    <div class="point"><span class="point-num">2</span><span class="point-text"><strong>IP Subnet Configuration:</strong> The host's IP address must be within the IP subnet assigned to that VLAN. For example, VLAN 20 might use network 192.168.20.0/24. The host needs an IP in this range (e.g., 192.168.20.10) and the correct default gateway (the VLAN 20 SVI IP, e.g., 192.168.20.1).</span></div>
+    <p style="margin-top: 10px; font-size: 14px; color: var(--color-text-primary);"><strong>Why BOTH are required:</strong></p>
+    <ul style="padding-left: 1.2rem; font-size: 14px; line-height: 1.7; color: var(--color-text-primary);">
+      <li><strong>Wrong switch port VLAN, correct IP:</strong> Host's frames arrive at the switch tagged with the wrong VLAN. The Layer 2 forwarding is wrong — frames go to the wrong broadcast domain. Even though the IP is technically correct, the host cannot communicate with its intended VLAN peers.</li>
+      <li><strong>Correct switch port VLAN, wrong IP subnet:</strong> Host is in the right Layer 2 VLAN, but its IP address is from the wrong subnet. It cannot communicate with other hosts in the VLAN at Layer 3. Routing fails even within the VLAN. ARPs work at L2 but IP routing breaks.</li>
+      <li><strong>Example:</strong> Host connected to port assigned to VLAN 20, but host configured with 192.168.10.5 (VLAN 10's subnet). The host sends traffic into VLAN 20's broadcast domain but thinks it belongs to VLAN 10's IP network — all communications fail.</li>
+    </ul>
+  </div>
+
+  <h2 class="section-head">VLAN Types / Deployment Models</h2>
+  <div class="card card-purple">
+    <h3>End-to-End VLAN (Campus-Wide VLAN)</h3>
+    <ul>
+      <li><strong>Definition:</strong> A VLAN that spans the ENTIRE campus network — from access layer switches all the way through distribution and core switches to the other side of the campus.</li>
+      <li><strong>Use case:</strong> Users who frequently move between buildings but need to remain in the same VLAN (e.g., a company where Finance department users may sit in any building but always need VLAN 30).</li>
+      <li><strong>Flexibility:</strong> Very high — VLAN follows the user wherever they plug in across the campus.</li>
+      <li><strong>Complexity:</strong> High — requires consistent VLAN configuration on ALL switches throughout the campus. Trunk links must carry the VLAN everywhere. Difficult to manage in large deployments.</li>
+      <li><strong>Broadcast domain:</strong> Can be very large, spanning the entire campus. This is a drawback — broadcast traffic propagates far and wide.</li>
+    </ul>
+  </div>
+  <div class="card card-amber">
+    <h3>Location-Based VLAN (Local VLAN)</h3>
+    <ul>
+      <li><strong>Definition:</strong> A VLAN that is confined to a specific geographic location (building, floor, or wiring closet). Users in a given location share a VLAN; users in another location use a different VLAN. VLANs are local — they do NOT span the entire campus.</li>
+      <li><strong>Use case:</strong> Most modern enterprise deployments follow this model. Users are assigned to VLANs based on where they are physically located, not their organizational group. When a user moves buildings, they get a new IP address/VLAN.</li>
+      <li><strong>Flexibility:</strong> Lower — user must reconfigure (or use DHCP) when moving locations. VLAN does NOT follow the user.</li>
+      <li><strong>Complexity:</strong> Lower — VLANs are simpler to manage, smaller broadcast domains, fewer VLANs needed across the network core.</li>
+      <li><strong>Broadcast domain:</strong> Small — limited to the local segment. Better performance.</li>
+    </ul>
+  </div>
+
+  <h2 class="section-head">End-to-End vs Location-Based VLAN Comparison</h2>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Property</th><th>End-to-End VLAN</th><th>Location-Based VLAN</th></tr>
+      <tr><td>VLAN span</td><td>Entire campus (all switches)</td><td>Local segment (one building/floor)</td></tr>
+      <tr><td>VLAN follows user?</td><td>Yes — user same VLAN anywhere</td><td>No — user gets new VLAN on move</td></tr>
+      <tr><td>Broadcast domain size</td><td>Large (campus-wide)</td><td>Small (local)</td></tr>
+      <tr><td>Configuration complexity</td><td>High — all switches must carry VLAN</td><td>Low — simpler, localized</td></tr>
+      <tr><td>Use case</td><td>Mobile users, specialized apps</td><td>Most modern enterprise networks</td></tr>
+      <tr><td>Performance</td><td>Lower (large broadcast domain)</td><td>Higher (small broadcast domain)</td></tr>
+    </table>
+  </div>
+
+  <h2 class="section-head">IEEE 802.1Q — VLAN Tagging Standard</h2>
+  <div class="card card-purple">
+    <h3>VLAN Tag Structure</h3>
+    <ul>
+      <li>802.1Q inserts a 4-byte VLAN TAG into the Ethernet frame header between the Source MAC and EtherType fields.</li>
+      <li><strong>VLAN Tag Format (4 bytes total):</strong>
+        <ul>
+          <li>TPID (Tag Protocol Identifier): 2 bytes = 0x8100 (identifies this as a tagged frame)</li>
+          <li>PCP (Priority Code Point): 3 bits — for QoS (802.1p priority levels 0–7)</li>
+          <li>DEI (Drop Eligible Indicator): 1 bit — marks frame as eligible for drop during congestion</li>
+          <li>VID (VLAN Identifier): 12 bits — identifies the VLAN (values 0–4095; usable: 1–4094)</li>
+        </ul>
+      </li>
+      <li>Maximum VLAN ID = 4094 (0 and 4095 are reserved). 12 bits → 2^12 = 4096 total values.</li>
+      <li><strong>VLAN ID (VID):</strong> Each VLAN has a unique 12-bit numeric identifier. Switches use the VID in the 802.1Q tag to determine which VLAN a tagged frame belongs to.</li>
+    </ul>
+  </div>
+
+  <div class="card card-amber">
+    <h3>VLAN Trunk Links</h3>
+    <ul>
+      <li><strong>Access Port:</strong> Belongs to ONE VLAN. Frames are untagged (tag is added/removed by switch). Used to connect end devices (PCs, printers, phones).</li>
+      <li><strong>Trunk Port:</strong> Carries frames from MULTIPLE VLANs (tagged with 802.1Q tags). Used to connect switches to switches or switches to routers.</li>
+      <li><strong>Native VLAN:</strong> Frames on a trunk port are tagged EXCEPT for the native VLAN (default VLAN 1). Native VLAN frames are sent UNTAGGED.</li>
+      <li><strong>Router-on-a-Stick:</strong> A router with a single physical trunk link to a switch, using sub-interfaces (each tagged with a VLAN ID) to route between VLANs.</li>
+    </ul>
+  </div>
+
+  <div class="card card-green">
+    <h3>Inter-VLAN Routing</h3>
+    <ul>
+      <li>Devices in different VLANs cannot communicate at Layer 2 — they need a Layer 3 device.</li>
+      <li><strong>Method 1:</strong> Use a router with one physical interface per VLAN (expensive, wastes ports).</li>
+      <li><strong>Method 2:</strong> Router-on-a-Stick — one router trunk port with sub-interfaces per VLAN (moderate cost).</li>
+      <li><strong>Method 3:</strong> Layer 3 Switch (SVI — Switched Virtual Interface) — most scalable and fastest. Each VLAN gets an SVI with an IP address. The L3 switch routes internally at hardware speed.</li>
+    </ul>
+  </div>
+
+  <h2 class="section-head">MCQs — VLANs</h2>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q1. A host is connected to a switch port configured for VLAN 20, but the host's IP address is configured in the VLAN 10 subnet (192.168.10.5). What is the result?</div>
+    <div class="mcq-opts" id="w11q11">
+      <button class="opt" onclick="answer('w11q11',0,3,'VLAN host assignment requires BOTH correct switch port VLAN AND correct IP subnet. If the IP is in the wrong subnet, the host gets the right L2 domain (VLAN 20 frames) but wrong L3 addressing. It cannot communicate at Layer 3 with VLAN 20 hosts because its IP is from VLAN 10\'s network. Both must match.')">A) The host can communicate normally within VLAN 20</button>
+      <button class="opt" onclick="answer('w11q11',1,3,'VLAN host assignment requires BOTH correct switch port VLAN AND correct IP subnet. If the IP is in the wrong subnet, the host gets the right L2 domain (VLAN 20 frames) but wrong L3 addressing. It cannot communicate at Layer 3 with VLAN 20 hosts because its IP is from VLAN 10\'s network. Both must match.')">B) The host automatically gets a new IP from VLAN 20</button>
+      <button class="opt" onclick="answer('w11q11',2,3,'VLAN host assignment requires BOTH correct switch port VLAN AND correct IP subnet. If the IP is in the wrong subnet, the host gets the right L2 domain (VLAN 20 frames) but wrong L3 addressing. It cannot communicate at Layer 3 with VLAN 20 hosts because its IP is from VLAN 10\'s network. Both must match.')">C) The switch rejects the host from both VLANs</button>
+      <button class="opt" onclick="answer('w11q11',3,3,'VLAN host assignment requires BOTH correct switch port VLAN AND correct IP subnet. If the IP is in the wrong subnet, the host gets the right L2 domain (VLAN 20 frames) but wrong L3 addressing. It cannot communicate at Layer 3 with VLAN 20 hosts because its IP is from VLAN 10\'s network. Both must match.')">D) The host is in VLAN 20 at L2 but cannot communicate normally — IP subnet mismatch breaks L3</button>
+    </div>
+    <div class="explanation" id="w11q11-exp"></div>
+  </div>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q2. In IEEE 802.1Q, the VLAN identifier (VID) field is how many bits wide, allowing a maximum of how many usable VLANs?</div>
+    <div class="mcq-opts" id="w11q12">
+      <button class="opt" onclick="answer('w11q12',0,2,'The 802.1Q VLAN ID (VID) field is 12 bits wide. 2^12 = 4096 possible values (0 to 4095). Values 0 and 4095 are reserved, so 4094 usable VLANs (VLAN 1 to VLAN 4094). VLAN 1 is the default native VLAN on most switches.')">A) 8 bits — 256 VLANs</button>
+      <button class="opt" onclick="answer('w11q12',1,2,'The 802.1Q VLAN ID (VID) field is 12 bits wide. 2^12 = 4096 possible values (0 to 4095). Values 0 and 4095 are reserved, so 4094 usable VLANs (VLAN 1 to VLAN 4094). VLAN 1 is the default native VLAN on most switches.')">B) 16 bits — 65536 VLANs</button>
+      <button class="opt" onclick="answer('w11q12',2,2,'The 802.1Q VLAN ID (VID) field is 12 bits wide. 2^12 = 4096 possible values (0 to 4095). Values 0 and 4095 are reserved, so 4094 usable VLANs (VLAN 1 to VLAN 4094). VLAN 1 is the default native VLAN on most switches.')">C) 12 bits — 4094 usable VLANs (1–4094)</button>
+      <button class="opt" onclick="answer('w11q12',3,2,'The 802.1Q VLAN ID (VID) field is 12 bits wide. 2^12 = 4096 possible values (0 to 4095). Values 0 and 4095 are reserved, so 4094 usable VLANs (VLAN 1 to VLAN 4094). VLAN 1 is the default native VLAN on most switches.')">D) 10 bits — 1024 VLANs</button>
+    </div>
+    <div class="explanation" id="w11q12-exp"></div>
+  </div>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q3. End-to-End VLANs differ from Location-Based VLANs primarily in that End-to-End VLANs:</div>
+    <div class="mcq-opts" id="w11q13">
+      <button class="opt" onclick="answer('w11q13',0,2,'End-to-End VLANs span the ENTIRE campus so a user stays in the same VLAN regardless of physical location. This provides flexibility for mobile users but creates large broadcast domains and complex configuration across all switches. Location-Based VLANs are local, simpler, and have smaller broadcast domains.')">A) Are smaller in size and use fewer switches</button>
+      <button class="opt" onclick="answer('w11q13',1,2,'End-to-End VLANs span the ENTIRE campus so a user stays in the same VLAN regardless of physical location. This provides flexibility for mobile users but creates large broadcast domains and complex configuration across all switches. Location-Based VLANs are local, simpler, and have smaller broadcast domains.')">B) Do not require 802.1Q tagging</button>
+      <button class="opt" onclick="answer('w11q13',2,2,'End-to-End VLANs span the ENTIRE campus so a user stays in the same VLAN regardless of physical location. This provides flexibility for mobile users but creates large broadcast domains and complex configuration across all switches. Location-Based VLANs are local, simpler, and have smaller broadcast domains.')">C) Span the entire campus — VLAN follows the user across all buildings and floors</button>
+      <button class="opt" onclick="answer('w11q13',3,2,'End-to-End VLANs span the ENTIRE campus so a user stays in the same VLAN regardless of physical location. This provides flexibility for mobile users but creates large broadcast domains and complex configuration across all switches. Location-Based VLANs are local, simpler, and have smaller broadcast domains.')">D) Provide better performance and smaller broadcast domains</button>
+    </div>
+    <div class="explanation" id="w11q13-exp"></div>
+  </div>
+</div>
+
+<!-- SECTION 6: Wireless LAN (NEW) -->
+<div id="wireless" class="section">
+  <div class="topic-title">Topic 6: Wireless LAN — 802.11 Wi-Fi <span class="badge badge-exam">Very Important — Full Lecture</span></div>
+
+  <h2 class="section-head">Why Wireless is Different from Wired Ethernet</h2>
+  <div class="card card-blue">
+    <h3>Unique Challenges of Wireless Medium</h3>
+    <ul>
+      <li><strong>Cannot detect collision while transmitting:</strong> In wired Ethernet, a station can listen to the channel while transmitting and detect if its signal is being garbled by a collision (CSMA/CD). In wireless, a transmitting station's own signal is much stronger than any received signal — it cannot "hear" a collision while sending. CSMA/CD is impossible.</li>
+      <li><strong>Signal attenuation:</strong> Radio signals weaken with distance (path loss). Not all stations can hear all other stations. Two stations may both be able to communicate with the access point but cannot hear each other at all.</li>
+      <li><strong>Interference:</strong> Other Wi-Fi networks, microwave ovens, Bluetooth devices, and cordless phones all share the 2.4 GHz band, causing interference that wired networks don't face.</li>
+      <li><strong>Channel is shared:</strong> All stations in a Basic Service Set (BSS) share the same wireless channel — unlike a switch where each port has its own dedicated link.</li>
+    </ul>
+  </div>
+
+  <h2 class="section-head">Hidden Terminal Problem <span class="badge badge-exam">Exam Favorite</span></h2>
+  <div class="card card-red">
+    <h3>Hidden Terminal — The Core Problem of Wireless MAC</h3>
+    <p style="margin-bottom: 8px;"><strong>Scenario:</strong> Three nodes A, B, C arranged in a line. B is in the center. A and C are both within range of B but are OUT of range of each other (they cannot hear each other at all).</p>
+    <div class="point"><span class="point-num">1</span><span class="point-text"><strong>A wants to send to B:</strong> A senses the channel — it hears nothing (because A cannot hear C). A decides the channel is free. A starts transmitting to B.</span></div>
+    <div class="point"><span class="point-num">2</span><span class="point-text"><strong>C also wants to send to B:</strong> C senses the channel — C also hears nothing (because C cannot hear A's transmission). C also decides the channel is free. C starts transmitting to B simultaneously.</span></div>
+    <div class="point"><span class="point-num">3</span><span class="point-text"><strong>Collision at B:</strong> Both A and C are transmitting to B at the same time. Their signals COLLIDE at B — B receives garbled data and cannot decode either frame. The collision happens at the receiver (B), not at the senders.</span></div>
+    <div class="point"><span class="point-num">4</span><span class="point-text"><strong>Why CSMA fails:</strong> A and C each performed carrier sensing before transmitting, but they sensed each other's transmissions as NOTHING (they are hidden from each other). The "listen before talk" mechanism fails completely — the collision is undetectable by the senders.</span></div>
+    <p style="margin-top: 8px; font-size: 14px; color: var(--color-text-primary);"><strong>A and C are "hidden terminals"</strong> from each other's perspective — each is hidden from the other's carrier sense, yet they interfere at the shared receiver B.</p>
+  </div>
+
+  <h2 class="section-head">Exposed Terminal Problem</h2>
+  <div class="card card-amber">
+    <h3>Exposed Terminal — Channel Underutilization</h3>
+    <p style="margin-bottom: 8px;"><strong>Scenario:</strong> Four nodes A, B, C, D in a line. B is transmitting to A. C is within range of B but wants to send to D (which is out of B's range).</p>
+    <ul>
+      <li>C senses the channel and hears B transmitting. C concludes "channel is busy" and WAITS — even though C's transmission to D would NOT interfere with B→A (because D is out of B's range).</li>
+      <li>C is unnecessarily blocked. C could safely transmit to D simultaneously with B→A without any collision.</li>
+      <li><strong>Result:</strong> Channel underutilization — C wastes time waiting unnecessarily. Throughput is reduced.</li>
+      <li><strong>Difference from hidden terminal:</strong> The hidden terminal problem causes collisions (bad). The exposed terminal problem causes unnecessary idle time (inefficient). Both are caused by the asymmetric propagation ranges of wireless signals.</li>
+    </ul>
+  </div>
+
+  <h2 class="section-head">Why CSMA/CD Fails in Wireless</h2>
+  <div class="card card-purple">
+    <h3>Three Reasons CSMA/CD Cannot Work in Wireless</h3>
+    <div class="point"><span class="point-num">1</span><span class="point-text"><strong>Cannot listen while transmitting:</strong> A wireless node's own transmitted signal is MUCH stronger (orders of magnitude) than any signal it might receive. A transmitting station cannot distinguish a received collision from its own signal — the received signal is completely swamped.</span></div>
+    <div class="point"><span class="point-num">2</span><span class="point-text"><strong>Signal strength varies:</strong> Unlike wired Ethernet where a collision causes a deterministic voltage change detectable by every sender, wireless signal strength varies with distance, obstacles, and interference. No reliable collision detection signal exists.</span></div>
+    <div class="point"><span class="point-num">3</span><span class="point-text"><strong>Hidden terminal problem:</strong> Even if a station could listen while transmitting, it still cannot detect collisions caused by hidden terminals it cannot hear. The collision happens at the receiver, not at the sender..</span></div>
+    <p style="margin-top: 8px; font-size: 14px; color: var(--color-text-primary);"><strong>Solution:</strong> CSMA/CA (Collision Avoidance) — instead of detecting collisions after they happen, try to AVOID collisions before they happen.</p>
+  </div>
+
+  <h2 class="section-head">CSMA/CA — Collision Avoidance</h2>
+  <div class="card card-green">
+    <h3>CSMA/CA Working — Step by Step</h3>
+    <div class="point"><span class="point-num">1</span><span class="point-text"><strong>Sense Channel (Physical Carrier Sensing):</strong> Before transmitting, the station listens to the channel. If the medium is busy, the station DEFERS and waits.</span></div>
+    <div class="point"><span class="point-num">2</span><span class="point-text"><strong>Wait for DIFS:</strong> After the channel becomes idle, the station waits for a mandatory inter-frame gap called DIFS (Distributed IFS) before proceeding. This ensures the channel is truly clear.</span></div>
+    <div class="point"><span class="point-num">3</span><span class="point-text"><strong>Random Backoff:</strong> After DIFS, the station picks a random backoff timer (from a contention window). It counts down the backoff ONLY while the channel is idle. If the channel becomes busy during backoff, the countdown PAUSES and resumes when idle again. This reduces collision probability compared to CSMA/CD's post-collision backoff.</span></div>
+    <div class="point"><span class="point-num">4</span><span class="point-text"><strong>Transmit:</strong> When backoff reaches 0, the station transmits the ENTIRE frame without stopping (no collision detection possible).</span></div>
+    <div class="point"><span class="point-num">5</span><span class="point-text"><strong>Wait for ACK:</strong> After transmitting, the station waits for an explicit ACK from the receiver. A short SIFS (Short IFS) gap is used between frame and ACK. If no ACK is received within a timeout, a collision is assumed → the frame is retransmitted with exponential backoff.</span></div>
+  </div>
+
+  <h2 class="section-head">RTS/CTS Mechanism <span class="badge badge-exam">Very Important</span></h2>
+  <div class="card card-blue">
+    <h3>RTS/CTS — Request to Send / Clear to Send</h3>
+    <p style="margin-bottom: 8px;">RTS/CTS is an optional handshake mechanism used before data transmission to reserve the channel and solve the hidden terminal problem.</p>
+    <div class="point"><span class="point-num">1</span><span class="point-text"><strong>RTS (Request to Send):</strong> Before sending a large data frame, the sender (A) sends a short RTS frame to the receiver (B). The RTS includes: sender address, receiver address, and the DURATION of the upcoming data transmission (how long the channel will be needed). RTS is short — low cost if it collides.</span></div>
+    <div class="point"><span class="point-num">2</span><span class="point-text"><strong>CTS (Clear to Send):</strong> If B is ready to receive, it broadcasts a CTS frame. CTS also contains the DURATION from the RTS. ALL nodes within range of B (including hidden terminal C) receive this CTS.</span></div>
+    <div class="point"><span class="point-num">3</span><span class="point-text"><strong>NAV Setting by Hidden Terminals:</strong> Node C hears the CTS from B (even though C couldn't hear A's RTS). C reads the duration field in the CTS and sets its NAV (Network Allocation Vector) timer to that duration. C is now "virtually silent" for the duration of A→B's data transmission — it will not transmit even though it cannot hear A.</span></div>
+    <div class="point"><span class="point-num">4</span><span class="point-text"><strong>Data Transmission:</strong> After receiving CTS, A transmits the full data frame to B.</span></div>
+    <div class="point"><span class="point-num">5</span><span class="point-text"><strong>ACK:</strong> B sends an ACK to A after successfully receiving the data. The transaction is complete.</span></div>
+    <p style="margin-top: 8px; font-size: 14px; color: var(--color-text-primary);"><strong>How RTS/CTS solves hidden terminal:</strong> C hears the CTS from B (even though C can't hear A) and defers via NAV. This prevents C from transmitting during A's data frame, eliminating the hidden terminal collision.</p>
+    <p style="font-size: 14px; color: var(--color-text-primary);"><strong>Overhead:</strong> RTS/CTS adds 2 extra frames before every data frame. Only worth using for large frames — small frames are sent without RTS/CTS to avoid disproportionate overhead.</p>
+  </div>
+
+  <h2 class="section-head">NAV — Network Allocation Vector</h2>
+  <div class="card card-green">
+    <h3>NAV — Virtual Carrier Sensing</h3>
+    <ul>
+      <li>The NAV is a timer maintained by every wireless station. It represents how long the channel is expected to be busy based on duration fields in received frames (RTS, CTS, data frames).</li>
+      <li><strong>Mechanism:</strong> When a station receives an RTS or CTS with a duration field, it sets its NAV countdown timer to that duration — even if it doesn't hear the data frame itself.</li>
+      <li><strong>Effect:</strong> While NAV > 0, the station treats the channel as busy and does NOT attempt to transmit — even if physical carrier sensing detects silence. This is "virtual carrier sensing."</li>
+      <li><strong>Dual carrier sensing:</strong> 802.11 uses BOTH physical carrier sensing (listening to the actual RF signal) AND virtual carrier sensing (NAV timer) to decide if the channel is busy. If EITHER says "busy," the station defers.</li>
+    </ul>
+  </div>
+
+  <h2 class="section-head">DCF vs PCF — Two MAC Modes</h2>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Feature</th><th>DCF (Distributed Coordination Function)</th><th>PCF (Point Coordination Function)</th></tr>
+      <tr><td>Access method</td><td>Contention-based (CSMA/CA with random backoff)</td><td>Controlled access (centralized polling by AP)</td></tr>
+      <tr><td>Coordination</td><td>Distributed — each station decides independently</td><td>Centralized — access point polls each station in turn</td></tr>
+      <tr><td>QoS/Delay</td><td>Non-deterministic — variable delay; collisions possible</td><td>Deterministic — bounded delay; no contention</td></tr>
+      <tr><td>IFS used</td><td>DIFS (Distributed IFS) — longer wait</td><td>PIFS (PCF IFS) — shorter than DIFS; AP gets priority</td></tr>
+      <tr><td>Contention window</td><td>Yes — random backoff timer</td><td>No — AP controls when each station transmits</td></tr>
+      <tr><td>Use case</td><td>Standard Wi-Fi (best-effort data traffic)</td><td>Time-sensitive applications (voice, video) — rarely used today</td></tr>
+      <tr><td>Mandatory?</td><td>Yes — required in all 802.11 stations</td><td>Optional — implemented only by some APs</td></tr>
+    </table>
+  </div>
+
+  <h2 class="section-head">IEEE 802.11 Standards</h2>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Standard</th><th>Frequency</th><th>Max Speed</th><th>Key Notes</th></tr>
+      <tr><td><strong>802.11</strong> (original)</td><td>2.4 GHz</td><td>2 Mbps</td><td>First Wi-Fi standard (1997); uses FHSS or DSSS</td></tr>
+      <tr><td><strong>802.11b</strong></td><td>2.4 GHz</td><td>11 Mbps</td><td>First widely adopted Wi-Fi; uses DSSS; 3 non-overlapping channels</td></tr>
+      <tr><td><strong>802.11a</strong></td><td>5 GHz</td><td>54 Mbps</td><td>Uses OFDM; less interference (5 GHz less crowded); shorter range than b/g</td></tr>
+      <tr><td><strong>802.11g</strong></td><td>2.4 GHz</td><td>54 Mbps</td><td>Backward compatible with 802.11b; uses OFDM; most popular before 802.11n</td></tr>
+      <tr><td><strong>802.11n</strong> (Wi-Fi 4)</td><td>2.4 &amp; 5 GHz</td><td>600 Mbps</td><td>Uses MIMO (multiple antennas); dual-band; 40 MHz channels</td></tr>
+      <tr><td><strong>802.11ac</strong> (Wi-Fi 5)</td><td>5 GHz only</td><td>3.5 Gbps</td><td>MU-MIMO; 80/160 MHz channels; beamforming</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-amber">
+    <h3>802.11 Infrastructure vs Ad-Hoc Mode</h3>
+    <ul>
+      <li><strong>Infrastructure Mode (BSS — Basic Service Set):</strong> All stations communicate through an Access Point (AP). The AP acts as a base station. Most common Wi-Fi deployment. The AP can connect to a wired network (Distribution System).</li>
+      <li><strong>Extended Service Set (ESS):</strong> Multiple BSSs (access points) connected via a Distribution System (usually a wired LAN). Allows roaming between access points — common in offices and campuses.</li>
+      <li><strong>Ad-Hoc Mode (IBSS — Independent BSS):</strong> Stations communicate directly with each other without an access point. Used for peer-to-peer wireless networking (e.g., two laptops sharing a file directly). No infrastructure needed.</li>
+      <li><strong>SSID (Service Set Identifier):</strong> The "network name" (up to 32 characters). Broadcast in Beacon frames by the AP. Stations associate with an AP with a matching SSID.</li>
+    </ul>
+  </div>
+
+  <h2 class="section-head">MCQs — Wireless LAN</h2>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q1. In the hidden terminal problem, nodes A and C both transmit to node B simultaneously, causing a collision at B. Why does CSMA (carrier sensing) fail to prevent this?</div>
+    <div class="mcq-opts" id="w11wl1">
+      <button class="opt" onclick="answer('w11wl1',0,3,'A and C are out of range of each other — they cannot hear each other\'s transmissions. When A senses the channel, it hears nothing and assumes it\'s free. When C senses the channel, it also hears nothing (cannot hear A). Both transmit simultaneously → collision at B. Carrier sensing only works if both senders can hear each other.')">A) A and C transmit on different frequencies</button>
+      <button class="opt" onclick="answer('w11wl1',1,3,'A and C are out of range of each other — they cannot hear each other\'s transmissions. When A senses the channel, it hears nothing and assumes it\'s free. When C senses the channel, it also hears nothing (cannot hear A). Both transmit simultaneously → collision at B. Carrier sensing only works if both senders can hear each other.')">B) The access point does not acknowledge RTS frames</button>
+      <button class="opt" onclick="answer('w11wl1',2,3,'A and C are out of range of each other — they cannot hear each other\'s transmissions. When A senses the channel, it hears nothing and assumes it\'s free. When C senses the channel, it also hears nothing (cannot hear A). Both transmit simultaneously → collision at B. Carrier sensing only works if both senders can hear each other.')">C) Channel sensing is too slow in wireless networks</button>
+      <button class="opt" onclick="answer('w11wl1',3,3,'A and C are out of range of each other — they cannot hear each other\'s transmissions. When A senses the channel, it hears nothing and assumes it\'s free. When C senses the channel, it also hears nothing (cannot hear A). Both transmit simultaneously → collision at B. Carrier sensing only works if both senders can hear each other.')">D) A and C cannot hear each other — both sense the channel as idle and transmit simultaneously, colliding at B</button>
+    </div>
+    <div class="explanation" id="w11wl1-exp"></div>
+  </div>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q2. In the RTS/CTS mechanism, how does a hidden terminal (node C) know to defer its transmission during A's data frame to B?</div>
+    <div class="mcq-opts" id="w11wl2">
+      <button class="opt" onclick="answer('w11wl2',0,2,'C hears the CTS frame broadcast by B. The CTS contains a duration field specifying how long A\'s data transmission will take. C reads this duration and sets its NAV (Network Allocation Vector) timer accordingly. While NAV > 0, C treats the channel as busy and will not transmit — even though C cannot hear A at all.')">A) C receives the RTS from A and sets its NAV timer</button>
+      <button class="opt" onclick="answer('w11wl2',1,2,'C hears the CTS frame broadcast by B. The CTS contains a duration field specifying how long A\'s data transmission will take. C reads this duration and sets its NAV (Network Allocation Vector) timer accordingly. While NAV > 0, C treats the channel as busy and will not transmit — even though C cannot hear A at all.')">B) C hears the CTS from B and sets its NAV timer to the duration in the CTS</button>
+      <button class="opt" onclick="answer('w11wl2',2,2,'C hears the CTS frame broadcast by B. The CTS contains a duration field specifying how long A\'s data transmission will take. C reads this duration and sets its NAV (Network Allocation Vector) timer accordingly. While NAV > 0, C treats the channel as busy and will not transmit — even though C cannot hear A at all.')">C) C senses A's data frame during transmission via physical carrier sensing</button>
+      <button class="opt" onclick="answer('w11wl2',3,2,'C hears the CTS frame broadcast by B. The CTS contains a duration field specifying how long A\'s data transmission will take. C reads this duration and sets its NAV (Network Allocation Vector) timer accordingly. While NAV > 0, C treats the channel as busy and will not transmit — even though C cannot hear A at all.')">D) The access point broadcasts a busy signal to all nodes</button>
+    </div>
+    <div class="explanation" id="w11wl2-exp"></div>
+  </div>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q3. Which IEEE 802.11 standard operates at 5 GHz with a maximum speed of 54 Mbps using OFDM?</div>
+    <div class="mcq-opts" id="w11wl3">
+      <button class="opt" onclick="answer('w11wl3',0,2,'802.11a operates at 5 GHz using OFDM and achieves up to 54 Mbps. Operating at 5 GHz gives it less interference (fewer competing devices) but shorter range. 802.11b operates at 2.4 GHz at 11 Mbps (DSSS). 802.11g operates at 2.4 GHz at 54 Mbps (OFDM, backward compatible with b).')">A) 802.11b</button>
+      <button class="opt" onclick="answer('w11wl3',1,2,'802.11a operates at 5 GHz using OFDM and achieves up to 54 Mbps. Operating at 5 GHz gives it less interference (fewer competing devices) but shorter range. 802.11b operates at 2.4 GHz at 11 Mbps (DSSS). 802.11g operates at 2.4 GHz at 54 Mbps (OFDM, backward compatible with b).')">B) 802.11a</button>
+      <button class="opt" onclick="answer('w11wl3',2,2,'802.11a operates at 5 GHz using OFDM and achieves up to 54 Mbps. Operating at 5 GHz gives it less interference (fewer competing devices) but shorter range. 802.11b operates at 2.4 GHz at 11 Mbps (DSSS). 802.11g operates at 2.4 GHz at 54 Mbps (OFDM, backward compatible with b).')">C) 802.11g</button>
+      <button class="opt" onclick="answer('w11wl3',3,2,'802.11a operates at 5 GHz using OFDM and achieves up to 54 Mbps. Operating at 5 GHz gives it less interference (fewer competing devices) but shorter range. 802.11b operates at 2.4 GHz at 11 Mbps (DSSS). 802.11g operates at 2.4 GHz at 54 Mbps (OFDM, backward compatible with b).')">D) 802.11n</button>
+    </div>
+    <div class="explanation" id="w11wl3-exp"></div>
+  </div>
+
+  <div class="mcq-block">
+    <div class="mcq-q">Q4. In DCF (Distributed Coordination Function), a station senses the channel as idle. What does it do BEFORE transmitting?</div>
+    <div class="mcq-opts" id="w11wl4">
+      <button class="opt" onclick="answer('w11wl4',0,3,'After sensing the channel idle, the station waits for DIFS, then picks a random backoff timer and counts it down while the channel remains idle. Only AFTER backoff reaches 0 does the station transmit. This random backoff prevents multiple stations from transmitting simultaneously after the channel clears.')">A) Immediately transmits without waiting</button>
+      <button class="opt" onclick="answer('w11wl4',1,3,'After sensing the channel idle, the station waits for DIFS, then picks a random backoff timer and counts it down while the channel remains idle. Only AFTER backoff reaches 0 does the station transmit. This random backoff prevents multiple stations from transmitting simultaneously after the channel clears.')">B) Sends an RTS frame first, regardless of frame size</button>
+      <button class="opt" onclick="answer('w11wl4',2,3,'After sensing the channel idle, the station waits for DIFS, then picks a random backoff timer and counts it down while the channel remains idle. Only AFTER backoff reaches 0 does the station transmit. This random backoff prevents multiple stations from transmitting simultaneously after the channel clears.')">C) Waits for the access point to grant permission</button>
+      <button class="opt" onclick="answer('w11wl4',3,3,'After sensing the channel idle, the station waits for DIFS, then picks a random backoff timer and counts it down while the channel remains idle. Only AFTER backoff reaches 0 does the station transmit. This random backoff prevents multiple stations from transmitting simultaneously after the channel clears.')">D) Waits DIFS, then waits a random backoff timer before transmitting</button>
+    </div>
+    <div class="explanation" id="w11wl4-exp"></div>
+  </div>
+</div>
+
+<!-- SECTION 7: Super Revision -->
+<div id="revision11" class="section">
+  <div class="topic-title">Super Revision — Week 11 Last-Day Notes</div>
+
+  <div class="card card-red">
+    <h3>MOST FREQUENTLY ASKED — Memorize These</h3>
+    <ul>
+      <li>ARP: IP → MAC; Request = broadcast; Reply = unicast; between L2 &amp; L3; EtherType 0x0806</li>
+      <li>RARP: MAC → IP; broadcast only; requires server per subnet; provides IP only; obsolete</li>
+      <li>DHCP DORA: <strong>D</strong>iscover → <strong>O</strong>ffer → <strong>R</strong>equest → <strong>A</strong>cknowledge</li>
+      <li>DHCP ports: UDP 67 (server), UDP 68 (client)</li>
+      <li>DHCP Scope = pool of assignable IPs; Lease = time-limited IP allocation; renew at 50% (T1), 87.5% (T2)</li>
+      <li>DHCP Relay Agent: forwards DHCP broadcasts across subnets (broadcasts → unicast to DHCP server)</li>
+      <li>Proxy ARP: router replies with OWN MAC for remote destination; used when host has wrong subnet mask</li>
+      <li>Gratuitous ARP: host ARPs for its own IP — detect IP conflicts, update other caches on MAC change</li>
+      <li>L2 Switch: learn src MAC → flood if dst unknown → filter if same port → aging = 300 sec</li>
+      <li><strong>STP Loop Root Cause: Ethernet frames have NO TTL → loop forever → broadcast storm + duplicate frames + MAC flapping</strong></li>
+      <li>STP root bridge = lowest Bridge ID (priority + MAC); blocks redundant ports to form tree</li>
+      <li>VLAN host assignment: MUST have correct switch port VLAN assignment AND correct IP subnet — BOTH required</li>
+      <li>End-to-End VLAN: spans campus, VLAN follows user, large broadcast domain; Location-Based: local, simpler, smaller broadcast domain</li>
+      <li>802.1Q VLAN tag: 4 bytes; VID = 12 bits → 4094 usable VLANs</li>
+      <li><strong>Hidden Terminal: A and C cannot hear each other → both sense channel as free → both transmit to B → collision at B</strong></li>
+      <li><strong>Exposed Terminal: C hears B→A transmission → C unnecessarily waits → channel underutilized</strong></li>
+      <li>CSMA/CD fails in wireless: cannot listen while transmitting; hidden terminals; variable signal strength</li>
+      <li>CSMA/CA: sense → wait DIFS → random backoff → transmit → wait ACK</li>
+      <li><strong>RTS/CTS solves hidden terminal: C hears CTS from B → sets NAV timer → defers transmission during A→B data</strong></li>
+      <li>NAV = Network Allocation Vector = virtual carrier sensing timer set from duration field in RTS/CTS</li>
+      <li>DCF = distributed, contention-based (CSMA/CA); PCF = centralized, AP polls stations, deterministic</li>
+      <li>802.11b = 2.4 GHz/11 Mbps; 802.11a = 5 GHz/54 Mbps; 802.11g = 2.4 GHz/54 Mbps</li>
+    </ul>
+  </div>
+
+  <div class="card card-blue">
+    <h3>ARP vs RARP vs BOOTP vs DHCP</h3>
+    <div class="revision-item"><span class="bullet">→</span><span class="revision-text">ARP: IP → MAC. Broadcast request, unicast reply. Essential for every IP communication on LAN.</span></div>
+    <div class="revision-item"><span class="bullet">→</span><span class="revision-text">RARP: MAC → IP. Broadcast only, one server per subnet, IP only. Obsolete.</span></div>
+    <div class="revision-item"><span class="bullet">→</span><span class="revision-text">BOOTP: Static allocation, cross-router via relay, UDP 67/68, IP+mask+gateway. Legacy.</span></div>
+    <div class="revision-item"><span class="bullet">→</span><span class="revision-text">DHCP: Dynamic leases (DORA), UDP 67/68, relay agents, scope/lease concept, all options. Current standard.</span></div>
+  </div>
+
+  <div class="card card-green">
+    <h3>VLAN Key Facts</h3>
+    <div class="revision-item"><span class="bullet">→</span><span class="revision-text">VLAN = logical broadcast domain segmentation on a switch.</span></div>
+    <div class="revision-item"><span class="bullet">→</span><span class="revision-text">802.1Q tag = 4 bytes: TPID(0x8100) + PCP(3b) + DEI(1b) + VID(12b) → 4094 usable VLANs.</span></div>
+    <div class="revision-item"><span class="bullet">→</span><span class="revision-text">VLAN host: correct port VLAN + correct IP subnet — BOTH required, not just one.</span></div>
+    <div class="revision-item"><span class="bullet">→</span><span class="revision-text">End-to-End VLAN: campus-wide, user mobility; Location-Based: local, simpler, preferred today.</span></div>
+    <div class="revision-item"><span class="bullet">→</span><span class="revision-text">Inter-VLAN routing: L3 switch SVI (fastest); router-on-a-stick (simpler).</span></div>
+  </div>
+
+  <div class="card card-purple">
+    <h3>Wireless LAN Quick Reference</h3>
+    <div class="revision-item"><span class="bullet">→</span><span class="revision-text">Hidden terminal: A, C cannot hear each other → both sense idle → collision at B (receiver).</span></div>
+    <div class="revision-item"><span class="bullet">→</span><span class="revision-text">Exposed terminal: C unnecessarily defers because it hears B→A, even though C→D would not interfere.</span></div>
+    <div class="revision-item"><span class="bullet">→</span><span class="revision-text">RTS/CTS: RTS from sender → CTS from receiver (heard by hidden terminal) → hidden terminal sets NAV → defers.</span></div>
+    <div class="revision-item"><span class="bullet">→</span><span class="revision-text">NAV = virtual carrier sense timer; set from duration field in RTS/CTS; prevents hidden terminal collisions.</span></div>
+    <div class="revision-item"><span class="bullet">→</span><span class="revision-text">DCF: distributed, CSMA/CA, DIFS + random backoff; PCF: centralized, AP polls, PIFS, deterministic.</span></div>
+    <div class="revision-item"><span class="bullet">→</span><span class="revision-text">802.11a=5GHz/54Mbps; 802.11b=2.4GHz/11Mbps; 802.11g=2.4GHz/54Mbps.</span></div>
+  </div>
+
+  <div style="margin-top: 1.5rem; padding: 1rem; background: #E6F1FB; border-radius: var(--border-radius-lg); border: 0.5px solid #B5D4F4;">
+    <p style="font-size: 14px; font-weight: 500; color: #0C447C; margin-bottom: 6px;">Exam Strategy — Week 11</p>
+    <ul style="font-size: 13px; color: #185FA5; padding-left: 1.2rem; line-height: 1.8;">
+      <li>Wireless questions are conceptual: hidden vs exposed terminal is scenario-based — read carefully who can hear who.</li>
+      <li>RTS/CTS: the KEY step is C hearing the CTS (not the RTS) and setting NAV. Many students confuse this.</li>
+      <li>DHCP DORA order is a standard numerical sequence question — memorize D-O-R-A.</li>
+      <li>DHCP ports 67 and 68 (UDP) — often confused with DNS (53) if unprepared.</li>
+      <li>VLAN assignment scenario: if port VLAN is correct but IP is wrong (or vice versa), communication FAILS — both must match.</li>
+      <li>STP loop root cause question: the answer is "no TTL in Ethernet frames" — not "too many VLANs" or similar.</li>
+      <li>DCF vs PCF: DCF = standard contention (CSMA/CA); PCF = optional centralized (AP polls). DCF is always there; PCF is optional.</li>
+      <li>802.11a vs 802.11g: both are 54 Mbps but a=5GHz and g=2.4GHz. 802.11b=11 Mbps at 2.4 GHz.</li>
+      <li>ARP: request/reply direction is VERY frequently asked — Request = broadcast; Reply = unicast.</li>
+      <li>Proxy ARP: router's OWN MAC in reply — not the remote host's MAC. For hosts with wrong subnet mask.</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<script>
+function show(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function answer(qid, chosen, correct, explanation) {
+  const opts = document.querySelectorAll('#' + qid + ' .opt');
+  opts.forEach((o, i) => {
+    o.disabled = true;
+    if (i === correct) o.classList.add('correct');
+    else if (i === chosen && chosen !== correct) o.classList.add('wrong');
+  });
+  const exp = document.getElementById(qid + '-exp');
+  exp.textContent = (chosen === correct ? '✓ Correct! ' : '✗ Incorrect. ') + explanation;
+  exp.classList.add('visible');
+}
+</script>

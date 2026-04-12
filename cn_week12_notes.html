@@ -1,0 +1,1196 @@
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: var(--font-sans);
+  }
+
+  .container {
+    max-width: 900px;
+    padding: 1.5rem 1rem;
+  }
+
+  .hero {
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .hero h1 {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: 4px;
+  }
+
+  .hero p {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+  }
+
+  .tab-bar {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+
+  .tab {
+    padding: 6px 14px;
+    border: 0.5px solid var(--color-border-secondary);
+    border-radius: var(--border-radius-md);
+    font-size: 13px;
+    cursor: pointer;
+    background: var(--color-background-primary);
+    color: var(--color-text-secondary);
+    transition: all 0.15s;
+  }
+
+  .tab:hover {
+    background: var(--color-background-secondary);
+  }
+
+  .tab.active {
+    background: #E6F1FB;
+    color: #0C447C;
+    border-color: #85B7EB;
+    font-weight: 500;
+  }
+
+  .section {
+    display: none;
+  }
+
+  .section.active {
+    display: block;
+  }
+
+  .topic-title {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: 6px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #85B7EB;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: var(--border-radius-md);
+    margin-left: 8px;
+  }
+
+  .badge-exam {
+    background: #FAEEDA;
+    color: #633806;
+  }
+
+  .badge-imp {
+    background: #E1F5EE;
+    color: #085041;
+  }
+
+  .badge-noexam {
+    background: #EEEDFE;
+    color: #3C3489;
+  }
+
+  .card {
+    background: var(--color-background-secondary);
+    border-radius: var(--border-radius-lg);
+    padding: 1rem 1.25rem;
+    margin: 1rem 0;
+  }
+
+  .card-blue {
+    background: #E6F1FB;
+    border-left: 3px solid #185FA5;
+  }
+
+  .card-green {
+    background: #EAF3DE;
+    border-left: 3px solid #3B6D11;
+  }
+
+  .card-amber {
+    background: #FAEEDA;
+    border-left: 3px solid #854F0B;
+  }
+
+  .card-red {
+    background: #FCEBEB;
+    border-left: 3px solid #A32D2D;
+  }
+
+  .card-purple {
+    background: #EEEDFE;
+    border-left: 3px solid #534AB7;
+  }
+
+  .card h3 {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .card-blue h3 {
+    color: #0C447C;
+  }
+
+  .card-green h3 {
+    color: #27500A;
+  }
+
+  .card-amber h3 {
+    color: #633806;
+  }
+
+  .card-red h3 {
+    color: #791F1F;
+  }
+
+  .card-purple h3 {
+    color: #3C3489;
+  }
+
+  .card p,
+  .card li {
+    font-size: 14px;
+    color: var(--color-text-primary);
+    line-height: 1.7;
+  }
+
+  .card ul {
+    padding-left: 1.2rem;
+  }
+
+  .point {
+    display: flex;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+  }
+
+  .point:last-child {
+    border-bottom: none;
+  }
+
+  .point-num {
+    font-size: 13px;
+    font-weight: 500;
+    color: #185FA5;
+    min-width: 22px;
+  }
+
+  .point-text {
+    font-size: 14px;
+    color: var(--color-text-primary);
+    line-height: 1.6;
+  }
+
+  .point-text strong {
+    font-weight: 500;
+    color: var(--color-text-primary);
+  }
+
+  .mcq-block {
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 1rem 1.25rem;
+    margin: 1rem 0;
+    background: var(--color-background-primary);
+  }
+
+  .mcq-q {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: 10px;
+    line-height: 1.6;
+  }
+
+  .mcq-opts {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .opt {
+    font-size: 13px;
+    padding: 6px 10px;
+    border-radius: var(--border-radius-md);
+    border: 0.5px solid var(--color-border-tertiary);
+    cursor: pointer;
+    color: var(--color-text-primary);
+    background: var(--color-background-primary);
+    text-align: left;
+    transition: background 0.1s;
+  }
+
+  .opt:hover {
+    background: var(--color-background-secondary);
+  }
+
+  .opt.correct {
+    background: #EAF3DE;
+    border-color: #639922;
+    color: #27500A;
+  }
+
+  .opt.wrong {
+    background: #FCEBEB;
+    border-color: #A32D2D;
+    color: #791F1F;
+  }
+
+  .explanation {
+    display: none;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    background: var(--color-background-secondary);
+    padding: 8px 12px;
+    border-radius: var(--border-radius-md);
+    margin-top: 6px;
+    line-height: 1.6;
+  }
+
+  .explanation.visible {
+    display: block;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    margin: 1rem 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  th {
+    background: #E6F1FB;
+    color: #0C447C;
+    font-weight: 500;
+    padding: 8px 12px;
+    text-align: left;
+    border: 0.5px solid #B5D4F4;
+  }
+
+  td {
+    padding: 8px 12px;
+    border: 0.5px solid var(--color-border-tertiary);
+    color: var(--color-text-primary);
+    vertical-align: top;
+  }
+
+  tr:nth-child(even) td {
+    background: var(--color-background-secondary);
+  }
+
+  .revision-item {
+    display: flex;
+    gap: 8px;
+    padding: 6px 0;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    align-items: flex-start;
+  }
+
+  .revision-item:last-child {
+    border-bottom: none;
+  }
+
+  .bullet {
+    font-size: 16px;
+    min-width: 20px;
+  }
+
+  .revision-text {
+    font-size: 13px;
+    color: var(--color-text-primary);
+    line-height: 1.6;
+  }
+
+  h2.section-head {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin: 1.5rem 0 0.5rem;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 99px;
+    margin: 2px;
+  }
+
+  .tag-blue {
+    background: #E6F1FB;
+    color: #185FA5;
+  }
+
+  .tag-green {
+    background: #EAF3DE;
+    color: #3B6D11;
+  }
+
+  .tag-red {
+    background: #FCEBEB;
+    color: #A32D2D;
+  }
+
+  .noexam-banner {
+    background: #EEEDFE;
+    border: 1px dashed #534AB7;
+    border-radius: var(--border-radius-lg);
+    padding: 10px 16px;
+    margin: 1rem 0;
+    font-size: 13px;
+    color: #3C3489;
+  }
+</style>
+
+<div class="container">
+  <div class="hero">
+    <h1>Computer Networks &amp; Internet Protocols — Week 12</h1>
+    <p>NPTEL Exam-Ready Notes &nbsp;|&nbsp; IIT Kharagpur &nbsp;|&nbsp; Physical Layer: Encoding, Modulation,
+      Multiplexing &amp; Network Security</p>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab active" onclick="show('phy_intro')">Physical Layer</button>
+    <button class="tab" onclick="show('encoding')">Encoding Schemes</button>
+    <button class="tab" onclick="show('modulation')">Modulation</button>
+    <button class="tab" onclick="show('multiplexing')">Multiplexing</button>
+    <button class="tab" onclick="show('security')">Network Security</button>
+    <button class="tab" onclick="show('revision12')">Super Revision</button>
+  </div>
+
+  <!-- SECTION 1: Physical Layer Intro -->
+  <div id="phy_intro" class="section active">
+    <div class="topic-title">Topic 1: Physical Layer — Foundations <span class="badge badge-exam">Exam Favorite</span>
+    </div>
+
+    <div class="card card-blue">
+      <h3>Role of the Physical Layer (Layer 1)</h3>
+      <p>The physical layer is the lowest layer — it deals with the actual transmission of raw bits over a physical
+        medium (copper wire, fiber optic, wireless). It converts digital data (0s and 1s) to physical signals
+        (electrical voltages, light pulses, radio waves) and back. Everything above depends on the physical layer
+        working correctly.</p>
+    </div>
+
+    <h2 class="section-head">Key Physical Layer Concepts</h2>
+    <div class="card" style="padding: 0.5rem 1.25rem;">
+      <div class="point"><span class="point-num">1</span><span class="point-text"><strong>Bandwidth:</strong> The range
+          of frequencies a medium can carry. Wider bandwidth → more data per second. Measured in Hz for analog; bps for
+          digital.</span></div>
+      <div class="point"><span class="point-num">2</span><span class="point-text"><strong>Bit Rate vs Baud
+            Rate:</strong> Bit rate = number of BITS per second (bps). Baud rate = number of SIGNAL CHANGES per second
+          (symbols/sec). If each symbol carries N bits, Bit rate = Baud rate × N. Example: QAM-16 → 4 bits/symbol → Bit
+          rate = 4 × Baud rate.</span></div>
+      <div class="point"><span class="point-num">3</span><span class="point-text"><strong>Nyquist Theorem:</strong> For
+          a noiseless channel, max data rate = 2 × Bandwidth × log₂(M), where M = number of signal levels. If BW = 3000
+          Hz and M = 8: Max rate = 2 × 3000 × 3 = 18,000 bps.</span></div>
+      <div class="point"><span class="point-num">4</span><span class="point-text"><strong>Shannon's Capacity:</strong>
+          For a noisy channel, C = B × log₂(1 + S/N), where B = bandwidth, S/N = Signal-to-Noise ratio. This is the
+          THEORETICAL MAXIMUM — you cannot exceed it regardless of encoding. Also: SNR (dB) = 10 × log₁₀(S/N).</span>
+      </div>
+      <div class="point"><span class="point-num">5</span><span class="point-text"><strong>Transmission Media:</strong>
+          Guided (wired) — twisted pair (UTP/STP), coaxial cable, fiber optic. Unguided (wireless) — radio waves,
+          microwaves, infrared.</span></div>
+    </div>
+
+    <div class="card card-amber">
+      <h3>Guided Transmission Media Comparison</h3>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <tr>
+          <th>Medium</th>
+          <th>Bandwidth</th>
+          <th>Max Distance</th>
+          <th>Interference</th>
+          <th>Use</th>
+        </tr>
+        <tr>
+          <td>UTP (Cat5e/6)</td>
+          <td>Up to 250 MHz</td>
+          <td>100m per segment</td>
+          <td>Susceptible</td>
+          <td>Ethernet LAN</td>
+        </tr>
+        <tr>
+          <td>Coaxial Cable</td>
+          <td>Up to 1 GHz</td>
+          <td>Several km</td>
+          <td>Moderate</td>
+          <td>Cable TV, legacy LAN</td>
+        </tr>
+        <tr>
+          <td>Single-mode Fiber</td>
+          <td>Hundreds of THz</td>
+          <td>100s of km</td>
+          <td>Immune</td>
+          <td>WAN backbone, long-haul</td>
+        </tr>
+        <tr>
+          <td>Multimode Fiber</td>
+          <td>Several GHz</td>
+          <td>Up to 2 km</td>
+          <td>Immune</td>
+          <td>Data centers, campus</td>
+        </tr>
+      </table>
+    </div>
+
+    <h2 class="section-head">MCQs — Physical Layer</h2>
+
+    <div class="mcq-block">
+      <div class="mcq-q">Q1. Shannon's channel capacity theorem states that the maximum achievable data rate C = B ×
+        log₂(1 + S/N). If the bandwidth B = 4 kHz and SNR = 31, the channel capacity is:</div>
+      <div class="mcq-opts" id="w12q1">
+        <button class="opt"
+          onclick="answer('w12q1',0,2,'C = B × log₂(1 + S/N) = 4000 × log₂(1+31) = 4000 × log₂(32) = 4000 × 5 = 20,000 bps = 20 kbps. Note: log₂(32) = 5 because 2^5 = 32. This is the theoretical maximum — a real system cannot exceed this regardless of modulation scheme.')">A)
+          4 kbps</button>
+        <button class="opt"
+          onclick="answer('w12q1',1,2,'C = B × log₂(1 + S/N) = 4000 × log₂(1+31) = 4000 × log₂(32) = 4000 × 5 = 20,000 bps = 20 kbps. Note: log₂(32) = 5 because 2^5 = 32. This is the theoretical maximum — a real system cannot exceed this regardless of modulation scheme.')">B)
+          8 kbps</button>
+        <button class="opt"
+          onclick="answer('w12q1',2,2,'C = B × log₂(1 + S/N) = 4000 × log₂(1+31) = 4000 × log₂(32) = 4000 × 5 = 20,000 bps = 20 kbps. Note: log₂(32) = 5 because 2^5 = 32. This is the theoretical maximum — a real system cannot exceed this regardless of modulation scheme.')">C)
+          20 kbps</button>
+        <button class="opt"
+          onclick="answer('w12q1',3,2,'C = B × log₂(1 + S/N) = 4000 × log₂(1+31) = 4000 × log₂(32) = 4000 × 5 = 20,000 bps = 20 kbps. Note: log₂(32) = 5 because 2^5 = 32. This is the theoretical maximum — a real system cannot exceed this regardless of modulation scheme.')">D)
+          31 kbps</button>
+      </div>
+      <div class="explanation" id="w12q1-exp"></div>
+    </div>
+
+    <div class="mcq-block">
+      <div class="mcq-q">Q2. If a modulation scheme uses 16 signal levels (M=16), the Nyquist max bit rate for a 3 kHz
+        bandwidth noiseless channel is:</div>
+      <div class="mcq-opts" id="w12q2">
+        <button class="opt"
+          onclick="answer('w12q2',0,3,'Nyquist: Max rate = 2 × B × log₂(M) = 2 × 3000 × log₂(16) = 6000 × 4 = 24,000 bps = 24 kbps. log₂(16) = 4 because 2^4 = 16. This applies to a NOISELESS channel — Shannon\'s formula applies to NOISY channels.')">A)
+          6 kbps</button>
+        <button class="opt"
+          onclick="answer('w12q2',1,3,'Nyquist: Max rate = 2 × B × log₂(M) = 2 × 3000 × log₂(16) = 6000 × 4 = 24,000 bps = 24 kbps. log₂(16) = 4 because 2^4 = 16. This applies to a NOISELESS channel — Shannon\'s formula applies to NOISY channels.')">B)
+          12 kbps</button>
+        <button class="opt"
+          onclick="answer('w12q2',2,3,'Nyquist: Max rate = 2 × B × log₂(M) = 2 × 3000 × log₂(16) = 6000 × 4 = 24,000 bps = 24 kbps. log₂(16) = 4 because 2^4 = 16. This applies to a NOISELESS channel — Shannon\'s formula applies to NOISY channels.')">C)
+          18 kbps</button>
+        <button class="opt"
+          onclick="answer('w12q2',3,3,'Nyquist: Max rate = 2 × B × log₂(M) = 2 × 3000 × log₂(16) = 6000 × 4 = 24,000 bps = 24 kbps. log₂(16) = 4 because 2^4 = 16. This applies to a NOISELESS channel — Shannon\'s formula applies to NOISY channels.')">D)
+          24 kbps</button>
+      </div>
+      <div class="explanation" id="w12q2-exp"></div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: Encoding Schemes -->
+  <div id="encoding" class="section">
+    <div class="topic-title">Topic 2: Digital Encoding Schemes <span class="badge badge-exam">Very High Weightage</span>
+    </div>
+
+    <div class="card card-blue">
+      <h3>Why Different Encoding Schemes?</h3>
+      <p>Different line coding schemes have different properties regarding DC component (baseline wander),
+        synchronization (clock recovery), bandwidth efficiency, and noise immunity. Choosing the right encoding is
+        critical for reliable communication.</p>
+    </div>
+
+    <h2 class="section-head">Non-Return-to-Zero (NRZ) Encoding</h2>
+    <div class="card card-green">
+      <h3>NRZ-L and NRZ-I</h3>
+      <ul>
+        <li><strong>NRZ-L (Level):</strong> 1 → high voltage, 0 → low voltage. Constant level for duration of bit.
+          Simple but has DC component and synchronization problems with long runs of same bit.</li>
+        <li><strong>NRZ-I (Inverted):</strong> 1 → transition at start of bit; 0 → no transition. Better for 1s
+          synchronization. Still has problem with long runs of 0s.</li>
+        <li><strong>Main problems:</strong> No inherent clock signal. Long sequences of same bits cause baseline wander
+          (DC drift). Receiver may lose synchronization.</li>
+      </ul>
+    </div>
+
+    <h2 class="section-head">Return-to-Zero (RZ) Encoding</h2>
+    <div class="card card-amber">
+      <h3>RZ</h3>
+      <ul>
+        <li>Signal returns to ZERO in the MIDDLE of each bit period.</li>
+        <li>1 → positive pulse then zero; 0 → negative pulse then zero.</li>
+        <li>Self-synchronizing (the mid-bit transition enables clock recovery).</li>
+        <li><strong>Problem:</strong> Requires TWICE the bandwidth of NRZ — each bit has two signal changes.</li>
+      </ul>
+    </div>
+
+    <h2 class="section-head">Manchester Encoding (IEEE 802.3 Ethernet)</h2>
+    <div class="card card-purple">
+      <h3>Manchester &amp; Differential Manchester</h3>
+      <ul>
+        <li><strong>Manchester (Biphase-L):</strong> Mid-bit transition ALWAYS occurs. 1 → low-to-high transition; 0 →
+          high-to-low transition. Self-synchronizing. Used in original 10 Mbps Ethernet (10BASE-T).</li>
+        <li><strong>Differential Manchester (Biphase-M):</strong> Transition at MIDDLE of every bit (for clocking). 1 →
+          NO transition at START of bit; 0 → transition at START of bit. Used in Token Ring (802.5).</li>
+        <li><strong>Advantages:</strong> No DC component; self-synchronizing; good noise immunity.</li>
+        <li><strong>Disadvantage:</strong> Requires 2× bandwidth of NRZ (same as RZ) — each bit needs at least one
+          transition.</li>
+      </ul>
+    </div>
+
+    <h2 class="section-head">4B/5B Encoding</h2>
+    <div class="card card-blue">
+      <h3>4B/5B (used with NRZI)</h3>
+      <ul>
+        <li>Every 4 data bits are encoded as 5 output bits — a 5-bit code chosen to ensure enough transitions for clock
+          recovery.</li>
+        <li>The 5-bit codes are selected so that no code has more than 3 consecutive 0s, preventing long runs of 0s.
+        </li>
+        <li>20% overhead (5 bits for 4 data bits). More bandwidth-efficient than Manchester (which has 100% overhead).
+        </li>
+        <li>Used in Fast Ethernet (100BASE-TX with MLT-3 line coding), FDDI.</li>
+        <li>The 32 valid 5-bit patterns = 16 data codes + 16 control/special codes (idle, start, end-of-frame).</li>
+      </ul>
+    </div>
+
+    <div class="card card-amber">
+      <h3>8B/10B and Other Modern Schemes</h3>
+      <ul>
+        <li><strong>8B/10B:</strong> 8 data bits → 10 channel bits. Used in Gigabit Ethernet (1000BASE-X), Fibre
+          Channel, USB 3.0. Guarantees DC balance (equal 0s and 1s) and transition density.</li>
+        <li><strong>64B/66B:</strong> 64 data bits → 66 bits. Very low overhead (3%). Used in 10 Gbps and higher
+          Ethernet.</li>
+        <li><strong>PAM-4 (Pulse Amplitude Modulation-4):</strong> 4 voltage levels per symbol → 2 bits per symbol. Used
+          in 25G, 50G, 100G Ethernet to double throughput without doubling baud rate.</li>
+      </ul>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <tr>
+          <th>Scheme</th>
+          <th>DC Component</th>
+          <th>Self-Sync</th>
+          <th>BW Efficiency</th>
+          <th>Use</th>
+        </tr>
+        <tr>
+          <td>NRZ-L</td>
+          <td>Yes</td>
+          <td>No</td>
+          <td>High (1 bit/signal)</td>
+          <td>RS-232, storage</td>
+        </tr>
+        <tr>
+          <td>NRZ-I</td>
+          <td>Yes (for 0s)</td>
+          <td>Partial</td>
+          <td>High</td>
+          <td>USB 1.0/2.0</td>
+        </tr>
+        <tr>
+          <td>Manchester</td>
+          <td>No</td>
+          <td>Yes</td>
+          <td>Low (2 signals/bit)</td>
+          <td>10 Mbps Ethernet</td>
+        </tr>
+        <tr>
+          <td>Diff. Manchester</td>
+          <td>No</td>
+          <td>Yes</td>
+          <td>Low</td>
+          <td>Token Ring (802.5)</td>
+        </tr>
+        <tr>
+          <td>4B/5B + NRZI</td>
+          <td>No</td>
+          <td>Yes</td>
+          <td>Medium (5/4 = 1.25)</td>
+          <td>100BASE-TX, FDDI</td>
+        </tr>
+        <tr>
+          <td>8B/10B</td>
+          <td>No</td>
+          <td>Yes</td>
+          <td>Good (10/8 = 1.25)</td>
+          <td>GbE, Fibre Channel</td>
+        </tr>
+      </table>
+    </div>
+
+    <h2 class="section-head">MCQs — Encoding</h2>
+
+    <div class="mcq-block">
+      <div class="mcq-q">Q1. In Manchester encoding, the bit value is determined by:</div>
+      <div class="mcq-opts" id="w12q3">
+        <button class="opt"
+          onclick="answer('w12q3',0,3,'Manchester: bit 1 = LOW to HIGH transition at mid-bit; bit 0 = HIGH to LOW transition at mid-bit. The MID-BIT TRANSITION determines the bit value AND provides the clock signal (self-synchronization). There is ALWAYS a mid-bit transition regardless of bit value.')">A)
+          The voltage level at the start of the bit period</button>
+        <button class="opt"
+          onclick="answer('w12q3',1,3,'Manchester: bit 1 = LOW to HIGH transition at mid-bit; bit 0 = HIGH to LOW transition at mid-bit. The MID-BIT TRANSITION determines the bit value AND provides the clock signal (self-synchronization). There is ALWAYS a mid-bit transition regardless of bit value.')">B)
+          The absence or presence of a transition at the start of the bit period</button>
+        <button class="opt"
+          onclick="answer('w12q3',2,3,'Manchester: bit 1 = LOW to HIGH transition at mid-bit; bit 0 = HIGH to LOW transition at mid-bit. The MID-BIT TRANSITION determines the bit value AND provides the clock signal (self-synchronization). There is ALWAYS a mid-bit transition regardless of bit value.')">C)
+          The average signal level over the entire bit period</button>
+        <button class="opt"
+          onclick="answer('w12q3',3,3,'Manchester: bit 1 = LOW to HIGH transition at mid-bit; bit 0 = HIGH to LOW transition at mid-bit. The MID-BIT TRANSITION determines the bit value AND provides the clock signal (self-synchronization). There is ALWAYS a mid-bit transition regardless of bit value.')">D)
+          The direction of the transition at the middle of the bit period (low-to-high = 1; high-to-low = 0)</button>
+      </div>
+      <div class="explanation" id="w12q3-exp"></div>
+    </div>
+
+    <div class="mcq-block">
+      <div class="mcq-q">Q2. 4B/5B encoding is more bandwidth-efficient than Manchester encoding because:</div>
+      <div class="mcq-opts" id="w12q4">
+        <button class="opt"
+          onclick="answer('w12q4',0,2,'Manchester requires 2 signal elements per data bit (100% overhead). 4B/5B uses 5 bits to encode 4 data bits (25% overhead). This makes 4B/5B much more bandwidth-efficient while still providing enough transitions for clock recovery (same self-sync benefit as Manchester).')">A)
+          It uses fewer bits to represent each data symbol</button>
+        <button class="opt"
+          onclick="answer('w12q4',1,2,'Manchester requires 2 signal elements per data bit (100% overhead). 4B/5B uses 5 bits to encode 4 data bits (25% overhead). This makes 4B/5B much more bandwidth-efficient while still providing enough transitions for clock recovery (same self-sync benefit as Manchester).')">B)
+          It encodes 4 data bits into 5 bits (25% overhead vs Manchester\'s 100% overhead)</button>
+        <button class="opt"
+          onclick="answer('w12q4',2,2,'Manchester requires 2 signal elements per data bit (100% overhead). 4B/5B uses 5 bits to encode 4 data bits (25% overhead). This makes 4B/5B much more bandwidth-efficient while still providing enough transitions for clock recovery (same self-sync benefit as Manchester).')">C)
+          It does not require clock synchronization</button>
+        <button class="opt"
+          onclick="answer('w12q4',3,2,'Manchester requires 2 signal elements per data bit (100% overhead). 4B/5B uses 5 bits to encode 4 data bits (25% overhead). This makes 4B/5B much more bandwidth-efficient while still providing enough transitions for clock recovery (same self-sync benefit as Manchester).')">D)
+          It eliminates all DC components without any overhead</button>
+      </div>
+      <div class="explanation" id="w12q4-exp"></div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: Modulation -->
+  <div id="modulation" class="section">
+    <div class="topic-title">Topic 3: Analog Modulation Techniques <span class="badge badge-exam">Exam Favorite</span>
+    </div>
+
+    <div class="card card-blue">
+      <h3>Why Modulation?</h3>
+      <p>Digital data must often be converted to analog form for transmission over analog channels (e.g., telephone
+        lines, wireless). Modulation is the process of varying a carrier wave's properties to carry information. A
+        carrier is a continuous sine wave: A sin(2πft + φ).</p>
+    </div>
+
+    <h2 class="section-head">Three Basic Analog Modulation Types</h2>
+
+    <div class="card card-green">
+      <h3>1. Amplitude Modulation (AM) — ASK</h3>
+      <ul>
+        <li><strong>ASK (Amplitude Shift Keying):</strong> Digital version of AM. Different bit values → different
+          amplitudes of carrier.</li>
+        <li>Binary ASK (OOK - On-Off Keying): 1 = carrier present; 0 = no carrier.</li>
+        <li><strong>Pros:</strong> Simple to implement.</li>
+        <li><strong>Cons:</strong> Very susceptible to noise and interference (amplitude is easy to corrupt). Poor noise
+          immunity.</li>
+        <li>Used in: Fiber optic communication (optical on/off keying), some RFID.</li>
+      </ul>
+    </div>
+
+    <div class="card card-amber">
+      <h3>2. Frequency Modulation (FM) — FSK</h3>
+      <ul>
+        <li><strong>FSK (Frequency Shift Keying):</strong> Different bit values → different frequencies of carrier. 1 →
+          higher frequency f₁; 0 → lower frequency f₀.</li>
+        <li><strong>BFSK (Binary FSK):</strong> Two frequencies used. Common in modems (Bell 103).</li>
+        <li><strong>Pros:</strong> Better noise immunity than ASK. Constant amplitude → less affected by amplitude
+          noise.</li>
+        <li><strong>Cons:</strong> Uses more bandwidth than ASK (needs two separate frequency bands).</li>
+        <li>Used in: Telephone modems (early), FM radio, some wireless sensors.</li>
+      </ul>
+    </div>
+
+    <div class="card card-purple">
+      <h3>3. Phase Modulation (PM) — PSK</h3>
+      <ul>
+        <li><strong>PSK (Phase Shift Keying):</strong> Different bit values → different phases of carrier. 1 → 0° phase;
+          0 → 180° phase (BPSK).</li>
+        <li><strong>BPSK:</strong> Binary PSK — 1 bit/symbol (2 phases: 0° and 180°).</li>
+        <li><strong>QPSK (Quadrature PSK):</strong> 4 phases (0°, 90°, 180°, 270°) → 2 bits/symbol. Doubles efficiency
+          of BPSK in same bandwidth.</li>
+        <li><strong>8-PSK:</strong> 8 phases → 3 bits/symbol.</li>
+        <li><strong>Pros:</strong> Better noise immunity than ASK; better bandwidth efficiency than FSK.</li>
+      </ul>
+    </div>
+
+    <div class="card card-blue">
+      <h3>QAM — Quadrature Amplitude Modulation</h3>
+      <ul>
+        <li>Combines both amplitude AND phase variation. Most efficient modulation scheme.</li>
+        <li><strong>QAM-16:</strong> 16 combinations (4 amplitudes × 4 phases) → 4 bits/symbol.</li>
+        <li><strong>QAM-64:</strong> 64 combinations → 6 bits/symbol. Used in cable modems (DOCSIS), Wi-Fi.</li>
+        <li><strong>QAM-256:</strong> 8 bits/symbol. Used in LTE, 802.11ac.</li>
+        <li><strong>QAM-1024:</strong> 10 bits/symbol. Used in DOCSIS 3.1, 802.11ax (Wi-Fi 6).</li>
+        <li>Higher QAM → more bps BUT requires better signal quality (higher SNR) → shorter range in wireless.</li>
+      </ul>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <tr>
+          <th>Modulation</th>
+          <th>What Changes</th>
+          <th>Bits/Symbol</th>
+          <th>Noise Immunity</th>
+          <th>Main Use</th>
+        </tr>
+        <tr>
+          <td>ASK (OOK)</td>
+          <td>Amplitude</td>
+          <td>1 (binary)</td>
+          <td>Poor</td>
+          <td>Fiber optic, RFID</td>
+        </tr>
+        <tr>
+          <td>FSK</td>
+          <td>Frequency</td>
+          <td>1 (binary)</td>
+          <td>Good</td>
+          <td>Old modems, RF sensors</td>
+        </tr>
+        <tr>
+          <td>BPSK</td>
+          <td>Phase (2 states)</td>
+          <td>1</td>
+          <td>Best</td>
+          <td>Satellite, deep space</td>
+        </tr>
+        <tr>
+          <td>QPSK</td>
+          <td>Phase (4 states)</td>
+          <td>2</td>
+          <td>Very good</td>
+          <td>3G, OFDM subcarriers</td>
+        </tr>
+        <tr>
+          <td>QAM-16</td>
+          <td>Amplitude + Phase</td>
+          <td>4</td>
+          <td>Good</td>
+          <td>Wi-Fi, LTE</td>
+        </tr>
+        <tr>
+          <td>QAM-64</td>
+          <td>Amplitude + Phase</td>
+          <td>6</td>
+          <td>Moderate</td>
+          <td>Cable modems, Wi-Fi</td>
+        </tr>
+      </table>
+    </div>
+
+    <h2 class="section-head">MCQs — Modulation</h2>
+
+    <div class="mcq-block">
+      <div class="mcq-q">Q1. QPSK modulation transmits 2 bits per symbol. Compared to BPSK, QPSK doubles the data rate
+        for the same bandwidth because:</div>
+      <div class="mcq-opts" id="w12q5">
+        <button class="opt"
+          onclick="answer('w12q5',0,2,'QPSK uses 4 phase states (0°, 90°, 180°, 270°). Each state can represent 2 bits (00, 01, 10, 11). BPSK uses only 2 phase states (0°, 180°) → 1 bit per symbol. So for the same baud rate (symbol rate) and bandwidth, QPSK carries TWICE as many bits → double the data rate.')">A)
+          QPSK uses higher carrier frequency</button>
+        <button class="opt"
+          onclick="answer('w12q5',1,2,'QPSK uses 4 phase states (0°, 90°, 180°, 270°). Each state can represent 2 bits (00, 01, 10, 11). BPSK uses only 2 phase states (0°, 180°) → 1 bit per symbol. So for the same baud rate (symbol rate) and bandwidth, QPSK carries TWICE as many bits → double the data rate.')">B)
+          QPSK uses 4 phase states so each symbol carries 2 bits instead of 1</button>
+        <button class="opt"
+          onclick="answer('w12q5',2,2,'QPSK uses 4 phase states (0°, 90°, 180°, 270°). Each state can represent 2 bits (00, 01, 10, 11). BPSK uses only 2 phase states (0°, 180°) → 1 bit per symbol. So for the same baud rate (symbol rate) and bandwidth, QPSK carries TWICE as many bits → double the data rate.')">C)
+          QPSK changes amplitude while BPSK only changes phase</button>
+        <button class="opt"
+          onclick="answer('w12q5',3,2,'QPSK uses 4 phase states (0°, 90°, 180°, 270°). Each state can represent 2 bits (00, 01, 10, 11). BPSK uses only 2 phase states (0°, 180°) → 1 bit per symbol. So for the same baud rate (symbol rate) and bandwidth, QPSK carries TWICE as many bits → double the data rate.')">D)
+          QPSK requires less SNR than BPSK</button>
+      </div>
+      <div class="explanation" id="w12q5-exp"></div>
+    </div>
+
+    <div class="mcq-block">
+      <div class="mcq-q">Q2. QAM-64 transmits how many bits per symbol?</div>
+      <div class="mcq-opts" id="w12q6">
+        <button class="opt"
+          onclick="answer('w12q6',0,2,'QAM-64 uses 64 distinct symbol states (combinations of amplitude and phase). log₂(64) = 6. So each symbol carries 6 bits. General formula: n-QAM carries log₂(n) bits per symbol. QAM-16 → 4 bits; QAM-64 → 6 bits; QAM-256 → 8 bits.')">A)
+          4 bits</button>
+        <button class="opt"
+          onclick="answer('w12q6',1,2,'QAM-64 uses 64 distinct symbol states (combinations of amplitude and phase). log₂(64) = 6. So each symbol carries 6 bits. General formula: n-QAM carries log₂(n) bits per symbol. QAM-16 → 4 bits; QAM-64 → 6 bits; QAM-256 → 8 bits.')">B)
+          8 bits</button>
+        <button class="opt"
+          onclick="answer('w12q6',2,2,'QAM-64 uses 64 distinct symbol states (combinations of amplitude and phase). log₂(64) = 6. So each symbol carries 6 bits. General formula: n-QAM carries log₂(n) bits per symbol. QAM-16 → 4 bits; QAM-64 → 6 bits; QAM-256 → 8 bits.')">C)
+          6 bits</button>
+        <button class="opt"
+          onclick="answer('w12q6',3,2,'QAM-64 uses 64 distinct symbol states (combinations of amplitude and phase). log₂(64) = 6. So each symbol carries 6 bits. General formula: n-QAM carries log₂(n) bits per symbol. QAM-16 → 4 bits; QAM-64 → 6 bits; QAM-256 → 8 bits.')">D)
+          10 bits</button>
+      </div>
+      <div class="explanation" id="w12q6-exp"></div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: Multiplexing -->
+  <div id="multiplexing" class="section">
+    <div class="topic-title">Topic 4: Multiplexing — Sharing Transmission Media <span class="badge badge-exam">Exam
+        Favorite</span></div>
+
+    <div class="card card-blue">
+      <h3>What is Multiplexing?</h3>
+      <p>Multiplexing allows multiple signals (from different users/sources) to share a single transmission medium
+        simultaneously. The device that combines signals is called a MULTIPLEXER (MUX). At the receiver, a DEMULTIPLEXER
+        (DEMUX) separates them back. Key principle: efficient utilization of expensive high-bandwidth links.</p>
+    </div>
+
+    <h2 class="section-head">Type 1: FDM — Frequency Division Multiplexing</h2>
+    <div class="card card-green">
+      <h3>FDM</h3>
+      <ul>
+        <li>Divide the total bandwidth into non-overlapping FREQUENCY BANDS.</li>
+        <li>Each user/signal is allocated a different frequency sub-band (channel).</li>
+        <li>Guard bands between channels prevent interference.</li>
+        <li>All users transmit simultaneously but on different frequencies.</li>
+        <li><strong>Used in:</strong> Traditional AM/FM radio, cable TV (CATV), ADSL (telephone modem), OFDM in Wi-Fi
+          and LTE.</li>
+        <li>Analog signals — no need for synchronization between users.</li>
+        <li><strong>Problem:</strong> Wasted bandwidth if a user is inactive (their frequency band goes unused).</li>
+      </ul>
+    </div>
+
+    <h2 class="section-head">Type 2: TDM — Time Division Multiplexing</h2>
+    <div class="card card-purple">
+      <h3>TDM — Synchronous (STDM) and Statistical</h3>
+      <ul>
+        <li>Divide time into SLOTS. Each user gets a fixed, recurring time slot.</li>
+        <li><strong>Synchronous TDM (STDM):</strong> Each user is allocated a time slot in a repeating FRAME — whether
+          they have data or not. Wasteful if users are idle → empty slots.</li>
+        <li><strong>Statistical TDM (STDM / Stat-Mux):</strong> Time slots dynamically allocated to users based on
+          DEMAND. Active users get slots; idle users get nothing. Much more efficient but requires headers to identify
+          which slot belongs to which user.</li>
+        <li><strong>T-carrier system (T1):</strong> 24 DS0 channels × 64kbps = 1.544 Mbps. Each DS0 = 8 bits × 8000
+          frames/sec.</li>
+        <li><strong>E-carrier system (E1):</strong> European standard — 32 channels (30 data + 2 signaling) × 64kbps =
+          2.048 Mbps.</li>
+      </ul>
+    </div>
+
+    <h2 class="section-head">Type 3: WDM — Wavelength Division Multiplexing</h2>
+    <div class="card card-amber">
+      <h3>WDM — Optical Multiplexing</h3>
+      <ul>
+        <li>FDM applied to OPTICAL FIBER. Different wavelengths (colors) of light carry different signals simultaneously
+          on the same fiber.</li>
+        <li><strong>DWDM (Dense WDM):</strong> 40, 80, or 160 channels on a single fiber, each at 10–100 Gbps. Total
+          fiber capacity can reach multiple Tbps.</li>
+        <li>Wavelength range: approximately 1530–1565 nm (C-band) for DWDM.</li>
+        <li>Used in backbone fiber optic networks worldwide. The foundation of the modern internet infrastructure.</li>
+      </ul>
+    </div>
+
+    <h2 class="section-head">Type 4: CDM — Code Division Multiplexing</h2>
+    <div class="card card-blue">
+      <h3>CDMA — Code Division Multiple Access</h3>
+      <ul>
+        <li>Each user is assigned a UNIQUE orthogonal code (spreading code). All users transmit simultaneously on the
+          SAME frequency band at the SAME time.</li>
+        <li>Receiver uses each user's code to extract their signal from the composite (cross-correlation extracts one
+          user's data).</li>
+        <li>Requires precise power control — if one user's signal is too strong, it overwhelms others (near-far
+          problem).</li>
+        <li>Used in: 3G cellular networks (WCDMA, CDMA2000), GPS.</li>
+      </ul>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <tr>
+          <th>Technique</th>
+          <th>Dimension Divided</th>
+          <th>Simultaneous Tx?</th>
+          <th>Main Use</th>
+        </tr>
+        <tr>
+          <td>FDM</td>
+          <td>Frequency (spectrum)</td>
+          <td>Yes (different frequencies)</td>
+          <td>Radio, cable TV, ADSL</td>
+        </tr>
+        <tr>
+          <td>TDM</td>
+          <td>Time (slots)</td>
+          <td>No (take turns in time)</td>
+          <td>T1/E1, telephony, SONET</td>
+        </tr>
+        <tr>
+          <td>WDM</td>
+          <td>Wavelength (optical)</td>
+          <td>Yes (different wavelengths)</td>
+          <td>Fiber optic backbones</td>
+        </tr>
+        <tr>
+          <td>CDM/CDMA</td>
+          <td>Code (mathematical)</td>
+          <td>Yes (different codes)</td>
+          <td>3G cellular, GPS</td>
+        </tr>
+      </table>
+    </div>
+
+    <h2 class="section-head">MCQs — Multiplexing</h2>
+
+    <div class="mcq-block">
+      <div class="mcq-q">Q1. In Synchronous TDM, when a user has no data to transmit, its time slot is:</div>
+      <div class="mcq-opts" id="w12q7">
+        <button class="opt"
+          onclick="answer('w12q7',0,2,'In Synchronous TDM, each user is ALWAYS assigned a fixed time slot regardless of whether they have data or not. If a user is idle, its slot is WASTED (transmitted empty). This is the main disadvantage of STDM — Statistical TDM solves this by only giving slots to active users.')">A)
+          Given to another active user</button>
+        <button class="opt"
+          onclick="answer('w12q7',1,2,'In Synchronous TDM, each user is ALWAYS assigned a fixed time slot regardless of whether they have data or not. If a user is idle, its slot is WASTED (transmitted empty). This is the main disadvantage of STDM — Statistical TDM solves this by only giving slots to active users.')">B)
+          Used to carry error-correction data</button>
+        <button class="opt"
+          onclick="answer('w12q7',2,2,'In Synchronous TDM, each user is ALWAYS assigned a fixed time slot regardless of whether they have data or not. If a user is idle, its slot is WASTED (transmitted empty). This is the main disadvantage of STDM — Statistical TDM solves this by only giving slots to active users.')">C)
+          Wasted (transmitted empty)</button>
+        <button class="opt"
+          onclick="answer('w12q7',3,2,'In Synchronous TDM, each user is ALWAYS assigned a fixed time slot regardless of whether they have data or not. If a user is idle, its slot is WASTED (transmitted empty). This is the main disadvantage of STDM — Statistical TDM solves this by only giving slots to active users.')">D)
+          Merged with the adjacent user's slot</button>
+      </div>
+      <div class="explanation" id="w12q7-exp"></div>
+    </div>
+
+    <div class="mcq-block">
+      <div class="mcq-q">Q2. DWDM (Dense Wavelength Division Multiplexing) is primarily used to increase capacity of:
+      </div>
+      <div class="mcq-opts" id="w12q8">
+        <button class="opt"
+          onclick="answer('w12q8',0,2,'DWDM multiplexes many different wavelengths (colors) of light on a single optical fiber. Each wavelength carries its own 10/40/100 Gbps channel. This allows existing fiber infrastructure to carry terabits per second of data, making it the foundation of internet backbone networks.')">A)
+          Copper Ethernet cables</button>
+        <button class="opt"
+          onclick="answer('w12q8',1,2,'DWDM multiplexes many different wavelengths (colors) of light on a single optical fiber. Each wavelength carries its own 10/40/100 Gbps channel. This allows existing fiber infrastructure to carry terabits per second of data, making it the foundation of internet backbone networks.')">B)
+          Wireless radio links</button>
+        <button class="opt"
+          onclick="answer('w12q8',2,2,'DWDM multiplexes many different wavelengths (colors) of light on a single optical fiber. Each wavelength carries its own 10/40/100 Gbps channel. This allows existing fiber infrastructure to carry terabits per second of data, making it the foundation of internet backbone networks.')">C)
+          Optical fiber links (carries multiple wavelengths simultaneously)</button>
+        <button class="opt"
+          onclick="answer('w12q8',3,2,'DWDM multiplexes many different wavelengths (colors) of light on a single optical fiber. Each wavelength carries its own 10/40/100 Gbps channel. This allows existing fiber infrastructure to carry terabits per second of data, making it the foundation of internet backbone networks.')">D)
+          Satellite uplinks</button>
+      </div>
+      <div class="explanation" id="w12q8-exp"></div>
+    </div>
+
+    <div class="mcq-block">
+      <div class="mcq-q">Q3. A T1 line carries how many DS0 channels and what is its total data rate?</div>
+      <div class="mcq-opts" id="w12q9">
+        <button class="opt"
+          onclick="answer('w12q9',0,2,'A T1 line multiplexes 24 DS0 channels using TDM. Each DS0 = 64 kbps (8 bits × 8000 frames/sec). Total = 24 × 64kbps = 1.536 Mbps + 1 framing bit/frame = 1.544 Mbps. E1 (European standard) = 32 channels (30 data + 2 signaling) = 2.048 Mbps.')">A)
+          12 channels at 768 kbps</button>
+        <button class="opt"
+          onclick="answer('w12q9',1,2,'A T1 line multiplexes 24 DS0 channels using TDM. Each DS0 = 64 kbps (8 bits × 8000 frames/sec). Total = 24 × 64kbps = 1.536 Mbps + 1 framing bit/frame = 1.544 Mbps. E1 (European standard) = 32 channels (30 data + 2 signaling) = 2.048 Mbps.')">B)
+          24 channels at 1.544 Mbps</button>
+        <button class="opt"
+          onclick="answer('w12q9',2,2,'A T1 line multiplexes 24 DS0 channels using TDM. Each DS0 = 64 kbps (8 bits × 8000 frames/sec). Total = 24 × 64kbps = 1.536 Mbps + 1 framing bit/frame = 1.544 Mbps. E1 (European standard) = 32 channels (30 data + 2 signaling) = 2.048 Mbps.')">C)
+          30 channels at 2.048 Mbps</button>
+        <button class="opt"
+          onclick="answer('w12q9',3,2,'A T1 line multiplexes 24 DS0 channels using TDM. Each DS0 = 64 kbps (8 bits × 8000 frames/sec). Total = 24 × 64kbps = 1.536 Mbps + 1 framing bit/frame = 1.544 Mbps. E1 (European standard) = 32 channels (30 data + 2 signaling) = 2.048 Mbps.')">D)
+          48 channels at 3.088 Mbps</button>
+      </div>
+      <div class="explanation" id="w12q9-exp"></div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: Network Security -->
+  <div id="security" class="section">
+    <div class="topic-title">Topic 5: Network Security <span class="badge badge-noexam">NOT in Exam — Conceptual
+        Only</span></div>
+
+    <div class="noexam-banner">
+      ⚠️ <strong>Note:</strong> The instructor explicitly stated that Network Security topics are for conceptual
+      understanding and background knowledge ONLY. This material is NOT expected in the NPTEL examination. Read for
+      general awareness.
+    </div>
+
+    <div class="card card-blue">
+      <h3>CIA Triad — The Three Goals of Security</h3>
+      <ul>
+        <li><strong>Confidentiality:</strong> Only authorized parties can READ the information. Achieved via encryption
+          (symmetric: AES, DES; asymmetric: RSA, ECC).</li>
+        <li><strong>Integrity:</strong> Data has not been modified (tampered) in transit. Achieved via hash functions
+          (MD5, SHA-256), digital signatures, MAC (Message Authentication Code).</li>
+        <li><strong>Availability:</strong> Authorized users can ACCESS services when needed. Threatened by DoS/DDoS
+          attacks, hardware failures.</li>
+      </ul>
+    </div>
+
+    <h2 class="section-head">Types of Attacks</h2>
+
+    <div class="card card-amber">
+      <h3>Passive Attacks — Eavesdropping</h3>
+      <ul>
+        <li>Attacker only observes traffic — does NOT modify it. Much harder to detect.</li>
+        <li><strong>Wire Tapping:</strong> Physically connect to a cable and read traffic.</li>
+        <li><strong>Traffic Analysis:</strong> Even if encrypted, patterns (who talks to whom, how often, packet sizes)
+          reveal information. Examples: Wireshark, packet sniffers.</li>
+        <li>Defense: Encryption (hides content), traffic padding (hides patterns).</li>
+      </ul>
+    </div>
+
+    <div class="card card-red">
+      <h3>Active Attacks — Modification</h3>
+      <ul>
+        <li>Attacker actively modifies or injects traffic. Easier to detect than passive.</li>
+        <li><strong>Masquerade (Spoofing):</strong> Attacker pretends to be someone else (IP spoofing, MAC spoofing).
+        </li>
+        <li><strong>Replay Attack:</strong> Capture a valid message and retransmit it later to fool the receiver.</li>
+        <li><strong>Modification:</strong> Intercept and alter messages in transit (man-in-the-middle).</li>
+        <li><strong>Denial of Service (DoS/DDoS):</strong> Flood targets with traffic to exhaust resources and deny
+          service to legitimate users.</li>
+      </ul>
+    </div>
+
+    <h2 class="section-head">Protective Mechanisms</h2>
+
+    <div class="card card-green">
+      <h3>Firewalls</h3>
+      <ul>
+        <li>A firewall is a security device (hardware or software) that controls traffic flow between networks based on
+          rules.</li>
+        <li><strong>Packet Filter Firewall:</strong> Inspects each packet individually based on source IP, destination
+          IP, port, and protocol. Stateless — does not track connection state. Fast but limited.</li>
+        <li><strong>Stateful Inspection Firewall:</strong> Tracks the STATE of connections. Only allows packets that are
+          part of established connections. More secure than pure packet filtering.</li>
+        <li><strong>Application-Layer Firewall (Proxy):</strong> Inspects content at the application layer. Can
+          understand HTTP, FTP, DNS — most powerful but slowest.</li>
+        <li><strong>DMZ (Demilitarized Zone):</strong> Network segment between external firewall (facing internet) and
+          internal firewall (protecting private network). Public servers (web, email, DNS) placed in DMZ.</li>
+      </ul>
+    </div>
+
+    <div class="card card-purple">
+      <h3>IPSec — Security at Network Layer</h3>
+      <ul>
+        <li>IPSec is a suite of protocols that provides security at the IP layer (Layer 3).</li>
+        <li><strong>AH (Authentication Header):</strong> Provides authentication and integrity (but NOT confidentiality
+          — no encryption of data).</li>
+        <li><strong>ESP (Encapsulating Security Payload):</strong> Provides encryption (confidentiality),
+          authentication, and integrity.</li>
+        <li><strong>Two modes:</strong>
+          <ul>
+            <li>Transport mode: Only payload is encrypted/authenticated. Used for host-to-host communication.</li>
+            <li>Tunnel mode: Entire IP packet is encrypted/authenticated (new IP header added). Used for VPNs.</li>
+          </ul>
+        </li>
+        <li>IKE (Internet Key Exchange) is used for key management and SA (Security Association) negotiation.</li>
+      </ul>
+    </div>
+
+    <div class="card card-blue">
+      <h3>TLS/SSL — Security at Transport Layer</h3>
+      <ul>
+        <li>TLS (Transport Layer Security) provides encryption and authentication above TCP (effectively between
+          Transport and Application layers).</li>
+        <li><strong>HTTPS = HTTP + TLS.</strong> Port 443.</li>
+        <li><strong>TLS Handshake:</strong> Client Hello → Server Hello + Certificate → Key Exchange → Finished. After
+          handshake, all data is encrypted using symmetric keys derived during handshake.</li>
+        <li>Digital Certificates (X.509): Issued by Certificate Authorities (CAs). Bind a public key to an identity.
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SECTION 6: Super Revision -->
+  <div id="revision12" class="section">
+    <div class="topic-title">Super Revision — Week 12 Last-Day Notes</div>
+
+    <div class="card card-red">
+      <h3>MOST FREQUENTLY ASKED — Physical Layer (Exam Content)</h3>
+      <ul>
+        <li>Shannon's capacity: C = B × log₂(1 + S/N) — theoretical maximum for noisy channel</li>
+        <li>Nyquist rate: Max = 2B × log₂(M) — theoretical maximum for noiseless channel</li>
+        <li>Bit rate = Baud rate × log₂(M) where M = number of signal levels</li>
+        <li>NRZ-L: 1=high, 0=low; has DC component; no sync — simple but problematic</li>
+        <li>Manchester: mid-bit transition determines bit value; self-synchronizing; 2× BW of NRZ; used in 10 Mbps
+          Ethernet</li>
+        <li>Differential Manchester: mid-bit transition always (for clock); start transition = 0, no start transition =
+          1; Token Ring</li>
+        <li>4B/5B: 4 data bits → 5 channel bits; 25% overhead; used in 100BASE-TX, FDDI</li>
+        <li>QAM-n: log₂(n) bits per symbol. QAM-16=4bits, QAM-64=6bits, QAM-256=8bits</li>
+        <li>FDM: different frequencies, all transmit simultaneously; TDM: different time slots</li>
+        <li>WDM/DWDM: multiple wavelengths on fiber; T1 = 24 DS0 = 1.544 Mbps; E1 = 32 ch = 2.048 Mbps</li>
+      </ul>
+    </div>
+
+    <div class="card card-blue">
+      <h3>Encoding Scheme Summary</h3>
+      <div class="revision-item"><span class="bullet">→</span><span class="revision-text">NRZ-L: Simple, DC component,
+          no sync. Use: RS-232, serial ports.</span></div>
+      <div class="revision-item"><span class="bullet">→</span><span class="revision-text">Manchester: mid-bit
+          transition, no DC, 2× BW, self-sync. Use: 10BASE-T Ethernet.</span></div>
+      <div class="revision-item"><span class="bullet">→</span><span class="revision-text">Diff. Manchester: mid-bit =
+          clock, start transition = 0/no-transition = 1. Use: Token Ring.</span></div>
+      <div class="revision-item"><span class="bullet">→</span><span class="revision-text">4B/5B: 25% overhead, used with
+          NRZI. Use: 100BASE-TX, FDDI.</span></div>
+      <div class="revision-item"><span class="bullet">→</span><span class="revision-text">8B/10B: balanced, DC-free, 25%
+          overhead. Use: GbE, USB 3.0, Fibre Channel.</span></div>
+    </div>
+
+    <div class="card card-green">
+      <h3>Modulation Quick Facts</h3>
+      <div class="revision-item"><span class="bullet">→</span><span class="revision-text">ASK: amplitude changes; poor
+          noise immunity; OOK = fiber optic on/off.</span></div>
+      <div class="revision-item"><span class="bullet">→</span><span class="revision-text">FSK: frequency changes; better
+          noise immunity; old modems.</span></div>
+      <div class="revision-item"><span class="bullet">→</span><span class="revision-text">PSK: phase changes; BPSK=1bit,
+          QPSK=2bits, 8PSK=3bits.</span></div>
+      <div class="revision-item"><span class="bullet">→</span><span class="revision-text">QAM: amplitude + phase;
+          QAM-16=4bits, QAM-64=6bits, QAM-256=8bits.</span></div>
+      <div class="revision-item"><span class="bullet">→</span><span class="revision-text">More QAM levels → more
+          bits/symbol BUT needs higher SNR.</span></div>
+    </div>
+
+    <div class="card card-purple">
+      <h3>Multiplexing Summary</h3>
+      <div class="revision-item"><span class="bullet">→</span><span class="revision-text">FDM: frequency bands;
+          simultaneous; radio/TV/ADSL; guard bands prevent interference.</span></div>
+      <div class="revision-item"><span class="bullet">→</span><span class="revision-text">TDM (Sync): fixed time slots;
+          wastes slots when idle; T1=24ch=1.544Mbps; E1=32ch=2.048Mbps.</span></div>
+      <div class="revision-item"><span class="bullet">→</span><span class="revision-text">Statistical TDM: dynamic
+          slots; efficient; needs headers; used in packet networks.</span></div>
+      <div class="revision-item"><span class="bullet">→</span><span class="revision-text">WDM/DWDM: multiple wavelengths
+          on single fiber; Tbps capacity; backbone networks.</span></div>
+      <div class="revision-item"><span class="bullet">→</span><span class="revision-text">CDMA: unique codes; all
+          transmit same time/freq; 3G cellular; power control critical.</span></div>
+    </div>
+
+    <div
+      style="margin-top: 1.5rem; padding: 1rem; background: #E6F1FB; border-radius: var(--border-radius-lg); border: 0.5px solid #B5D4F4;">
+      <p style="font-size: 14px; font-weight: 500; color: #0C447C; margin-bottom: 6px;">Exam Strategy — Week 12</p>
+      <ul style="font-size: 13px; color: #185FA5; padding-left: 1.2rem; line-height: 1.8;">
+        <li>Nyquist (noiseless) vs Shannon (noisy) — know which formula to use in which scenario</li>
+        <li>Manchester = 10 Mbps Ethernet; Diff. Manchester = Token Ring (802.5)</li>
+        <li>QAM bits/symbol = log₂(n): QAM-16=4, QAM-64=6, QAM-256=8, QAM-1024=10</li>
+        <li>T1 = 24 DS0 channels = 1.544 Mbps (North America); E1 = 30+2 = 2.048 Mbps (Europe)</li>
+        <li>FDM = frequency sharing; TDM = time sharing; WDM = wavelength sharing; CDM = code sharing</li>
+        <li>Security topics are NOT in the exam — do NOT spend exam prep time on them</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  function show(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  function answer(qid, chosen, correct, explanation) {
+    const opts = document.querySelectorAll('#' + qid + ' .opt');
+    opts.forEach((o, i) => {
+      o.disabled = true;
+      if (i === correct) o.classList.add('correct');
+      else if (i === chosen && chosen !== correct) o.classList.add('wrong');
+    });
+    const exp = document.getElementById(qid + '-exp');
+    exp.textContent = (chosen === correct ? '✓ Correct! ' : '✗ Incorrect. ') + explanation;
+    exp.classList.add('visible');
+  }
+</script>

@@ -1,0 +1,675 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.w{max-width:900px;padding:1.5rem 1rem}
+.hero{border-bottom:0.5px solid var(--color-border-tertiary);padding-bottom:1.5rem;margin-bottom:2rem}
+.hero h1{font-size:22px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px}
+.hero p{font-size:14px;color:var(--color-text-secondary)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:2rem}
+.tab{padding:6px 14px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:13px;cursor:pointer;background:var(--color-background-primary);color:var(--color-text-secondary);transition:all 0.15s}
+.tab:hover{background:var(--color-background-secondary)}
+.tab.on{background:#E6F1FB;color:#0C447C;border-color:#85B7EB;font-weight:500}
+.sec{display:none}.sec.on{display:block}
+.ttl{font-size:20px;font-weight:500;color:var(--color-text-primary);margin-bottom:6px;padding-bottom:8px;border-bottom:2px solid #85B7EB}
+.bdg{display:inline-block;font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);margin-left:8px}
+.bx{border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin:1rem 0}
+.bbl{background:#E6F1FB;border-left:3px solid #185FA5}
+.bbl h3{color:#0C447C}
+.bgn{background:#EAF3DE;border-left:3px solid #3B6D11}
+.bgn h3{color:#27500A}
+.bamb{background:#FAEEDA;border-left:3px solid #854F0B}
+.bamb h3{color:#633806}
+.bred{background:#FCEBEB;border-left:3px solid #A32D2D}
+.bred h3{color:#791F1F}
+.bpur{background:#EEEDFE;border-left:3px solid #534AB7}
+.bpur h3{color:#3C3489}
+.bteal{background:#E1F5EE;border-left:3px solid #0F6E56}
+.bteal h3{color:#085041}
+.bsec{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:0.5rem 1.25rem;margin:1rem 0}
+.bx h3{font-size:14px;font-weight:500;margin-bottom:6px}
+.bx p,.bx li{font-size:14px;color:var(--color-text-primary);line-height:1.7}
+.bx ul{padding-left:1.2rem}
+.pt{display:flex;gap:10px;padding:8px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.pt:last-child{border-bottom:none}
+.pn{font-size:13px;font-weight:500;color:#185FA5;min-width:22px}
+.ptx{font-size:14px;color:var(--color-text-primary);line-height:1.6}
+.ptx strong{font-weight:500}
+.tw{overflow-x:auto;margin:1rem 0}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:#E6F1FB;color:#0C447C;font-weight:500;padding:8px 12px;text-align:left;border:0.5px solid #B5D4F4}
+td{padding:8px 12px;border:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary);vertical-align:top}
+tr:nth-child(even) td{background:var(--color-background-secondary)}
+h2.sh{font-size:18px;font-weight:500;color:var(--color-text-primary);margin:1.5rem 0 0.5rem}
+.mcq{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin:1rem 0;background:var(--color-background-primary)}
+.mcq-q{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:10px;line-height:1.6}
+.opts{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+.opt{font-size:13px;padding:6px 10px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);cursor:pointer;color:var(--color-text-primary);background:var(--color-background-primary);text-align:left;transition:background 0.1s}
+.opt:hover{background:var(--color-background-secondary)}
+.opt.ok{background:#EAF3DE;border-color:#639922;color:#27500A}
+.opt.no{background:#FCEBEB;border-color:#A32D2D;color:#791F1F}
+.exp{display:none;font-size:13px;color:var(--color-text-secondary);background:var(--color-background-secondary);padding:8px 12px;border-radius:var(--border-radius-md);margin-top:6px;line-height:1.6}
+.exp.show{display:block}
+.ri{display:flex;gap:8px;padding:6px 0;border-bottom:0.5px solid var(--color-border-tertiary);align-items:flex-start}
+.ri:last-child{border-bottom:none}
+.rb{font-size:14px;min-width:18px;color:#185FA5;font-weight:500}
+.rt{font-size:13px;color:var(--color-text-primary);line-height:1.6}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:1rem 0}
+.fbox{background:#E6F1FB;border:0.5px solid #B5D4F4;border-radius:var(--border-radius-md);padding:6px 12px;font-size:13px;color:#0C447C;font-weight:500}
+.farr{font-size:16px;color:var(--color-text-secondary)}
+.code{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:8px 12px;font-family:var(--font-mono);font-size:12px;color:var(--color-text-primary);margin:6px 0;line-height:1.6}
+</style>
+
+<div class="w">
+<div class="hero">
+  <h1>Computer Networks — Week 2: Application Layer Protocols</h1>
+  <p>DNS · FTP/TFTP · HTTP/HTML · Telnet · SMTP/MIME · SNMP &nbsp;|&nbsp; NPTEL Exam-Ready Notes</p>
+</div>
+
+<div class="tabs">
+  <button class="tab on" onclick="show('dns')">DNS</button>
+  <button class="tab" onclick="show('cs')">Client-Server + FTP</button>
+  <button class="tab" onclick="show('http')">HTTP & HTML</button>
+  <button class="tab" onclick="show('telnet')">Telnet</button>
+  <button class="tab" onclick="show('smtp')">SMTP & SNMP</button>
+  <button class="tab" onclick="show('rev')">Super Revision</button>
+</div>
+
+<div id="dns" class="sec on">
+  <div class="ttl">Topic 1: DNS — Domain Name System <span class="bdg" style="background:#FAEEDA;color:#633806">Very High Weightage</span></div>
+
+  <div class="bx bbl">
+    <h3>What is DNS?</h3>
+    <p>DNS is a global distributed database for the internet that primarily translates human-readable domain names (like www.iitkgp.ac.in) into IP addresses (like 203.110.x.x). Routers understand only IP addresses — not names. DNS is the "phonebook" of the internet.</p>
+  </div>
+
+  <h2 class="sh">Key explanation points</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">1</span><span class="ptx"><strong>Why DNS is needed:</strong> IP addresses are hard to remember. Routers can only process IP addresses (at the network layer). Names are understood only at the application layer. DNS bridges this gap by resolving names to IPs before communication begins.</span></div>
+    <div class="pt"><span class="pn">2</span><span class="ptx"><strong>Three categories of domains:</strong> (a) Generic TLD (gTLD) — 3+ characters: .com, .org, .net, .edu, .aero, .museum etc. Managed by ICANN. (b) Country TLD (ccTLD) — exactly 2 characters: .in (India), .us (USA), .au (Australia), .ca (Canada). (c) Inverse/Reverse domain — IP to name resolution, uses in-addr.arpa.</span></div>
+    <div class="pt"><span class="pn">3</span><span class="ptx"><strong>Domain namespace hierarchy (tree structure):</strong> Root (.) → TLD (.in) → Second level (.ac) → Third level (iitkgp) → Subdomain (cse). Each node in this tree has a label. Reading right to left gives you the full path. Example: cse.iitkgp.ac.in — cse is leftmost, in is rightmost (TLD).</span></div>
+    <div class="pt"><span class="pn">4</span><span class="ptx"><strong>FQDN — Fully Qualified Domain Name:</strong> A domain name ending with a dot (.) is fully qualified and complete. Example: cse.iitkgp.ac.in. (with trailing dot). Without trailing dot = partially qualified = incomplete. DNS resolver may append a suffix to complete a partially qualified name.</span></div>
+    <div class="pt"><span class="pn">5</span><span class="ptx"><strong>Zone vs Domain:</strong> A Domain is the entire namespace under a label (e.g., iitkgp.ac.in and all below it). A Zone is a domain MINUS the sub-domains delegated to other DNS servers. A domain is served by two or more DNS servers for redundancy. Only ONE primary (master copy). Secondary servers sync via zone transfer.</span></div>
+    <div class="pt"><span class="pn">6</span><span class="ptx"><strong>Zone transfer:</strong> Primary server loads data from disk. Secondary server loads from the primary. When primary downloads from secondary = zone transfer. Used for keeping secondary servers updated and synchronized.</span></div>
+    <div class="pt"><span class="pn">7</span><span class="ptx"><strong>Resource Records (RR):</strong> DNS database entries. Structure: Name | Type | Class | TTL | RDLength | RData. Provides mapping between domain name and network objects. A zone starts with a Start of Authority (SOA) record. NS record identifies which server is authoritative.</span></div>
+    <div class="pt"><span class="pn">8</span><span class="ptx"><strong>Recursive vs Iterative resolution:</strong> Recursive — DNS server itself queries other servers and returns final answer to client. Iterative — DNS server returns address of NEXT server to query if it doesn't know; client queries each server itself. Both are valid.</span></div>
+    <div class="pt"><span class="pn">9</span><span class="ptx"><strong>Two types of resolvers:</strong> (a) Full resolver — maintains a cache, queries name servers on behalf of user. (b) Stub resolver — library routine linked INTO the user program (getHostByName, getHostByAddress). Faster, more popular, hits the name server directly.</span></div>
+    <div class="pt"><span class="pn">10</span><span class="ptx"><strong>Inverse DNS (Reverse lookup):</strong> Normal = name → IP (forward). Inverse = IP → name (reverse). Used for authentication — e.g., FTP server receiving IP 153.2.79.9 wants to know which domain it belongs to. Uses in-addr.arpa. IP is written in reverse: 9.79.2.153.in-addr.arpa.</span></div>
+  </div>
+
+  <div class="bx bgn">
+    <h3>DNS resolution flow (recursive)</h3>
+    <div class="flow">
+      <div class="fbox">Browser (client)</div><div class="farr">→</div>
+      <div class="fbox">Local DNS resolver</div><div class="farr">→</div>
+      <div class="fbox">Root DNS server</div><div class="farr">→</div>
+      <div class="fbox">TLD server (.in)</div><div class="farr">→</div>
+      <div class="fbox">Authoritative server (iitkgp.ac.in)</div><div class="farr">→</div>
+      <div class="fbox">IP returned</div>
+    </div>
+  </div>
+
+  <div class="tw">
+    <table>
+      <tr><th>RR Type</th><th>Meaning</th><th>Purpose</th></tr>
+      <tr><td>A</td><td>Address</td><td>Maps hostname → IPv4 address</td></tr>
+      <tr><td>AAAA</td><td>IPv6 Address</td><td>Maps hostname → IPv6 address</td></tr>
+      <tr><td>NS</td><td>Name Server</td><td>Identifies authoritative name server for a zone</td></tr>
+      <tr><td>MX</td><td>Mail Exchange</td><td>Identifies mail server for a domain</td></tr>
+      <tr><td>CNAME</td><td>Canonical Name</td><td>Alias for another domain name</td></tr>
+      <tr><td>PTR</td><td>Pointer</td><td>Reverse lookup — IP to hostname</td></tr>
+      <tr><td>SOA</td><td>Start of Authority</td><td>First record in any zone; defines zone properties</td></tr>
+      <tr><td>TXT</td><td>Text</td><td>Arbitrary text; used for SPF, DKIM etc.</td></tr>
+    </table>
+  </div>
+
+  <div class="bx bamb">
+    <h3>Common mistakes</h3>
+    <ul>
+      <li>Confusing zone and domain — zone = domain minus delegated sub-domains</li>
+      <li>Thinking DNS uses TCP — DNS primarily uses UDP (port 53). TCP used for zone transfers</li>
+      <li>Confusing recursive and iterative — in recursive, the server does all the work. In iterative, the client does multiple queries</li>
+      <li>In inverse DNS, IP is written in REVERSE order before appending in-addr.arpa</li>
+      <li>BIND (Berkeley Internet Name Domain) is the most popular DNS server software, runs as "named" daemon</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">MCQs — DNS</h2>
+
+  <div class="mcq">
+    <div class="mcq-q">Q1. Which of the following is a country-code Top Level Domain (ccTLD)?</div>
+    <div class="opts" id="d1">
+      <button class="opt" onclick="ans('d1',0,2,'.com, .org, .edu are generic TLDs (3+ characters managed by ICANN). Country-code TLDs are exactly 2 characters based on ISO 3166 codes. .in = India, .us = USA, .au = Australia.')">A) .com</button>
+      <button class="opt" onclick="ans('d1',1,2,'.com, .org, .edu are generic TLDs (3+ characters managed by ICANN). Country-code TLDs are exactly 2 characters based on ISO 3166 codes. .in = India, .us = USA, .au = Australia.')">B) .org</button>
+      <button class="opt" onclick="ans('d1',2,2,'.com, .org, .edu are generic TLDs (3+ characters managed by ICANN). Country-code TLDs are exactly 2 characters based on ISO 3166 codes. .in = India, .us = USA, .au = Australia.')">C) .in</button>
+      <button class="opt" onclick="ans('d1',3,2,'.com, .org, .edu are generic TLDs (3+ characters managed by ICANN). Country-code TLDs are exactly 2 characters based on ISO 3166 codes. .in = India, .us = USA, .au = Australia.')">D) .edu</button>
+    </div>
+    <div class="exp" id="d1-e"></div>
+  </div>
+
+  <div class="mcq">
+    <div class="mcq-q">Q2. In inverse (reverse) DNS lookup, the IP address 10.20.30.40 would be written as:</div>
+    <div class="opts" id="d2">
+      <button class="opt" onclick="ans('d2',0,1,'In reverse DNS, the IP is written in REVERSE octect order, then .in-addr.arpa is appended. So 10.20.30.40 becomes 40.30.20.10.in-addr.arpa. This is used to resolve IP → domain name.')">A) 10.20.30.40.in-addr.arpa</button>
+      <button class="opt" onclick="ans('d2',1,1,'In reverse DNS, the IP is written in REVERSE octect order, then .in-addr.arpa is appended. So 10.20.30.40 becomes 40.30.20.10.in-addr.arpa. This is used to resolve IP → domain name.')">B) 40.30.20.10.in-addr.arpa</button>
+      <button class="opt" onclick="ans('d2',2,1,'In reverse DNS, the IP is written in REVERSE octect order, then .in-addr.arpa is appended. So 10.20.30.40 becomes 40.30.20.10.in-addr.arpa. This is used to resolve IP → domain name.')">C) arpa.in-addr.10.20.30.40</button>
+      <button class="opt" onclick="ans('d2',3,1,'In reverse DNS, the IP is written in REVERSE octect order, then .in-addr.arpa is appended. So 10.20.30.40 becomes 40.30.20.10.in-addr.arpa. This is used to resolve IP → domain name.')">D) 10.20.30.40.arpa</button>
+    </div>
+    <div class="exp" id="d2-e"></div>
+  </div>
+
+  <div class="mcq">
+    <div class="mcq-q">Q3. What is the difference between a DNS "zone" and a DNS "domain"?</div>
+    <div class="opts" id="d3">
+      <button class="opt" onclick="ans('d3',0,2,'A domain is the full namespace under a label including ALL sub-domains. A zone is the domain MINUS sub-domains that have been delegated to other DNS servers. Zone = Domain - delegated sub-domains.')">A) Zone is larger than domain</button>
+      <button class="opt" onclick="ans('d3',1,2,'A domain is the full namespace under a label including ALL sub-domains. A zone is the domain MINUS sub-domains that have been delegated to other DNS servers. Zone = Domain - delegated sub-domains.')">B) They are the same thing</button>
+      <button class="opt" onclick="ans('d3',2,2,'A domain is the full namespace under a label including ALL sub-domains. A zone is the domain MINUS sub-domains that have been delegated to other DNS servers. Zone = Domain - delegated sub-domains.')">C) Zone = Domain minus delegated sub-domains</button>
+      <button class="opt" onclick="ans('d3',3,2,'A domain is the full namespace under a label including ALL sub-domains. A zone is the domain MINUS sub-domains that have been delegated to other DNS servers. Zone = Domain - delegated sub-domains.')">D) Zone only contains IP addresses</button>
+    </div>
+    <div class="exp" id="d3-e"></div>
+  </div>
+
+  <div class="mcq">
+    <div class="mcq-q">Q4. In recursive DNS resolution, who performs all the intermediate queries?</div>
+    <div class="opts" id="d4">
+      <button class="opt" onclick="ans('d4',0,1,'In recursive resolution, the DNS server (resolver) itself queries all intermediate name servers and returns the FINAL answer to the client. The client only sends ONE query and waits for ONE final response. In iterative, the client itself queries each server.')">A) The client browser</button>
+      <button class="opt" onclick="ans('d4',1,1,'In recursive resolution, the DNS server (resolver) itself queries all intermediate name servers and returns the FINAL answer to the client. The client only sends ONE query and waits for ONE final response. In iterative, the client itself queries each server.')">B) The DNS resolver/name server</button>
+      <button class="opt" onclick="ans('d4',2,1,'In recursive resolution, the DNS server (resolver) itself queries all intermediate name servers and returns the FINAL answer to the client. The client only sends ONE query and waits for ONE final response. In iterative, the client itself queries each server.')">C) The root name server</button>
+      <button class="opt" onclick="ans('d4',3,1,'In recursive resolution, the DNS server (resolver) itself queries all intermediate name servers and returns the FINAL answer to the client. The client only sends ONE query and waits for ONE final response. In iterative, the client itself queries each server.')">D) The TLD server</button>
+    </div>
+    <div class="exp" id="d4-e"></div>
+  </div>
+
+  <div class="mcq">
+    <div class="mcq-q">Q5. The DNS message format flag "QR" indicates:</div>
+    <div class="opts" id="d5">
+      <button class="opt" onclick="ans('d5',0,0,'QR flag = 0 means it is a Query, QR = 1 means it is a Response. Other flags: AA = Authoritative Answer, TC = Truncated, RD = Recursion Desired, RA = Recursion Available, RCODE = error status code.')">A) Whether message is a Query (0) or Response (1)</button>
+      <button class="opt" onclick="ans('d5',1,0,'QR flag = 0 means it is a Query, QR = 1 means it is a Response. Other flags: AA = Authoritative Answer, TC = Truncated, RD = Recursion Desired, RA = Recursion Available, RCODE = error status code.')">B) Whether recursion is available</button>
+      <button class="opt" onclick="ans('d5',2,0,'QR flag = 0 means it is a Query, QR = 1 means it is a Response. Other flags: AA = Authoritative Answer, TC = Truncated, RD = Recursion Desired, RA = Recursion Available, RCODE = error status code.')">C) Whether the record is authoritative</button>
+      <button class="opt" onclick="ans('d5',3,0,'QR flag = 0 means it is a Query, QR = 1 means it is a Response. Other flags: AA = Authoritative Answer, TC = Truncated, RD = Recursion Desired, RA = Recursion Available, RCODE = error status code.')">D) The error/response code</button>
+    </div>
+    <div class="exp" id="d5-e"></div>
+  </div>
+</div>
+
+<div id="cs" class="sec">
+  <div class="ttl">Topic 2: Client-Server Model & FTP/TFTP <span class="bdg" style="background:#E1F5EE;color:#085041">Important</span></div>
+
+  <div class="bx bbl">
+    <h3>Client-server paradigm</h3>
+    <p>The dominant model for application communication. Server = process offering a service, always waiting/listening. Client = process requesting the service. They may be on the same machine or different machines. The five-tuple {Protocol, Server IP, Server Port, Client IP, Client Port} uniquely identifies every connection.</p>
+  </div>
+
+  <h2 class="sh">Key explanation points</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">1</span><span class="ptx"><strong>Iterative server:</strong> Handles ONE client at a time, sequentially. Server knows in advance how long each request takes. Single copy of server process runs. Other clients WAIT. Used when requests are short and fast.</span></div>
+    <div class="pt"><span class="pn">2</span><span class="ptx"><strong>Concurrent server:</strong> Handles MULTIPLE clients simultaneously. Server forks (creates) a child process for EACH client request. Server process immediately goes back to listening. Used when request duration is unknown. Most HTTP servers are concurrent.</span></div>
+    <div class="pt"><span class="pn">3</span><span class="ptx"><strong>Socket:</strong> Mechanism for Inter-Process Communication (IPC). Like a file handle — you open a socket, get a socket ID, and use it for communication. Berkeley socket interface is standard. Analogy: a telephone — it allows one person to speak to another.</span></div>
+    <div class="pt"><span class="pn">4</span><span class="ptx"><strong>Five-tuple for a connection:</strong> {Protocol, Client IP, Client Port, Server IP, Server Port}. ANY difference in any one field = different connection. This is why multiple browser tabs to same server work independently.</span></div>
+    <div class="pt"><span class="pn">5</span><span class="ptx"><strong>FTP — File Transfer Protocol:</strong> RFC 959. Uses TCP (reliable). Uses TWO separate connections: Control connection (port 21) — sends commands. Data connection (port 20) — transfers actual files. Only ONE data transfer at a time per session.</span></div>
+    <div class="pt"><span class="pn">6</span><span class="ptx"><strong>FTP active vs passive mode:</strong> Active mode — server initiates data connection to client (server uses port 20). Passive mode — client initiates data connection to server (server uses an ephemeral port > 1023). Passive is used when client is behind a firewall/NAT.</span></div>
+    <div class="pt"><span class="pn">7</span><span class="ptx"><strong>FTP has two processes at each end:</strong> PI (Protocol Interpreter) — handles the control connection and commands. DTP (Data Transfer Process) — handles the actual data transfer. Both client and server have PI + DTP.</span></div>
+    <div class="pt"><span class="pn">8</span><span class="ptx"><strong>File transfer modes in FTP:</strong> ASCII mode — for text files (.txt, .html). Binary mode — for non-text files (.doc, .pdf, .jpg, .mp4). You must explicitly set the mode before transfer.</span></div>
+    <div class="pt"><span class="pn">9</span><span class="ptx"><strong>TFTP — Trivial FTP:</strong> Uses UDP (port 69) — NOT TCP. Connectionless, no authentication, no directory listing. Only: read a file from server OR write a file to server. Used for: router/device firmware updates at boot time, constrained-resource devices. Lower overhead than FTP.</span></div>
+  </div>
+
+  <div class="tw">
+    <table>
+      <tr><th>Feature</th><th>FTP</th><th>TFTP</th></tr>
+      <tr><td>Transport</td><td>TCP (reliable)</td><td>UDP (unreliable)</td></tr>
+      <tr><td>Port(s)</td><td>21 (control), 20 (data)</td><td>69</td></tr>
+      <tr><td>Authentication</td><td>Yes (username/password)</td><td>No</td></tr>
+      <tr><td>Directory listing</td><td>Yes</td><td>No</td></tr>
+      <tr><td>Operations</td><td>Full file management</td><td>Read or write only</td></tr>
+      <tr><td>Overhead</td><td>Higher</td><td>Lower (lightweight)</td></tr>
+      <tr><td>RFC</td><td>RFC 959</td><td>—</td></tr>
+      <tr><td>Use case</td><td>General file transfer</td><td>Firmware/config updates</td></tr>
+    </table>
+  </div>
+
+  <div class="bx bgn">
+    <h3>FTP commands to know</h3>
+    <ul>
+      <li><strong>Access commands:</strong> USER (username), PASS (password), QUIT (logout), ABOR (abort)</li>
+      <li><strong>File management:</strong> CWD (change directory), DELE (delete file), MKD (make directory)</li>
+      <li><strong>Data formatting:</strong> TYPE (ASCII or binary), STRU (file structure), MODE (stream/block/compress)</li>
+      <li><strong>Transfer:</strong> RETR (retrieve/download), STOR (store/upload), STAT (status)</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">MCQs — Client-Server & FTP</h2>
+
+  <div class="mcq">
+    <div class="mcq-q">Q1. FTP uses which two port numbers for its two connections?</div>
+    <div class="opts" id="f1">
+      <button class="opt" onclick="ans('f1',0,2,'FTP uses port 21 for the CONTROL connection (commands like login, navigate, delete) and port 20 for the DATA connection (actual file transfer). In passive mode, server may use a different ephemeral port > 1023 for data.')">A) Port 20 (control), Port 21 (data)</button>
+      <button class="opt" onclick="ans('f1',1,2,'FTP uses port 21 for the CONTROL connection (commands like login, navigate, delete) and port 20 for the DATA connection (actual file transfer). In passive mode, server may use a different ephemeral port > 1023 for data.')">B) Port 80 (control), Port 20 (data)</button>
+      <button class="opt" onclick="ans('f1',2,2,'FTP uses port 21 for the CONTROL connection (commands like login, navigate, delete) and port 20 for the DATA connection (actual file transfer). In passive mode, server may use a different ephemeral port > 1023 for data.')">C) Port 21 (control), Port 20 (data)</button>
+      <button class="opt" onclick="ans('f1',3,2,'FTP uses port 21 for the CONTROL connection (commands like login, navigate, delete) and port 20 for the DATA connection (actual file transfer). In passive mode, server may use a different ephemeral port > 1023 for data.')">D) Port 21 (control), Port 22 (data)</button>
+    </div>
+    <div class="exp" id="f1-e"></div>
+  </div>
+
+  <div class="mcq">
+    <div class="mcq-q">Q2. TFTP is preferred over FTP in constrained-resource devices because:</div>
+    <div class="opts" id="f2">
+      <button class="opt" onclick="ans('f2',0,1,'TFTP uses UDP (not TCP) making it much lighter with less overhead. It has no authentication, no directory listing — just read/write. This simplicity means it can be implemented on devices with very limited memory/CPU, like routers downloading firmware at boot time.')">A) It provides better security than FTP</button>
+      <button class="opt" onclick="ans('f2',1,1,'TFTP uses UDP (not TCP) making it much lighter with less overhead. It has no authentication, no directory listing — just read/write. This simplicity means it can be implemented on devices with very limited memory/CPU, like routers downloading firmware at boot time.')">B) It uses UDP and has very low overhead, suitable for small devices</button>
+      <button class="opt" onclick="ans('f2',2,1,'TFTP uses UDP (not TCP) making it much lighter with less overhead. It has no authentication, no directory listing — just read/write. This simplicity means it can be implemented on devices with very limited memory/CPU, like routers downloading firmware at boot time.')">C) It supports more commands than FTP</button>
+      <button class="opt" onclick="ans('f2',3,1,'TFTP uses UDP (not TCP) making it much lighter with less overhead. It has no authentication, no directory listing — just read/write. This simplicity means it can be implemented on devices with very limited memory/CPU, like routers downloading firmware at boot time.')">D) It is connection-oriented and reliable</button>
+    </div>
+    <div class="exp" id="f2-e"></div>
+  </div>
+
+  <div class="mcq">
+    <div class="mcq-q">Q3. In a concurrent server, what happens when a new client request arrives?</div>
+    <div class="opts" id="f3">
+      <button class="opt" onclick="ans('f3',0,2,'A concurrent server forks (creates) a child process dedicated to serving the new client. The parent server process immediately returns to listening for more clients. This allows multiple clients to be served simultaneously.')">A) The server queues the request and serves it after finishing the current client</button>
+      <button class="opt" onclick="ans('f3',1,2,'A concurrent server forks (creates) a child process dedicated to serving the new client. The parent server process immediately returns to listening for more clients. This allows multiple clients to be served simultaneously.')">B) The server rejects the new request</button>
+      <button class="opt" onclick="ans('f3',2,2,'A concurrent server forks (creates) a child process dedicated to serving the new client. The parent server process immediately returns to listening for more clients. This allows multiple clients to be served simultaneously.')">C) The server forks a child process to serve the new client and returns to listening</button>
+      <button class="opt" onclick="ans('f3',3,2,'A concurrent server forks (creates) a child process dedicated to serving the new client. The parent server process immediately returns to listening for more clients. This allows multiple clients to be served simultaneously.')">D) The server clones itself completely</button>
+    </div>
+    <div class="exp" id="f3-e"></div>
+  </div>
+
+  <div class="mcq">
+    <div class="mcq-q">Q4. The FTP command used to DOWNLOAD a file from server to client is:</div>
+    <div class="opts" id="f4">
+      <button class="opt" onclick="ans('f4',0,0,'RETR (Retrieve) is used to download a file from server to client. STOR (Store) is for uploading (client to server). CWD changes directory. DELE deletes a file on the server.')">A) RETR</button>
+      <button class="opt" onclick="ans('f4',1,0,'RETR (Retrieve) is used to download a file from server to client. STOR (Store) is for uploading (client to server). CWD changes directory. DELE deletes a file on the server.')">B) STOR</button>
+      <button class="opt" onclick="ans('f4',2,0,'RETR (Retrieve) is used to download a file from server to client. STOR (Store) is for uploading (client to server). CWD changes directory. DELE deletes a file on the server.')">C) CWD</button>
+      <button class="opt" onclick="ans('f4',3,0,'RETR (Retrieve) is used to download a file from server to client. STOR (Store) is for uploading (client to server). CWD changes directory. DELE deletes a file on the server.')">D) DELE</button>
+    </div>
+    <div class="exp" id="f4-e"></div>
+  </div>
+</div>
+
+<div id="http" class="sec">
+  <div class="ttl">Topic 3: HTTP & HTML <span class="bdg" style="background:#FAEEDA;color:#633806">Very High Weightage</span></div>
+
+  <div class="bx bbl">
+    <h3>HTTP — Hypertext Transfer Protocol</h3>
+    <p>The foundation of the World Wide Web. HTTP allows web documents to be communicated over the network. Web browser = HTTP client. Web server = HTTP server. Well-known port: 80. HTTP 1.0 (RFC 1945) — non-persistent. HTTP 1.1 (RFC 2616) — persistent connections by default.</p>
+  </div>
+
+  <div class="bsec">
+    <div class="pt"><span class="pn">1</span><span class="ptx"><strong>Three types of web documents:</strong> (a) Static — fixed page, same for all users. Request → get same page. (b) Dynamic — server executes a program and generates HTML on the fly based on request. Uses CGI (Common Gateway Interface). (c) Active — program runs on CLIENT side. Java applets, JavaScript. Called "client-side scripting."</span></div>
+    <div class="pt"><span class="pn">2</span><span class="ptx"><strong>URL — Uniform Resource Locator:</strong> Structure = protocol://hostname:port/path. Default port for HTTP = 80. If port 80, it is optional to specify. Example: http://www.iitkgp.ac.in:80/index.html is same as http://www.iitkgp.ac.in/index.html.</span></div>
+    <div class="pt"><span class="pn">3</span><span class="ptx"><strong>HTTP request message format:</strong> Request line (method + URL + HTTP version) → Header lines → Blank line → Body (optional). The blank line MUST be present even if no body exists.</span></div>
+    <div class="pt"><span class="pn">4</span><span class="ptx"><strong>HTTP response message format:</strong> Status line (HTTP version + status code + phrase) → Header lines → Blank line → Body (document).</span></div>
+    <div class="pt"><span class="pn">5</span><span class="ptx"><strong>HTTP is stateless:</strong> Server does NOT remember previous requests. Each request is independent. Cookies are used to maintain state/session information across requests.</span></div>
+    <div class="pt"><span class="pn">6</span><span class="ptx"><strong>HTTP proxy server:</strong> Intermediate server between client and HTTP server. Can cache responses, filter content, log access, improve performance. Sits transparently between client and server.</span></div>
+    <div class="pt"><span class="pn">7</span><span class="ptx"><strong>Transport independence:</strong> HTTP is designed to work over any transport, but TCP is the default and predominant choice. HTTP itself does not mandate a specific transport layer.</span></div>
+  </div>
+
+  <h2 class="sh">HTTP methods</h2>
+  <div class="tw">
+    <table>
+      <tr><th>Method</th><th>Purpose</th><th>Frequency</th></tr>
+      <tr><td>GET</td><td>Request a document from the server</td><td>Most common</td></tr>
+      <tr><td>POST</td><td>Send data FROM client TO server (form submission)</td><td>Very common</td></tr>
+      <tr><td>HEAD</td><td>Request headers only, NOT the document body</td><td>Common</td></tr>
+      <tr><td>PUT</td><td>Send a document FROM server TO client / upload resource</td><td>Common</td></tr>
+      <tr><td>DELETE</td><td>Delete a specified resource on the server</td><td>Moderate</td></tr>
+      <tr><td>TRACE</td><td>Echo the incoming request back to client (debugging)</td><td>Rare</td></tr>
+      <tr><td>CONNECT</td><td>Reserved for use with proxy servers (tunneling)</td><td>Rare</td></tr>
+      <tr><td>OPTIONS</td><td>Inquire about available methods for a resource</td><td>Rare</td></tr>
+    </table>
+  </div>
+
+  <h2 class="sh">HTTP status codes — must memorize</h2>
+  <div class="tw">
+    <table>
+      <tr><th>Code range</th><th>Category</th><th>Key examples</th></tr>
+      <tr><td>1xx</td><td>Informational</td><td>100 Continue, 101 Switching Protocols</td></tr>
+      <tr><td>2xx</td><td>Success</td><td>200 OK, 201 Created, 202 Accepted, 204 No Content</td></tr>
+      <tr><td>3xx</td><td>Redirection</td><td>301 Moved Permanently, 302 Moved Temporarily, 304 Not Modified</td></tr>
+      <tr><td>4xx</td><td>Client Error</td><td>400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found, 405 Method Not Allowed</td></tr>
+      <tr><td>5xx</td><td>Server Error</td><td>500 Internal Server Error, 501 Not Implemented, 503 Service Unavailable</td></tr>
+    </table>
+  </div>
+
+  <div class="bx bpur">
+    <h3>HTML — Hypertext Markup Language</h3>
+    <ul>
+      <li>Language for creating web pages. Extension: .html or .htm</li>
+      <li>Tags tell browser how to DISPLAY content. Tags come in pairs: &lt;tag&gt; content &lt;/tag&gt;</li>
+      <li>Tags are NOT case-sensitive (but lowercase is standard)</li>
+      <li>Structure: &lt;html&gt; → &lt;head&gt; (title, meta) + &lt;body&gt; (content) → &lt;/html&gt;</li>
+      <li>Key tags: &lt;h1&gt;-&lt;h6&gt; headings, &lt;p&gt; paragraph, &lt;a href&gt; hyperlink, &lt;img src&gt; image, &lt;div&gt; section/division</li>
+      <li>Three types of links: same folder, different folder (relative), external URL (absolute)</li>
+      <li>HTML is parsed by browser's HTML interpreter/parser to render the page</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">MCQs — HTTP & HTML</h2>
+
+  <div class="mcq">
+    <div class="mcq-q">Q1. Which HTTP method is used to REQUEST a document from the server?</div>
+    <div class="opts" id="h1">
+      <button class="opt" onclick="ans('h1',0,0,'GET is used to request (retrieve) a document from the server. POST sends data from client to server. PUT uploads a resource. HEAD only requests headers, not the document body.')">A) GET</button>
+      <button class="opt" onclick="ans('h1',1,0,'GET is used to request (retrieve) a document from the server. POST sends data from client to server. PUT uploads a resource. HEAD only requests headers, not the document body.')">B) POST</button>
+      <button class="opt" onclick="ans('h1',2,0,'GET is used to request (retrieve) a document from the server. POST sends data from client to server. PUT uploads a resource. HEAD only requests headers, not the document body.')">C) PUT</button>
+      <button class="opt" onclick="ans('h1',3,0,'GET is used to request (retrieve) a document from the server. POST sends data from client to server. PUT uploads a resource. HEAD only requests headers, not the document body.')">D) HEAD</button>
+    </div>
+    <div class="exp" id="h1-e"></div>
+  </div>
+
+  <div class="mcq">
+    <div class="mcq-q">Q2. HTTP status code 404 indicates:</div>
+    <div class="opts" id="h2">
+      <button class="opt" onclick="ans('h2',0,2,'404 = Not Found — the most commonly seen error code. It is a 4xx (client error) code meaning the requested resource does not exist on the server. 200=OK, 301=Moved Permanently, 500=Internal Server Error.')">A) Internal server error</button>
+      <button class="opt" onclick="ans('h2',1,2,'404 = Not Found — the most commonly seen error code. It is a 4xx (client error) code meaning the requested resource does not exist on the server. 200=OK, 301=Moved Permanently, 500=Internal Server Error.')">B) Request successful</button>
+      <button class="opt" onclick="ans('h2',2,2,'404 = Not Found — the most commonly seen error code. It is a 4xx (client error) code meaning the requested resource does not exist on the server. 200=OK, 301=Moved Permanently, 500=Internal Server Error.')">C) Document not found (client error)</button>
+      <button class="opt" onclick="ans('h2',3,2,'404 = Not Found — the most commonly seen error code. It is a 4xx (client error) code meaning the requested resource does not exist on the server. 200=OK, 301=Moved Permanently, 500=Internal Server Error.')">D) Redirect to another page</button>
+    </div>
+    <div class="exp" id="h2-e"></div>
+  </div>
+
+  <div class="mcq">
+    <div class="mcq-q">Q3. In HTTP, a "dynamic document" is one where:</div>
+    <div class="opts" id="h3">
+      <button class="opt" onclick="ans('h3',0,2,'A dynamic document is generated at the SERVER side by executing a program (e.g., via CGI) in response to a client request. The HTML page changes based on input. Static = fixed page. Active = client-side program (applet, JavaScript).')">A) The page content changes based on time of day</button>
+      <button class="opt" onclick="ans('h3',1,2,'A dynamic document is generated at the SERVER side by executing a program (e.g., via CGI) in response to a client request. The HTML page changes based on input. Static = fixed page. Active = client-side program (applet, JavaScript).')">B) A program runs on the client side (browser)</button>
+      <button class="opt" onclick="ans('h3',2,2,'A dynamic document is generated at the SERVER side by executing a program (e.g., via CGI) in response to a client request. The HTML page changes based on input. Static = fixed page. Active = client-side program (applet, JavaScript).')">C) A server-side program generates the HTML in response to a request</button>
+      <button class="opt" onclick="ans('h3',3,2,'A dynamic document is generated at the SERVER side by executing a program (e.g., via CGI) in response to a client request. The HTML page changes based on input. Static = fixed page. Active = client-side program (applet, JavaScript).')">D) The page uses JavaScript for animations</button>
+    </div>
+    <div class="exp" id="h3-e"></div>
+  </div>
+
+  <div class="mcq">
+    <div class="mcq-q">Q4. HTTP 1.1 differs from HTTP 1.0 primarily in that HTTP 1.1:</div>
+    <div class="opts" id="h4">
+      <button class="opt" onclick="ans('h4',0,2,'HTTP 1.1 (RFC 2616) introduced persistent connections by default — a single TCP connection can be reused for multiple request-response exchanges. HTTP 1.0 (RFC 1945) opened a new TCP connection for each request, which was inefficient.')">A) Uses UDP instead of TCP</button>
+      <button class="opt" onclick="ans('h4',1,2,'HTTP 1.1 (RFC 2616) introduced persistent connections by default — a single TCP connection can be reused for multiple request-response exchanges. HTTP 1.0 (RFC 1945) opened a new TCP connection for each request, which was inefficient.')">B) Supports only static documents</button>
+      <button class="opt" onclick="ans('h4',2,2,'HTTP 1.1 (RFC 2616) introduced persistent connections by default — a single TCP connection can be reused for multiple request-response exchanges. HTTP 1.0 (RFC 1945) opened a new TCP connection for each request, which was inefficient.')">C) Supports persistent connections by default</button>
+      <button class="opt" onclick="ans('h4',3,2,'HTTP 1.1 (RFC 2616) introduced persistent connections by default — a single TCP connection can be reused for multiple request-response exchanges. HTTP 1.0 (RFC 1945) opened a new TCP connection for each request, which was inefficient.')">D) Uses a different port (8080)</button>
+    </div>
+    <div class="exp" id="h4-e"></div>
+  </div>
+</div>
+
+<div id="telnet" class="sec">
+  <div class="ttl">Topic 4: Telnet Protocol <span class="bdg" style="background:#E1F5EE;color:#085041">Moderate</span></div>
+
+  <div class="bx bbl">
+    <h3>What is Telnet?</h3>
+    <p>A protocol that allows remote login to another system over a network. It provides a general, bidirectional, 8-bit byte oriented communication facility over TCP. Port 23 is the well-known Telnet port. Data and control use the SAME TCP connection (unlike FTP which uses two).</p>
+  </div>
+
+  <div class="bsec">
+    <div class="pt"><span class="pn">1</span><span class="ptx"><strong>NVT — Network Virtual Terminal:</strong> An intermediate representation of a generic terminal. Provides a standard language for communicating terminal control functions. Without NVT, escape characters and control functions from different terminal types would conflict.</span></div>
+    <div class="pt"><span class="pn">2</span><span class="ptx"><strong>Same connection for data and control:</strong> Unlike FTP (separate ports 20 and 21), Telnet uses ONE single TCP connection for BOTH commands and data. This is a key distinguishing fact for NPTEL MCQs.</span></div>
+    <div class="pt"><span class="pn">3</span><span class="ptx"><strong>IAC code (Interpret As Command):</strong> Special escape character, value = 255 (decimal). Any byte with value 255 in the stream is interpreted as a command prefix. If actual data is 255, it must be followed by ANOTHER 255. IAC followed by any other code = Telnet command.</span></div>
+    <div class="pt"><span class="pn">4</span><span class="ptx"><strong>Negotiated options:</strong> Both endpoints negotiate mutually acceptable options — line mode vs character mode, echo mode, character set (ASCII vs EBCDIC). Options are NOT part of the Telnet protocol itself, allowing new features without changing the protocol.</span></div>
+    <div class="pt"><span class="pn">5</span><span class="ptx"><strong>Control functions:</strong> IP (Interrupt Process), AO (Abort Output), AYT (Are You There — checks if system alive), EC (Erase Character — delete last char), EL (Erase Line — delete current line).</span></div>
+    <div class="pt"><span class="pn">6</span><span class="ptx"><strong>Telnet as a generic TCP client:</strong> Telnet can be used to test ANY TCP server that uses ASCII protocols. Example: Telnet to port 80 to test HTTP server. Telnet to port 25 to test SMTP server. Sends whatever you type, prints whatever comes back.</span></div>
+    <div class="pt"><span class="pn">7</span><span class="ptx"><strong>Default Unix/Linux servers accessible via Telnet:</strong> Echo server (port 7), Discard server (port 9), Daytime server (port 13), Chargen server (port 19).</span></div>
+  </div>
+
+  <div class="bx bamb">
+    <h3>Key comparison: Telnet vs FTP vs HTTP</h3>
+    <ul>
+      <li>Telnet: ONE connection (data + control together), port 23, remote login</li>
+      <li>FTP: TWO connections (control port 21, data port 20), file transfer</li>
+      <li>HTTP: ONE connection, port 80, stateless, web documents</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">MCQs — Telnet</h2>
+
+  <div class="mcq">
+    <div class="mcq-q">Q1. How does Telnet differ from FTP in terms of connections?</div>
+    <div class="opts" id="t1">
+      <button class="opt" onclick="ans('t1',0,2,'Telnet uses ONE single TCP connection for BOTH data and control. FTP uses TWO separate connections — port 21 for control (commands) and port 20 for data (file transfer). This is a frequently tested NPTEL point.')">A) Telnet uses two connections; FTP uses one</button>
+      <button class="opt" onclick="ans('t1',1,2,'Telnet uses ONE single TCP connection for BOTH data and control. FTP uses TWO separate connections — port 21 for control (commands) and port 20 for data (file transfer). This is a frequently tested NPTEL point.')">B) Both use two connections</button>
+      <button class="opt" onclick="ans('t1',2,2,'Telnet uses ONE single TCP connection for BOTH data and control. FTP uses TWO separate connections — port 21 for control (commands) and port 20 for data (file transfer). This is a frequently tested NPTEL point.')">C) Telnet uses one connection; FTP uses two</button>
+      <button class="opt" onclick="ans('t1',3,2,'Telnet uses ONE single TCP connection for BOTH data and control. FTP uses TWO separate connections — port 21 for control (commands) and port 20 for data (file transfer). This is a frequently tested NPTEL point.')">D) Both use one connection</button>
+    </div>
+    <div class="exp" id="t1-e"></div>
+  </div>
+
+  <div class="mcq">
+    <div class="mcq-q">Q2. The IAC (Interpret As Command) character in Telnet has the decimal value:</div>
+    <div class="opts" id="t2">
+      <button class="opt" onclick="ans('t2',0,3,'IAC = 255 decimal. It is a special escape character. If 255 appears in actual data, it must be doubled (255 255) to distinguish data from command. Any IAC followed by a non-255 byte is interpreted as a Telnet command.')">A) 0</button>
+      <button class="opt" onclick="ans('t2',1,3,'IAC = 255 decimal. It is a special escape character. If 255 appears in actual data, it must be doubled (255 255) to distinguish data from command. Any IAC followed by a non-255 byte is interpreted as a Telnet command.')">B) 127</button>
+      <button class="opt" onclick="ans('t2',2,3,'IAC = 255 decimal. It is a special escape character. If 255 appears in actual data, it must be doubled (255 255) to distinguish data from command. Any IAC followed by a non-255 byte is interpreted as a Telnet command.')">C) 128</button>
+      <button class="opt" onclick="ans('t2',3,3,'IAC = 255 decimal. It is a special escape character. If 255 appears in actual data, it must be doubled (255 255) to distinguish data from command. Any IAC followed by a non-255 byte is interpreted as a Telnet command.')">D) 255</button>
+    </div>
+    <div class="exp" id="t2-e"></div>
+  </div>
+
+  <div class="mcq">
+    <div class="mcq-q">Q3. NVT (Network Virtual Terminal) in Telnet serves as:</div>
+    <div class="opts" id="t3">
+      <button class="opt" onclick="ans('t3',0,1,'NVT = Network Virtual Terminal. It is an intermediate representation of a generic terminal that provides a STANDARD language for communication of terminal control functions. This allows different terminal types (with different escape characters) to communicate without conflicts.')">A) A physical terminal connected to the network</button>
+      <button class="opt" onclick="ans('t3',1,1,'NVT = Network Virtual Terminal. It is an intermediate representation of a generic terminal that provides a STANDARD language for communication of terminal control functions. This allows different terminal types (with different escape characters) to communicate without conflicts.')">B) An intermediate standard representation for terminal communication</button>
+      <button class="opt" onclick="ans('t3',2,1,'NVT = Network Virtual Terminal. It is an intermediate representation of a generic terminal that provides a STANDARD language for communication of terminal control functions. This allows different terminal types (with different escape characters) to communicate without conflicts.')">C) A virtual machine running at the server</button>
+      <button class="opt" onclick="ans('t3',3,1,'NVT = Network Virtual Terminal. It is an intermediate representation of a generic terminal that provides a STANDARD language for communication of terminal control functions. This allows different terminal types (with different escape characters) to communicate without conflicts.')">D) An encryption mechanism for Telnet</button>
+    </div>
+    <div class="exp" id="t3-e"></div>
+  </div>
+</div>
+
+<div id="smtp" class="sec">
+  <div class="ttl">Topic 5: SMTP & SNMP <span class="bdg" style="background:#FAEEDA;color:#633806">High Weightage</span></div>
+
+  <div class="bx bbl">
+    <h3>SMTP — Simple Mail Transfer Protocol</h3>
+    <p>Protocol for transferring email between mail servers and from client to server. Uses TCP, port 25. RFC 821 (1982). Goal: reliable transfer of mail from sender to receiver. The email system analogy is the postal system — MTA = postal worker.</p>
+  </div>
+
+  <div class="bsec">
+    <div class="pt"><span class="pn">1</span><span class="ptx"><strong>Two components of SMTP systems:</strong> User Agent (UA) — prepares the message, creates the envelope (like Thunderbird, Outlook). Mail Transfer Agent (MTA) — transfers the mail across the internet. MTA acts as both client and server.</span></div>
+    <div class="pt"><span class="pn">2</span><span class="ptx"><strong>Email message structure:</strong> Envelope (sender + receiver addresses + routing info) → Header (From, To, Subject, Date fields) → Blank line → Body (actual message content).</span></div>
+    <div class="pt"><span class="pn">3</span><span class="ptx"><strong>SMTP keywords (commands):</strong> HELO (sender identifies itself), MAIL FROM (sender email), RCPT TO (recipient email), DATA (start of message body), QUIT (end session). Additional: RSET (reset), VRFY (verify address), NOOP, TURN, EXPN, HELP.</span></div>
+    <div class="pt"><span class="pn">4</span><span class="ptx"><strong>SMTP reply codes (3-digit):</strong> 2xx = success. 3xx = command accepted, more info needed. 4xx = command rejected but temporary error (retry later). 5xx = command rejected permanently (bad user/address). Key: 220 = service ready, 250 = OK, 221 = closing.</span></div>
+    <div class="pt"><span class="pn">5</span><span class="ptx"><strong>MIME — Multipurpose Internet Mail Extensions:</strong> SMTP was designed for 7-bit ASCII only. MIME extends SMTP to handle non-ASCII data (images, audio, video, binary). MIME converts non-ASCII to NVT 7-bit ASCII for transmission. Types: text, application, image, audio, video, multipart.</span></div>
+    <div class="pt"><span class="pn">6</span><span class="ptx"><strong>Mail access protocols:</strong> SMTP = push protocol (delivers to server). POP3 (Post Office Protocol v3) = simple, downloads all emails, can delete from server. IMAP4 (Internet Message Access Protocol v4) = more features, can check headers before downloading, search by string, create/delete/rename mailboxes on server, access from anywhere.</span></div>
+  </div>
+
+  <div class="tw">
+    <table>
+      <tr><th>Feature</th><th>POP3</th><th>IMAP4</th></tr>
+      <tr><td>Complexity</td><td>Simple</td><td>More features</td></tr>
+      <tr><td>Header preview</td><td>No — downloads all</td><td>Yes — check before downloading</td></tr>
+      <tr><td>Partial download</td><td>No</td><td>Yes</td></tr>
+      <tr><td>Search before download</td><td>No</td><td>Yes (search by string)</td></tr>
+      <tr><td>Mailbox management on server</td><td>Limited</td><td>Full (create/delete/rename)</td></tr>
+      <tr><td>Multi-device access</td><td>Difficult</td><td>Yes — from any location</td></tr>
+    </table>
+  </div>
+
+  <div class="bx bgn">
+    <h3>SNMP — Simple Network Management Protocol</h3>
+    <ul>
+      <li><strong>Purpose:</strong> Manage all aspects of the network. Monitor health, forecast capacity, troubleshoot, alter network parameters.</li>
+      <li><strong>Transport:</strong> UDP (NOT TCP). This is frequently tested!</li>
+      <li><strong>RFC 1157</strong> defines SNMP community components</li>
+      <li><strong>Three versions:</strong> SNMPv1 (1990) — plain text community string (no encryption). SNMPv2c (1996) — attempted security fixes but incomplete. SNMPv3 (2002) — full security: integrity + authentication + privacy (confidentiality). CIA properties.</li>
+    </ul>
+  </div>
+
+  <div class="bsec">
+    <div class="pt"><span class="pn">1</span><span class="ptx"><strong>SNMP components (RFC 1157):</strong> MIB (Management Information Base) — text file describing managed objects using ASN.1 syntax. SNMP Agent — software on a network device (router, host, printer) maintaining configuration/state database. SNMP Manager — application querying/modifying the agent database. SNMP Sub-agent — subset of agent functions.</span></div>
+    <div class="pt"><span class="pn">2</span><span class="ptx"><strong>SNMP operations:</strong> Get-Request (read one or more objects). Get-Next-Request (read next object in lexicographic order of OID). Set-Request (modify one or more objects). Get-Response (agent response to get/set requests). Trap (agent-initiated notification to manager without any query — triggered by specific events). Manager uses port 161. Traps go to port 162.</span></div>
+    <div class="pt"><span class="pn">3</span><span class="ptx"><strong>OID — Object Identifier:</strong> Each managed object has a unique OID — a sequence of integers separated by dots, representable as a text string. MIB-2 (RFC 1213) defines managed objects for TCP/IP networks. Linux MIB files stored in a specific directory.</span></div>
+    <div class="pt"><span class="pn">4</span><span class="ptx"><strong>SNMPv3 security features:</strong> Integrity — packet has not been tampered with. Authentication — message is valid/from authorized source. Privacy/Confidentiality — message cannot be read by unauthorized parties. These are the CIA properties of information security.</span></div>
+  </div>
+
+  <h2 class="sh">MCQs — SMTP & SNMP</h2>
+
+  <div class="mcq">
+    <div class="mcq-q">Q1. SMTP operates on which transport protocol and port?</div>
+    <div class="opts" id="s1">
+      <button class="opt" onclick="ans('s1',0,1,'SMTP uses TCP (reliable, connection-oriented) and the well-known port is 25. SNMP uses UDP. DNS uses UDP (port 53). Telnet uses TCP port 23.')">A) UDP, port 25</button>
+      <button class="opt" onclick="ans('s1',1,1,'SMTP uses TCP (reliable, connection-oriented) and the well-known port is 25. SNMP uses UDP. DNS uses UDP (port 53). Telnet uses TCP port 23.')">B) TCP, port 25</button>
+      <button class="opt" onclick="ans('s1',2,1,'SMTP uses TCP (reliable, connection-oriented) and the well-known port is 25. SNMP uses UDP. DNS uses UDP (port 53). Telnet uses TCP port 23.')">C) TCP, port 110</button>
+      <button class="opt" onclick="ans('s1',3,1,'SMTP uses TCP (reliable, connection-oriented) and the well-known port is 25. SNMP uses UDP. DNS uses UDP (port 53). Telnet uses TCP port 23.')">D) UDP, port 161</button>
+    </div>
+    <div class="exp" id="s1-e"></div>
+  </div>
+
+  <div class="mcq">
+    <div class="mcq-q">Q2. MIME extends SMTP primarily to handle:</div>
+    <div class="opts" id="s2">
+      <button class="opt" onclick="ans('s2',0,2,'SMTP was originally designed for 7-bit ASCII text only. MIME (Multipurpose Internet Mail Extensions) extends it to handle non-ASCII data — images, audio, video, binary files, international character sets — by converting them to 7-bit NVT ASCII for SMTP transmission.')">A) Email routing and relay</button>
+      <button class="opt" onclick="ans('s2',1,2,'SMTP was originally designed for 7-bit ASCII text only. MIME (Multipurpose Internet Mail Extensions) extends it to handle non-ASCII data — images, audio, video, binary files, international character sets — by converting them to 7-bit NVT ASCII for SMTP transmission.')">B) Email encryption and security</button>
+      <button class="opt" onclick="ans('s2',2,2,'SMTP was originally designed for 7-bit ASCII text only. MIME (Multipurpose Internet Mail Extensions) extends it to handle non-ASCII data — images, audio, video, binary files, international character sets — by converting them to 7-bit NVT ASCII for SMTP transmission.')">C) Non-ASCII data (images, audio, video, binary)</button>
+      <button class="opt" onclick="ans('s2',3,2,'SMTP was originally designed for 7-bit ASCII text only. MIME (Multipurpose Internet Mail Extensions) extends it to handle non-ASCII data — images, audio, video, binary files, international character sets — by converting them to 7-bit NVT ASCII for SMTP transmission.')">D) Mail server authentication</button>
+    </div>
+    <div class="exp" id="s2-e"></div>
+  </div>
+
+  <div class="mcq">
+    <div class="mcq-q">Q3. SNMP uses which transport layer protocol?</div>
+    <div class="opts" id="s3">
+      <button class="opt" onclick="ans('s3',0,1,'SNMP uses UDP — this is a frequently tested point. SNMP is a monitoring/management protocol; the overhead of TCP connection establishment would slow down management queries. SMTP uses TCP. FTP uses TCP. HTTP uses TCP.')">A) TCP</button>
+      <button class="opt" onclick="ans('s3',1,1,'SNMP uses UDP — this is a frequently tested point. SNMP is a monitoring/management protocol; the overhead of TCP connection establishment would slow down management queries. SMTP uses TCP. FTP uses TCP. HTTP uses TCP.')">B) UDP</button>
+      <button class="opt" onclick="ans('s3',2,1,'SNMP uses UDP — this is a frequently tested point. SNMP is a monitoring/management protocol; the overhead of TCP connection establishment would slow down management queries. SMTP uses TCP. FTP uses TCP. HTTP uses TCP.')">C) ICMP</button>
+      <button class="opt" onclick="ans('s3',3,1,'SNMP uses UDP — this is a frequently tested point. SNMP is a monitoring/management protocol; the overhead of TCP connection establishment would slow down management queries. SMTP uses TCP. FTP uses TCP. HTTP uses TCP.')">D) SCTP</button>
+    </div>
+    <div class="exp" id="s3-e"></div>
+  </div>
+
+  <div class="mcq">
+    <div class="mcq-q">Q4. Which SNMP message type is sent by an agent WITHOUT any prior query from the manager?</div>
+    <div class="opts" id="s4">
+      <button class="opt" onclick="ans('s4',0,2,'TRAP is the only SNMP message type initiated by the AGENT (not manager). It is sent when a significant event occurs (link down, threshold exceeded, etc.) without waiting for a Get-Request. All other messages (Get, Set, Response) are initiated by the manager.')">A) Get-Request</button>
+      <button class="opt" onclick="ans('s4',1,2,'TRAP is the only SNMP message type initiated by the AGENT (not manager). It is sent when a significant event occurs (link down, threshold exceeded, etc.) without waiting for a Get-Request. All other messages (Get, Set, Response) are initiated by the manager.')">B) Set-Request</button>
+      <button class="opt" onclick="ans('s4',2,2,'TRAP is the only SNMP message type initiated by the AGENT (not manager). It is sent when a significant event occurs (link down, threshold exceeded, etc.) without waiting for a Get-Request. All other messages (Get, Set, Response) are initiated by the manager.')">C) Trap</button>
+      <button class="opt" onclick="ans('s4',3,2,'TRAP is the only SNMP message type initiated by the AGENT (not manager). It is sent when a significant event occurs (link down, threshold exceeded, etc.) without waiting for a Get-Request. All other messages (Get, Set, Response) are initiated by the manager.')">D) Get-Response</button>
+    </div>
+    <div class="exp" id="s4-e"></div>
+  </div>
+
+  <div class="mcq">
+    <div class="mcq-q">Q5. IMAP4 has an advantage over POP3 in that IMAP4 allows:</div>
+    <div class="opts" id="s5">
+      <button class="opt" onclick="ans('s5',0,2,'IMAP4 allows checking email headers BEFORE downloading, searching email by string, downloading partial emails, creating/deleting/renaming server mailboxes, and accessing from any location. POP3 is simpler but downloads all emails without preview.')">A) Faster download speeds</button>
+      <button class="opt" onclick="ans('s5',1,2,'IMAP4 allows checking email headers BEFORE downloading, searching email by string, downloading partial emails, creating/deleting/renaming server mailboxes, and accessing from any location. POP3 is simpler but downloads all emails without preview.')">B) Better spam filtering</button>
+      <button class="opt" onclick="ans('s5',2,2,'IMAP4 allows checking email headers BEFORE downloading, searching email by string, downloading partial emails, creating/deleting/renaming server mailboxes, and accessing from any location. POP3 is simpler but downloads all emails without preview.')">C) Checking email headers before downloading and managing server mailboxes</button>
+      <button class="opt" onclick="ans('s5',3,2,'IMAP4 allows checking email headers BEFORE downloading, searching email by string, downloading partial emails, creating/deleting/renaming server mailboxes, and accessing from any location. POP3 is simpler but downloads all emails without preview.')">D) Sending emails to multiple recipients</button>
+    </div>
+    <div class="exp" id="s5-e"></div>
+  </div>
+</div>
+
+<div id="rev" class="sec">
+  <div class="ttl">Super Revision Notes — Week 2 (Last-Day Study)</div>
+
+  <div class="bx bred">
+    <h3>Absolute must-know facts for NPTEL</h3>
+    <ul>
+      <li>DNS = name → IP. Uses UDP port 53. Runs as "named" daemon (BIND software)</li>
+      <li>Inverse DNS (in-addr.arpa) = IP → name. IP written in REVERSE</li>
+      <li>gTLD = 3+ chars (.com, .org, .edu). ccTLD = 2 chars (.in, .us, .au)</li>
+      <li>FQDN ends with a dot ( . ) — completely specified domain name</li>
+      <li>Zone = Domain MINUS delegated sub-domains</li>
+      <li>FTP: control = port 21, data = port 20. Uses TCP</li>
+      <li>TFTP: port 69, uses UDP, no auth, no directory listing</li>
+      <li>HTTP: port 80, uses TCP, stateless, RFC 1945 (v1.0), RFC 2616 (v1.1)</li>
+      <li>Telnet: port 23, TCP, ONE connection for data+control, IAC=255</li>
+      <li>SMTP: port 25, TCP, RFC 821, push email protocol</li>
+      <li>POP3: port 110, TCP. IMAP4: port 143, TCP (mail access)</li>
+      <li>SNMP: UDP, port 161 (queries), port 162 (traps). v3 = CIA security</li>
+    </ul>
+  </div>
+
+  <h2 class="sh">All port numbers — week 2</h2>
+  <div class="tw">
+    <table>
+      <tr><th>Port</th><th>Protocol</th><th>Transport</th><th>Purpose</th></tr>
+      <tr><td>20</td><td>FTP-Data</td><td>TCP</td><td>FTP data connection</td></tr>
+      <tr><td>21</td><td>FTP-Control</td><td>TCP</td><td>FTP control connection</td></tr>
+      <tr><td>23</td><td>Telnet</td><td>TCP</td><td>Remote login</td></tr>
+      <tr><td>25</td><td>SMTP</td><td>TCP</td><td>Send email</td></tr>
+      <tr><td>53</td><td>DNS</td><td>UDP (TCP for zone transfer)</td><td>Name resolution</td></tr>
+      <tr><td>69</td><td>TFTP</td><td>UDP</td><td>Trivial file transfer</td></tr>
+      <tr><td>80</td><td>HTTP</td><td>TCP</td><td>Web pages</td></tr>
+      <tr><td>110</td><td>POP3</td><td>TCP</td><td>Retrieve email (simple)</td></tr>
+      <tr><td>143</td><td>IMAP4</td><td>TCP</td><td>Retrieve email (advanced)</td></tr>
+      <tr><td>161</td><td>SNMP</td><td>UDP</td><td>Network management queries</td></tr>
+      <tr><td>162</td><td>SNMP Trap</td><td>UDP</td><td>Agent-initiated alerts</td></tr>
+      <tr><td>443</td><td>HTTPS</td><td>TCP</td><td>Secure web pages</td></tr>
+    </table>
+  </div>
+
+  <div class="bx bpur">
+    <h3>SNMP components — quick table</h3>
+    <ul>
+      <li><strong>MIB</strong> — Management Information Base. Text file (ASN.1 syntax). Database of managed objects. MIB-2 = RFC 1213 (TCP/IP objects)</li>
+      <li><strong>SNMP Agent</strong> — runs ON network device. Maintains state database</li>
+      <li><strong>SNMP Manager</strong> — application program. Queries/modifies agent database</li>
+      <li><strong>OID</strong> — Object Identifier. Sequence of integers with dots. Uniquely identifies each managed object</li>
+      <li><strong>Trap</strong> — ONLY agent-initiated message (no query needed). Port 162</li>
+    </ul>
+  </div>
+
+  <div class="bx bgn">
+    <h3>HTTP status codes — 1-line summary</h3>
+    <div class="ri"><span class="rb">1xx</span><span class="rt">Informational — request received, processing</span></div>
+    <div class="ri"><span class="rb">2xx</span><span class="rt">Success — 200 OK, 201 Created, 204 No Content</span></div>
+    <div class="ri"><span class="rb">3xx</span><span class="rt">Redirection — 301 Moved Permanently, 302 Temporary, 304 Not Modified</span></div>
+    <div class="ri"><span class="rb">4xx</span><span class="rt">Client Error — 400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found</span></div>
+    <div class="ri"><span class="rb">5xx</span><span class="rt">Server Error — 500 Internal, 501 Not Implemented, 503 Unavailable</span></div>
+  </div>
+
+  <div class="bx bamb">
+    <h3>DNS query types — remember RR types</h3>
+    <div class="ri"><span class="rb">A</span><span class="rt">Hostname → IPv4 address (most common)</span></div>
+    <div class="ri"><span class="rb">AAAA</span><span class="rt">Hostname → IPv6 address</span></div>
+    <div class="ri"><span class="rb">NS</span><span class="rt">Name server record (identifies authoritative server)</span></div>
+    <div class="ri"><span class="rb">MX</span><span class="rt">Mail exchange — identifies mail server for a domain</span></div>
+    <div class="ri"><span class="rb">CNAME</span><span class="rt">Alias/canonical name for another domain</span></div>
+    <div class="ri"><span class="rb">PTR</span><span class="rt">Reverse lookup — IP to hostname (used with in-addr.arpa)</span></div>
+    <div class="ri"><span class="rb">SOA</span><span class="rt">Start of Authority — first record in any zone file</span></div>
+  </div>
+
+  <div class="bx bbl">
+    <h3>Tricky NPTEL MCQ facts — don't get these wrong</h3>
+    <div class="ri"><span class="rb">1</span><span class="rt">SNMP uses UDP — NOT TCP (very commonly tested)</span></div>
+    <div class="ri"><span class="rb">2</span><span class="rt">Telnet uses ONE connection for both data and control — FTP uses TWO</span></div>
+    <div class="ri"><span class="rb">3</span><span class="rt">DNS uses UDP (port 53) for queries; TCP for zone transfers (large data)</span></div>
+    <div class="ri"><span class="rb">4</span><span class="rt">TFTP uses UDP (port 69) — NOT TCP like FTP</span></div>
+    <div class="ri"><span class="rb">5</span><span class="rt">HTTP is stateless — does NOT remember previous requests</span></div>
+    <div class="ri"><span class="rb">6</span><span class="rt">HTTP 1.1 = persistent connections (default). HTTP 1.0 = non-persistent</span></div>
+    <div class="ri"><span class="rb">7</span><span class="rt">MIME converts non-ASCII to 7-bit NVT ASCII for SMTP transmission</span></div>
+    <div class="ri"><span class="rb">8</span><span class="rt">SMTP Trap goes to port 162 (not 161). Get/Set/Response = port 161</span></div>
+    <div class="ri"><span class="rb">9</span><span class="rt">In SMTP: MAIL FROM = sender. RCPT TO = recipient. DATA = body start</span></div>
+    <div class="ri"><span class="rb">10</span><span class="rt">FTP active = server initiates data connection. Passive = client initiates</span></div>
+  </div>
+
+  <div style="margin-top:1.5rem;padding:1rem;background:#E6F1FB;border-radius:var(--border-radius-lg);border:0.5px solid #B5D4F4">
+    <p style="font-size:14px;font-weight:500;color:#0C447C;margin-bottom:8px">Exam strategy for Week 2</p>
+    <ul style="font-size:13px;color:#185FA5;padding-left:1.2rem;line-height:1.9">
+      <li>DNS questions: Focus on types (forward/reverse), zone vs domain, recursive vs iterative, RR types</li>
+      <li>FTP questions: Always remember TWO connections. Active vs passive mode. RETR=download, STOR=upload</li>
+      <li>HTTP questions: Status codes (404, 200, 301, 500 are favorites). HTTP methods (GET, POST, HEAD)</li>
+      <li>SMTP questions: Port 25, TCP, MIME for non-ASCII, POP3 vs IMAP4 differences</li>
+      <li>SNMP questions: UDP, port 161/162, Trap=agent-initiated, MIB, SNMPv3 security</li>
+      <li>If asked which uses UDP: DNS, TFTP, SNMP. Everything else usually TCP</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<script>
+function show(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  event.target.classList.add('on');
+}
+function ans(qid,chosen,correct,explanation){
+  const opts=document.querySelectorAll('#'+qid+' .opt');
+  opts.forEach((o,i)=>{
+    o.disabled=true;
+    if(i===correct)o.classList.add('ok');
+    else if(i===chosen&&chosen!==correct)o.classList.add('no');
+  });
+  const exp=document.getElementById(qid+'-e');
+  exp.textContent=(chosen===correct?'Correct! ':'Incorrect. ')+explanation;
+  exp.classList.add('show');
+}
+</script>

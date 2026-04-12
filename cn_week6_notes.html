@@ -1,0 +1,578 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.w{max-width:900px;padding:1.5rem 1rem}
+.hero{border-bottom:0.5px solid var(--color-border-tertiary);padding-bottom:1.5rem;margin-bottom:2rem}
+.hero h1{font-size:22px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px}
+.hero p{font-size:14px;color:var(--color-text-secondary)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:2rem}
+.tab{padding:6px 14px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:13px;cursor:pointer;background:var(--color-background-primary);color:var(--color-text-secondary);transition:all 0.15s}
+.tab:hover{background:var(--color-background-secondary)}
+.tab.on{background:#E6F1FB;color:#0C447C;border-color:#85B7EB;font-weight:500}
+.sec{display:none}.sec.on{display:block}
+.ttl{font-size:20px;font-weight:500;color:var(--color-text-primary);margin-bottom:6px;padding-bottom:8px;border-bottom:2px solid #85B7EB}
+.bdg{display:inline-block;font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);margin-left:8px}
+.bx{border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin:1rem 0}
+.bbl{background:#E6F1FB;border-left:3px solid #185FA5}.bbl h3{color:#0C447C}
+.bgn{background:#EAF3DE;border-left:3px solid #3B6D11}.bgn h3{color:#27500A}
+.bamb{background:#FAEEDA;border-left:3px solid #854F0B}.bamb h3{color:#633806}
+.bred{background:#FCEBEB;border-left:3px solid #A32D2D}.bred h3{color:#791F1F}
+.bpur{background:#EEEDFE;border-left:3px solid #534AB7}.bpur h3{color:#3C3489}
+.bteal{background:#E1F5EE;border-left:3px solid #0F6E56}.bteal h3{color:#085041}
+.bsec{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:0.5rem 1.25rem;margin:1rem 0}
+.bx h3{font-size:14px;font-weight:500;margin-bottom:6px}
+.bx p,.bx li{font-size:14px;color:var(--color-text-primary);line-height:1.7}
+.bx ul{padding-left:1.2rem}
+.pt{display:flex;gap:10px;padding:8px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.pt:last-child{border-bottom:none}
+.pn{font-size:13px;font-weight:500;color:#185FA5;min-width:22px}
+.ptx{font-size:14px;color:var(--color-text-primary);line-height:1.6}
+.ptx strong{font-weight:500}
+.tw{overflow-x:auto;margin:1rem 0}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:#E6F1FB;color:#0C447C;font-weight:500;padding:8px 12px;text-align:left;border:0.5px solid #B5D4F4}
+td{padding:8px 12px;border:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary);vertical-align:top}
+tr:nth-child(even) td{background:var(--color-background-secondary)}
+h2.sh{font-size:18px;font-weight:500;color:var(--color-text-primary);margin:1.5rem 0 0.5rem}
+.mcq{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin:1rem 0;background:var(--color-background-primary)}
+.mcq-q{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:10px;line-height:1.6}
+.opts{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+.opt{font-size:13px;padding:6px 10px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);cursor:pointer;color:var(--color-text-primary);background:var(--color-background-primary);text-align:left;transition:background 0.1s}
+.opt:hover{background:var(--color-background-secondary)}
+.opt.ok{background:#EAF3DE;border-color:#639922;color:#27500A}
+.opt.no{background:#FCEBEB;border-color:#A32D2D;color:#791F1F}
+.exp{display:none;font-size:13px;color:var(--color-text-secondary);background:var(--color-background-secondary);padding:8px 12px;border-radius:var(--border-radius-md);margin-top:6px;line-height:1.6}
+.exp.show{display:block}
+.ri{display:flex;gap:8px;padding:6px 0;border-bottom:0.5px solid var(--color-border-tertiary);align-items:flex-start}
+.ri:last-child{border-bottom:none}
+.rb{font-size:14px;min-width:130px;color:#185FA5;font-weight:500}
+.rt{font-size:13px;color:var(--color-text-primary);line-height:1.6}
+.code{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:8px 12px;font-family:var(--font-mono);font-size:12px;color:var(--color-text-primary);margin:6px 0;line-height:1.6}
+</style>
+
+<div class="w">
+<div class="hero">
+  <h1>Computer Networks — Week 6: Network Layer, IP, Subnetting, NAT &amp; ICMP</h1>
+  <p>IP Header · Subnetting &amp; CIDR · Longest Prefix Match · NAT · ICMP · ARP · Routing Introduction &nbsp;|&nbsp; NPTEL Exam-Ready Notes</p>
+</div>
+
+<div class="tabs">
+  <button class="tab on" onclick="show('nl')">Network Layer</button>
+  <button class="tab" onclick="show('iph')">IP Header</button>
+  <button class="tab" onclick="show('cidr')">Subnetting &amp; CIDR</button>
+  <button class="tab" onclick="show('nat')">NAT</button>
+  <button class="tab" onclick="show('icmp')">ICMP &amp; ARP</button>
+  <button class="tab" onclick="show('rtg')">Routing Intro</button>
+  <button class="tab" onclick="show('rev')">Super Revision</button>
+</div>
+
+<!-- ═══════════════ TAB 1: NETWORK LAYER ═══════════════ -->
+<div id="nl" class="sec on">
+  <div class="ttl">Topic 1: Network Layer — Role &amp; IP Service Model <span class="bdg" style="background:#FAEEDA;color:#633806">High Weightage</span></div>
+  <div class="bx bbl">
+    <h3>What does the Network Layer do?</h3>
+    <p>The Network Layer (also called the <strong>Internet Layer</strong> in TCP/IP) interconnects multiple networks and is responsible for forwarding packets from one end-host to another across the global internet. It is the 3rd layer of the TCP/IP stack (from top). Its two core functions are <strong>forwarding</strong> (moving a packet from input link to output link at a router) and <strong>routing</strong> (building the forwarding table used to make per-packet forwarding decisions).</p>
+  </div>
+
+  <h2 class="sh">Key explanation points — IP Service Model</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">1</span><span class="ptx"><strong>IP = Best-Effort, Connectionless, Unreliable:</strong> IP makes no guarantees. Packets may be dropped, reordered, corrupted, or duplicated. There is no connection establishment before sending. IP just tries its best to deliver the datagram ("best-effort delivery"). Reliability (if needed) must be provided by the transport layer (TCP). This design philosophy kept IP simple and fast.</span></div>
+    <div class="pt"><span class="pn">2</span><span class="ptx"><strong>Datagram vs Virtual Circuit:</strong> IP uses the <strong>datagram model</strong> — each packet carries the full destination address and is independently forwarded by each router. No path is pre-established. Alternative: <strong>Virtual Circuit (VC)</strong> model — a path is set up before sending any data (like in ATM networks). VC can give QoS guarantees; datagrams cannot. Internet chose datagrams for robustness and scalability.</span></div>
+    <div class="pt"><span class="pn">3</span><span class="ptx"><strong>Network of networks (internet):</strong> The internet consists of millions of end hosts connected by thousands of routers through many different physical networks (Ethernet, WiFi, fiber, etc.). IP provides a uniform addressing and forwarding layer that hides the heterogeneity of lower-layer technologies — this is IP's biggest achievement.</span></div>
+    <div class="pt"><span class="pn">4</span><span class="ptx"><strong>Forwarding vs Routing (critical distinction):</strong> <strong>Forwarding</strong> = data plane — what happens to a single packet at a single router (look up destination in forwarding table → send out appropriate interface). Time scale: nanoseconds. <strong>Routing</strong> = control plane — how the forwarding table is built and populated by routing protocols (RIP, OSPF, BGP). Time scale: seconds to minutes.</span></div>
+    <div class="pt"><span class="pn">5</span><span class="ptx"><strong>Forwarding table (routing table):</strong> Each router maintains a forwarding table: a mapping from destination IP prefix → output interface (next hop). When a packet arrives, the router reads the destination IP, looks up the table using <strong>longest prefix match</strong>, and forwards to the corresponding output interface. Table is populated by routing protocols.</span></div>
+    <div class="pt"><span class="pn">6</span><span class="ptx"><strong>Layer 3 devices — Routers:</strong> A router operates at Layer 3 (Network Layer). It inspects the IP header of every packet and makes forwarding decisions. Routers connect different IP subnets/networks. Bridges/switches operate at Layer 2 (Data Link) — they only look at MAC addresses and only forward within one network. Routers <strong>separate</strong> broadcast domains; switches extend them.</span></div>
+    <div class="pt"><span class="pn">7</span><span class="ptx"><strong>TTL — Time To Live:</strong> A field in the IP header set by the sender (typically 64 or 128). Each router decrements TTL by 1. If TTL reaches 0, router discards the packet and sends an ICMP "Time Exceeded" message back to the sender. Purpose: prevent infinite loops in case of routing loops. TTL is NOT a time value — it's a <strong>hop count</strong>.</span></div>
+    <div class="pt"><span class="pn">8</span><span class="ptx"><strong>IP fragmentation:</strong> Different networks have different <strong>MTU (Maximum Transmission Unit)</strong>. Ethernet MTU = 1500 bytes. If an IP datagram is larger than the MTU of the outgoing link, the router <strong>fragments</strong> the datagram into smaller pieces. Each fragment has its own IP header with the same identification field, a fragment offset, and a MF (More Fragments) flag. The destination host reassembles fragments. Fragmentation is harmful (overhead, loss amplification) — modern networks use <strong>Path MTU Discovery</strong> to avoid it.</span></div>
+  </div>
+
+  <div class="tw">
+    <table>
+      <tr><th>Aspect</th><th>Network Layer (IP)</th><th>Transport Layer (TCP/UDP)</th></tr>
+      <tr><td>Addressing scope</td><td>Machine-to-machine (IP address)</td><td>Process-to-process (port number)</td></tr>
+      <tr><td>Reliability</td><td>Best-effort (no guarantee)</td><td>TCP: reliable; UDP: none</td></tr>
+      <tr><td>Connection</td><td>Connectionless (datagram)</td><td>TCP: connection-oriented; UDP: connectionless</td></tr>
+      <tr><td>Routing decision</td><td>At every router (per-hop)</td><td>End-to-end only</td></tr>
+      <tr><td>Fragmentation</td><td>Yes (at IP layer, reassembled at destination)</td><td>No fragmentation</td></tr>
+    </table>
+  </div>
+
+  <h2 class="sh">MCQs — Network Layer</h2>
+  <div class="mcq">
+    <div class="mcq-q">Q1. What is the difference between routing and forwarding in the context of IP?</div>
+    <div class="opts" id="nl1">
+      <button class="opt" onclick="ans('nl1',0,2,'Forwarding = data plane operation at a single router: look up destination in forwarding table, send to output interface. Time scale = nanoseconds. Routing = control plane: the process by which forwarding tables are built and updated using routing protocols (RIP, OSPF, BGP). Time scale = seconds. Routing determines the tables; forwarding uses them.')">A) Routing is faster; forwarding is slower</button>
+      <button class="opt" onclick="ans('nl1',1,2,'Forwarding = data plane operation at a single router: look up destination in forwarding table, send to output interface. Time scale = nanoseconds. Routing = control plane: the process by which forwarding tables are built and updated using routing protocols (RIP, OSPF, BGP). Time scale = seconds. Routing determines the tables; forwarding uses them.')">B) Forwarding is done at the destination host; routing is done at routers</button>
+      <button class="opt" onclick="ans('nl1',2,2,'Forwarding = data plane operation at a single router: look up destination in forwarding table, send to output interface. Time scale = nanoseconds. Routing = control plane: the process by which forwarding tables are built and updated using routing protocols (RIP, OSPF, BGP). Time scale = seconds. Routing determines the tables; forwarding uses them.')">C) Forwarding = per-packet action at a router (data plane); Routing = building the forwarding table via protocols (control plane)</button>
+      <button class="opt" onclick="ans('nl1',3,2,'Forwarding = data plane operation at a single router: look up destination in forwarding table, send to output interface. Time scale = nanoseconds. Routing = control plane: the process by which forwarding tables are built and updated using routing protocols (RIP, OSPF, BGP). Time scale = seconds. Routing determines the tables; forwarding uses them.')">D) They are synonyms — both refer to moving packets through the network</button>
+    </div>
+    <div class="exp" id="nl1-e"></div>
+  </div>
+  <div class="mcq">
+    <div class="mcq-q">Q2. A router receives a packet with TTL=1. What does it do?</div>
+    <div class="opts" id="nl2">
+      <button class="opt" onclick="ans('nl2',0,2,'Router decrements TTL: 1−1=0. TTL=0 → router DISCARDS the packet (does NOT forward it). It then sends an ICMP Type 11 (Time Exceeded) message back to the original sender. This mechanism prevents packets from looping forever in the event of routing loops.')">A) Forwards the packet normally and decrements TTL to 0</button>
+      <button class="opt" onclick="ans('nl2',1,2,'Router decrements TTL: 1−1=0. TTL=0 → router DISCARDS the packet (does NOT forward it). It then sends an ICMP Type 11 (Time Exceeded) message back to the original sender. This mechanism prevents packets from looping forever in the event of routing loops.')">B) Discards the packet and sends ICMP Time Exceeded to the sender</button>
+      <button class="opt" onclick="ans('nl2',2,2,'Router decrements TTL: 1−1=0. TTL=0 → router DISCARDS the packet (does NOT forward it). It then sends an ICMP Type 11 (Time Exceeded) message back to the original sender. This mechanism prevents packets from looping forever in the event of routing loops.')">C) Resets TTL to the default value and forwards</button>
+      <button class="opt" onclick="ans('nl2',3,2,'Router decrements TTL: 1−1=0. TTL=0 → router DISCARDS the packet (does NOT forward it). It then sends an ICMP Type 11 (Time Exceeded) message back to the original sender. This mechanism prevents packets from looping forever in the event of routing loops.')">D) Sends a TCP RST to the transport layer</button>
+    </div>
+    <div class="exp" id="nl2-e"></div>
+  </div>
+  <div class="mcq">
+    <div class="mcq-q">Q3. IP fragmentation occurs when:</div>
+    <div class="opts" id="nl3">
+      <button class="opt" onclick="ans('nl3',0,1,'If the datagram size exceeds the MTU of the outgoing link (e.g., datagram = 4000B but Ethernet MTU = 1500B), the router fragments it into smaller pieces each ≤ MTU. All fragments carry the same IP Identification field. Fragment offset field indicates where in original datagram each fragment starts. MF (More Fragments) flag = 1 for all except the last fragment. Reassembly happens at the DESTINATION HOST only.')">A) The transport layer sends too much data at once</button>
+      <button class="opt" onclick="ans('nl3',1,1,'If the datagram size exceeds the MTU of the outgoing link (e.g., datagram = 4000B but Ethernet MTU = 1500B), the router fragments it into smaller pieces each ≤ MTU. All fragments carry the same IP Identification field. Fragment offset field indicates where in original datagram each fragment starts. MF (More Fragments) flag = 1 for all except the last fragment. Reassembly happens at the DESTINATION HOST only.')">B) The datagram size exceeds the MTU of the outgoing link</button>
+      <button class="opt" onclick="ans('nl3',2,1,'If the datagram size exceeds the MTU of the outgoing link (e.g., datagram = 4000B but Ethernet MTU = 1500B), the router fragments it into smaller pieces each ≤ MTU. All fragments carry the same IP Identification field. Fragment offset field indicates where in original datagram each fragment starts. MF (More Fragments) flag = 1 for all except the last fragment. Reassembly happens at the DESTINATION HOST only.')">C) A router's buffer is full and it must split traffic</button>
+      <button class="opt" onclick="ans('nl3',3,1,'If the datagram size exceeds the MTU of the outgoing link (e.g., datagram = 4000B but Ethernet MTU = 1500B), the router fragments it into smaller pieces each ≤ MTU. All fragments carry the same IP Identification field. Fragment offset field indicates where in original datagram each fragment starts. MF (More Fragments) flag = 1 for all except the last fragment. Reassembly happens at the DESTINATION HOST only.')">D) TTL expires and the packet must be retransmitted in smaller pieces</button>
+    </div>
+    <div class="exp" id="nl3-e"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ TAB 2: IP HEADER ═══════════════ -->
+<div id="iph" class="sec">
+  <div class="ttl">Topic 2: IPv4 Header — Field-by-Field <span class="bdg" style="background:#FCEBEB;color:#791F1F">Most Important</span></div>
+  <div class="bx bbl">
+    <h3>IPv4 Header — minimum 20 bytes</h3>
+    <p>Every IP datagram starts with the IP header. Minimum header size = <strong>20 bytes</strong> (with no options). Maximum = 60 bytes (with options). The header contains all routing information needed by intermediate routers. Knowing every field and its purpose is critical for the exam.</p>
+  </div>
+
+  <h2 class="sh">Key explanation points — IP Header Fields</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">1</span><span class="ptx"><strong>Version (4 bits):</strong> IP version. IPv4 = 4 (binary 0100). IPv6 = 6 (binary 0110). Routers first read this field to decide how to parse the rest of the header. Mixed-version networks can coexist because routers understand both.</span></div>
+    <div class="pt"><span class="pn">2</span><span class="ptx"><strong>IHL — IP Header Length (4 bits):</strong> Length of the IP header in units of <strong>4-byte words</strong>. Minimum value = 5 (5 × 4 = 20 bytes — no options). Maximum value = 15 (15 × 4 = 60 bytes — with options). IHL tells the router/host where the data payload starts. Formula: header length in bytes = IHL × 4.</span></div>
+    <div class="pt"><span class="pn">3</span><span class="ptx"><strong>TOS — Type of Service / DS (8 bits):</strong> Originally for QoS marking (precedence, delay, throughput, reliability bits). Modern usage: <strong>DSCP (Differentiated Services Code Point)</strong> — top 6 bits used for QoS marking, bottom 2 bits for ECN (Explicit Congestion Notification). Allows routers to prioritize certain traffic classes.</span></div>
+    <div class="pt"><span class="pn">4</span><span class="ptx"><strong>Total Length (16 bits):</strong> Total size of the IP datagram in bytes (header + data). Maximum = 65535 bytes (2¹⁶ − 1). Minimum = 20 bytes (header only, no data). Used by receiver to determine where the datagram ends in the received byte stream.</span></div>
+    <div class="pt"><span class="pn">5</span><span class="ptx"><strong>Identification (16 bits):</strong> Unique identifier assigned by the sender to each datagram. All fragments of the same original datagram carry the <strong>same identification value</strong>. Used by the destination host to group fragments belonging to the same original datagram for reassembly.</span></div>
+    <div class="pt"><span class="pn">6</span><span class="ptx"><strong>Flags (3 bits):</strong> Bit 0 = Reserved (must be 0). Bit 1 = <strong>DF (Don't Fragment)</strong> — if set to 1, routers must NOT fragment this datagram; if MTU is too small, discard and send ICMP "Fragmentation Needed" back. Used in Path MTU Discovery. Bit 2 = <strong>MF (More Fragments)</strong> — set to 1 in all fragments except the last (last fragment: MF=0).</span></div>
+    <div class="pt"><span class="pn">7</span><span class="ptx"><strong>Fragment Offset (13 bits):</strong> Position of this fragment's data in the original datagram, measured in units of <strong>8 bytes</strong>. Example: if fragment starts at byte 1480 of original, offset = 1480/8 = 185. This allows the destination host to reassemble fragments in correct order even if they arrive out of order.</span></div>
+    <div class="pt"><span class="pn">8</span><span class="ptx"><strong>TTL — Time To Live (8 bits):</strong> Hop count limit. Set by sender (typically 64 or 128). Decremented by 1 at each router. When TTL = 0: router discards packet and sends ICMP Type 11 (Time Exceeded) to sender. Prevents infinite loops. traceroute uses this field deliberately (sends packets with TTL=1, 2, 3... to map the network path).</span></div>
+    <div class="pt"><span class="pn">9</span><span class="ptx"><strong>Protocol (8 bits):</strong> Identifies the upper-layer (transport layer) protocol carried in the IP datagram's payload. Common values: 6 = TCP, 17 = UDP, 1 = ICMP, 89 = OSPF, 88 = EIGRP. Used by the destination host to demultiplex the datagram — hand the payload to the correct transport protocol.</span></div>
+    <div class="pt"><span class="pn">10</span><span class="ptx"><strong>Header Checksum (16 bits):</strong> Internet checksum over the IP header <strong>only</strong> (not the data payload). Recomputed at <strong>every router hop</strong> because TTL changes at each hop. If checksum fails → discard silently. Transport layer (TCP/UDP) has its own end-to-end checksum covering the data.</span></div>
+    <div class="pt"><span class="pn">11</span><span class="ptx"><strong>Source IP Address (32 bits):</strong> IPv4 address of the originating host. 32 bits = 4 octets (e.g., 192.168.1.1). Written in dotted-decimal notation. Each octet = 8 bits. Can range from 0.0.0.0 to 255.255.255.255.</span></div>
+    <div class="pt"><span class="pn">12</span><span class="ptx"><strong>Destination IP Address (32 bits):</strong> IPv4 address of the intended destination host. Used by every router for forwarding decisions (longest prefix match against forwarding table). Most important field in the IP header for routing.</span></div>
+    <div class="pt"><span class="pn">13</span><span class="ptx"><strong>Options (0–40 bytes, variable):</strong> Optional field. Examples: Record Route (stores IP of each router), Strict/Loose Source Routing (sender specifies exact/partial path), Timestamp. Rarely used today — options complicate router processing and are often blocked by firewalls. IHL field accounts for the presence of options.</span></div>
+  </div>
+
+  <div class="tw">
+    <table>
+      <tr><th>Field</th><th>Size</th><th>Key Purpose / Exam Trap</th></tr>
+      <tr><td>Version</td><td>4 bits</td><td>4 = IPv4, 6 = IPv6</td></tr>
+      <tr><td>IHL</td><td>4 bits</td><td>Header length in 4-byte words. Min=5(20B), Max=15(60B)</td></tr>
+      <tr><td>TOS/DS</td><td>8 bits</td><td>QoS (DSCP top 6b) + ECN (bottom 2b)</td></tr>
+      <tr><td>Total Length</td><td>16 bits</td><td>Header + Data. Max = 65535 bytes</td></tr>
+      <tr><td>Identification</td><td>16 bits</td><td>Same for all fragments of one datagram</td></tr>
+      <tr><td>Flags</td><td>3 bits</td><td>DF (bit1), MF (bit2). DF=1 → no fragmentation</td></tr>
+      <tr><td>Fragment Offset</td><td>13 bits</td><td>In units of 8 bytes. Used for reassembly order</td></tr>
+      <tr><td>TTL</td><td>8 bits</td><td>Hop count. Decremented per router. 0 → discard + ICMP</td></tr>
+      <tr><td>Protocol</td><td>8 bits</td><td>6=TCP, 17=UDP, 1=ICMP, 89=OSPF</td></tr>
+      <tr><td>Header Checksum</td><td>16 bits</td><td>IP header only. Recomputed at EVERY router (TTL changes)</td></tr>
+      <tr><td>Source IP</td><td>32 bits</td><td>Sender's IPv4 address</td></tr>
+      <tr><td>Destination IP</td><td>32 bits</td><td>Receiver's IPv4 address — used for forwarding decision</td></tr>
+      <tr><td>Options</td><td>0–40 bytes</td><td>Record Route, Source Routing, Timestamp. Rarely used</td></tr>
+    </table>
+  </div>
+
+  <h2 class="sh">MCQs — IP Header</h2>
+  <div class="mcq">
+    <div class="mcq-q">Q1. An IP header has IHL = 7. What is the total header size in bytes?</div>
+    <div class="opts" id="iph1">
+      <button class="opt" onclick="ans('iph1',0,2,'IHL is measured in 4-byte words. Header size = IHL × 4 = 7 × 4 = 28 bytes. The minimum is IHL=5 → 20 bytes (no options). IHL > 5 means options are present. In this case, IHL=7 → 28 bytes → 8 bytes of options are present (28 − 20 = 8B options).')">A) 7 bytes</button>
+      <button class="opt" onclick="ans('iph1',1,2,'IHL is measured in 4-byte words. Header size = IHL × 4 = 7 × 4 = 28 bytes. The minimum is IHL=5 → 20 bytes (no options). IHL > 5 means options are present. In this case, IHL=7 → 28 bytes → 8 bytes of options are present (28 − 20 = 8B options).')">B) 28 bytes (IHL × 4 = 7 × 4)</button>
+      <button class="opt" onclick="ans('iph1',2,2,'IHL is measured in 4-byte words. Header size = IHL × 4 = 7 × 4 = 28 bytes. The minimum is IHL=5 → 20 bytes (no options). IHL > 5 means options are present. In this case, IHL=7 → 28 bytes → 8 bytes of options are present (28 − 20 = 8B options).')">C) 35 bytes</button>
+      <button class="opt" onclick="ans('iph1',3,2,'IHL is measured in 4-byte words. Header size = IHL × 4 = 7 × 4 = 28 bytes. The minimum is IHL=5 → 20 bytes (no options). IHL > 5 means options are present. In this case, IHL=7 → 28 bytes → 8 bytes of options are present (28 − 20 = 8B options).')">D) 20 bytes (options are separate)</button>
+    </div>
+    <div class="exp" id="iph1-e"></div>
+  </div>
+  <div class="mcq">
+    <div class="mcq-q">Q2. Why is the IP header checksum recomputed at every router, but the TCP/UDP checksum is not?</div>
+    <div class="opts" id="iph2">
+      <button class="opt" onclick="ans('iph2',0,1,'The IP header checksum covers only the IP header. The TTL field in the IP header is DECREMENTED by every router → the IP header changes at each hop → checksum must be recomputed at each router. TCP/UDP checksum is end-to-end (computed once at sender, verified once at receiver); the transport header does NOT change at intermediate routers.')">A) TCP/UDP checksum is stronger and replaces the IP checksum</button>
+      <button class="opt" onclick="ans('iph2',1,1,'The IP header checksum covers only the IP header. The TTL field in the IP header is DECREMENTED by every router → the IP header changes at each hop → checksum must be recomputed at each router. TCP/UDP checksum is end-to-end (computed once at sender, verified once at receiver); the transport header does NOT change at intermediate routers.')">B) IP header (specifically TTL) changes at each router hop → header checksum must be recomputed; TCP/UDP header is unchanged end-to-end</button>
+      <button class="opt" onclick="ans('iph2',2,1,'The IP header checksum covers only the IP header. The TTL field in the IP header is DECREMENTED by every router → the IP header changes at each hop → checksum must be recomputed at each router. TCP/UDP checksum is end-to-end (computed once at sender, verified once at receiver); the transport header does NOT change at intermediate routers.')">C) Routers do not have enough processing power for TCP checksum</button>
+      <button class="opt" onclick="ans('iph2',3,1,'The IP header checksum covers only the IP header. The TTL field in the IP header is DECREMENTED by every router → the IP header changes at each hop → checksum must be recomputed at each router. TCP/UDP checksum is end-to-end (computed once at sender, verified once at receiver); the transport header does NOT change at intermediate routers.')">D) Both checksums are recomputed at every router</button>
+    </div>
+    <div class="exp" id="iph2-e"></div>
+  </div>
+  <div class="mcq">
+    <div class="mcq-q">Q3. A datagram has MF=1 and Fragment Offset=185. What does this tell you?</div>
+    <div class="opts" id="iph3">
+      <button class="opt" onclick="ans('iph3',0,3,'MF (More Fragments) = 1 means this is NOT the last fragment (more fragments follow). Fragment offset = 185 means data starts at byte 185 × 8 = 1480 in the original datagram. This is an intermediate fragment of a fragmented datagram — neither the first fragment (offset=0) nor the last fragment (MF=0).')">A) This is the last fragment; data starts at byte 185</button>
+      <button class="opt" onclick="ans('iph3',1,3,'MF (More Fragments) = 1 means this is NOT the last fragment (more fragments follow). Fragment offset = 185 means data starts at byte 185 × 8 = 1480 in the original datagram. This is an intermediate fragment of a fragmented datagram — neither the first fragment (offset=0) nor the last fragment (MF=0).')">B) This is the first fragment; more fragments follow</button>
+      <button class="opt" onclick="ans('iph3',2,3,'MF (More Fragments) = 1 means this is NOT the last fragment (more fragments follow). Fragment offset = 185 means data starts at byte 185 × 8 = 1480 in the original datagram. This is an intermediate fragment of a fragmented datagram — neither the first fragment (offset=0) nor the last fragment (MF=0).')">C) The datagram is not fragmented</button>
+      <button class="opt" onclick="ans('iph3',3,3,'MF (More Fragments) = 1 means this is NOT the last fragment (more fragments follow). Fragment offset = 185 means data starts at byte 185 × 8 = 1480 in the original datagram. This is an intermediate fragment of a fragmented datagram — neither the first fragment (offset=0) nor the last fragment (MF=0).')">D) More fragments follow; data in this fragment starts at byte 1480 (185×8) in the original datagram</button>
+    </div>
+    <div class="exp" id="iph3-e"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ TAB 3: SUBNETTING & CIDR ═══════════════ -->
+<div id="cidr" class="sec">
+  <div class="ttl">Topic 3: IP Addressing, Subnetting &amp; CIDR <span class="bdg" style="background:#FCEBEB;color:#791F1F">Most Important</span></div>
+  <div class="bx bbl">
+    <h3>IP Address Structure &amp; Classful vs Classless</h3>
+    <p>An IPv4 address is <strong>32 bits</strong> long. Originally divided into <strong>classful</strong> addressing (Class A/B/C/D/E). Modern internet uses <strong>CIDR — Classless Inter-Domain Routing</strong> — where any number of bits can be the network prefix. CIDR dramatically reduced the routing table explosion problem and enabled efficient address allocation.</p>
+  </div>
+
+  <h2 class="sh">Key explanation points — Classful Addressing</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">1</span><span class="ptx"><strong>Class A:</strong> First bit = 0. Network prefix = 8 bits. Host part = 24 bits. Range: 0.0.0.0 – 127.255.255.255. Number of hosts per network = 2²⁴ − 2 = ~16 million. Only 128 Class A networks exist in the world — each is HUGE. (127.x.x.x is loopback — not usable).</span></div>
+    <div class="pt"><span class="pn">2</span><span class="ptx"><strong>Class B:</strong> First two bits = 10. Network prefix = 16 bits. Host part = 16 bits. Range: 128.0.0.0 – 191.255.255.255. Number of hosts = 2¹⁶ − 2 = 65534. Suitable for medium-large organizations. 16,384 Class B networks possible.</span></div>
+    <div class="pt"><span class="pn">3</span><span class="ptx"><strong>Class C:</strong> First three bits = 110. Network prefix = 24 bits. Host part = 8 bits. Range: 192.0.0.0 – 223.255.255.255. Number of hosts = 2⁸ − 2 = 254. Small networks. Over 2 million Class C networks possible.</span></div>
+    <div class="pt"><span class="pn">4</span><span class="ptx"><strong>Class D:</strong> First four bits = 1110. Range: 224.0.0.0 – 239.255.255.255. Reserved for <strong>multicast</strong>. No host/network split. Used by routing protocols (OSPF uses 224.0.0.5), streaming, etc.</span></div>
+    <div class="pt"><span class="pn">5</span><span class="ptx"><strong>Class E:</strong> First four bits = 1111. Range: 240.0.0.0 – 255.255.255.255. Reserved for experimental/research use. 255.255.255.255 = limited broadcast. Not used in public internet.</span></div>
+    <div class="pt"><span class="pn">6</span><span class="ptx"><strong>Problem with classful addressing:</strong> A company with 1000 hosts needs a Class B (65534 hosts) — wastes 64534 addresses. OR needs 4 Class C networks — routing tables need 4 entries. Both are inefficient. This is the <strong>address wastage</strong> and <strong>routing table explosion</strong> problem that classful addressing caused.</span></div>
+  </div>
+
+  <h2 class="sh">Key explanation points — CIDR &amp; Subnetting</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">7</span><span class="ptx"><strong>CIDR — Classless Inter-Domain Routing:</strong> Introduced in 1993 (RFC 1519). Instead of fixed class boundaries, use a <strong>prefix length</strong> (slash notation). Format: <strong>a.b.c.d/n</strong> — the first n bits are the network prefix, remaining (32−n) bits are the host part. Example: 192.168.1.0/24 → 24 bits network, 8 bits host → 254 usable hosts.</span></div>
+    <div class="pt"><span class="pn">8</span><span class="ptx"><strong>Subnet Mask:</strong> Equivalent to CIDR prefix length but expressed as a 32-bit number. /24 → subnet mask = 255.255.255.0 (24 ones followed by 8 zeros). /16 → 255.255.0.0. /8 → 255.0.0.0. AND-ing an IP address with the subnet mask gives the <strong>network address</strong>. Example: 192.168.1.57 AND 255.255.255.0 = 192.168.1.0.</span></div>
+    <div class="pt"><span class="pn">9</span><span class="ptx"><strong>Subnetting:</strong> Dividing a large address block into smaller sub-blocks. Example: 192.168.1.0/24 can be split into two /25 subnets: 192.168.1.0/25 (hosts .1–.126) and 192.168.1.128/25 (hosts .129–.254). Each /25 has 2⁷ − 2 = 126 usable hosts. Network address and broadcast address are not assignable to hosts.</span></div>
+    <div class="pt"><span class="pn">10</span><span class="ptx"><strong>Network address &amp; Broadcast address:</strong> Network address = all host bits = 0 (e.g., 192.168.1.0 for /24). Broadcast address = all host bits = 1 (e.g., 192.168.1.255 for /24). These two are <strong>not assignable</strong>. Usable hosts = 2^(host bits) − 2.</span></div>
+    <div class="pt"><span class="pn">11</span><span class="ptx"><strong>Route Aggregation (Supernetting):</strong> CIDR allows multiple consecutive networks to be summarized into one prefix. Example: 200.23.16.0/24, 200.23.17.0/24, ..., 200.23.23.0/24 (8 networks) can all be summarized as <strong>200.23.16.0/21</strong>. Routers only need one entry instead of 8. This dramatically reduces routing table size — a key CIDR benefit.</span></div>
+    <div class="pt"><span class="pn">12</span><span class="ptx"><strong>Longest Prefix Match (LPM):</strong> When a router looks up a destination IP, multiple entries in the forwarding table may match. Router always uses the entry with the <strong>longest matching prefix</strong> (most specific route). Example: router table has 192.168.1.0/24 and 192.168.0.0/16. Destination = 192.168.1.5 matches BOTH — use /24 (more specific). Default route = 0.0.0.0/0 (least specific — matches everything).</span></div>
+    <div class="pt"><span class="pn">13</span><span class="ptx"><strong>Special IP addresses:</strong> 127.0.0.1 = loopback (localhost — packets stay on the same machine, never reach the wire). 0.0.0.0 = unspecified/any address. 255.255.255.255 = limited broadcast (delivered to all hosts on local subnet only, not forwarded by routers). 169.254.0.0/16 = APIPA (Automatic Private IP Addressing — when DHCP fails).</span></div>
+    <div class="pt"><span class="pn">14</span><span class="ptx"><strong>Private IP ranges (RFC 1918):</strong> Not routable on public internet. Used inside organizations with NAT. 10.0.0.0/8 (Class A private), 172.16.0.0/12, 192.168.0.0/16 (most common home networks). Packets with these source addresses are dropped at internet routers.</span></div>
+  </div>
+
+  <div class="tw">
+    <table>
+      <tr><th>Class</th><th>First Bits</th><th>Network Bits</th><th>Host Bits</th><th>Range</th><th>Max Hosts/Net</th></tr>
+      <tr><td>A</td><td>0</td><td>8</td><td>24</td><td>0.0.0.0 – 127.255.255.255</td><td>16,777,214</td></tr>
+      <tr><td>B</td><td>10</td><td>16</td><td>16</td><td>128.0.0.0 – 191.255.255.255</td><td>65,534</td></tr>
+      <tr><td>C</td><td>110</td><td>24</td><td>8</td><td>192.0.0.0 – 223.255.255.255</td><td>254</td></tr>
+      <tr><td>D</td><td>1110</td><td>Multicast</td><td>—</td><td>224.0.0.0 – 239.255.255.255</td><td>N/A</td></tr>
+      <tr><td>E</td><td>1111</td><td>Reserved</td><td>—</td><td>240.0.0.0 – 255.255.255.255</td><td>N/A</td></tr>
+    </table>
+  </div>
+
+  <h2 class="sh">MCQs — Subnetting &amp; CIDR</h2>
+  <div class="mcq">
+    <div class="mcq-q">Q1. How many usable host addresses are available in the subnet 172.16.5.0/26?</div>
+    <div class="opts" id="ci1">
+      <button class="opt" onclick="ans('ci1',0,1,'Prefix = /26 → 26 bits network, 6 bits host. Total addresses = 2⁶ = 64. Usable hosts = 64 − 2 = 62. (Subtract network address 172.16.5.0 and broadcast address 172.16.5.63). Usable range: 172.16.5.1 – 172.16.5.62.')">A) 62 (2⁶ − 2 = 64 − 2)</button>
+      <button class="opt" onclick="ans('ci1',1,1,'Prefix = /26 → 26 bits network, 6 bits host. Total addresses = 2⁶ = 64. Usable hosts = 64 − 2 = 62. (Subtract network address 172.16.5.0 and broadcast address 172.16.5.63). Usable range: 172.16.5.1 – 172.16.5.62.')">B) 64</button>
+      <button class="opt" onclick="ans('ci1',2,1,'Prefix = /26 → 26 bits network, 6 bits host. Total addresses = 2⁶ = 64. Usable hosts = 64 − 2 = 62. (Subtract network address 172.16.5.0 and broadcast address 172.16.5.63). Usable range: 172.16.5.1 – 172.16.5.62.')">C) 126</button>
+      <button class="opt" onclick="ans('ci1',3,1,'Prefix = /26 → 26 bits network, 6 bits host. Total addresses = 2⁶ = 64. Usable hosts = 64 − 2 = 62. (Subtract network address 172.16.5.0 and broadcast address 172.16.5.63). Usable range: 172.16.5.1 – 172.16.5.62.')">D) 30</button>
+    </div>
+    <div class="exp" id="ci1-e"></div>
+  </div>
+  <div class="mcq">
+    <div class="mcq-q">Q2. A router's forwarding table has entries: 192.168.0.0/16 → Interface A, 192.168.1.0/24 → Interface B, 0.0.0.0/0 → Interface C. Destination = 192.168.1.100. Which interface is used?</div>
+    <div class="opts" id="ci2">
+      <button class="opt" onclick="ans('ci2',0,1,'Longest Prefix Match: Check all entries that match 192.168.1.100. 192.168.0.0/16: prefix = 192.168.x.x → matches (16 bits match). 192.168.1.0/24: prefix = 192.168.1.x → matches (24 bits match). 0.0.0.0/0: matches everything (0 bits match). Longest match = 192.168.1.0/24 (24 bits) → Interface B. Always choose the most specific route.')">A) Interface A (/16 is the wider route)</button>
+      <button class="opt" onclick="ans('ci2',1,1,'Longest Prefix Match: Check all entries that match 192.168.1.100. 192.168.0.0/16: prefix = 192.168.x.x → matches (16 bits match). 192.168.1.0/24: prefix = 192.168.1.x → matches (24 bits match). 0.0.0.0/0: matches everything (0 bits match). Longest match = 192.168.1.0/24 (24 bits) → Interface B. Always choose the most specific route.')">B) Interface B (/24 is longest, most specific match)</button>
+      <button class="opt" onclick="ans('ci2',2,1,'Longest Prefix Match: Check all entries that match 192.168.1.100. 192.168.0.0/16: prefix = 192.168.x.x → matches (16 bits match). 192.168.1.0/24: prefix = 192.168.1.x → matches (24 bits match). 0.0.0.0/0: matches everything (0 bits match). Longest match = 192.168.1.0/24 (24 bits) → Interface B. Always choose the most specific route.')">C) Interface C (default route)</button>
+      <button class="opt" onclick="ans('ci2',3,1,'Longest Prefix Match: Check all entries that match 192.168.1.100. 192.168.0.0/16: prefix = 192.168.x.x → matches (16 bits match). 192.168.1.0/24: prefix = 192.168.1.x → matches (24 bits match). 0.0.0.0/0: matches everything (0 bits match). Longest match = 192.168.1.0/24 (24 bits) → Interface B. Always choose the most specific route.')">D) The packet is dropped (multiple matches cause ambiguity)</button>
+    </div>
+    <div class="exp" id="ci2-e"></div>
+  </div>
+  <div class="mcq">
+    <div class="mcq-q">Q3. What is the broadcast address of the subnet 10.5.3.128/26?</div>
+    <div class="opts" id="ci3">
+      <button class="opt" onclick="ans('ci3',0,2,'/26 → 6 host bits. Network address = 10.5.3.128 (128 = 10000000 in last octet → host bits all 0). Broadcast = all host bits = 1 → last octet = 10000000 | 00111111 = 10111111 = 191. Broadcast = 10.5.3.191. Usable range: 10.5.3.129 – 10.5.3.190 (62 hosts).')">A) 10.5.3.255</button>
+      <button class="opt" onclick="ans('ci3',1,2,'/26 → 6 host bits. Network address = 10.5.3.128 (128 = 10000000 in last octet → host bits all 0). Broadcast = all host bits = 1 → last octet = 10000000 | 00111111 = 10111111 = 191. Broadcast = 10.5.3.191. Usable range: 10.5.3.129 – 10.5.3.190 (62 hosts).')">B) 10.5.3.191 (128 + 64 − 1 = 191)</button>
+      <button class="opt" onclick="ans('ci3',2,2,'/26 → 6 host bits. Network address = 10.5.3.128 (128 = 10000000 in last octet → host bits all 0). Broadcast = all host bits = 1 → last octet = 10000000 | 00111111 = 10111111 = 191. Broadcast = 10.5.3.191. Usable range: 10.5.3.129 – 10.5.3.190 (62 hosts).')">C) 10.5.3.159</button>
+      <button class="opt" onclick="ans('ci3',3,2,'/26 → 6 host bits. Network address = 10.5.3.128 (128 = 10000000 in last octet → host bits all 0). Broadcast = all host bits = 1 → last octet = 10000000 | 00111111 = 10111111 = 191. Broadcast = 10.5.3.191. Usable range: 10.5.3.129 – 10.5.3.190 (62 hosts).')">D) 10.5.3.192</button>
+    </div>
+    <div class="exp" id="ci3-e"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ TAB 4: NAT ═══════════════ -->
+<div id="nat" class="sec">
+  <div class="ttl">Topic 4: NAT — Network Address Translation <span class="bdg" style="background:#FAEEDA;color:#633806">High Weightage</span></div>
+  <div class="bx bbl">
+    <h3>Why NAT exists</h3>
+    <p>IPv4 has only 2³² ≈ 4.3 billion addresses. With billions of devices, addresses ran out (IPv4 exhaustion). NAT allows multiple devices sharing <strong>one public IP address</strong> by using private IP addresses internally. A NAT box (router) translates between private (internal) and public (external) IP addresses, keeping a translation table to track connections.</p>
+  </div>
+
+  <h2 class="sh">Key explanation points — NAT Operation</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">1</span><span class="ptx"><strong>Basic NAT operation (outgoing packet):</strong> Internal host 192.168.1.5:3425 sends packet to external server 8.8.8.8:80. NAT router changes the source to: public IP 203.0.113.1, new port 5001. Stores mapping: {192.168.1.5:3425 ↔ 203.0.113.1:5001} in NAT translation table. Forwards modified packet to internet.</span></div>
+    <div class="pt"><span class="pn">2</span><span class="ptx"><strong>Basic NAT operation (incoming reply):</strong> Server replies to 203.0.113.1:5001. NAT router receives this, looks up translation table: 203.0.113.1:5001 maps to 192.168.1.5:3425. Changes destination back to 192.168.1.5:3425. Forwards to internal host. The internal host never knows its real IP was translated.</span></div>
+    <div class="pt"><span class="pn">3</span><span class="ptx"><strong>PAT — Port Address Translation (NAPT):</strong> Full form: <strong>Network Address Port Translation</strong>. The most common form of NAT. Multiple internal hosts share ONE public IP address — differentiated by <strong>port numbers</strong>. NAT table maps (private IP, private port) → (public IP, public port). Effectively multiplexes all internal connections through one public IP using different ports.</span></div>
+    <div class="pt"><span class="pn">4</span><span class="ptx"><strong>NAT breaks end-to-end connectivity:</strong> A host behind NAT cannot be directly reached from the internet (no inbound connection is possible unless NAT mapping exists). Servers cannot be hosted behind NAT without <strong>port forwarding</strong> (static NAT entry). This violates the original internet end-to-end principle where every host has a unique globally routable address.</span></div>
+    <div class="pt"><span class="pn">5</span><span class="ptx"><strong>NAT and transport layer:</strong> NAT modifies both IP header (src/dst IP) and the TCP/UDP header (src/dst port). This means NAT is technically a layer 3 + layer 4 device — it violates the layering principle. It cannot work with protocols that embed IPs in application data (e.g., FTP active mode, SIP for VoIP need ALG — Application Layer Gateway).</span></div>
+    <div class="pt"><span class="pn">6</span><span class="ptx"><strong>NAT traversal problem:</strong> Peer-to-peer applications, VoIP, gaming need two NAT-ed hosts to communicate directly. Neither can initiate an inbound connection. Solutions: <strong>STUN</strong> (Session Traversal Utilities for NAT) — uses a public server to discover external IP/port. <strong>TURN</strong> — relay all traffic through a server. <strong>ICE</strong> — combines both. Used by WebRTC, Skype, etc.</span></div>
+    <div class="pt"><span class="pn">7</span><span class="ptx"><strong>NAT table entry lifetime:</strong> TCP connections: NAT entry stays alive while TCP connection is open (tracks SYN, FIN). UDP: NAT entry has a timeout (typically 30 seconds) since UDP is connectionless. When timeout expires, NAT entry is deleted. If a reply arrives after entry is deleted → packet dropped and connection fails.</span></div>
+    <div class="pt"><span class="pn">8</span><span class="ptx"><strong>IPv6 and NAT:</strong> IPv6 has 2¹²⁸ addresses — effectively unlimited. NAT is generally NOT needed in IPv6. Every device can have a globally unique routable IPv6 address, restoring end-to-end connectivity. One of the main arguments for IPv6 migration. However, some NAT66 deployments still exist for security/privacy.</span></div>
+  </div>
+
+  <div class="tw">
+    <table>
+      <tr><th>NAT Type</th><th>What changes</th><th>Advantage</th><th>Disadvantage</th></tr>
+      <tr><td>Basic NAT (1:1)</td><td>IP only (one public IP per private IP)</td><td>Simple</td><td>Still needs many public IPs</td></tr>
+      <tr><td>PAT/NAPT (many:1)</td><td>IP + Port (many private IPs share one public IP)</td><td>Maximum address conservation</td><td>No inbound connections without port forwarding</td></tr>
+      <tr><td>Port Forwarding</td><td>Static entry: public port → internal host:port</td><td>Allows hosting servers behind NAT</td><td>Must be manually configured</td></tr>
+    </table>
+  </div>
+
+  <h2 class="sh">MCQs — NAT</h2>
+  <div class="mcq">
+    <div class="mcq-q">Q1. A home router uses PAT (Port Address Translation). How does it distinguish between connections from different internal hosts that all share the same public IP?</div>
+    <div class="opts" id="na1">
+      <button class="opt" onclick="ans('na1',0,2,'PAT assigns a unique PUBLIC PORT NUMBER to each outgoing connection. Internal host 192.168.1.2:4000 → public 1.2.3.4:50001. Internal host 192.168.1.3:4000 → public 1.2.3.4:50002. The NAT table maps each (private IP, private port) to a unique (public IP, public port). Incoming reply to port 50001 → goes to 192.168.1.2:4000. Port 50002 → goes to 192.168.1.3:4000.')">A) By using different protocols for each host (TCP for one, UDP for another)</button>
+      <button class="opt" onclick="ans('na1',1,2,'PAT assigns a unique PUBLIC PORT NUMBER to each outgoing connection. Internal host 192.168.1.2:4000 → public 1.2.3.4:50001. Internal host 192.168.1.3:4000 → public 1.2.3.4:50002. The NAT table maps each (private IP, private port) to a unique (public IP, public port). Incoming reply to port 50001 → goes to 192.168.1.2:4000. Port 50002 → goes to 192.168.1.3:4000.')">B) By Time-of-Day — each host gets a turn</button>
+      <button class="opt" onclick="ans('na1',2,2,'PAT assigns a unique PUBLIC PORT NUMBER to each outgoing connection. Internal host 192.168.1.2:4000 → public 1.2.3.4:50001. Internal host 192.168.1.3:4000 → public 1.2.3.4:50002. The NAT table maps each (private IP, private port) to a unique (public IP, public port). Incoming reply to port 50001 → goes to 192.168.1.2:4000. Port 50002 → goes to 192.168.1.3:4000.')">C) Each connection from a different host is assigned a unique public port number in the NAT table</button>
+      <button class="opt" onclick="ans('na1',3,2,'PAT assigns a unique PUBLIC PORT NUMBER to each outgoing connection. Internal host 192.168.1.2:4000 → public 1.2.3.4:50001. Internal host 192.168.1.3:4000 → public 1.2.3.4:50002. The NAT table maps each (private IP, private port) to a unique (public IP, public port). Incoming reply to port 50001 → goes to 192.168.1.2:4000. Port 50002 → goes to 192.168.1.3:4000.')">D) By MAC address — the router remembers each device's MAC</button>
+    </div>
+    <div class="exp" id="na1-e"></div>
+  </div>
+  <div class="mcq">
+    <div class="mcq-q">Q2. Why can a server not be hosted transparently behind a NAT router?</div>
+    <div class="opts" id="na2">
+      <button class="opt" onclick="ans('na2',0,1,'NAT only creates table entries when an OUTGOING connection is initiated by an internal host. External clients trying to reach the server send packets to the NAT router\'s public IP, but the NAT router has no table entry telling it which internal host to forward these packets to. Inbound connections fail unless port forwarding is manually configured (static NAT entry).')">A) NAT only handles UDP, not TCP</button>
+      <button class="opt" onclick="ans('na2',1,1,'NAT only creates table entries when an OUTGOING connection is initiated by an internal host. External clients trying to reach the server send packets to the NAT router\'s public IP, but the NAT router has no table entry telling it which internal host to forward these packets to. Inbound connections fail unless port forwarding is manually configured (static NAT entry).')">B) NAT table has no entry for inbound connections — external packets cannot reach private IP without port forwarding</button>
+      <button class="opt" onclick="ans('na2',2,1,'NAT only creates table entries when an OUTGOING connection is initiated by an internal host. External clients trying to reach the server send packets to the NAT router\'s public IP, but the NAT router has no table entry telling it which internal host to forward these packets to. Inbound connections fail unless port forwarding is manually configured (static NAT entry).')">C) NAT blocks all TCP connections to prevent security attacks</button>
+      <button class="opt" onclick="ans('na2',3,1,'NAT only creates table entries when an OUTGOING connection is initiated by an internal host. External clients trying to reach the server send packets to the NAT router\'s public IP, but the NAT router has no table entry telling it which internal host to forward these packets to. Inbound connections fail unless port forwarding is manually configured (static NAT entry).')">D) Private IP addresses are not reachable because routers drop packets with private source addresses</button>
+    </div>
+    <div class="exp" id="na2-e"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ TAB 5: ICMP & ARP ═══════════════ -->
+<div id="icmp" class="sec">
+  <div class="ttl">Topic 5: ICMP &amp; ARP <span class="bdg" style="background:#FAEEDA;color:#633806">High Weightage</span></div>
+  <div class="bx bbl">
+    <h3>ICMP — Internet Control Message Protocol</h3>
+    <p>ICMP (RFC 792) is a <strong>network-layer protocol</strong> (Protocol number = 1 in IP header). It is used by routers and hosts to send <strong>error messages and operational information</strong> about IP packet processing. ICMP messages are encapsulated inside IP datagrams. ICMP does NOT carry application data — it carries control/error signals only.</p>
+  </div>
+
+  <h2 class="sh">Key explanation points — ICMP</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">1</span><span class="ptx"><strong>ICMP message format:</strong> Every ICMP message has: Type (8 bits) — identifies message category. Code (8 bits) — sub-type within category. Checksum (16 bits). Then type-specific data. Important: ICMP is at the network layer (not transport) and is encapsulated in an IP datagram with Protocol = 1.</span></div>
+    <div class="pt"><span class="pn">2</span><span class="ptx"><strong>ICMP Type 0 / Type 8 — Echo Reply / Echo Request (ping):</strong> Type 8 = Echo Request (sent by ping source). Type 0 = Echo Reply (sent back by target). ping uses these to test reachability and measure RTT. The request carries an Identifier and Sequence Number to match replies to requests.</span></div>
+    <div class="pt"><span class="pn">3</span><span class="ptx"><strong>ICMP Type 3 — Destination Unreachable:</strong> Sent by a router or host when it cannot deliver a packet. Code 0 = Network Unreachable. Code 1 = Host Unreachable. Code 2 = Protocol Unreachable. Code 3 = Port Unreachable (sent by destination host when no process is listening on that port — UDP). Code 4 = Fragmentation Needed and DF set (used in Path MTU Discovery).</span></div>
+    <div class="pt"><span class="pn">4</span><span class="ptx"><strong>ICMP Type 11 — Time Exceeded:</strong> Code 0 = TTL exceeded in transit (router received packet with TTL=1, decremented to 0, discarded it, sent this ICMP back to sender). Code 1 = Fragment reassembly time exceeded (destination got some fragments but not all). traceroute exploits Type 11 Code 0 to map network paths.</span></div>
+    <div class="pt"><span class="pn">5</span><span class="ptx"><strong>ICMP Type 5 — Redirect:</strong> Sent by a router to a host to inform it that a better route exists. Code 0 = Redirect for Network. Code 1 = Redirect for Host. Example: host sends packet to Router A, but Router B is a better gateway for that destination. Router A sends ICMP Redirect to host saying "send future packets for this destination to Router B directly."</span></div>
+    <div class="pt"><span class="pn">6</span><span class="ptx"><strong>How ping works:</strong> Sender sends ICMP Type 8 (Echo Request) to destination. Destination sends ICMP Type 0 (Echo Reply). Sender measures one RTT per reply. Reports: round-trip time, packet loss percentage, TTL of replies. Ping cannot connect to servers (no port/process) — it uses ICMP at the network layer directly.</span></div>
+    <div class="pt"><span class="pn">7</span><span class="ptx"><strong>How traceroute works:</strong> traceroute sends packets with TTL=1, 2, 3... (using UDP to high port numbers, or ICMP Echo Requests). TTL=1: first router decrements to 0 → discards → sends ICMP Time Exceeded to sender. Sender records first hop's IP. TTL=2: second router does the same. Eventually packet reaches destination → destination sends ICMP Port Unreachable (UDP traceroute) or Echo Reply → traceroute knows path is complete. Reveals each hop's IP and RTT.</span></div>
+    <div class="pt"><span class="pn">8</span><span class="ptx"><strong>Path MTU Discovery (PMTUD):</strong> Sender sets DF (Don't Fragment) = 1 and sends large packets. If MTU is exceeded at any router → router sends ICMP Type 3 Code 4 (Fragmentation Needed + MTU of that link). Sender reduces packet size to fit that MTU and retries. Process repeats until packet reaches destination. Finds the minimum MTU across the entire path.  Avoids fragmentation overhead.</span></div>
+  </div>
+
+  <div class="bx bteal">
+    <h3>ARP — Address Resolution Protocol</h3>
+    <p>ARP maps a known <strong>IP address → MAC address</strong> within a local network (subnet). When Host A wants to send to Host B on the same subnet, it knows B's IP but needs B's MAC address to construct the Ethernet frame. ARP resolves this IP→MAC mapping.</p>
+  </div>
+
+  <h2 class="sh">Key explanation points — ARP</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">9</span><span class="ptx"><strong>ARP Request:</strong> Host A broadcasts an ARP Request to all hosts on the subnet (destination MAC = FF:FF:FF:FF:FF:FF — Ethernet broadcast). Message: "Who has IP 192.168.1.5? Tell 192.168.1.2". All hosts receive it. Only Host B (with IP 192.168.1.5) replies.</span></div>
+    <div class="pt"><span class="pn">10</span><span class="ptx"><strong>ARP Reply:</strong> Host B sends a unicast ARP Reply directly to Host A: "192.168.1.5 is at MAC aa:bb:cc:dd:ee:ff". Host A caches this mapping in its <strong>ARP cache</strong> (ARP table). Future packets to 192.168.1.5 use the cached MAC directly — no new ARP needed. ARP cache entries expire after a timeout (typically 5–20 minutes).</span></div>
+    <div class="pt"><span class="pn">11</span><span class="ptx"><strong>ARP for router (default gateway):</strong> When a host sends a packet to an IP in a different subnet, it sends the packet to its <strong>default gateway</strong> (router). It does not ARP for the destination IP — it ARPs for the router's IP (default gateway IP) to get the router's MAC. Packet is then encapsulated with router's MAC and sent to the router, which forwards it toward the destination.</span></div>
+    <div class="pt"><span class="pn">12</span><span class="ptx"><strong>Gratuitous ARP:</strong> A host sends an ARP Reply announcing its own IP→MAC mapping without being asked (ARP Request for its own IP). Purpose: (1) Detect IP conflicts — if another host replies, conflict exists. (2) Update ARP caches of all hosts on subnet after IP/MAC change (e.g., after a failover in high-availability setups).</span></div>
+    <div class="pt"><span class="pn">13</span><span class="ptx"><strong>ARP Spoofing/Poisoning (security):</strong> An attacker sends fake ARP Replies mapping a victim's IP to the attacker's MAC. Other hosts update their ARP caches with the fake mapping. All traffic destined for the victim now goes to the attacker → <strong>Man-in-the-Middle (MITM) attack</strong>. ARP has no authentication — this is a fundamental weakness. Mitigation: Dynamic ARP Inspection (DAI) on switches.</span></div>
+    <div class="pt"><span class="pn">14</span><span class="ptx"><strong>Proxy ARP:</strong> A router answers ARP Requests on behalf of hosts on another subnet. Allows two subnets to communicate without explicit routing — hosts think the remote host is local. The router's MAC appears in the ARP cache instead of the remote host's MAC. Generally avoided in modern networks — use routing instead.</span></div>
+  </div>
+
+  <div class="tw">
+    <table>
+      <tr><th>ICMP Type</th><th>Code</th><th>Meaning</th></tr>
+      <tr><td>0</td><td>0</td><td>Echo Reply (ping response)</td></tr>
+      <tr><td>3</td><td>0</td><td>Network Unreachable</td></tr>
+      <tr><td>3</td><td>1</td><td>Host Unreachable</td></tr>
+      <tr><td>3</td><td>3</td><td>Port Unreachable (no process on port — UDP)</td></tr>
+      <tr><td>3</td><td>4</td><td>Fragmentation Needed (DF=1 but MTU too small)</td></tr>
+      <tr><td>5</td><td>0/1</td><td>Redirect (better route exists — use different gateway)</td></tr>
+      <tr><td>8</td><td>0</td><td>Echo Request (ping)</td></tr>
+      <tr><td>11</td><td>0</td><td>Time Exceeded (TTL=0 at router — used by traceroute)</td></tr>
+      <tr><td>11</td><td>1</td><td>Fragment reassembly time exceeded</td></tr>
+    </table>
+  </div>
+
+  <h2 class="sh">MCQs — ICMP &amp; ARP</h2>
+  <div class="mcq">
+    <div class="mcq-q">Q1. traceroute sends packets with increasing TTL values (1, 2, 3...). What does each intermediate router send back?</div>
+    <div class="opts" id="ic1">
+      <button class="opt" onclick="ans('ic1',0,2,'When TTL decrements to 0 at an intermediate router, the router discards the packet and sends ICMP Type 11 Code 0 (Time Exceeded — TTL exceeded in transit) back to the traceroute sender. The ICMP message contains the router\'s IP address. traceroute records this IP and the RTT to this hop. By increasing TTL one at a time, traceroute discovers each hop in sequence.')">A) ICMP Destination Unreachable (Type 3)</button>
+      <button class="opt" onclick="ans('ic1',1,2,'When TTL decrements to 0 at an intermediate router, the router discards the packet and sends ICMP Type 11 Code 0 (Time Exceeded — TTL exceeded in transit) back to the traceroute sender. The ICMP message contains the router\'s IP address. traceroute records this IP and the RTT to this hop. By increasing TTL one at a time, traceroute discovers each hop in sequence.')">B) ICMP Time Exceeded Type 11 Code 0 — TTL expired</button>
+      <button class="opt" onclick="ans('ic1',2,2,'When TTL decrements to 0 at an intermediate router, the router discards the packet and sends ICMP Type 11 Code 0 (Time Exceeded — TTL exceeded in transit) back to the traceroute sender. The ICMP message contains the router\'s IP address. traceroute records this IP and the RTT to this hop. By increasing TTL one at a time, traceroute discovers each hop in sequence.')">C) ARP Request for the next hop MAC</button>
+      <button class="opt" onclick="ans('ic1',3,2,'When TTL decrements to 0 at an intermediate router, the router discards the packet and sends ICMP Type 11 Code 0 (Time Exceeded — TTL exceeded in transit) back to the traceroute sender. The ICMP message contains the router\'s IP address. traceroute records this IP and the RTT to this hop. By increasing TTL one at a time, traceroute discovers each hop in sequence.')">D) TCP RST to terminate the connection</button>
+    </div>
+    <div class="exp" id="ic1-e"></div>
+  </div>
+  <div class="mcq">
+    <div class="mcq-q">Q2. Host A (192.168.1.10) wants to send a packet to Host C (10.0.0.5) which is on a different subnet. The default gateway is 192.168.1.1. What does Host A's ARP request ask for?</div>
+    <div class="opts" id="ic2">
+      <button class="opt" onclick="ans('ic2',0,1,'Host A knows 10.0.0.5 is NOT on its local subnet (different network prefix). So Host A sends the packet to its default gateway (router 192.168.1.1). To construct the Ethernet frame, Host A needs the router\'s MAC address. Host A sends ARP Request: "Who has 192.168.1.1?" — asking for the default gateway\'s MAC, NOT for 10.0.0.5\'s MAC (which is on a different subnet and unreachable via ARP).')">A) ARP for 10.0.0.5 (destination host's MAC)</button>
+      <button class="opt" onclick="ans('ic2',1,1,'Host A knows 10.0.0.5 is NOT on its local subnet (different network prefix). So Host A sends the packet to its default gateway (router 192.168.1.1). To construct the Ethernet frame, Host A needs the router\'s MAC address. Host A sends ARP Request: "Who has 192.168.1.1?" — asking for the default gateway\'s MAC, NOT for 10.0.0.5\'s MAC (which is on a different subnet and unreachable via ARP).')">B) ARP for 192.168.1.1 (default gateway's MAC)</button>
+      <button class="opt" onclick="ans('ic2',2,1,'Host A knows 10.0.0.5 is NOT on its local subnet (different network prefix). So Host A sends the packet to its default gateway (router 192.168.1.1). To construct the Ethernet frame, Host A needs the router\'s MAC address. Host A sends ARP Request: "Who has 192.168.1.1?" — asking for the default gateway\'s MAC, NOT for 10.0.0.5\'s MAC (which is on a different subnet and unreachable via ARP).')">C) No ARP — Host A knows all MACs from DNS</button>
+      <button class="opt" onclick="ans('ic2',3,1,'Host A knows 10.0.0.5 is NOT on its local subnet (different network prefix). So Host A sends the packet to its default gateway (router 192.168.1.1). To construct the Ethernet frame, Host A needs the router\'s MAC address. Host A sends ARP Request: "Who has 192.168.1.1?" — asking for the default gateway\'s MAC, NOT for 10.0.0.5\'s MAC (which is on a different subnet and unreachable via ARP).')">D) ARP for 192.168.1.10 (its own MAC — gratuitous ARP)</button>
+    </div>
+    <div class="exp" id="ic2-e"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ TAB 6: ROUTING INTRO ═══════════════ -->
+<div id="rtg" class="sec">
+  <div class="ttl">Topic 6: IP Routing Introduction <span class="bdg" style="background:#FAEEDA;color:#633806">High Weightage</span></div>
+  <div class="bx bbl">
+    <h3>How routing works — a high-level view</h3>
+    <p>Routing is the process of building the forwarding tables that routers use to make per-packet decisions. Two main contexts: <strong>intra-domain routing</strong> (within one autonomous system — uses OSPF, RIP) and <strong>inter-domain routing</strong> (between autonomous systems — uses BGP). This section introduces the key concepts before Week 8's deep dive into routing protocols.</p>
+  </div>
+
+  <h2 class="sh">Key explanation points — Routing Fundamentals</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">1</span><span class="ptx"><strong>Autonomous System (AS):</strong> A collection of IP networks and routers under the control of a <strong>single administrative entity</strong> (an ISP, a university, a company) that presents a common routing policy to the internet. Each AS is identified by a globally unique <strong>ASN (Autonomous System Number)</strong> — a 16-bit (now 32-bit) number assigned by IANA/RIRs. Example: Google's AS15169, Airtel's AS9498.</span></div>
+    <div class="pt"><span class="pn">2</span><span class="ptx"><strong>Intra-domain vs Inter-domain routing:</strong> <strong>Intra-domain (Interior Gateway Protocol — IGP)</strong>: routing within one AS. Goals: find optimal (shortest/least-cost) path. Protocols: RIP (Distance Vector), OSPF (Link State). <strong>Inter-domain (Exterior Gateway Protocol — EGP)</strong>: routing between different ASes. Goal: policy-driven reachability (NOT just optimal path). Protocol: BGP (Path Vector). BGP is the de facto routing protocol of the internet backbone.</span></div>
+    <div class="pt"><span class="pn">3</span><span class="ptx"><strong>Static vs Dynamic routing:</strong> <strong>Static routing</strong> — routes manually entered by administrators into routing tables. Simple, predictable, no overhead, no adaptation to failures. Used in small networks or for default routes. <strong>Dynamic routing</strong> — routers exchange information using routing protocols (RIP, OSPF, BGP) and automatically build/update forwarding tables. Adapts to topology changes. Used at internet scale.</span></div>
+    <div class="pt"><span class="pn">4</span><span class="ptx"><strong>Default route (0.0.0.0/0):</strong> A catch-all route that matches any destination not matched by more specific routes. Forwarded to the "default gateway." Every host and stub router has a default route pointing to their ISP or next-hop router. The 0.0.0.0/0 entry has the shortest prefix (0 bits) → always the last resort in longest prefix match.</span></div>
+    <div class="pt"><span class="pn">5</span><span class="ptx"><strong>Distance Vector Routing (preview):</strong> Each router knows only its direct neighbors and their link costs. Routers exchange distance vectors (cost to each destination) with neighbors. Iteratively converges to optimal routes using Bellman-Ford algorithm. Simple but suffers from <strong>count-to-infinity</strong> problem during failures. Protocol: <strong>RIP (Routing Information Protocol)</strong>.</span></div>
+    <div class="pt"><span class="pn">6</span><span class="ptx"><strong>Link State Routing (preview):</strong> Each router floods information about its directly connected links (Link State Advertisement — LSA) to ALL routers in the network. Every router builds a complete map of the network topology. Runs Dijkstra's shortest path algorithm on the map to compute shortest paths. No count-to-infinity. More computation but faster convergence. Protocol: <strong>OSPF (Open Shortest Path First)</strong>.</span></div>
+    <div class="pt"><span class="pn">7</span><span class="ptx"><strong>Next-hop routing:</strong> Forwarding tables don't store complete paths (would be too large). Instead, each entry gives only the <strong>next hop</strong> — the immediate next router (or interface) to forward to. Each router independently makes the next-hop decision based on its own table. The combined effect of all routers' decisions creates end-to-end paths.</span></div>
+    <div class="pt"><span class="pn">8</span><span class="ptx"><strong>Routing metric:</strong> The cost assigned to a path for routing decisions. Common metrics: Hop count (RIP — simple, ignores bandwidth), Bandwidth (OSPF — higher bandwidth = lower cost), Delay, Reliability, Load. The routing protocol attempts to find the path with the <strong>minimum total metric</strong> from source to destination.</span></div>
+    <div class="pt"><span class="pn">9</span><span class="ptx"><strong>DHCP — Dynamic Host Configuration Protocol:</strong> Automatically assigns IP addresses to hosts. Uses UDP (port 67 server, port 68 client). 4-step process: DISCOVER (broadcast from client) → OFFER (from DHCP server) → REQUEST (client accepts offer) → ACK (server confirms). Also assigns default gateway, subnet mask, DNS server. Lease time: address is rented for a period; client must renew before expiry.</span></div>
+    <div class="pt"><span class="pn">10</span><span class="ptx"><strong>DNS resolution and IP routing:</strong> When a browser accesses google.com: (1) DNS query resolves google.com → IP address. (2) IP layer uses that IP + routing protocols to forward packets from client to Google's servers across the internet. DNS operates at application layer; IP routing at network layer. They work together but are independent systems.</span></div>
+  </div>
+
+  <div class="tw">
+    <table>
+      <tr><th>Feature</th><th>Distance Vector (RIP)</th><th>Link State (OSPF)</th><th>Path Vector (BGP)</th></tr>
+      <tr><td>Scope</td><td>Intra-domain (IGP)</td><td>Intra-domain (IGP)</td><td>Inter-domain (EGP)</td></tr>
+      <tr><td>Algorithm</td><td>Bellman-Ford</td><td>Dijkstra (SPF)</td><td>Policy-based path selection</td></tr>
+      <tr><td>Information shared</td><td>Distance vector (cost to destinations)</td><td>Link state (topology map)</td><td>Complete AS-path to prefixes</td></tr>
+      <tr><td>Convergence speed</td><td>Slow (count-to-infinity risk)</td><td>Fast (complete topology)</td><td>Slow (complex policy)</td></tr>
+      <tr><td>Scalability</td><td>Poor (limited to 15 hops in RIP)</td><td>Good (within one AS)</td><td>Excellent (internet-scale)</td></tr>
+    </table>
+  </div>
+
+  <h2 class="sh">MCQs — Routing Introduction</h2>
+  <div class="mcq">
+    <div class="mcq-q">Q1. What is an Autonomous System (AS) and why is this abstraction important?</div>
+    <div class="opts" id="rt1">
+      <button class="opt" onclick="ans('rt1',0,1,'An AS is a collection of routers/networks under one administrative authority (e.g., one ISP) with a single routing policy. It is identified by a unique ASN. The abstraction is important because: (1) It allows the internet to scale — inter-domain routing (BGP) only needs to know how to reach each AS, not every individual subnet. (2) Each AS can use its own internal routing protocol without affecting others. (3) Policy-based inter-AS routing becomes possible.')">A) A single router that connects to the internet backbone</button>
+      <button class="opt" onclick="ans('rt1',1,1,'An AS is a collection of routers/networks under one administrative authority (e.g., one ISP) with a single routing policy. It is identified by a unique ASN. The abstraction is important because: (1) It allows the internet to scale — inter-domain routing (BGP) only needs to know how to reach each AS, not every individual subnet. (2) Each AS can use its own internal routing protocol without affecting others. (3) Policy-based inter-AS routing becomes possible.')">B) A group of networks under one administrative domain with a unique ASN — enables scalable inter-domain routing</button>
+      <button class="opt" onclick="ans('rt1',2,1,'An AS is a collection of routers/networks under one administrative authority (e.g., one ISP) with a single routing policy. It is identified by a unique ASN. The abstraction is important because: (1) It allows the internet to scale — inter-domain routing (BGP) only needs to know how to reach each AS, not every individual subnet. (2) Each AS can use its own internal routing protocol without affecting others. (3) Policy-based inter-AS routing becomes possible.')">C) A physical region of the network (e.g., one city's infrastructure)</button>
+      <button class="opt" onclick="ans('rt1',3,1,'An AS is a collection of routers/networks under one administrative authority (e.g., one ISP) with a single routing policy. It is identified by a unique ASN. The abstraction is important because: (1) It allows the internet to scale — inter-domain routing (BGP) only needs to know how to reach each AS, not every individual subnet. (2) Each AS can use its own internal routing protocol without affecting others. (3) Policy-based inter-AS routing becomes possible.')">D) A type of routing algorithm used inside large ISPs</button>
+    </div>
+    <div class="exp" id="rt1-e"></div>
+  </div>
+  <div class="mcq">
+    <div class="mcq-q">Q2. DHCP uses which transport protocol and which port numbers?</div>
+    <div class="opts" id="rt2">
+      <button class="opt" onclick="ans('rt2',0,2,'DHCP uses UDP (not TCP) because: (1) Client has no IP address yet — cannot establish a TCP connection (need IP for 3WHS). (2) DHCP messages are short — no need for TCP reliability. (3) Client must broadcast (255.255.255.255) to find server — TCP cannot broadcast. Server listens on UDP port 67. Client sends from UDP port 68. DHCP DISCOVER is broadcast; OFFER is unicast (or broadcast) back to client.')">A) TCP, port 80 (HTTP-based configuration)</button>
+      <button class="opt" onclick="ans('rt2',1,2,'DHCP uses UDP (not TCP) because: (1) Client has no IP address yet — cannot establish a TCP connection (need IP for 3WHS). (2) DHCP messages are short — no need for TCP reliability. (3) Client must broadcast (255.255.255.255) to find server — TCP cannot broadcast. Server listens on UDP port 67. Client sends from UDP port 68. DHCP DISCOVER is broadcast; OFFER is unicast (or broadcast) back to client.')">B) UDP, server port 67, client port 68</button>
+      <button class="opt" onclick="ans('rt2',2,2,'DHCP uses UDP (not TCP) because: (1) Client has no IP address yet — cannot establish a TCP connection (need IP for 3WHS). (2) DHCP messages are short — no need for TCP reliability. (3) Client must broadcast (255.255.255.255) to find server — TCP cannot broadcast. Server listens on UDP port 67. Client sends from UDP port 68. DHCP DISCOVER is broadcast; OFFER is unicast (or broadcast) back to client.')">C) TCP, port 67 (requires reliable delivery of IP configuration)</button>
+      <button class="opt" onclick="ans('rt2',3,2,'DHCP uses UDP (not TCP) because: (1) Client has no IP address yet — cannot establish a TCP connection (need IP for 3WHS). (2) DHCP messages are short — no need for TCP reliability. (3) Client must broadcast (255.255.255.255) to find server — TCP cannot broadcast. Server listens on UDP port 67. Client sends from UDP port 68. DHCP DISCOVER is broadcast; OFFER is unicast (or broadcast) back to client.')">D) ICMP, embedded in IP directly</button>
+    </div>
+    <div class="exp" id="rt2-e"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ TAB 7: SUPER REVISION ═══════════════ -->
+<div id="rev" class="sec">
+  <div class="ttl">Super Revision Notes — Week 6 (Last-Day Study)</div>
+
+  <div class="bx bred">
+    <h3>Absolute must-know facts</h3>
+    <ul>
+      <li>IP = <strong>best-effort, connectionless, unreliable</strong>. Reliability is TCP's job, not IP's</li>
+      <li>Forwarding = data plane (per-packet at one router). Routing = control plane (build the table)</li>
+      <li>TTL = hop count, NOT time. Decremented by each router. TTL=0 → discard + ICMP Type 11</li>
+      <li>Fragmentation: same Identification, Fragment Offset in units of 8 bytes, MF=1 for all except last</li>
+      <li>DF=1 → router cannot fragment → discard + ICMP Type 3 Code 4 (used in PMTUD)</li>
+      <li>IP Header: min 20B (IHL=5). IHL in 4-byte units. Max header = 60B (IHL=15)</li>
+      <li>Protocol field: 6=TCP, 17=UDP, 1=ICMP, 89=OSPF</li>
+      <li>Header Checksum covers IP header ONLY. Recomputed at EVERY router (TTL changes)</li>
+      <li>Class A: /8. Class B: /16. Class C: /24. Class D: multicast. Class E: reserved</li>
+      <li>Usable hosts = 2^(host bits) − 2 (network address and broadcast not usable)</li>
+      <li><strong>Longest Prefix Match (LPM)</strong>: most specific route wins in forwarding table lookup</li>
+      <li>Default route = 0.0.0.0/0 (zero prefix length — least specific, last resort)</li>
+      <li>Private ranges (RFC 1918): 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 — not routable on public internet</li>
+      <li>NAT: translates private IP+port → public IP+port. PAT = many:one (most common)</li>
+      <li>NAT breaks end-to-end connectivity. Inbound connections fail without port forwarding</li>
+      <li>ICMP: protocol=1 in IP Header. Encapsulated in IP datagram</li>
+      <li>ping: Type 8 (Echo Request) → Type 0 (Echo Reply). Tests reachability + RTT</li>
+      <li>traceroute: sends TTL=1,2,3... → each router returns ICMP Type 11 Code 0</li>
+      <li>ICMP Type 3: Destination Unreachable. Code 3 = Port Unreachable (no process on UDP port)</li>
+      <li>ARP: broadcast request (FF:FF:FF:FF:FF:FF) for IP→MAC mapping. Replies are unicast</li>
+      <li>ARP for remote host: always ARP for the DEFAULT GATEWAY's MAC, not the remote host's MAC</li>
+      <li>Gratuitous ARP: detect IP conflicts; update all ARP caches after failover</li>
+      <li>DHCP: UDP, port 67 (server), port 68 (client). 4 steps: DISCOVER→OFFER→REQUEST→ACK</li>
+      <li>AS = Autonomous System. Identified by ASN. Intra-domain: RIP/OSPF. Inter-domain: BGP</li>
+      <li>Distance Vector: Bellman-Ford. Link State: Dijkstra. Path Vector (BGP): policy-based</li>
+    </ul>
+  </div>
+
+  <div class="bx bpur">
+    <h3>IP Header field quick-reference</h3>
+    <div class="ri"><span class="rb">Version</span><span class="rt">4 bits. IPv4=4, IPv6=6</span></div>
+    <div class="ri"><span class="rb">IHL</span><span class="rt">4 bits. In 4B words. Min 5 (20B), Max 15 (60B). Data starts at byte IHL×4</span></div>
+    <div class="ri"><span class="rb">TOS/DS</span><span class="rt">8 bits. DSCP (top 6b) for QoS + ECN (bottom 2b)</span></div>
+    <div class="ri"><span class="rb">Total Length</span><span class="rt">16 bits. Header + data. Max 65535 bytes</span></div>
+    <div class="ri"><span class="rb">Identification</span><span class="rt">16 bits. Same for all fragments of one datagram</span></div>
+    <div class="ri"><span class="rb">Flags</span><span class="rt">3 bits. Bit1=DF (no fragment). Bit2=MF (more fragments follow)</span></div>
+    <div class="ri"><span class="rb">Fragment Offset</span><span class="rt">13 bits. In units of 8 bytes. For reassembly ordering</span></div>
+    <div class="ri"><span class="rb">TTL</span><span class="rt">8 bits. Hop count. Decremented per router. 0 → discard + ICMP Type 11</span></div>
+    <div class="ri"><span class="rb">Protocol</span><span class="rt">8 bits. 1=ICMP, 6=TCP, 17=UDP, 89=OSPF</span></div>
+    <div class="ri"><span class="rb">Header Checksum</span><span class="rt">16 bits. Header only. Recomputed every hop (TTL changes)</span></div>
+    <div class="ri"><span class="rb">Src/Dst IP</span><span class="rt">32 bits each. Dotted decimal. Dst IP used for LPM forwarding decision</span></div>
+  </div>
+
+  <div class="bx bgn">
+    <h3>ICMP types — exam quick-reference</h3>
+    <div class="ri"><span class="rb">Type 0</span><span class="rt">Echo Reply (ping response)</span></div>
+    <div class="ri"><span class="rb">Type 3 Code 0</span><span class="rt">Network Unreachable</span></div>
+    <div class="ri"><span class="rb">Type 3 Code 1</span><span class="rt">Host Unreachable</span></div>
+    <div class="ri"><span class="rb">Type 3 Code 3</span><span class="rt">Port Unreachable (UDP traceroute termination signal / no process)</span></div>
+    <div class="ri"><span class="rb">Type 3 Code 4</span><span class="rt">Fragmentation Needed (DF=1 but MTU too small → PMTUD)</span></div>
+    <div class="ri"><span class="rb">Type 5</span><span class="rt">Redirect (better gateway exists)</span></div>
+    <div class="ri"><span class="rb">Type 8</span><span class="rt">Echo Request (ping)</span></div>
+    <div class="ri"><span class="rb">Type 11 Code 0</span><span class="rt">Time Exceeded — TTL=0 at router (traceroute signal)</span></div>
+  </div>
+
+  <div class="bx bamb">
+    <h3>Tricky NPTEL MCQ traps — don't get these wrong</h3>
+    <div class="ri"><span class="rb">1</span><span class="rt">IHL is in 4-byte words (not bytes). IHL=5 → 20 bytes, NOT 5 bytes</span></div>
+    <div class="ri"><span class="rb">2</span><span class="rt">Fragment Offset is in 8-byte units (not bytes). Offset=185 → byte 1480</span></div>
+    <div class="ri"><span class="rb">3</span><span class="rt">TTL is a HOP COUNT, not a time duration (despite the name "Time To Live")</span></div>
+    <div class="ri"><span class="rb">4</span><span class="rt">Header Checksum covers IP header ONLY — not the data payload</span></div>
+    <div class="ri"><span class="rb">5</span><span class="rt">Fragmentation reassembly happens at DESTINATION HOST only, NOT at intermediate routers</span></div>
+    <div class="ri"><span class="rb">6</span><span class="rt">LPM: most specific route wins. 0.0.0.0/0 is LAST resort (least specific)</span></div>
+    <div class="ri"><span class="rb">7</span><span class="rt">Usable hosts = 2^h − 2 (subtract network + broadcast). Example: /24 → 2⁸−2 = 254</span></div>
+    <div class="ri"><span class="rb">8</span><span class="rt">Sending to remote subnet → ARP for DEFAULT GATEWAY, not the destination host</span></div>
+    <div class="ri"><span class="rb">9</span><span class="rt">ICMP Type 11 Code 0 = traceroute's tool. Type 3 Code 3 = traceroute's termination (UDP mode)</span></div>
+    <div class="ri"><span class="rb">10</span><span class="rt">NAT works at L3+L4 (modifies both IP and port). Breaks end-to-end principle</span></div>
+    <div class="ri"><span class="rb">11</span><span class="rt">DHCP uses UDP broadcast. Client has NO IP yet — cannot use TCP or unicast</span></div>
+    <div class="ri"><span class="rb">12</span><span class="rt">Class D (224–239) = Multicast. OSPF uses 224.0.0.5 (all OSPF routers)</span></div>
+    <div class="ri"><span class="rb">13</span><span class="rt">Protocol field 1=ICMP, 6=TCP, 17=UDP. Memorise these numbers</span></div>
+  </div>
+
+  <div style="margin-top:1.5rem;padding:1rem;background:#E6F1FB;border-radius:var(--border-radius-lg);border:0.5px solid #B5D4F4">
+    <p style="font-size:14px;font-weight:500;color:#0C447C;margin-bottom:8px">Exam strategy — Week 6</p>
+    <ul style="font-size:13px;color:#185FA5;padding-left:1.2rem;line-height:1.9">
+      <li>IP Header: Memorise all fields, sizes, and units. IHL × 4 = bytes. Fragment Offset × 8 = byte position</li>
+      <li>Subnetting: Practice calculating network address, broadcast, usable hosts, and subnet ranges for /25, /26, /27, /28, /29, /30</li>
+      <li>LPM: Always pick the most specific (longest) matching prefix. 0.0.0.0/0 only if nothing else matches</li>
+      <li>NAT: Know PAT (many:one, port-based). Know why inbound fails without port forwarding</li>
+      <li>ICMP: Type 8/0 = ping. Type 11/0 = traceroute intermediate. Type 3/3 = port unreachable. Type 3/4 = fragmentation needed</li>
+      <li>ARP: Broadcast request, unicast reply. For remote host → ARP for gateway. Gratuitous ARP = detect conflicts</li>
+      <li>DHCP port numbers: Server=67, Client=68. Uses UDP. 4 steps: DORA</li>
+      <li>AS concept: Know ASN, intra (RIP/OSPF) vs inter-domain (BGP) distinction</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<script>
+function show(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  event.target.classList.add('on');
+}
+function ans(qid,chosen,correct,explanation){
+  const opts=document.querySelectorAll('#'+qid+' .opt');
+  opts.forEach((o,i)=>{
+    o.disabled=true;
+    if(i===correct)o.classList.add('ok');
+    else if(i===chosen&&chosen!==correct)o.classList.add('no');
+  });
+  const exp=document.getElementById(qid+'-e');
+  exp.textContent=(chosen===correct?'Correct! ':'Incorrect. ')+explanation;
+  exp.classList.add('show');
+}
+</script>

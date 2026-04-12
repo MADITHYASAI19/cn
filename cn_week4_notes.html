@@ -1,0 +1,615 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.w{max-width:900px;padding:1.5rem 1rem}
+.hero{border-bottom:0.5px solid var(--color-border-tertiary);padding-bottom:1.5rem;margin-bottom:2rem}
+.hero h1{font-size:22px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px}
+.hero p{font-size:14px;color:var(--color-text-secondary)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:2rem}
+.tab{padding:6px 14px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:13px;cursor:pointer;background:var(--color-background-primary);color:var(--color-text-secondary);transition:all 0.15s}
+.tab:hover{background:var(--color-background-secondary)}
+.tab.on{background:#E6F1FB;color:#0C447C;border-color:#85B7EB;font-weight:500}
+.sec{display:none}.sec.on{display:block}
+.ttl{font-size:20px;font-weight:500;color:var(--color-text-primary);margin-bottom:6px;padding-bottom:8px;border-bottom:2px solid #85B7EB}
+.bdg{display:inline-block;font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);margin-left:8px}
+.bx{border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin:1rem 0}
+.bbl{background:#E6F1FB;border-left:3px solid #185FA5}.bbl h3{color:#0C447C}
+.bgn{background:#EAF3DE;border-left:3px solid #3B6D11}.bgn h3{color:#27500A}
+.bamb{background:#FAEEDA;border-left:3px solid #854F0B}.bamb h3{color:#633806}
+.bred{background:#FCEBEB;border-left:3px solid #A32D2D}.bred h3{color:#791F1F}
+.bpur{background:#EEEDFE;border-left:3px solid #534AB7}.bpur h3{color:#3C3489}
+.bteal{background:#E1F5EE;border-left:3px solid #0F6E56}.bteal h3{color:#085041}
+.bsec{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:0.5rem 1.25rem;margin:1rem 0}
+.bx h3{font-size:14px;font-weight:500;margin-bottom:6px}
+.bx p,.bx li{font-size:14px;color:var(--color-text-primary);line-height:1.7}
+.bx ul{padding-left:1.2rem}
+.pt{display:flex;gap:10px;padding:8px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.pt:last-child{border-bottom:none}
+.pn{font-size:13px;font-weight:500;color:#185FA5;min-width:22px}
+.ptx{font-size:14px;color:var(--color-text-primary);line-height:1.6}
+.ptx strong{font-weight:500}
+.tw{overflow-x:auto;margin:1rem 0}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:#E6F1FB;color:#0C447C;font-weight:500;padding:8px 12px;text-align:left;border:0.5px solid #B5D4F4}
+td{padding:8px 12px;border:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary);vertical-align:top}
+tr:nth-child(even) td{background:var(--color-background-secondary)}
+h2.sh{font-size:18px;font-weight:500;color:var(--color-text-primary);margin:1.5rem 0 0.5rem}
+.mcq{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin:1rem 0;background:var(--color-background-primary)}
+.mcq-q{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:10px;line-height:1.6}
+.opts{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+.opt{font-size:13px;padding:6px 10px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);cursor:pointer;color:var(--color-text-primary);background:var(--color-background-primary);text-align:left;transition:background 0.1s}
+.opt:hover{background:var(--color-background-secondary)}
+.opt.ok{background:#EAF3DE;border-color:#639922;color:#27500A}
+.opt.no{background:#FCEBEB;border-color:#A32D2D;color:#791F1F}
+.exp{display:none;font-size:13px;color:var(--color-text-secondary);background:var(--color-background-secondary);padding:8px 12px;border-radius:var(--border-radius-md);margin-top:6px;line-height:1.6}
+.exp.show{display:block}
+.ri{display:flex;gap:8px;padding:6px 0;border-bottom:0.5px solid var(--color-border-tertiary);align-items:flex-start}
+.ri:last-child{border-bottom:none}
+.rb{font-size:14px;min-width:60px;color:#185FA5;font-weight:500}
+.rt{font-size:13px;color:var(--color-text-primary);line-height:1.6}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:1rem 0}
+.fbox{background:#E6F1FB;border:0.5px solid #B5D4F4;border-radius:var(--border-radius-md);padding:6px 12px;font-size:13px;color:#0C447C;font-weight:500}
+.farr{font-size:16px;color:var(--color-text-secondary)}
+</style>
+
+<div class="w">
+<div class="hero">
+  <h1>Computer Networks — Week 4: Performance, TCP Deep Dive</h1>
+  <p>BDP &amp; Window Sizing · Buffer Management · Congestion Control · TCP Protocol · TCP Connection &amp; State Machine &nbsp;|&nbsp; NPTEL Exam-Ready Notes</p>
+</div>
+
+<div class="tabs">
+  <button class="tab on" onclick="show('bdp')">BDP &amp; Buffers</button>
+  <button class="tab" onclick="show('cong')">Congestion Control</button>
+  <button class="tab" onclick="show('svc')">Transport Services</button>
+  <button class="tab" onclick="show('tcpdet')">TCP Protocol</button>
+  <button class="tab" onclick="show('tcpconn')">TCP Connection Est.</button>
+  <button class="tab" onclick="show('tcprel')">TCP Release &amp; States</button>
+  <button class="tab" onclick="show('rev')">Super Revision</button>
+</div>
+
+<!-- ═══════════════ TAB 1: BDP & BUFFERS ═══════════════ -->
+<div id="bdp" class="sec on">
+  <div class="ttl">Topic 1: Bandwidth-Delay Product &amp; Buffer Management <span class="bdg" style="background:#FAEEDA;color:#633806">High Weightage</span></div>
+  <div class="bx bbl">
+    <h3>What is Bandwidth-Delay Product (BDP)?</h3>
+    <p>BDP = Link Bandwidth × One-way Propagation Delay. It represents how many bits can be "in the pipe" (in flight) at any point in time. It is the single most important parameter for deciding which ARQ protocol to use and what window size to configure for maximum link utilization.</p>
+  </div>
+
+  <h2 class="sh">Key explanation points — BDP &amp; Window Sizing</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">1</span><span class="ptx"><strong>BDP formula &amp; example:</strong> BDP = Bandwidth × One-way delay. Example: 50 Kbps × 250 ms = 12,500 bits = 12.5 Kbits. If segment size = 1000 bits → BDP = 12.5 segments. This is how many segments can be simultaneously in the pipe in one direction.</span></div>
+    <div class="pt"><span class="pn">2</span><span class="ptx"><strong>Round Trip Time (RTT):</strong> RTT ≈ 2 × one-way propagation delay (assuming no congestion or intermediate delay). It is the time from sending a segment to receiving its ACK. Measured as the time difference between transmission and acknowledgement reception.</span></div>
+    <div class="pt"><span class="pn">3</span><span class="ptx"><strong>Pipe analogy:</strong> Think of the network link as a water pipe. Latency = length of the pipe. Bandwidth = cross-section (diameter) of the pipe. BDP = volume of the pipe (how much water it can hold). For two-way communication there are two pipes: one for data (forward) and one for ACKs (reverse).</span></div>
+    <div class="pt"><span class="pn">4</span><span class="ptx"><strong>Maximum outstanding segments (two-way):</strong> The data pipe holds up to BD segments. The ACK pipe holds another BD segments (ACKs for data already received by the receiver and sitting in receiver buffer). Total outstanding = 2 × BD. So if BDP = 12.5 segments → max outstanding = 25 segments.</span></div>
+    <div class="pt"><span class="pn">5</span><span class="ptx"><strong>Optimal sender window size:</strong> W = 2×BD + 1. The "+1" accounts for one ACK just received at the sender but not yet processed. This ensures BOTH the data pipe and ACK pipe are always fully utilized → maximum link utilization. This is the theoretical upper bound on window size.</span></div>
+    <div class="pt"><span class="pn">6</span><span class="ptx"><strong>Window size → Sequence number bits:</strong> Once W is known: For Go-Back-N: W ≤ 2ⁿ − 1 → n ≥ log₂(W+1). For Selective Repeat: W ≤ 2ⁿ/2 → n ≥ log₂(2W). BDP thus determines both window size AND minimum bits needed in the sequence number field.</span></div>
+    <div class="pt"><span class="pn">7</span><span class="ptx"><strong>Protocol selection using BDP (example):</strong> Bandwidth = 1 Mbps, delay = 1 ms → BDP = 1 Mbps × 1 ms = 1 Kbit = 1024 bits. Segment = 1 KB = 8192 bits. BDP is SMALLER than one segment. The pipe cannot even hold one complete segment → no benefit from sending multiple segments in parallel.</span></div>
+    <div class="pt"><span class="pn">8</span><span class="ptx"><strong>When to use Stop-and-Wait:</strong> When BDP &lt; segment size — pipe cannot hold a full segment. Sliding window provides no parallelism advantage here. Stop-and-Wait has the LEAST complexity (no sender/receiver window maintenance, no sequence number management) → always prefer it in this case.</span></div>
+    <div class="pt"><span class="pn">9</span><span class="ptx"><strong>When to use Sliding Window:</strong> When BDP &gt;&gt; segment size — many segments can be in-flight simultaneously. Set window W = 2×BD+1 to fill the pipe completely. Then choose Go-Back-N or Selective Repeat based on error rate and buffer complexity trade-off.</span></div>
+  </div>
+
+  <div class="bx bgn">
+    <h3>BDP decision logic</h3>
+    <div class="flow">
+      <div class="fbox">Compute BDP = BW × delay</div><div class="farr">→</div>
+      <div class="fbox">BDP &lt; segment size?</div><div class="farr">→</div>
+      <div class="fbox">YES → Stop-and-Wait (least complexity)</div>
+    </div>
+    <div class="flow">
+      <div class="fbox">BDP &gt; segment size?</div><div class="farr">→</div>
+      <div class="fbox">Set W = 2×BD+1</div><div class="farr">→</div>
+      <div class="fbox">Pick GBN or SR based on error tolerance</div>
+    </div>
+  </div>
+
+  <h2 class="sh">Key explanation points — Transport Layer Buffer Architecture</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">10</span><span class="ptx"><strong>Sender-side interface (TportSend):</strong> A hypothetical TportSend() function is called periodically by the transmission rate control module (based on current flow/congestion window). Application writes data to a <em>source buffer</em> at its own rate; TportSend reads from that buffer and passes segments to IP.</span></div>
+    <div class="pt"><span class="pn">11</span><span class="ptx"><strong>Source buffer &amp; write call blocking:</strong> Application may generate data at 10 Mbps but rate control allows only 2 Mbps. The difference accumulates in the source buffer. The write() system call BLOCKS the port when the buffer is full — prevents the application from overflowing the buffer. Connection-specific: one buffer per connection.</span></div>
+    <div class="pt"><span class="pn">12</span><span class="ptx"><strong>Receiver-side interface (TportRecv):</strong> A hypothetical TportRecv() receives segments from the IP layer. It reads the destination port number in the transport header and routes the data to the correct application's receive queue. One receive queue per port/application.</span></div>
+    <div class="pt"><span class="pn">13</span><span class="ptx"><strong>Read call blocking:</strong> The application makes a read() system call to get data from its receive queue. This call BLOCKS when the queue is empty — waits until new data arrives. An interrupt signal from TportRecv unblocks the call. The call also blocks until all requested data is retrieved.</span></div>
+    <div class="pt"><span class="pn">14</span><span class="ptx"><strong>Buffer type 1 — Pool of identically-sized buffers:</strong> Each buffer slot holds exactly one segment. Works when all segments are the same size. Low complexity. Zero wasted space if segment sizes are uniform.</span></div>
+    <div class="pt"><span class="pn">15</span><span class="ptx"><strong>Buffer type 2 — Chained fixed-size buffers (linked list):</strong> Individual buffers of max-segment-size connected as a linked list. Used for variable segment sizes. Problem: significant space wasted if segment sizes vary widely. Small segments waste most of a large buffer slot.</span></div>
+    <div class="pt"><span class="pn">16</span><span class="ptx"><strong>Buffer type 3 — Variable-size buffers:</strong> Each buffer is dynamically sized to match the incoming segment. Best memory utilization. Disadvantage: complex implementation — dynamic memory allocation is required for every segment.</span></div>
+    <div class="pt"><span class="pn">17</span><span class="ptx"><strong>Buffer type 4 — Single large circular buffer (preferred):</strong> One large circular buffer per connection. Segments of different sizes placed one after another in the circular space. Unused space can store the next arriving segment. Good utilization under heavy load. Balances complexity and efficiency.</span></div>
+    <div class="pt"><span class="pn">18</span><span class="ptx"><strong>Dynamic buffer management:</strong> The receiver's available buffer space changes dynamically because the application reads at a different rate than the network delivers. If network delivers at 1 Mbps and app reads at 10 Kbps, the buffer fills up → would cause packet drops. Solution: receiver continuously ADVERTISES its available buffer space to the sender.</span></div>
+    <div class="pt"><span class="pn">19</span><span class="ptx"><strong>Dynamic buffer management — example:</strong> In sliding window, sender and receiver dynamically adjust buffer allocation. Receiver advertises remaining buffer space with each ACK. Sender limits its window to that advertised size → never sends more data than receiver can hold. Example in lecture: A requests 8 buffers, B has only 4 → B advertises 4. A sends 3 at a time based on advertisement.</span></div>
+    <div class="pt"><span class="pn">20</span><span class="ptx"><strong>Deadlock prevention (window = 0):</strong> When receiver advertises window = 0 (buffer full), sender stops sending. If receiver later frees space and sends an ACK announcing it, but that ACK is LOST → sender is permanently blocked (deadlock). Prevention: receiver must periodically send DUPLICATE ACKs after timeout, re-announcing available buffer space — even if no new data has arrived.</span></div>
+  </div>
+
+  <div class="tw">
+    <table>
+      <tr><th>Buffer Type</th><th>Best when</th><th>Memory Use</th><th>Complexity</th></tr>
+      <tr><td>Identically-sized pool</td><td>All segments same size</td><td>Excellent</td><td>Low</td></tr>
+      <tr><td>Chained fixed-size (linked list)</td><td>Variable, but not widely varied</td><td>Poor (wasted space)</td><td>Medium</td></tr>
+      <tr><td>Variable-size (dynamic alloc)</td><td>Widely varied segment sizes</td><td>Excellent</td><td>High</td></tr>
+      <tr><td>Single large circular buffer ✓</td><td>Heavily loaded connections</td><td>Good</td><td>Medium</td></tr>
+    </table>
+  </div>
+
+  <h2 class="sh">MCQs — BDP &amp; Buffers</h2>
+  <div class="mcq">
+    <div class="mcq-q">Q1. A network has bandwidth = 1 Mbps and one-way delay = 1 ms. Segment size = 1 KB (8192 bits). Which ARQ protocol should be used?</div>
+    <div class="opts" id="b1">
+      <button class="opt" onclick="ans('b1',0,2,'BDP = 1 Mbps × 1 ms = 1000 bits = 1 Kbit. Segment size = 8192 bits. BDP is SMALLER than one segment — so the pipe cannot hold even a single complete segment. Sending multiple segments in parallel provides no benefit. Use Stop-and-Wait — it has least complexity (no window management needed).')">A) Go-Back-N ARQ</button>
+      <button class="opt" onclick="ans('b1',1,2,'BDP = 1 Mbps × 1 ms = 1000 bits = 1 Kbit. Segment size = 8192 bits. BDP is SMALLER than one segment — so the pipe cannot hold even a single complete segment. Sending multiple segments in parallel provides no benefit. Use Stop-and-Wait — it has least complexity (no window management needed).')">B) Selective Repeat ARQ</button>
+      <button class="opt" onclick="ans('b1',2,2,'BDP = 1 Mbps × 1 ms = 1000 bits = 1 Kbit. Segment size = 8192 bits. BDP is SMALLER than one segment — so the pipe cannot hold even a single complete segment. Sending multiple segments in parallel provides no benefit. Use Stop-and-Wait — it has least complexity (no window management needed).')">C) Stop-and-Wait</button>
+      <button class="opt" onclick="ans('b1',3,2,'BDP = 1 Mbps × 1 ms = 1000 bits = 1 Kbit. Segment size = 8192 bits. BDP is SMALLER than one segment — so the pipe cannot hold even a single complete segment. Sending multiple segments in parallel provides no benefit. Use Stop-and-Wait — it has least complexity (no window management needed).')">D) Any sliding window protocol</button>
+    </div>
+    <div class="exp" id="b1-e"></div>
+  </div>
+  <div class="mcq">
+    <div class="mcq-q">Q2. The optimal sender window size for maximum link utilization is:</div>
+    <div class="opts" id="b2">
+      <button class="opt" onclick="ans('b2',0,2,'W = 2×BD + 1. The 2×BD fills both the forward data pipe AND the reverse ACK pipe. The +1 is for one ACK just received at the sender but not yet processed. This combination keeps both pipes 100% full at all times → maximum channel utilization.')">A) W = BD</button>
+      <button class="opt" onclick="ans('b2',1,2,'W = 2×BD + 1. The 2×BD fills both the forward data pipe AND the reverse ACK pipe. The +1 is for one ACK just received at the sender but not yet processed. This combination keeps both pipes 100% full at all times → maximum channel utilization.')">B) W = 2×BD</button>
+      <button class="opt" onclick="ans('b2',2,2,'W = 2×BD + 1. The 2×BD fills both the forward data pipe AND the reverse ACK pipe. The +1 is for one ACK just received at the sender but not yet processed. This combination keeps both pipes 100% full at all times → maximum channel utilization.')">C) W = 2×BD + 1</button>
+      <button class="opt" onclick="ans('b2',3,2,'W = 2×BD + 1. The 2×BD fills both the forward data pipe AND the reverse ACK pipe. The +1 is for one ACK just received at the sender but not yet processed. This combination keeps both pipes 100% full at all times → maximum channel utilization.')">D) W = BD/2</button>
+    </div>
+    <div class="exp" id="b2-e"></div>
+  </div>
+  <div class="mcq">
+    <div class="mcq-q">Q3. To prevent deadlock when the receiver advertises window size = 0, the receiver must:</div>
+    <div class="opts" id="b3">
+      <button class="opt" onclick="ans('b3',0,1,'If window=0 ACK is sent and then buffer frees up but the new ACK is lost, sender is permanently blocked. To prevent this, receiver must periodically send DUPLICATE ACKs (after timeout) re-announcing current available buffer space, so sender knows when it can resume sending.')">A) Close the connection immediately</button>
+      <button class="opt" onclick="ans('b3',1,1,'If window=0 ACK is sent and then buffer frees up but the new ACK is lost, sender is permanently blocked. To prevent this, receiver must periodically send DUPLICATE ACKs (after timeout) re-announcing current available buffer space, so sender knows when it can resume sending.')">B) Periodically send duplicate ACKs after timeout, re-announcing available buffer space</button>
+      <button class="opt" onclick="ans('b3',2,1,'If window=0 ACK is sent and then buffer frees up but the new ACK is lost, sender is permanently blocked. To prevent this, receiver must periodically send DUPLICATE ACKs (after timeout) re-announcing current available buffer space, so sender knows when it can resume sending.')">C) Wait for sender to retransmit all data</button>
+      <button class="opt" onclick="ans('b3',3,1,'If window=0 ACK is sent and then buffer frees up but the new ACK is lost, sender is permanently blocked. To prevent this, receiver must periodically send DUPLICATE ACKs (after timeout) re-announcing current available buffer space, so sender knows when it can resume sending.')">D) Send a RESET message to restart the connection</button>
+    </div>
+    <div class="exp" id="b3-e"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ TAB 2: CONGESTION CONTROL ═══════════════ -->
+<div id="cong" class="sec">
+  <div class="ttl">Topic 2: Congestion Control <span class="bdg" style="background:#FAEEDA;color:#633806">High Weightage</span></div>
+  <div class="bx bbl">
+    <h3>What is Congestion?</h3>
+    <p>Congestion occurs when the total incoming rate (λ) at an intermediate router buffer exceeds its outgoing rate (μ). If λ &gt; μ, the buffer fills up → packet drops. Retransmissions cause even more load → a vicious cycle called <strong>congestion collapse</strong>. The transport layer must detect and avoid this.</p>
+  </div>
+
+  <h2 class="sh">Key explanation points</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">1</span><span class="ptx"><strong>Max-Flow Min-Cut (centralized):</strong> In a centralized network, you can apply the Max-Flow Min-Cut theorem to find the bottleneck capacity and restrict flows to that maximum. In the real distributed internet, each router only has local information — this calculation is impossible in real-time. Congestion control must work in a decentralized, distributed way.</span></div>
+    <div class="pt"><span class="pn">2</span><span class="ptx"><strong>Congestion avoidance vs congestion control:</strong> Since a priori estimation of the exact congestion point is difficult in a distributed environment, we do not perform strict "congestion control." Instead, we do <strong>congestion avoidance</strong> — detect congestion when it starts happening (infer from packet loss) and back off before it becomes severe.</span></div>
+    <div class="pt"><span class="pn">3</span><span class="ptx"><strong>Packet loss as the congestion signal:</strong> In wired networks, physical bit errors are rare. If a packet is dropped, it is almost certainly due to buffer overflow at some intermediate router (λ > μ). Packet loss = signature of congestion. Transport layer use this to trigger rate reduction.</span></div>
+    <div class="pt"><span class="pn">4</span><span class="ptx"><strong>Updated sender rate formula:</strong> Previously: Sender_rate = Receiver_rate (from flow control). Now with congestion control: <strong>Sender_rate = min(network_supported_rate, receiver_advertised_rate)</strong>. Flow control sets the upper bound from the receiver side. Congestion control sets a separate upper bound from the network side. Sender uses the minimum.</span></div>
+    <div class="pt"><span class="pn">5</span><span class="ptx"><strong>Goodput vs offered load curve:</strong> As offered load increases from 0, goodput increases proportionally up to the link capacity. At the saturation point, retransmissions begin → goodput drops sharply. This drop is called <strong>congestion collapse</strong>. End-to-end delay also spikes at this point as router queues fill up.</span></div>
+    <div class="pt"><span class="pn">6</span><span class="ptx"><strong>Dynamic bandwidth sharing:</strong> Flows enter and exit the network dynamically. If Flow 1 and Flow 2 share a 1 Mbps bottleneck, each gets ~500 Kbps. If Flow 3 (100 Kbps) joins, it steals bandwidth → F1 and F2 each get ~450 Kbps. If F2 finishes, F1 captures ~900 Kbps. Congestion control must handle this dynamically without central coordination.</span></div>
+    <div class="pt"><span class="pn">7</span><span class="ptx"><strong>Fairness:</strong> Bad congestion control can starve some flows entirely (some flows get 0 bandwidth while others hog all of it). Like cars stuck in a traffic jam forever. In networks, starvation means some applications cannot get any service. We need fairness guarantees.</span></div>
+    <div class="pt"><span class="pn">8</span><span class="ptx"><strong>Max-Min Fairness:</strong> An allocation {λ₁, λ₂, ...} is max-min fair if the bandwidth of any flow CANNOT be increased without DECREASING the bandwidth of another flow that has equal or less bandwidth. Example: 3 flows on a bottleneck → each gets 1/3. To give Flow A more than 1/3, you must take from B or C.</span></div>
+    <div class="pt"><span class="pn">9</span><span class="ptx"><strong>AIMD — Additive Increase Multiplicative Decrease (Chiu &amp; Jain, 1989):</strong> The distributed algorithm that achieves both max-min fairness AND full link utilization simultaneously. Rule: If no congestion detected → w(t+1) = w(t) + a (additive increase). If congestion detected (packet loss) → w(t+1) = b × w(t), where 0 &lt; b &lt; 1 (multiplicative decrease). 'a' is the additive factor, 'b' is the multiplicative factor.</span></div>
+    <div class="pt"><span class="pn">10</span><span class="ptx"><strong>Why AIMD converges to optimal (geometric proof):</strong> Plot User1 rate on x-axis, User2 rate on y-axis. Fairness line: x = y (45° line). Efficiency line: x + y = C (total capacity). AIMD additive increase moves diagonally at 45° (adds equally to both → toward fairness). Multiplicative decrease moves toward origin (radially). Together: spirals inward to the intersection point (max efficiency + max fairness) = optimal point.</span></div>
+    <div class="pt"><span class="pn">11</span><span class="ptx"><strong>Why AIAD fails:</strong> AIAD = Additive Increase Additive Decrease. Additive increase moves parallel to fairness line. Additive decrease also moves parallel. Net result: oscillation ALONG the efficiency line. Never converges to the fairness point.</span></div>
+    <div class="pt"><span class="pn">12</span><span class="ptx"><strong>Why MIMD fails:</strong> MIMD = Multiplicative Increase Multiplicative Decrease. Both increase and decrease are radial (toward/away from origin). Net result: oscillation radially along a line from origin. May eventually hit efficiency line but NOT the fairness point.</span></div>
+    <div class="pt"><span class="pn">13</span><span class="ptx"><strong>TCP uses AIMD:</strong> TCP implements AIMD through the <strong>congestion window (cwnd)</strong>. cwnd starts small and grows additively (congestion avoidance phase). On packet loss (congestion detected) → cwnd drops significantly (multiplicative decrease). This is expanded in TCP details with slow start, fast retransmit, etc.</span></div>
+  </div>
+
+  <div class="tw">
+    <table>
+      <tr><th>Algorithm</th><th>Increase</th><th>Decrease</th><th>Convergence to optimal?</th></tr>
+      <tr><td>AIAD</td><td>+a (additive)</td><td>−a (additive)</td><td>No — oscillates on efficiency line</td></tr>
+      <tr><td>MIMD</td><td>×a (multiplicative)</td><td>×b (multiplicative)</td><td>No — oscillates radially</td></tr>
+      <tr><td><strong>AIMD ✓</strong></td><td><strong>+a (additive)</strong></td><td><strong>×b (multiplicative, 0&lt;b&lt;1)</strong></td><td><strong>YES — converges to fairness + efficiency</strong></td></tr>
+    </table>
+  </div>
+
+  <div class="bx bgn">
+    <h3>Max-Min Fairness — example from lecture</h3>
+    <p style="font-size:14px">Four flows (A, B, C, D) in a network. Flows B, C, D all pass through the same bottleneck link → each gets 1/3 capacity. Flow A shares a different link with only B → A gets 2/3 of that link's capacity. This is max-min fair: to give B more than 1/3, you must take from C or D.</p>
+  </div>
+
+  <h2 class="sh">MCQs — Congestion Control</h2>
+  <div class="mcq">
+    <div class="mcq-q">Q1. AIMD was proposed by whom, and why is it preferred over AIAD and MIMD?</div>
+    <div class="opts" id="cc1">
+      <button class="opt" onclick="ans('cc1',0,2,'AIMD proposed by Chiu and Jain (1989). AIMD converges to the OPTIMAL point — the intersection of the efficiency line (100% utilization) and fairness line (equal share). AIAD oscillates on the efficiency line without converging to fairness. MIMD oscillates radially. Only AIMD achieves BOTH simultaneously.')">A) Proposed by Tomlinson (1975) to replace Stop-and-Wait</button>
+      <button class="opt" onclick="ans('cc1',1,2,'AIMD proposed by Chiu and Jain (1989). AIMD converges to the OPTIMAL point — the intersection of the efficiency line (100% utilization) and fairness line (equal share). AIAD oscillates on the efficiency line without converging to fairness. MIMD oscillates radially. Only AIMD achieves BOTH simultaneously.')">B) Proposed by RFC 793 to manage TCP segments</button>
+      <button class="opt" onclick="ans('cc1',2,2,'AIMD proposed by Chiu and Jain (1989). AIMD converges to the OPTIMAL point — the intersection of the efficiency line (100% utilization) and fairness line (equal share). AIAD oscillates on the efficiency line without converging to fairness. MIMD oscillates radially. Only AIMD achieves BOTH simultaneously.')">C) Chiu &amp; Jain (1989); it converges to optimal fair and efficient allocation — AIAD/MIMD do not</button>
+      <button class="opt" onclick="ans('cc1',3,2,'AIMD proposed by Chiu and Jain (1989). AIMD converges to the OPTIMAL point — the intersection of the efficiency line (100% utilization) and fairness line (equal share). AIAD oscillates on the efficiency line without converging to fairness. MIMD oscillates radially. Only AIMD achieves BOTH simultaneously.')">D) Proposed by IEEE 802.11 committee for wireless</button>
+    </div>
+    <div class="exp" id="cc1-e"></div>
+  </div>
+  <div class="mcq">
+    <div class="mcq-q">Q2. In a wired network, packet loss is used as a congestion signal because:</div>
+    <div class="opts" id="cc2">
+      <button class="opt" onclick="ans('cc2',0,1,'In wired networks, physical bit error rates are very low. Almost all packet loss is caused by BUFFER OVERFLOW at intermediate routers — meaning λ > μ (incoming rate exceeds outgoing rate). Packet loss thus reliably signals that the network is congested. Wireless networks have physical errors too — making this heuristic less reliable there.')">A) Wired networks have high physical bit error rates</button>
+      <button class="opt" onclick="ans('cc2',1,1,'In wired networks, physical bit error rates are very low. Almost all packet loss is caused by BUFFER OVERFLOW at intermediate routers — meaning λ > μ (incoming rate exceeds outgoing rate). Packet loss thus reliably signals that the network is congested. Wireless networks have physical errors too — making this heuristic less reliable there.')">B) Physical bit errors are rare in wired networks; loss almost always means router buffer overflow (λ > μ)</button>
+      <button class="opt" onclick="ans('cc2',2,1,'In wired networks, physical bit error rates are very low. Almost all packet loss is caused by BUFFER OVERFLOW at intermediate routers — meaning λ > μ (incoming rate exceeds outgoing rate). Packet loss thus reliably signals that the network is congested. Wireless networks have physical errors too — making this heuristic less reliable there.')">C) ISPs deliberately drop packets to signal bandwidth</button>
+      <button class="opt" onclick="ans('cc2',3,1,'In wired networks, physical bit error rates are very low. Almost all packet loss is caused by BUFFER OVERFLOW at intermediate routers — meaning λ > μ (incoming rate exceeds outgoing rate). Packet loss thus reliably signals that the network is congested. Wireless networks have physical errors too — making this heuristic less reliable there.')">D) Wired cables have fixed MTU causing drops</button>
+    </div>
+    <div class="exp" id="cc2-e"></div>
+  </div>
+  <div class="mcq">
+    <div class="mcq-q">Q3. An allocation is max-min fair if:</div>
+    <div class="opts" id="cc3">
+      <button class="opt" onclick="ans('cc3',0,2,'Max-min fair: you cannot increase any one flow\'s bandwidth without DECREASING another flow\'s bandwidth. The minimum allocation is maximized (max-min). Example: 3 flows on 1 Mbps bottleneck → each gets 1/3 Mbps. To give Flow A > 1/3, you must take from B or C. That is max-min fairness.')">A) All flows receive the same bandwidth regardless of path</button>
+      <button class="opt" onclick="ans('cc3',1,2,'Max-min fair: you cannot increase any one flow\'s bandwidth without DECREASING another flow\'s bandwidth. The minimum allocation is maximized (max-min). Example: 3 flows on 1 Mbps bottleneck → each gets 1/3 Mbps. To give Flow A > 1/3, you must take from B or C. That is max-min fairness.')">B) Bandwidth of any flow cannot be increased without decreasing another flow\'s bandwidth</button>
+      <button class="opt" onclick="ans('cc3',2,2,'Max-min fair: you cannot increase any one flow\'s bandwidth without DECREASING another flow\'s bandwidth. The minimum allocation is maximized (max-min). Example: 3 flows on 1 Mbps bottleneck → each gets 1/3 Mbps. To give Flow A > 1/3, you must take from B or C. That is max-min fairness.')">C) High-priority flows always get more bandwidth than low-priority</button>
+      <button class="opt" onclick="ans('cc3',3,2,'Max-min fair: you cannot increase any one flow\'s bandwidth without DECREASING another flow\'s bandwidth. The minimum allocation is maximized (max-min). Example: 3 flows on 1 Mbps bottleneck → each gets 1/3 Mbps. To give Flow A > 1/3, you must take from B or C. That is max-min fairness.')">D) Flows with shorter RTT get proportionally more bandwidth</button>
+    </div>
+    <div class="exp" id="cc3-e"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ TAB 3: TRANSPORT SERVICES (COMBINING + SOCKET) ═══════════════ -->
+<div id="svc" class="sec">
+  <div class="ttl">Topic 3: Combining Transport Services &amp; Socket Model <span class="bdg" style="background:#FAEEDA;color:#633806">Medium Weightage</span></div>
+  <div class="bx bbl">
+    <h3>Putting it all together</h3>
+    <p>The full transport layer protocol combines all individual services into a coherent state machine. It requires (1) a unique identifier for each connection, (2) a stateful protocol that remembers connection state before allowing send/receive, and (3) a standard set of primitives (connect, send, receive, disconnect) that applications use.</p>
+  </div>
+
+  <h2 class="sh">Key explanation points</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">1</span><span class="ptx"><strong>Port number — identifying applications:</strong> On a single machine, multiple applications run simultaneously (multi-tasking). Eg: D1 runs A1, A2; D3 runs A1, A2, A3. The network layer IP address uniquely identifies the machine. The port number uniquely identifies the application on that machine. Transport layer header carries both source port and destination port.</span></div>
+    <div class="pt"><span class="pn">2</span><span class="ptx"><strong>The logical pipe (socket):</strong> A transport-layer connection between two apps is a logical pipe — all of TCP/IP's services are applied over this pipe to make it reliable. In TCP/Unix systems, this logical pipe is called a <strong>socket</strong>.</span></div>
+    <div class="pt"><span class="pn">3</span><span class="ptx"><strong>Socket = 6-tuple:</strong> A socket (unique connection identifier) is defined by: {Source IP, Source Port, Source ISN, Destination IP, Destination Port, Destination ISN}. All six parameters must match for a packet to belong to a connection. The ISNs prevent confusion with old connections that used the same IP+port pair.</span></div>
+    <div class="pt"><span class="pn">4</span><span class="ptx"><strong>State-full protocol:</strong> The transport layer MUST remember the state of each connection (IDLE, CONNECTING, ESTABLISHED, CLOSING). A send() or recv() call is only valid in the ESTABLISHED state. Calling send() before establishing the connection is invalid. The protocol transitions between states based on received messages and application calls.</span></div>
+    <div class="pt"><span class="pn">5</span><span class="ptx"><strong>Hypothetical transport primitives:</strong> Server: listen() → then recv() to receive data → send() to reply → disconnect(). Client: connect() → send() data → recv() reply → disconnect(). The connect() triggers 3-way handshake internally. These primitives are the basis of socket programming.</span></div>
+    <div class="pt"><span class="pn">6</span><span class="ptx"><strong>Hypothetical state transition:</strong> IDLE → (connect() or listen()) → ACTIVE/PASSIVE ESTABLISHMENT → ESTABLISHED → (disconnect()) → IDLE. In ESTABLISHED state: send() and recv() are allowed. In any other state: send/recv calls wait or are rejected.</span></div>
+    <div class="pt"><span class="pn">7</span><span class="ptx"><strong>Complete end-to-end service flow:</strong> (1) Connection establishment using 3WHS → agree on ISN. (2) Flow control using sliding window ARQ → maintain delivery order and reliability. (3) Congestion control using AIMD → respect network capacity. (4) Connection closure using symmetric release with timeout → clean shutdown.</span></div>
+    <div class="pt"><span class="pn">8</span><span class="ptx"><strong>Sender rate — full formula:</strong> Sender_rate = min(network_rate, receiver_rate). Network rate is estimated by the AIMD congestion window. Receiver rate is advertised by the receiver's window field. Both are managed simultaneously — flow control and congestion control are tightly coupled in TCP.</span></div>
+    <div class="pt"><span class="pn">9</span><span class="ptx"><strong>Rate control over time (conceptual graph):</strong> Initially: low rate. Gradually increases (AIMD additive increase). Hits receiver rate → saturates (stops increasing). If packet loss → drops sharply (AIMD multiplicative decrease). Starts increasing again. Periodically saturates at receiver rate. Cycle continues → dynamically tracks network capacity.</span></div>
+  </div>
+
+  <div class="bx bamb">
+    <h3>Why ISN is part of the socket 6-tuple</h3>
+    <p style="font-size:14px">If a machine crashes and restarts, the same {src IP, src port, dst IP, dst port} pair may be reused for a new connection. Old delayed packets with old ISNs would then corrupt the new connection's data. By including the ISN in the socket identifier, old and new connections remain distinguishable even with the same IP+port pair.</p>
+  </div>
+
+  <h2 class="sh">MCQs — Transport Services</h2>
+  <div class="mcq">
+    <div class="mcq-q">Q1. A TCP socket (connection) is uniquely identified by how many parameters?</div>
+    <div class="opts" id="sv1">
+      <button class="opt" onclick="ans('sv1',0,2,'A TCP socket is uniquely identified by 6 parameters: {Source IP, Source Port, Source ISN, Destination IP, Destination Port, Destination ISN}. The ISNs are included to distinguish connections that reuse the same IP+port pair after crashes.')">A) 2 (source IP + destination IP)</button>
+      <button class="opt" onclick="ans('sv1',1,2,'A TCP socket is uniquely identified by 6 parameters: {Source IP, Source Port, Source ISN, Destination IP, Destination Port, Destination ISN}. The ISNs are included to distinguish connections that reuse the same IP+port pair after crashes.')">B) 4 (source IP, source port, destination IP, destination port)</button>
+      <button class="opt" onclick="ans('sv1',2,2,'A TCP socket is uniquely identified by 6 parameters: {Source IP, Source Port, Source ISN, Destination IP, Destination Port, Destination ISN}. The ISNs are included to distinguish connections that reuse the same IP+port pair after crashes.')">C) 6 (src IP, src port, src ISN, dst IP, dst port, dst ISN)</button>
+      <button class="opt" onclick="ans('sv1',3,2,'A TCP socket is uniquely identified by 6 parameters: {Source IP, Source Port, Source ISN, Destination IP, Destination Port, Destination ISN}. The ISNs are included to distinguish connections that reuse the same IP+port pair after crashes.')">D) 8 (including MAC addresses)</button>
+    </div>
+    <div class="exp" id="sv1-e"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ TAB 4: TCP PROTOCOL DETAILS ═══════════════ -->
+<div id="tcpdet" class="sec">
+  <div class="ttl">Topic 4: TCP Protocol — Design &amp; Segment Format <span class="bdg" style="background:#FCEBEB;color:#791F1F">Most Important</span></div>
+  <div class="bx bbl">
+    <h3>What is TCP?</h3>
+    <p>TCP (Transmission Control Protocol) was designed to provide <strong>reliable, end-to-end byte streaming over an unreliable internet</strong>. First specified in RFC 793 (September 1981). Today &gt;80% of all internet traffic uses TCP. It dynamically adapts to heterogeneous paths — wired, wireless, optical — and is robust to diverse network failure modes.</p>
+  </div>
+
+  <h2 class="sh">Key explanation points — TCP Service Model</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">1</span><span class="ptx"><strong>Full duplex, point-to-point only:</strong> TCP is strictly between exactly 2 hosts (point-to-point). Both directions are active simultaneously. TCP was NOT designed for multicast or broadcast — sending to a group of nodes. If you need that, use UDP or special multicast protocols.</span></div>
+    <div class="pt"><span class="pn">2</span><span class="ptx"><strong>Byte stream — not message stream:</strong> TCP does NOT preserve application-level message boundaries. Sender writing 4 × 512-byte blocks to TCP socket may have them delivered as 2048 bytes in one chunk, or 1024 + 1024, or any other division. The receiver cannot determine how the sender chunked the data. Everything is one continuous byte stream.</span></div>
+    <div class="pt"><span class="pn">3</span><span class="ptx"><strong>Why message boundaries are not preserved:</strong> TCP collects data from the sender buffer and creates segments based on current window size and MSS — not based on application write boundaries. Retransmission may also restructure segments (e.g., two 50B+150B segments retransmitted as two 100B segments). TCP sees it as bytes, not messages.</span></div>
+    <div class="pt"><span class="pn">4</span><span class="ptx"><strong>inetd daemon (Unix):</strong> A single process "inetd" (Internet Daemon) runs at all well-known ports simultaneously. When a connection arrives on port 80, inetd forks an httpd child process. Port 21 → ftpd. Port 22 → sshd. After forking, inetd returns to listening. Applications do not need to always be running — inetd starts them on demand.</span></div>
+    <div class="pt"><span class="pn">5</span><span class="ptx"><strong>TCP RFC evolution:</strong> RFC 793 (Sept 1981) — original TCP specification. RFC 1122 — clarifications and bug corrections. RFC 1323 — extensions for high performance (window scaling, timestamps). RFC 2018 — SACK (Selective ACK using Selective Repeat ARQ). RFC 2581 — congestion control algorithms. RFC 3168 — Explicit Congestion Notification (ECN). TCP continues to evolve.</span></div>
+    <div class="pt"><span class="pn">6</span><span class="ptx"><strong>Byte sequence numbers (32-bit):</strong> Every individual byte in a TCP stream has its own 32-bit sequence number. The sequence number in the segment header is the byte offset of the FIRST byte in that segment's payload. 32 bits = 2³² ≈ 4 billion unique byte positions — large enough for most connections but can wrap at very high speeds.</span></div>
+    <div class="pt"><span class="pn">7</span><span class="ptx"><strong>Cumulative ACK (32-bit):</strong> ACK number = the next byte the receiver EXPECTS. If ACK = 31245, it means all bytes up to 31244 have been received correctly. The receiver does NOT send one ACK per segment — it sends a cumulative ACK for all bytes received so far.</span></div>
+  </div>
+
+  <h2 class="sh">Key explanation points — TCP Segment Header</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">8</span><span class="ptx"><strong>Source Port &amp; Destination Port (16-bit each):</strong> Identify the sending and receiving applications. Together with IP addresses, they uniquely identify the connection. Well-known ports: 80 (HTTP), 21 (FTP), 22 (SSH), 25 (SMTP), 443 (HTTPS).</span></div>
+    <div class="pt"><span class="pn">9</span><span class="ptx"><strong>Header Length:</strong> Tells where the data payload starts, because TCP header length is variable (optional fields exist). Measured in 32-bit words. Minimum header = 20 bytes (no options).</span></div>
+    <div class="pt"><span class="pn">10</span><span class="ptx"><strong>Flag bits (critical for NPTEL):</strong> <strong>SYN</strong> — connection initiation (set in first 2 messages of 3WHS). <strong>ACK</strong> — ACK field is valid (set in all messages except first raw SYN). <strong>FIN</strong> — connection close (sender has no more data). <strong>RST</strong> — reset (forceful close, reject connection). <strong>PSH</strong> — push data to application immediately without buffering. <strong>URG</strong> — urgent data present (urgent pointer field valid).</span></div>
+    <div class="pt"><span class="pn">11</span><span class="ptx"><strong>Window Size (16-bit):</strong> Receiver-advertised window = available buffer space at receiver. Sender window = min(cwnd, rwnd). This implements dynamic buffer management and flow control simultaneously. Maximum without scaling = 65535 bytes. Can be scaled with TCP window scaling option (RFC 1323).</span></div>
+    <div class="pt"><span class="pn">12</span><span class="ptx"><strong>Checksum:</strong> Mandatory in TCP (unlike UDP where it's optional in IPv4). Covers the TCP header + data + a pseudoheader (source IP, destination IP, protocol, segment length). Detects bit-level corruption of the segment.</span></div>
+    <div class="pt"><span class="pn">13</span><span class="ptx"><strong>Urgent Pointer:</strong> When URG=1, points to the last byte of urgent data within the segment. Urgent data bypasses the normal FIFO transmit queue — sent immediately without waiting. Used for out-of-band signals, e.g., Ctrl+C in a Telnet session to interrupt a running remote process.</span></div>
+    <div class="pt"><span class="pn">14</span><span class="ptx"><strong>Segment size limits:</strong> (1) IP payload limit = 65515 bytes maximum. (2) MTU (Maximum Transmission Unit) of the particular data link technology — Ethernet, Wi-Fi, optical fiber each have different MTUs. TCP uses <strong>Path MTU Discovery (PMTUD)</strong> — a mechanism in ICMP that finds the minimum MTU along the entire end-to-end path. Sets MSS accordingly during connection setup.</span></div>
+    <div class="pt"><span class="pn">15</span><span class="ptx"><strong>Sender window = min(cwnd, rwnd):</strong> cwnd = congestion window (how much the network can handle — set by AIMD). rwnd = receiver window (how much buffer the receiver has — advertised in each ACK). Sender always uses the minimum of both, satisfying both flow control AND congestion control simultaneously.</span></div>
+    <div class="pt"><span class="pn">16</span><span class="ptx"><strong>Out-of-order segment handling:</strong> TCP's network layer may route different packets via different paths → segments arrive out of order. TCP receiver should BUFFER out-of-order segments rather than discarding them. When the missing segment eventually arrives, the receiver can assemble all buffered segments and deliver them in order to the application.</span></div>
+    <div class="pt"><span class="pn">17</span><span class="ptx"><strong>Retransmission may change segment boundaries:</strong> Example: original segments are 50B + 150B (bytes 201–250 and 251–400). Both are lost. Retransmission might be 100B + 100B (bytes 201–300 and 301–400). TCP sees it as "resend bytes 201–400" — not "resend those two specific segments." Segment boundaries are NOT preserved.</span></div>
+  </div>
+
+  <div class="tw">
+    <table>
+      <tr><th>Field</th><th>Size</th><th>Purpose</th></tr>
+      <tr><td>Source Port</td><td>16 bits</td><td>Identifies sending application</td></tr>
+      <tr><td>Destination Port</td><td>16 bits</td><td>Identifies receiving application</td></tr>
+      <tr><td>Sequence Number</td><td>32 bits</td><td>Byte offset of first byte in this segment</td></tr>
+      <tr><td>Acknowledgement Number</td><td>32 bits</td><td>Next expected byte (cumulative ACK)</td></tr>
+      <tr><td>Header Length</td><td>4 bits</td><td>TCP header length in 32-bit words</td></tr>
+      <tr><td>Flags (SYN, ACK, FIN, RST, PSH, URG)</td><td>6 bits</td><td>Connection and flow control signals</td></tr>
+      <tr><td>Window Size</td><td>16 bits</td><td>Receiver's available buffer (advertised window)</td></tr>
+      <tr><td>Checksum</td><td>16 bits</td><td>Error detection over header + data</td></tr>
+      <tr><td>Urgent Pointer</td><td>16 bits</td><td>End of urgent data when URG=1</td></tr>
+      <tr><td>Options</td><td>Variable</td><td>MSS, SACK, timestamps, window scaling</td></tr>
+      <tr><td>Data Payload</td><td>Variable</td><td>Application data</td></tr>
+    </table>
+  </div>
+
+  <h2 class="sh">MCQs — TCP Protocol</h2>
+  <div class="mcq">
+    <div class="mcq-q">Q1. A TCP receiver sends ACK number = 8001. What does this mean?</div>
+    <div class="opts" id="td1">
+      <button class="opt" onclick="ans('td1',0,1,'TCP ACK is CUMULATIVE. ACK=8001 means all bytes up to and including byte 8000 have been correctly received. The receiver is expecting byte 8001 next. It does NOT mean 8001 packets or 8001 segments — TCP uses BYTE sequence numbers.')">A) 8001 segments have been received</button>
+      <button class="opt" onclick="ans('td1',1,1,'TCP ACK is CUMULATIVE. ACK=8001 means all bytes up to and including byte 8000 have been correctly received. The receiver is expecting byte 8001 next. It does NOT mean 8001 packets or 8001 segments — TCP uses BYTE sequence numbers.')">B) All bytes up to byte 8000 received; next expected byte is 8001</button>
+      <button class="opt" onclick="ans('td1',2,1,'TCP ACK is CUMULATIVE. ACK=8001 means all bytes up to and including byte 8000 have been correctly received. The receiver is expecting byte 8001 next. It does NOT mean 8001 packets or 8001 segments — TCP uses BYTE sequence numbers.')">C) Byte 8001 has been sent by the sender</button>
+      <button class="opt" onclick="ans('td1',3,1,'TCP ACK is CUMULATIVE. ACK=8001 means all bytes up to and including byte 8000 have been correctly received. The receiver is expecting byte 8001 next. It does NOT mean 8001 packets or 8001 segments — TCP uses BYTE sequence numbers.')">D) 8000 bytes have been lost</button>
+    </div>
+    <div class="exp" id="td1-e"></div>
+  </div>
+  <div class="mcq">
+    <div class="mcq-q">Q2. The FIN flag in a TCP segment indicates:</div>
+    <div class="opts" id="td2">
+      <button class="opt" onclick="ans('td2',0,2,'FIN flag = sender has no more data to send and wants to close its half of the connection. ACK = acknowledgement is valid. SYN = connection initiation. RST = forceful reset/close. FIN is used in the graceful 4-step TCP connection termination process.')">A) ACK is valid and should be processed</button>
+      <button class="opt" onclick="ans('td2',1,2,'FIN flag = sender has no more data to send and wants to close its half of the connection. ACK = acknowledgement is valid. SYN = connection initiation. RST = forceful reset/close. FIN is used in the graceful 4-step TCP connection termination process.')">B) Connection initiation request</button>
+      <button class="opt" onclick="ans('td2',2,2,'FIN flag = sender has no more data to send and wants to close its half of the connection. ACK = acknowledgement is valid. SYN = connection initiation. RST = forceful reset/close. FIN is used in the graceful 4-step TCP connection termination process.')">C) Sender has finished sending data and wants to close its half-connection</button>
+      <button class="opt" onclick="ans('td2',3,2,'FIN flag = sender has no more data to send and wants to close its half of the connection. ACK = acknowledgement is valid. SYN = connection initiation. RST = forceful reset/close. FIN is used in the graceful 4-step TCP connection termination process.')">D) Data should bypass the transmit queue urgently</button>
+    </div>
+    <div class="exp" id="td2-e"></div>
+  </div>
+  <div class="mcq">
+    <div class="mcq-q">Q3. TCP does NOT support which of the following?</div>
+    <div class="opts" id="td3">
+      <button class="opt" onclick="ans('td3',0,2,'TCP is strictly POINT-TO-POINT (between exactly 2 hosts). It does NOT support multicast (one sender → group of receivers) or broadcast (one sender → all receivers). For multicast, one uses UDP with multicast IP addresses or dedicated multicast protocols.')">A) Reliable data delivery</button>
+      <button class="opt" onclick="ans('td3',1,2,'TCP is strictly POINT-TO-POINT (between exactly 2 hosts). It does NOT support multicast (one sender → group of receivers) or broadcast (one sender → all receivers). For multicast, one uses UDP with multicast IP addresses or dedicated multicast protocols.')">B) Full-duplex bidirectional communication</button>
+      <button class="opt" onclick="ans('td3',2,2,'TCP is strictly POINT-TO-POINT (between exactly 2 hosts). It does NOT support multicast (one sender → group of receivers) or broadcast (one sender → all receivers). For multicast, one uses UDP with multicast IP addresses or dedicated multicast protocols.')">C) Multicast or broadcast communication</button>
+      <button class="opt" onclick="ans('td3',3,2,'TCP is strictly POINT-TO-POINT (between exactly 2 hosts). It does NOT support multicast (one sender → group of receivers) or broadcast (one sender → all receivers). For multicast, one uses UDP with multicast IP addresses or dedicated multicast protocols.')">D) Congestion control via AIMD</button>
+    </div>
+    <div class="exp" id="td3-e"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ TAB 5: TCP CONNECTION ESTABLISHMENT ═══════════════ -->
+<div id="tcpconn" class="sec">
+  <div class="ttl">Topic 5: TCP Connection Establishment — SYN &amp; ISN <span class="bdg" style="background:#FCEBEB;color:#791F1F">Most Important</span></div>
+  <div class="bx bbl">
+    <h3>TCP 3-Way Handshake</h3>
+    <p>TCP connection establishment uses a 3-way handshake with a special message called <strong>SYN</strong> (Synchronize). Both hosts exchange Initial Sequence Numbers (ISN) during this handshake. The ISN selection mechanism must be carefully designed to prevent delayed duplicate packets from corrupting new connections.</p>
+  </div>
+
+  <h2 class="sh">Key explanation points — TCP 3-Way Handshake</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">1</span><span class="ptx"><strong>SYN segment (Step 1):</strong> Host A sends a SYN segment (SYN flag = 1) with its chosen Initial Sequence Number x. This is the connection request. SYN = Synchronize — used to synchronize sequence numbers between the two hosts before data transfer.</span></div>
+    <div class="pt"><span class="pn">2</span><span class="ptx"><strong>SYN+ACK segment (Step 2):</strong> Host B receives SYN → sends SYN+ACK (both SYN flag=1 AND ACK flag=1). This message: (a) Acknowledges A's SYN with ACK number = x+1. (b) Proposes B's own ISN = y for the B→A direction. This "piggybacking" (combining SYN and ACK) saves one round trip compared to sending them separately.</span></div>
+    <div class="pt"><span class="pn">3</span><span class="ptx"><strong>ACK segment (Step 3):</strong> Host A receives SYN+ACK → verifies ACK number = x+1 (matches its SYN) → accepts as valid. Sends final ACK: sequence number = x+1, ACK number = y+1. Connection is now ESTABLISHED. Both ISNs (x for A→B, y for B→A) are confirmed. Data transfer can begin.</span></div>
+    <div class="pt"><span class="pn">4</span><span class="ptx"><strong>Why bidirectional SYN?</strong> TCP is FULL DUPLEX — both hosts send data to each other simultaneously. A→B direction needs ISN x. B→A direction needs ISN y. If only A sent SYN, only A's ISN would be established. The SYN+ACK from B establishes B's ISN y for the reverse direction.</span></div>
+  </div>
+
+  <div class="bx bgn">
+    <h3>3-Way Handshake — step by step</h3>
+    <div class="flow">
+      <div class="fbox">A → SYN (seq=x)</div><div class="farr">→</div>
+      <div class="fbox">B → SYN+ACK (seq=y, ack=x+1)</div><div class="farr">→</div>
+      <div class="fbox">A → ACK (seq=x+1, ack=y+1)</div><div class="farr">→</div>
+      <div class="fbox">ESTABLISHED — Data Transfer Begins</div>
+    </div>
+  </div>
+
+  <h2 class="sh">Key explanation points — ISN Selection</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">5</span><span class="ptx"><strong>Why ISN selection matters:</strong> If a machine crashes and restarts, it reuses the same source IP and port. Old in-flight packets from the crashed connection arrive later. If the new connection uses overlapping sequence numbers, old packets corrupt new connection's data. ISN must be chosen to avoid overlap with previous connection's forbidden region.</span></div>
+    <div class="pt"><span class="pn">6</span><span class="ptx"><strong>Two strategies to avoid forbidden region:</strong> (a) Time-based: wait for duration T (max packet lifetime) before starting the new connection — all old packets are guaranteed dead. (b) Sequence-number-based: choose new ISN high enough above the last sequence number used in the old connection — no overlap in sequence number space. TCP uses strategy (b).</span></div>
+    <div class="pt"><span class="pn">7</span><span class="ptx"><strong>Original TCP — clock-based ISN:</strong> Clock ticks every 4 microseconds. Each tick generates a new sequence number. Clock cycles from 0 to 2³²−1. When new connection starts, ISN = current clock value → always higher than previous connection's last sequence number → no forbidden region overlap guaranteed.</span></div>
+    <div class="pt"><span class="pn">8</span><span class="ptx"><strong>Problem with clock-based ISN — predictability:</strong> Clock ticks at exactly 4 μs → ISN is deterministic and predictable. An attacker who knows the clock rate can compute the current clock value and predict the next connection's ISN. This enables a SYN flood attack.</span></div>
+    <div class="pt"><span class="pn">9</span><span class="ptx"><strong>SYN Flood Attack (DoS):</strong> Attacker sends thousands of SYN packets with spoofed source IPs. Server responds with SYN+ACK to fake IPs (which never respond). Server allocates memory for each "half-open" connection waiting for the third ACK. Eventually server's memory for half-open connections is exhausted → cannot handle legitimate connections → Denial of Service (DoS).</span></div>
+    <div class="pt"><span class="pn">10</span><span class="ptx"><strong>Modern TCP — cryptographic ISN:</strong> Clock gives base value x. Apply a cryptographic hash function (e.g., MD5/HMAC) to generate final ISN y, where y &gt; x. Since hash output is unpredictable (cannot be computed from clock value without the secret key), the attacker cannot guess y even knowing the clock rate. Still ensures y is above the forbidden region.</span></div>
+    <div class="pt"><span class="pn">11</span><span class="ptx"><strong>Simultaneous open:</strong> Both client and server call connect() at the same time → both send SYN → both receive SYN (not SYN+ACK). Both then send SYN+ACK. Both move to SYN_RECEIVED state → both eventually move to ESTABLISHED. This rare edge case is handled correctly by TCP.</span></div>
+  </div>
+
+  <h2 class="sh">MCQs — TCP Connection Establishment</h2>
+  <div class="mcq">
+    <div class="mcq-q">Q1. In the TCP 3-way handshake, the SYN+ACK from the server has ACK number = x+1. This means:</div>
+    <div class="opts" id="tc1">
+      <button class="opt" onclick="ans('tc1',0,2,'ACK = x+1 acknowledges the client\'s SYN which had sequence number x. The "+1" is because the SYN itself consumes one sequence number (even though it carries no data). This tells the client that the server received the SYN(x) and is ready to receive starting from byte x+1. This is how the client verifies the SYN+ACK is valid and not a delayed duplicate.')">A) Server will send x+1 more bytes of data</button>
+      <button class="opt" onclick="ans('tc1',1,2,'ACK = x+1 acknowledges the client\'s SYN which had sequence number x. The "+1" is because the SYN itself consumes one sequence number (even though it carries no data). This tells the client that the server received the SYN(x) and is ready to receive starting from byte x+1. This is how the client verifies the SYN+ACK is valid and not a delayed duplicate.')">B) Server received the client\'s SYN(x) and expects start of data from byte x+1</button>
+      <button class="opt" onclick="ans('tc1',2,2,'ACK = x+1 acknowledges the client\'s SYN which had sequence number x. The "+1" is because the SYN itself consumes one sequence number (even though it carries no data). This tells the client that the server received the SYN(x) and is ready to receive starting from byte x+1. This is how the client verifies the SYN+ACK is valid and not a delayed duplicate.')">C) x+1 retransmissions have occurred</button>
+      <button class="opt" onclick="ans('tc1',3,2,'ACK = x+1 acknowledges the client\'s SYN which had sequence number x. The "+1" is because the SYN itself consumes one sequence number (even though it carries no data). This tells the client that the server received the SYN(x) and is ready to receive starting from byte x+1. This is how the client verifies the SYN+ACK is valid and not a delayed duplicate.')">D) Server\'s buffer has x+1 bytes free</button>
+    </div>
+    <div class="exp" id="tc1-e"></div>
+  </div>
+  <div class="mcq">
+    <div class="mcq-q">Q2. The SYN Flood attack exploits which TCP vulnerability?</div>
+    <div class="opts" id="tc2">
+      <button class="opt" onclick="ans('tc2',0,2,'Original TCP uses a clock-based ISN (tick every 4 μs) — the ISN is PREDICTABLE. Attacker can predict the ISN and flood the server with SYN packets from spoofed IPs. Server allocates resources for each half-open connection → memory exhausted → DoS. Modern TCP uses cryptographic ISN (hash function) to make ISN unpredictable.')">A) TCP has no checksum for SYN messages</button>
+      <button class="opt" onclick="ans('tc2',1,2,'Original TCP uses a clock-based ISN (tick every 4 μs) — the ISN is PREDICTABLE. Attacker can predict the ISN and flood the server with SYN packets from spoofed IPs. Server allocates resources for each half-open connection → memory exhausted → DoS. Modern TCP uses cryptographic ISN (hash function) to make ISN unpredictable.')">B) TCP does not verify the server\'s SYN+ACK</button>
+      <button class="opt" onclick="ans('tc2',2,2,'Original TCP uses a clock-based ISN (tick every 4 μs) — the ISN is PREDICTABLE. Attacker can predict the ISN and flood the server with SYN packets from spoofed IPs. Server allocates resources for each half-open connection → memory exhausted → DoS. Modern TCP uses cryptographic ISN (hash function) to make ISN unpredictable.')">C) Clock-based ISN is predictable; attacker floods server with spoofed SYNs causing DoS</button>
+      <button class="opt" onclick="ans('tc2',3,2,'Original TCP uses a clock-based ISN (tick every 4 μs) — the ISN is PREDICTABLE. Attacker can predict the ISN and flood the server with SYN packets from spoofed IPs. Server allocates resources for each half-open connection → memory exhausted → DoS. Modern TCP uses cryptographic ISN (hash function) to make ISN unpredictable.')">D) TCP window size is fixed at a known value</button>
+    </div>
+    <div class="exp" id="tc2-e"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ TAB 6: TCP RELEASE & STATE MACHINE ═══════════════ -->
+<div id="tcprel" class="sec">
+  <div class="ttl">Topic 6: TCP Connection Release &amp; State Machine <span class="bdg" style="background:#FCEBEB;color:#791F1F">Most Important</span></div>
+  <div class="bx bbl">
+    <h3>TCP Connection Release (FIN)</h3>
+    <p>TCP uses a symmetric (half-close) release. Each side closes its own half independently using a <strong>FIN</strong> (finish) segment. The side that initiates closing is the "active closer." The other side is the "passive closer." The active closer enters TIME_WAIT to handle delayed packets before fully closing.</p>
+  </div>
+
+  <h2 class="sh">Key explanation points — Connection Release</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">1</span><span class="ptx"><strong>Active Close (FIN):</strong> Host A wants to stop sending → sends FIN segment (FIN flag=1) with current seq and ACK numbers. This closes the A→B half of the connection. FIN = "I have no more data to send."</span></div>
+    <div class="pt"><span class="pn">2</span><span class="ptx"><strong>Passive Close options:</strong> Host B receives FIN → Option 1: Sends ACK+FIN immediately (FIN+ACK combined) — means B also has nothing more to send. Option 2: Sends only ACK (not FIN yet) — if B still has data to send to A. B continues sending data. When B finishes, it sends its own FIN.</span></div>
+    <div class="pt"><span class="pn">3</span><span class="ptx"><strong>Final ACK + TIME_WAIT:</strong> Host A receives B's FIN → sends final ACK → enters TIME_WAIT state. TIME_WAIT duration = 2 × MSL (Maximum Segment Lifetime). During TIME_WAIT, A can still receive delayed packets. After 2×MSL, all delayed packets are guaranteed dead → A fully closes.</span></div>
+    <div class="pt"><span class="pn">4</span><span class="ptx"><strong>Why active closer gets TIME_WAIT but passive closer doesn't:</strong> Active closer (A) may still receive delayed segments from B that were in-flight when A sent FIN. TIME_WAIT lets A receive them gracefully. Passive closer (B): B knows A sent FIN → A will definitely not send more data. B doesn't need to wait.</span></div>
+    <div class="pt"><span class="pn">5</span><span class="ptx"><strong>Simultaneous close:</strong> Both A and B call close() at the same time → both send FIN. Both receive FIN from the other side (not ACK). Both send ACK for the received FIN → both enter CLOSING state → both wait for ACK of their own FIN → both enter TIME_WAIT → both eventually CLOSED.</span></div>
+  </div>
+
+  <h2 class="sh">TCP State Machine — all 11 states</h2>
+  <div class="bsec">
+    <div class="pt"><span class="pn">6</span><span class="ptx"><strong>CLOSED:</strong> Initial and final state. No TCP socket exists. Both client and server start here before any connection is initiated.</span></div>
+    <div class="pt"><span class="pn">7</span><span class="ptx"><strong>LISTEN:</strong> Server calls listen() on a port. Ready to accept incoming SYN. Server waits here for clients to connect. (inetd keeps well-known ports in LISTEN state permanently.)</span></div>
+    <div class="pt"><span class="pn">8</span><span class="ptx"><strong>SYN_SENT:</strong> Client calls connect() → sends SYN(x) → enters SYN_SENT. Waiting for SYN+ACK from server. If client calls close() here → moves back to CLOSED.</span></div>
+    <div class="pt"><span class="pn">9</span><span class="ptx"><strong>SYN_RECEIVED:</strong> Server received SYN → sent SYN+ACK(y, ack=x+1) → waiting for client's final ACK. Server can call reset() here → returns to LISTEN (used to defend against SYN flood — reject suspicious SYN packets).</span></div>
+    <div class="pt"><span class="pn">10</span><span class="ptx"><strong>ESTABLISHED:</strong> Connection fully open. Data transfer active in both directions. Both client and server reach ESTABLISHED: client on receiving SYN+ACK; server on receiving final ACK. send() and recv() are only valid in this state.</span></div>
+    <div class="pt"><span class="pn">11</span><span class="ptx"><strong>FIN_WAIT_1:</strong> Active closer calls close() → sends FIN → enters FIN_WAIT_1. Three possible next events: (a) Gets ACK only → FIN_WAIT_2. (b) Gets FIN+ACK → TIME_WAIT. (c) Gets FIN only (simultaneous close) → CLOSING.</span></div>
+    <div class="pt"><span class="pn">12</span><span class="ptx"><strong>FIN_WAIT_2:</strong> Received ACK for own FIN. Passive closer still sending data. Waiting for passive closer's FIN. On receiving FIN → send ACK → TIME_WAIT.</span></div>
+    <div class="pt"><span class="pn">13</span><span class="ptx"><strong>TIME_WAIT:</strong> Received FIN, sent final ACK. Waiting for 2×MSL to expire. Purpose: (1) let delayed packets die, (2) if passive closer's FIN+ACK was lost and it retransmits, active closer can resend the final ACK. After timeout → CLOSED.</span></div>
+    <div class="pt"><span class="pn">14</span><span class="ptx"><strong>CLOSE_WAIT:</strong> Passive closer received FIN → sent ACK. Application may still be generating data. Server waits here until its application finishes and calls close(). On close() → sends own FIN → LAST_ACK.</span></div>
+    <div class="pt"><span class="pn">15</span><span class="ptx"><strong>LAST_ACK:</strong> Passive closer sent its own FIN. Waiting for the active closer's final ACK. On receiving final ACK → CLOSED. No timeout needed — passive closer knows active closer will definitely close (it already sent FIN).</span></div>
+    <div class="pt"><span class="pn">16</span><span class="ptx"><strong>CLOSING:</strong> Simultaneous close state. Both sent FIN at the same time. Client gets FIN from server instead of ACK → sends ACK → CLOSING. Waiting for ACK of its own FIN → TIME_WAIT → CLOSED.</span></div>
+  </div>
+
+  <div class="tw">
+    <table>
+      <tr><th>State</th><th>Who</th><th>Event that brings you here</th><th>Next transition</th></tr>
+      <tr><td>CLOSED</td><td>Both</td><td>Initial state / timeout from TIME_WAIT / last ACK received</td><td>→ LISTEN or → SYN_SENT</td></tr>
+      <tr><td>LISTEN</td><td>Server</td><td>listen() call</td><td>→ SYN_RECEIVED (recv SYN)</td></tr>
+      <tr><td>SYN_SENT</td><td>Client</td><td>connect() → sent SYN</td><td>→ ESTABLISHED (recv SYN+ACK) | → SYN_RECEIVED (simultaneous)</td></tr>
+      <tr><td>SYN_RECEIVED</td><td>Server</td><td>recv SYN → sent SYN+ACK</td><td>→ ESTABLISHED (recv ACK) | → LISTEN (reset)</td></tr>
+      <tr><td>ESTABLISHED</td><td>Both</td><td>3WHS complete</td><td>→ FIN_WAIT_1 (active close) | → CLOSE_WAIT (passive close)</td></tr>
+      <tr><td>FIN_WAIT_1</td><td>Active closer</td><td>close() → sent FIN</td><td>→ FIN_WAIT_2 | → TIME_WAIT | → CLOSING</td></tr>
+      <tr><td>FIN_WAIT_2</td><td>Active closer</td><td>recv ACK only (not FIN+ACK)</td><td>→ TIME_WAIT (recv FIN)</td></tr>
+      <tr><td>TIME_WAIT</td><td>Active closer</td><td>recv FIN+ACK or FIN</td><td>→ CLOSED (after 2×MSL timeout)</td></tr>
+      <tr><td>CLOSE_WAIT</td><td>Passive closer</td><td>recv FIN → sent ACK</td><td>→ LAST_ACK (close() → send FIN)</td></tr>
+      <tr><td>LAST_ACK</td><td>Passive closer</td><td>sent own FIN</td><td>→ CLOSED (recv final ACK)</td></tr>
+      <tr><td>CLOSING</td><td>Both (simultaneous)</td><td>recv FIN instead of ACK → sent ACK</td><td>→ TIME_WAIT (recv ACK for own FIN)</td></tr>
+    </table>
+  </div>
+
+  <h2 class="sh">MCQs — TCP Release &amp; State Machine</h2>
+  <div class="mcq">
+    <div class="mcq-q">Q1. Why does the active closer enter TIME_WAIT before fully closing?</div>
+    <div class="opts" id="tr1">
+      <button class="opt" onclick="ans('tr1',0,2,'TIME_WAIT (duration = 2×MSL) serves two purposes: (1) Allows any delayed in-flight packets from the passive closer to expire before the port is reused — prevents them from corrupting a future connection on the same port. (2) If the passive closer\'s FIN got lost, it will retransmit it, and active closer in TIME_WAIT can still send the final ACK.')">A) To free up TCP socket memory gradually</button>
+      <button class="opt" onclick="ans('tr1',1,2,'TIME_WAIT (duration = 2×MSL) serves two purposes: (1) Allows any delayed in-flight packets from the passive closer to expire before the port is reused — prevents them from corrupting a future connection on the same port. (2) If the passive closer\'s FIN got lost, it will retransmit it, and active closer in TIME_WAIT can still send the final ACK.')">B) To allow delayed in-flight packets to expire and to resend final ACK if FIN is retransmitted</button>
+      <button class="opt" onclick="ans('tr1',2,2,'TIME_WAIT (duration = 2×MSL) serves two purposes: (1) Allows any delayed in-flight packets from the passive closer to expire before the port is reused — prevents them from corrupting a future connection on the same port. (2) If the passive closer\'s FIN got lost, it will retransmit it, and active closer in TIME_WAIT can still send the final ACK.')">C) To prevent the passive closer from sending more data</button>
+      <button class="opt" onclick="ans('tr1',3,2,'TIME_WAIT (duration = 2×MSL) serves two purposes: (1) Allows any delayed in-flight packets from the passive closer to expire before the port is reused — prevents them from corrupting a future connection on the same port. (2) If the passive closer\'s FIN got lost, it will retransmit it, and active closer in TIME_WAIT can still send the final ACK.')">D) TIME_WAIT is a bug — TCP should close immediately</button>
+    </div>
+    <div class="exp" id="tr1-e"></div>
+  </div>
+  <div class="mcq">
+    <div class="mcq-q">Q2. A TCP server receives a client's FIN but still has data to send. What does it do?</div>
+    <div class="opts" id="tr2">
+      <button class="opt" onclick="ans('tr2',0,2,'TCP uses half-close — each direction closes independently. Server (passive closer) receives FIN from client → sends only ACK (not FIN+ACK yet) → enters CLOSE_WAIT → continues sending its own data. When server finishes, it sends its own FIN → enters LAST_ACK → waits for client\'s final ACK → CLOSED.')">A) Immediately resets the connection with RST</button>
+      <button class="opt" onclick="ans('tr2',1,2,'TCP uses half-close — each direction closes independently. Server (passive closer) receives FIN from client → sends only ACK (not FIN+ACK yet) → enters CLOSE_WAIT → continues sending its own data. When server finishes, it sends its own FIN → enters LAST_ACK → waits for client\'s final ACK → CLOSED.')">B) Closes immediately and discards unsent data</button>
+      <button class="opt" onclick="ans('tr2',2,2,'TCP uses half-close — each direction closes independently. Server (passive closer) receives FIN from client → sends only ACK (not FIN+ACK yet) → enters CLOSE_WAIT → continues sending its own data. When server finishes, it sends its own FIN → enters LAST_ACK → waits for client\'s final ACK → CLOSED.')">C) Sends only ACK (enters CLOSE_WAIT), continues sending data, then sends own FIN later</button>
+      <button class="opt" onclick="ans('tr2',3,2,'TCP uses half-close — each direction closes independently. Server (passive closer) receives FIN from client → sends only ACK (not FIN+ACK yet) → enters CLOSE_WAIT → continues sending its own data. When server finishes, it sends its own FIN → enters LAST_ACK → waits for client\'s final ACK → CLOSED.')">D) Retransmits all previous data before accepting the FIN</button>
+    </div>
+    <div class="exp" id="tr2-e"></div>
+  </div>
+  <div class="mcq">
+    <div class="mcq-q">Q3. The CLOSING state in TCP occurs when:</div>
+    <div class="opts" id="tr3">
+      <button class="opt" onclick="ans('tr3',0,2,'CLOSING = simultaneous close. Both client and server call close() at the same time. Client sends FIN to server AND receives FIN from server (instead of receiving ACK for its FIN first). Client sends ACK for server\'s FIN → enters CLOSING. Waits for ACK of its own FIN → TIME_WAIT → CLOSED.')">A) Server rejects the client's connection</button>
+      <button class="opt" onclick="ans('tr3',1,2,'CLOSING = simultaneous close. Both client and server call close() at the same time. Client sends FIN to server AND receives FIN from server (instead of receiving ACK for its FIN first). Client sends ACK for server\'s FIN → enters CLOSING. Waits for ACK of its own FIN → TIME_WAIT → CLOSED.')">B) The network experiences congestion and drops the FIN</button>
+      <button class="opt" onclick="ans('tr3',2,2,'CLOSING = simultaneous close. Both client and server call close() at the same time. Client sends FIN to server AND receives FIN from server (instead of receiving ACK for its FIN first). Client sends ACK for server\'s FIN → enters CLOSING. Waits for ACK of its own FIN → TIME_WAIT → CLOSED.')">C) Both sides send FIN simultaneously — client receives FIN instead of ACK for its own FIN</button>
+      <button class="opt" onclick="ans('tr3',3,2,'CLOSING = simultaneous close. Both client and server call close() at the same time. Client sends FIN to server AND receives FIN from server (instead of receiving ACK for its FIN first). Client sends ACK for server\'s FIN → enters CLOSING. Waits for ACK of its own FIN → TIME_WAIT → CLOSED.')">D) The connection timer expires in SYN_SENT state</button>
+    </div>
+    <div class="exp" id="tr3-e"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ TAB 7: SUPER REVISION ═══════════════ -->
+<div id="rev" class="sec">
+  <div class="ttl">Super Revision Notes — Week 4 (Last-Day Study)</div>
+
+  <div class="bx bred">
+    <h3>Absolute must-know facts</h3>
+    <ul>
+      <li>BDP = Bandwidth × One-way delay. RTT ≈ 2 × one-way delay</li>
+      <li>Optimal window W = 2×BD + 1 (fills data pipe + ACK pipe + 1 just-received ACK)</li>
+      <li>If BDP &lt; segment size → use Stop-and-Wait (no benefit from sliding window)</li>
+      <li>Write call (sender) blocks when buffer FULL; read call (receiver) blocks when buffer EMPTY</li>
+      <li>Preferred buffer type: Single large circular buffer (per connection)</li>
+      <li>Deadlock prevention: receiver sends periodic duplicate ACKs after timeout if window=0</li>
+      <li>Packet loss in wired networks = router buffer overflow (λ &gt; μ) = congestion signal</li>
+      <li>Sender_rate = min(network_rate, receiver_rate) — both flow control and congestion control apply</li>
+      <li>AIMD proposed by Chiu and Jain (1989) — additive increase, multiplicative decrease</li>
+      <li>AIMD converges to optimal fair+efficient point. AIAD and MIMD do NOT</li>
+      <li>Max-Min Fairness: cannot increase one flow without decreasing another</li>
+      <li>Socket = 6-tuple: {src IP, src port, src ISN, dst IP, dst port, dst ISN}</li>
+      <li>TCP = byte stream, NOT message stream. Message boundaries NOT preserved</li>
+      <li>TCP ACK is CUMULATIVE: ACK=N means all bytes up to N−1 received; expecting byte N</li>
+      <li>TCP does NOT support multicast — point-to-point only</li>
+      <li>TCP ISN originally clock-based (4 μs tick) → predictable → SYN flood attack</li>
+      <li>Modern TCP: cryptographic hash for ISN → unpredictable → prevents SYN flood</li>
+      <li>3WHS: SYN(x) → SYN+ACK(y, ack=x+1) → ACK(ack=y+1)</li>
+      <li>Sender window = min(cwnd, rwnd). cwnd = congestion window; rwnd = receiver window</li>
+      <li>Active close → FIN_WAIT_1 → FIN_WAIT_2 → TIME_WAIT (2×MSL) → CLOSED</li>
+      <li>Passive close → CLOSE_WAIT → LAST_ACK → CLOSED (no timeout needed)</li>
+      <li>Simultaneous close → CLOSING → TIME_WAIT → CLOSED</li>
+      <li>TCP SACK (RFC 2018) uses Selective Repeat. Standard TCP uses Go-Back-N (cumulative ACK)</li>
+    </ul>
+  </div>
+
+  <div class="bx bpur">
+    <h3>Key formulas — BDP</h3>
+    <div class="ri"><span class="rb">BDP</span><span class="rt">= Bandwidth × One-way propagation delay (number of frames/bytes in pipe)</span></div>
+    <div class="ri"><span class="rb">RTT</span><span class="rt">≈ 2 × one-way propagation delay (no congestion assumed)</span></div>
+    <div class="ri"><span class="rb">W_opt</span><span class="rt">= 2 × BD + 1 (BD = BD in units of segments)</span></div>
+    <div class="ri"><span class="rb">GBN</span><span class="rt">Max window = 2ⁿ − 1 (n = bits in sequence number)</span></div>
+    <div class="ri"><span class="rb">SR</span><span class="rt">Max window = 2ⁿ / 2 (n = bits in sequence number)</span></div>
+    <div class="ri"><span class="rb">SW</span><span class="rt">Sender window = min(cwnd, rwnd)</span></div>
+    <div class="ri"><span class="rb">S_rate</span><span class="rt">= min(network_supported_rate, receiver_advertised_rate)</span></div>
+  </div>
+
+  <div class="bx bgn">
+    <h3>AIMD algorithm — key points</h3>
+    <div class="ri"><span class="rb">AI</span><span class="rt">No congestion: w(t+1) = w(t) + a (additive increase — linear growth)</span></div>
+    <div class="ri"><span class="rb">MD</span><span class="rt">Congestion detected (packet loss): w(t+1) = b × w(t), 0 &lt; b &lt; 1 (multiplicative decrease — sharp drop)</span></div>
+    <div class="ri"><span class="rb">AIAD</span><span class="rt">Oscillates on efficiency line — never reaches fairness point</span></div>
+    <div class="ri"><span class="rb">MIMD</span><span class="rt">Oscillates radially — never reaches optimal point</span></div>
+    <div class="ri"><span class="rb">AIMD</span><span class="rt">Spirals to intersection of efficiency line (x+y=C) and fairness line (x=y) = OPTIMAL</span></div>
+  </div>
+
+  <div class="bx bamb">
+    <h3>TCP header flags — use cases</h3>
+    <div class="ri"><span class="rb">SYN</span><span class="rt">Connection initiation — set in first 2 messages of 3WHS</span></div>
+    <div class="ri"><span class="rb">ACK</span><span class="rt">ACK number field is valid — set in all messages EXCEPT the very first SYN</span></div>
+    <div class="ri"><span class="rb">FIN</span><span class="rt">Sender has no more data — initiates graceful half-close</span></div>
+    <div class="ri"><span class="rb">RST</span><span class="rt">Forceful reset — reject connection, recover from error (server uses in SYN_RECEIVED to return to LISTEN)</span></div>
+    <div class="ri"><span class="rb">PSH</span><span class="rt">Push — deliver data to application immediately, don't buffer</span></div>
+    <div class="ri"><span class="rb">URG</span><span class="rt">Urgent — urgent pointer valid; bypass FIFO queue (e.g., Ctrl+C in Telnet)</span></div>
+  </div>
+
+  <div class="bx bbl">
+    <h3>Tricky NPTEL MCQ traps — don't get these wrong</h3>
+    <div class="ri"><span class="rb">1</span><span class="rt">BDP &lt; segment: use Stop-and-Wait. Never sliding window just because network is fast</span></div>
+    <div class="ri"><span class="rb">2</span><span class="rt">W_opt = 2×BD+1 not 2×BD (the +1 matters)</span></div>
+    <div class="ri"><span class="rb">3</span><span class="rt">GBN max window = 2ⁿ−1. SR max window = 2ⁿ/2. NOT the same!</span></div>
+    <div class="ri"><span class="rb">4</span><span class="rt">TCP uses byte sequence numbers — NOT packet sequence numbers</span></div>
+    <div class="ri"><span class="rb">5</span><span class="rt">ACK number = NEXT EXPECTED BYTE (not number of bytes received)</span></div>
+    <div class="ri"><span class="rb">6</span><span class="rt">TCP does NOT support multicast — strictly point-to-point</span></div>
+    <div class="ri"><span class="rb">7</span><span class="rt">Message boundaries are NOT preserved in TCP (it is a byte stream)</span></div>
+    <div class="ri"><span class="rb">8</span><span class="rt">TCP window = 16 bits → max rwnd = 65535 bytes (without scaling)</span></div>
+    <div class="ri"><span class="rb">9</span><span class="rt">ISN: original = clock (4 μs ticks, predictable). Modern = clock + cryptographic hash (unpredictable)</span></div>
+    <div class="ri"><span class="rb">10</span><span class="rt">TIME_WAIT = active closer. CLOSE_WAIT = passive closer. Don't confuse</span></div>
+    <div class="ri"><span class="rb">11</span><span class="rt">CLOSING state = simultaneous close only (both send FIN at same time)</span></div>
+    <div class="ri"><span class="rb">12</span><span class="rt">AIMD: Chiu &amp; Jain (1989). Memorise this name and year</span></div>
+    <div class="ri"><span class="rb">13</span><span class="rt">Socket = 6-tuple (includes ISNs). 4-tuple (without ISNs) is NOT complete</span></div>
+    <div class="ri"><span class="rb">14</span><span class="rt">Sender window = min(cwnd, rwnd). Not max — the MINIMUM of both</span></div>
+  </div>
+
+  <div style="margin-top:1.5rem;padding:1rem;background:#E6F1FB;border-radius:var(--border-radius-lg);border:0.5px solid #B5D4F4">
+    <p style="font-size:14px;font-weight:500;color:#0C447C;margin-bottom:8px">Exam strategy — Week 4</p>
+    <ul style="font-size:13px;color:#185FA5;padding-left:1.2rem;line-height:1.9">
+      <li>BDP questions: Always compute BDP first. Compare to segment size. Use W=2BD+1 for window. Link to GBN/SR sequence number bits</li>
+      <li>Buffer management: Know all 4 buffer types. Circular buffer = preferred. Write blocks when full, read blocks when empty</li>
+      <li>Congestion control: Know AIMD (Chiu &amp; Jain 1989). Know why packet loss = congestion in wired networks. Know max-min fairness definition</li>
+      <li>TCP header: Know all 11 fields, sizes, and flag meanings (SYN/ACK/FIN/RST/PSH/URG)</li>
+      <li>TCP byte stream: ACK = cumulative next expected byte. NOT per-segment. Message boundaries NOT preserved</li>
+      <li>TCP 3WHS: Know exact messages (SYN→SYN+ACK→ACK). Know ISN clock issue + SYN flood + cryptographic fix</li>
+      <li>TCP state machine: Know all 11 states. Especially TIME_WAIT (active) vs CLOSE_WAIT (passive) vs CLOSING (simultaneous)</li>
+      <li>Sender window: Always min(cwnd, rwnd). Memorise this formula</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<script>
+function show(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  event.target.classList.add('on');
+}
+function ans(qid,chosen,correct,explanation){
+  const opts=document.querySelectorAll('#'+qid+' .opt');
+  opts.forEach((o,i)=>{
+    o.disabled=true;
+    if(i===correct)o.classList.add('ok');
+    else if(i===chosen&&chosen!==correct)o.classList.add('no');
+  });
+  const exp=document.getElementById(qid+'-e');
+  exp.textContent=(chosen===correct?'Correct! ':'Incorrect. ')+explanation;
+  exp.classList.add('show');
+}
+</script>
