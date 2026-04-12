@@ -1,170 +1,1559 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NPTEL Computer Networking — Exam Master Hub</title>
+    <meta name="description"
+        content="NPTEL Computer Networks & Internet Protocols — IIT Kharagpur. Complete 12-week study hub with notes, quizzes, and exam preparation.">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
         :root {
             --bg: #030712;
             --bg-card: rgba(17, 24, 39, 0.7);
+            --bg-card-hover: rgba(24, 32, 50, 0.85);
             --accent: #6366f1;
+            --accent-light: #818cf8;
             --accent-glow: rgba(99, 102, 241, 0.4);
+            --accent-subtle: rgba(99, 102, 241, 0.08);
             --text: #f8fafc;
             --text-dim: #94a3b8;
+            --text-muted: #64748b;
             --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.15);
             --green: #10b981;
+            --green-glow: rgba(16, 185, 129, 0.3);
             --red: #ef4444;
             --gold: #f59e0b;
+            --gold-subtle: rgba(245, 158, 11, 0.1);
+            --cyan: #06b6d4;
             --glass: blur(20px);
             --font: 'Plus Jakarta Sans', sans-serif;
+            --radius-sm: 10px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
         }
 
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; line-height: 1.6; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        /* BACKGROUND ORBS */
-        .bg-orb { position: fixed; border-radius: 50%; filter: blur(120px); z-index: -1; opacity: 0.2; pointer-events: none; }
-        .orb-1 { width: 500px; height: 500px; background: var(--accent); top:-100px; left:-100px; }
-        .orb-2 { width: 400px; height: 400px; background: #7c3aed; bottom:-100px; right:-100px; }
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
 
-        /* NAVIGATION */
-        .nav { position: fixed; top:0; left:0; width:100%; height:72px; background: rgba(3, 7, 18, 0.8); backdrop-filter: var(--glass); border-bottom: 1px solid var(--border); z-index: 1000; display:flex; align-items:center; justify-content:space-between; padding:0 32px; }
-        .logo { display:flex; align-items:center; gap:12px; font-weight:800; font-size:1.25rem; letter-spacing:-0.5px; cursor:pointer; }
-        .logo-box { width:40px; height:40px; background: linear-gradient(135deg, var(--accent), #7c3aed); border-radius:12px; display:flex; align-items:center; justify-content:center; box-shadow: 0 8px 16px var(--accent-glow); }
-        .logo-text span { color: var(--accent-light); }
+        /* ── BACKGROUND ORBS ── */
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            opacity: 0.15;
+            pointer-events: none;
+        }
 
-        .nav-stats { display:flex; gap:24px; }
-        .stat { text-align:right; }
-        .stat-val { font-size:0.9rem; font-weight:700; color:var(--accent); display:block; }
-        .stat-label { font-size:0.65rem; color: var(--text-dim); text-transform: uppercase; letter-spacing:1px; }
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: var(--accent);
+            top: -100px;
+            left: -100px;
+            animation: orbFloat 20s ease-in-out infinite;
+        }
 
-        /* LAYOUT */
-        .layout { display:flex; margin-top:72px; min-height:calc(100vh - 72px); }
-        
-        /* SIDEBAR */
-        .sidebar { width:300px; position:fixed; top:72px; bottom:0; left:0; border-right: 1px solid var(--border); padding:24px 16px; overflow-y:auto; background: rgba(17,24,39,0.4); backdrop-filter: var(--glass); z-index: 100; transition: transform 0.3s; }
-        .sidebar-label { font-size:0.7rem; font-weight:700; color:var(--text-dim); text-transform:uppercase; letter-spacing:2px; margin:24px 0 12px 12px; }
-        .side-item { display:flex; align-items:center; justify-content:space-between; padding:14px 16px; border-radius:14px; color:var(--text-dim); cursor:pointer; transition: 0.3s; margin-bottom:4px; border: 1px solid transparent; }
-        .side-item:hover { background: rgba(255,255,255,0.03); color: #fff; }
-        .side-item.active { background: var(--accent-glow); color: #fff; border-color: rgba(99,102,241,0.2); font-weight:600; }
-        .side-item.active .dot { background: var(--accent); }
-        .dot { width:8px; height:8px; border-radius:50%; background: var(--border); transition: 0.3s; }
-        .side-item.done .dot { background: var(--green); box-shadow: 0 0 10px var(--green); }
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: #7c3aed;
+            bottom: -100px;
+            right: -100px;
+            animation: orbFloat 25s ease-in-out infinite reverse;
+        }
 
-        /* CONTENT */
-        .content { flex:1; margin-left:300px; padding:48px 64px 80px; max-width:1100px; }
+        .orb-3 {
+            width: 300px;
+            height: 300px;
+            background: var(--cyan);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: orbFloat 30s ease-in-out infinite;
+        }
 
-        /* COMMON COMPONENTS */
-        .card { background: var(--bg-card); backdrop-filter: var(--glass); border: 1px solid var(--border); border-radius:24px; padding:40px; margin-bottom:40px; transition: 0.3s; }
-        .card:hover { border-color: rgba(255,255,255,0.15); }
-        .badge { display:inline-block; padding:6px 14px; background: var(--accent-glow); color:var(--accent); border-radius:99px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:16px; }
-        .title { font-size:2.75rem; font-weight:800; margin-bottom:12px; letter-spacing:-1.5px; line-height:1.1; }
-        .subtitle { font-size:1.15rem; color:var(--text-dim); margin-bottom:40px; font-weight:300; }
+        @keyframes orbFloat {
 
-        .btn { display:inline-flex; align-items:center; gap:12px; padding:16px 32px; border-radius:16px; font-weight:700; cursor:pointer; transition: 0.3s; border:none; font-family:inherit; font-size:0.95rem; text-decoration:none; }
-        .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 8px 24px var(--accent-glow); }
-        .btn-primary:hover { background: #818cf8; transform: translateY(-2px); box-shadow: 0 12px 32px var(--accent-glow); }
-        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
-        .btn-outline:hover { background: var(--border); }
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
 
-        /* RESOURCES */
-        .res-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:48px; }
-        .res-item { background: rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:20px; padding:28px; display:flex; align-items:center; gap:20px; cursor:pointer; transition:0.3s; text-decoration:none; color:inherit; }
-        .res-item:hover { border-color: var(--accent); background: rgba(255,255,255,0.05); transform:translateY(-3px); }
-        .res-icon { width:56px; height:56px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; }
-        .res-icon.notes { background: rgba(99, 102, 241, 0.1); color: var(--accent); }
-        .res-icon.slides { background: rgba(245, 158, 11, 0.1); color: var(--gold); }
-        .res-info h4 { margin-bottom:4px; font-weight:700; }
-        .res-info p { font-size:0.85rem; color: var(--text-dim); }
+            33% {
+                transform: translate(30px, -30px);
+            }
 
-        /* TOPICS */
-        .topics-list { display:grid; grid-template-columns:1fr 1fr; gap:14px 40px; list-style:none; }
-        .topic-item { display:flex; align-items:center; gap:12px; font-size:0.95rem; color: var(--text-dim); }
-        .topic-item::before { content:''; width:6px; height:6px; background:var(--accent); border-radius:50%; opacity:0.6; }
+            66% {
+                transform: translate(-20px, 20px);
+            }
+        }
 
-        /* QUIZ MODE */
-        .view-syllabus .quiz-view { display:none; }
-        .view-quiz .syllabus-view { display:none; }
+        /* ── NAVIGATION ── */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 72px;
+            background: rgba(3, 7, 18, 0.85);
+            backdrop-filter: var(--glass);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+        }
 
-        .quiz-card { background: var(--bg-card); border-radius:32px; padding:60px 40px; border:1px solid var(--border); position: relative; overflow:hidden; }
-        .quiz-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:40px; }
-        .quiz-count { font-size:0.8rem; font-weight:800; color: var(--accent); text-transform:uppercase; letter-spacing:2px; }
-        .quiz-close { font-size:1.5rem; cursor:pointer; opacity:0.5; transition:0.3s; }
-        .quiz-close:hover { opacity:1; }
-        
-        .q-text { font-size:1.6rem; font-weight:700; line-height:1.4; margin-bottom:48px; }
-        .q-text code { font-family: 'JetBrains Mono', monospace; background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px; color: var(--accent); }
-        
-        .options-list { display:grid; gap:14px; }
-        .option-btn { width:100%; text-align:left; padding:20px 28px; background: rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:18px; color:inherit; font-size:1.05rem; cursor:pointer; transition:0.3s; font-family:inherit; }
-        .option-btn:hover:not(.disabled) { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); }
-        .option-btn.correct { background: rgba(16,185,129,0.15); border-color: var(--green); color: var(--green); font-weight:600; }
-        .option-btn.wrong { background: rgba(239,68,68,0.15); border-color: var(--red); color: var(--red); font-weight:600; }
-        .option-btn.disabled { pointer-events: none; opacity:0.9; }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 1.25rem;
+            letter-spacing: -0.5px;
+            cursor: pointer;
+        }
 
-        /* INPUT STYLES */
-        .quiz-input { width: 100%; padding: 18px 24px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 18px; color: #fff; font-family: inherit; font-size: 1.1rem; margin-bottom: 24px; outline: none; transition: 0.3s; }
-        .quiz-input:focus { border-color: var(--accent); background: rgba(255,255,255,0.06); }
-        .quiz-textarea { min-height: 140px; resize: vertical; }
+        .logo-box {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent), #7c3aed);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 16px var(--accent-glow);
+            font-size: 0.85rem;
+            font-weight: 800;
+        }
 
-        .feedback-box { margin-top:40px; padding:32px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius:24px; display:none; animation: slideUp 0.5s ease; }
-        .feedback-box.visible { display:block; }
-        .fb-status { font-weight:800; margin-bottom:10px; font-size:1.1rem; text-transform:uppercase; letter-spacing:1px; }
-        .fb-explanation { font-size:1rem; color: var(--text-dim); }
-        .fb-explanation code { font-family: 'JetBrains Mono', monospace; background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px; color: var(--accent); }
-        
-        @keyframes slideUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+        .logo-text span {
+            color: var(--accent-light);
+        }
 
-        /* SCORE VIEW */
-        .score-view { text-align:center; padding:40px; }
-        .score-circle { width:150px; height:150px; border-radius:50%; border:8px solid var(--accent); display:flex; align-items:center; justify-content:center; font-size:3rem; font-weight:800; margin:0 auto 32px; color: var(--accent); box-shadow: 0 0 30px var(--accent-glow); }
-        
-        /* RESPONSIVE */
-        @media (max-width: 1024px) { .sidebar { transform: translateX(-100%); } .content { margin-left:0; padding:32px 20px; } .res-grid, .topics-list { grid-template-columns: 1fr; } }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .nav-stats {
+            display: flex;
+            gap: 24px;
+        }
+
+        .stat {
+            text-align: right;
+        }
+
+        .stat-val {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ── HAMBURGER ── */
+        .hamburger {
+            display: none;
+            width: 42px;
+            height: 42px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: transparent;
+            cursor: pointer;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: var(--text);
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* ── LAYOUT ── */
+        .layout {
+            display: flex;
+            margin-top: 72px;
+            min-height: calc(100vh - 72px);
+        }
+
+        /* ── SIDEBAR ── */
+        .sidebar {
+            width: 300px;
+            position: fixed;
+            top: 72px;
+            bottom: 0;
+            left: 0;
+            border-right: 1px solid var(--border);
+            padding: 24px 16px;
+            overflow-y: auto;
+            background: rgba(17, 24, 39, 0.4);
+            backdrop-filter: var(--glass);
+            z-index: 100;
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        .sidebar-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 24px 0 12px 12px;
+        }
+
+        .sidebar-label:first-child {
+            margin-top: 0;
+        }
+
+        .side-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            border-radius: 14px;
+            color: var(--text-dim);
+            cursor: pointer;
+            transition: 0.3s;
+            margin-bottom: 4px;
+            border: 1px solid transparent;
+            font-size: 0.9rem;
+        }
+
+        .side-item:hover {
+            background: rgba(255, 255, 255, 0.03);
+            color: #fff;
+        }
+
+        .side-item.active {
+            background: var(--accent-glow);
+            color: #fff;
+            border-color: rgba(99, 102, 241, 0.2);
+            font-weight: 600;
+        }
+
+        .side-item.active .dot {
+            background: var(--accent);
+        }
+
+        .side-item-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .side-num {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            min-width: 20px;
+        }
+
+        .side-item.active .side-num {
+            color: var(--accent-light);
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--border);
+            transition: 0.3s;
+        }
+
+        .side-item.done .dot {
+            background: var(--green);
+            box-shadow: 0 0 10px var(--green);
+        }
+
+        /* ── OVERLAY ── */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 72px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 99;
+            backdrop-filter: blur(4px);
+        }
+
+        /* ── CONTENT ── */
+        .content {
+            flex: 1;
+            margin-left: 300px;
+            padding: 40px 48px 100px;
+            max-width: 1100px;
+        }
+
+        /* ── HERO SECTION ── */
+        .hero-section {
+            margin-bottom: 48px;
+            padding: 48px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(124, 58, 237, 0.08), rgba(6, 182, 212, 0.05));
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--accent-glow), transparent 70%);
+            z-index: 0;
+        }
+
+        .hero-section>* {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: var(--accent-glow);
+            color: var(--accent-light);
+            border-radius: 99px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            margin-bottom: 32px;
+            font-weight: 300;
+            max-width: 600px;
+        }
+
+        /* ── OVERALL PROGRESS BAR ── */
+        .master-progress {
+            margin-bottom: 24px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .progress-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .progress-value {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 99px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 99px;
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(90deg, var(--accent), #7c3aed, var(--cyan));
+            background-size: 200% 100%;
+            animation: shimmer 3s ease-in-out infinite;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 20px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 99px;
+            filter: blur(4px);
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        /* ── STATS ROW ── */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 48px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+        }
+
+        .stat-card-icon {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .stat-card-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 4px;
+        }
+
+        .stat-card-label {
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        /* ── WEEKS SECTION TITLE ── */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .section-count {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            font-weight: 600;
+        }
+
+        /* ── WEEK CARDS GRID ── */
+        .weeks-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .week-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .week-card:hover {
+            border-color: var(--border-hover);
+            background: var(--bg-card-hover);
+        }
+
+        .week-card.expanded {
+            cursor: default;
+        }
+
+        .week-card.completed {
+            border-left: 3px solid var(--green);
+        }
+
+        .week-card.not-available {
+            opacity: 0.5;
+        }
+
+        /* Week Card Header (always visible) */
+        .week-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 24px 28px;
+            position: relative;
+        }
+
+        .week-number {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+            transition: 0.3s;
+        }
+
+        .week-number.available {
+            background: var(--accent-subtle);
+            color: var(--accent-light);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .week-number.done {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--green);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .week-number.unavailable {
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+        }
+
+        .week-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .week-title-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 4px;
+        }
+
+        .week-name {
+            font-size: 1.05rem;
+            font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .week-status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 10px;
+            border-radius: 99px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
+        }
+
+        .badge-completed {
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--green);
+        }
+
+        .badge-available {
+            background: var(--accent-subtle);
+            color: var(--accent-light);
+        }
+
+        .badge-unavailable {
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-muted);
+        }
+
+        .week-desc {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Week mini progress */
+        .week-mini-progress {
+            width: 80px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 99px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .week-mini-fill {
+            height: 100%;
+            border-radius: 99px;
+            transition: width 0.5s ease;
+        }
+
+        .week-mini-fill.done {
+            background: var(--green);
+            width: 100%;
+        }
+
+        .week-mini-fill.partial {
+            background: var(--accent);
+            width: 50%;
+        }
+
+        .week-mini-fill.none {
+            background: transparent;
+            width: 0%;
+        }
+
+        /* Expand arrow */
+        .week-arrow {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-dim);
+            transition: 0.3s;
+            flex-shrink: 0;
+            font-size: 0.9rem;
+        }
+
+        .week-card.expanded .week-arrow {
+            transform: rotate(180deg);
+            color: var(--accent);
+        }
+
+        /* Week Card Body (expandable) */
+        .week-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .week-card.expanded .week-body {
+            max-height: 1000px;
+        }
+
+        .week-body-inner {
+            padding: 0 28px 28px;
+            border-top: 1px solid var(--border);
+            padding-top: 24px;
+        }
+
+        /* ── RESOURCES IN WEEK BODY ── */
+        .res-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .res-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .res-item:hover {
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .res-item.disabled {
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        .res-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .res-icon.notes {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--accent);
+        }
+
+        .res-icon.slides {
+            background: var(--gold-subtle);
+            color: var(--gold);
+        }
+
+        .res-info h4 {
+            margin-bottom: 2px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .res-info p {
+            font-size: 0.78rem;
+            color: var(--text-dim);
+        }
+
+        /* ── TOPICS ── */
+        .topics-section {
+            margin-bottom: 24px;
+        }
+
+        .topics-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+        }
+
+        .topics-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .topic-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 99px;
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            transition: 0.2s;
+        }
+
+        .topic-tag::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0.6;
+        }
+
+        /* ── ACTION BUTTONS ── */
+        .week-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 24px;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            border: none;
+            font-family: inherit;
+            font-size: 0.88rem;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 6px 20px var(--accent-glow);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px var(--accent-glow);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn-outline:hover {
+            background: var(--border);
+        }
+
+        .btn-green {
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--green);
+        }
+
+        .btn-green:hover {
+            background: rgba(16, 185, 129, 0.2);
+        }
+
+        .btn-sm {
+            padding: 10px 18px;
+            font-size: 0.8rem;
+        }
+
+        /* ── NOT AVAILABLE STATE ── */
+        .not-available-msg {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 24px;
+        }
+
+        .not-available-msg .na-icon {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        /* ── QUIZ MODE ── */
+        .view-syllabus .quiz-view {
+            display: none;
+        }
+
+        .view-quiz .syllabus-view {
+            display: none;
+        }
+
+        .quiz-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            padding: 60px 40px;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .quiz-count {
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .quiz-close {
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0.5;
+            transition: 0.3s;
+        }
+
+        .quiz-close:hover {
+            opacity: 1;
+        }
+
+        .q-text {
+            font-size: 1.6rem;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 48px;
+        }
+
+        .q-text code {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--accent);
+        }
+
+        .options-list {
+            display: grid;
+            gap: 14px;
+        }
+
+        .option-btn {
+            width: 100%;
+            text-align: left;
+            padding: 20px 28px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            color: inherit;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: inherit;
+        }
+
+        .option-btn:hover:not(.disabled) {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .option-btn.correct {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: var(--green);
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        .option-btn.wrong {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: var(--red);
+            color: var(--red);
+            font-weight: 600;
+        }
+
+        .option-btn.disabled {
+            pointer-events: none;
+            opacity: 0.9;
+        }
+
+        .quiz-input {
+            width: 100%;
+            padding: 18px 24px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            color: #fff;
+            font-family: inherit;
+            font-size: 1.1rem;
+            margin-bottom: 24px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .quiz-input:focus {
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .quiz-textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        .feedback-box {
+            margin-top: 40px;
+            padding: 32px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            display: none;
+            animation: slideUp 0.5s ease;
+        }
+
+        .feedback-box.visible {
+            display: block;
+        }
+
+        .fb-status {
+            font-weight: 800;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .fb-explanation {
+            font-size: 1rem;
+            color: var(--text-dim);
+        }
+
+        .fb-explanation code {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--accent);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .score-view {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 8px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 0 auto 32px;
+            color: var(--accent);
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+
+        /* ── MOBILE BOTTOM BAR ── */
+        .mobile-bottom-bar {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: rgba(3, 7, 18, 0.95);
+            backdrop-filter: var(--glass);
+            border-top: 1px solid var(--border);
+            z-index: 1000;
+            padding: 0 16px;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .bottom-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.6rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 8px 12px;
+            border-radius: 10px;
+            transition: 0.2s;
+        }
+
+        .bottom-btn:hover,
+        .bottom-btn.active {
+            color: var(--accent);
+            background: var(--accent-subtle);
+        }
+
+        .bottom-btn-icon {
+            font-size: 1.2rem;
+        }
+
+        /* ═══════════════════════════
+           RESPONSIVE BREAKPOINTS
+           ═══════════════════════════ */
+
+        /* Tablet: 768px - 1024px */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-overlay.visible {
+                display: block;
+            }
+
+            .content {
+                margin-left: 0;
+                padding: 32px 24px 100px;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-stats {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-section {
+                padding: 32px;
+            }
+
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .mobile-bottom-bar {
+                display: flex;
+            }
+        }
+
+        /* Mobile: < 640px */
+        @media (max-width: 640px) {
+            .nav {
+                padding: 0 16px;
+                height: 60px;
+            }
+
+            .logo-box {
+                width: 34px;
+                height: 34px;
+                font-size: 0.75rem;
+            }
+
+            .logo-text {
+                font-size: 1rem;
+            }
+
+            .layout {
+                margin-top: 60px;
+            }
+
+            .sidebar {
+                top: 60px;
+                width: 280px;
+            }
+
+            .content {
+                padding: 20px 16px 100px;
+            }
+
+            .hero-section {
+                padding: 24px 20px;
+                border-radius: var(--radius-md);
+                margin-bottom: 32px;
+            }
+
+            .hero-badge {
+                font-size: 0.6rem;
+                padding: 4px 12px;
+            }
+
+            .hero-title {
+                font-size: 1.6rem;
+                letter-spacing: -1px;
+            }
+
+            .hero-subtitle {
+                font-size: 0.9rem;
+                margin-bottom: 24px;
+            }
+
+            .master-progress {
+                margin-bottom: 20px;
+            }
+
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                margin-bottom: 32px;
+            }
+
+            .stat-card {
+                padding: 16px 12px;
+                border-radius: var(--radius-sm);
+            }
+
+            .stat-card-icon {
+                font-size: 1.2rem;
+                margin-bottom: 4px;
+            }
+
+            .stat-card-value {
+                font-size: 1.4rem;
+            }
+
+            .stat-card-label {
+                font-size: 0.6rem;
+            }
+
+            .section-header {
+                margin-bottom: 16px;
+                padding-bottom: 12px;
+            }
+
+            .section-title {
+                font-size: 1.2rem;
+            }
+
+            .weeks-grid {
+                gap: 12px;
+            }
+
+            .week-header {
+                padding: 18px 16px;
+                gap: 14px;
+            }
+
+            .week-number {
+                width: 42px;
+                height: 42px;
+                border-radius: 10px;
+                font-size: 0.75rem;
+            }
+
+            .week-name {
+                font-size: 0.9rem;
+            }
+
+            .week-desc {
+                font-size: 0.75rem;
+            }
+
+            .week-mini-progress {
+                width: 50px;
+            }
+
+            .week-status-badge {
+                font-size: 0.55rem;
+                padding: 2px 8px;
+            }
+
+            .week-body-inner {
+                padding: 0 16px 20px;
+                padding-top: 20px;
+            }
+
+            .res-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                margin-bottom: 20px;
+            }
+
+            .res-item {
+                padding: 16px;
+                gap: 12px;
+            }
+
+            .res-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.1rem;
+            }
+
+            .res-info h4 {
+                font-size: 0.82rem;
+            }
+
+            .res-info p {
+                font-size: 0.7rem;
+            }
+
+            .topics-list {
+                gap: 6px;
+            }
+
+            .topic-tag {
+                padding: 5px 10px;
+                font-size: 0.7rem;
+            }
+
+            .week-actions {
+                gap: 8px;
+            }
+
+            .btn {
+                padding: 12px 18px;
+                font-size: 0.8rem;
+                gap: 8px;
+            }
+
+            .btn-sm {
+                padding: 8px 14px;
+                font-size: 0.72rem;
+            }
+
+            /* Quiz mobile */
+            .quiz-card {
+                padding: 32px 20px;
+                border-radius: var(--radius-md);
+            }
+
+            .q-text {
+                font-size: 1.15rem;
+                margin-bottom: 32px;
+            }
+
+            .option-btn {
+                padding: 16px 20px;
+                font-size: 0.9rem;
+                border-radius: 14px;
+            }
+
+            .quiz-input {
+                padding: 14px 18px;
+                font-size: 0.95rem;
+            }
+
+            .score-circle {
+                width: 120px;
+                height: 120px;
+                font-size: 2.2rem;
+                border-width: 6px;
+            }
+
+            .mobile-bottom-bar {
+                height: 56px;
+            }
+        }
+
+        /* Very small phones */
+        @media (max-width: 380px) {
+            .hero-title {
+                font-size: 1.35rem;
+            }
+
+            .stats-row {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+
+            .week-header {
+                gap: 10px;
+                padding: 14px 12px;
+            }
+
+            .week-number {
+                width: 36px;
+                height: 36px;
+                font-size: 0.65rem;
+            }
+
+            .week-mini-progress {
+                display: none;
+            }
+        }
     </style>
 </head>
+
 <body class="view-syllabus">
 
     <div class="bg-orb orb-1"></div>
     <div class="bg-orb orb-2"></div>
+    <div class="bg-orb orb-3"></div>
 
-    <nav class="nav">
+    <!-- ══ NAVIGATION ══ -->
+    <nav class="nav" id="navbar">
         <div class="logo" onclick="goHome()">
             <div class="logo-box">CN</div>
             <div class="logo-text">IIT-K Master <span>Hub</span></div>
         </div>
-        <div class="nav-stats">
-            <div class="stat">
-                <span class="stat-val" id="globalProgress">0%</span>
-                <span class="stat-label">HUB Mastery</span>
+        <div class="nav-right">
+            <div class="nav-stats">
+                <div class="stat">
+                    <span class="stat-val" id="globalProgress">0%</span>
+                    <span class="stat-label">Mastery</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-val" id="completedCount">0/12</span>
+                    <span class="stat-label">Weeks Done</span>
+                </div>
             </div>
-            <div class="stat">
-                <span class="stat-val" id="completedCount">0/12</span>
-                <span class="stat-label">Weeks Done</span>
-            </div>
+            <button class="hamburger" id="hamburgerBtn" onclick="toggleSidebar()" aria-label="Toggle Menu">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </nav>
 
+    <!-- ══ SIDEBAR OVERLAY (mobile) ══ -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
     <div class="layout">
-        <aside class="sidebar">
+        <!-- ══ SIDEBAR ══ -->
+        <aside class="sidebar" id="sidebar">
             <div class="sidebar-label">Course Timeline</div>
             <div id="sidebarMenu"></div>
         </aside>
 
+        <!-- ══ MAIN CONTENT ══ -->
         <main class="content">
             <div class="syllabus-view" id="syllabusView">
-                <div id="weekContent"></div>
+                <!-- HERO -->
+                <div class="hero-section">
+                    <div class="hero-badge">📚 NPTEL — IIT Kharagpur</div>
+                    <h1 class="hero-title" id="heroTitle">Computer Networks & Internet Protocols</h1>
+                    <p class="hero-subtitle">Complete 12-week study hub with interactive notes, quizzes, and exam-ready
+                        material.</p>
+                    <div class="master-progress">
+                        <div class="progress-header">
+                            <span class="progress-title">Overall Progress</span>
+                            <span class="progress-value" id="progressPercent">0%</span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STATS -->
+                <div class="stats-row" id="statsRow">
+                    <div class="stat-card">
+                        <div class="stat-card-icon">📖</div>
+                        <div class="stat-card-value" id="statTotalWeeks">12</div>
+                        <div class="stat-card-label">Total Weeks</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-icon">✅</div>
+                        <div class="stat-card-value" id="statCompleted">0</div>
+                        <div class="stat-card-label">Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-icon">⏳</div>
+                        <div class="stat-card-value" id="statRemaining">12</div>
+                        <div class="stat-card-label">Remaining</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-icon">🎯</div>
+                        <div class="stat-card-value" id="statQuizzes">0</div>
+                        <div class="stat-card-label">Quizzes Taken</div>
+                    </div>
+                </div>
+
+                <!-- WEEKS SECTIONS -->
+                <div class="section-header">
+                    <h2 class="section-title">📋 Weekly Modules</h2>
+                    <span class="section-count" id="sectionCount">12 Modules</span>
+                </div>
+                <div class="weeks-grid" id="weeksGrid"></div>
             </div>
+
             <div class="quiz-view" id="quizView">
                 <div class="quiz-card" id="quizCard"></div>
             </div>
         </main>
     </div>
 
+    <!-- ══ MOBILE BOTTOM BAR ══ -->
+    <div class="mobile-bottom-bar" id="mobileBar">
+        <button class="bottom-btn active" onclick="showAllWeeks()">
+            <span class="bottom-btn-icon">🏠</span>
+            Home
+        </button>
+        <button class="bottom-btn" onclick="scrollToWeeks()">
+            <span class="bottom-btn-icon">📋</span>
+            Weeks
+        </button>
+        <button class="bottom-btn" onclick="toggleSidebar()">
+            <span class="bottom-btn-icon">📑</span>
+            Navigate
+        </button>
+    </div>
+
     <script>
+        // ═══════════════════════════════════════
+        //  DATA
+        // ═══════════════════════════════════════
         const WEEKS_DATA = [
             {
                 id: 1, title: "Introduction to Computer Networks",
@@ -172,13 +1561,13 @@
                 notes: "cn_week1_notes.html", slides: "Week-01.pdf",
                 topics: ["Layering Protocols", "Circuit vs Packet Switching", "OSI 7-Layer Model", "Internet History"],
                 questions: [
-                    {t:'mcq', diff:'easy', q:"Which layer of the OSI model is responsible for routing packets across multiple networks?", options:["Data Link Layer","Network Layer","Transport Layer","Session Layer"], ans:1, exp:"The Network Layer (Layer 3) handles logical addressing and routing — deciding the path a packet takes."},
-                    {t:'mcq', diff:'easy', q:"What does 'protocol' consist of? Choose the three key elements.", options:["Syntax, Semantics, Timing","Speed, Size, Security","Hardware, Software, Firmware","Encoding, Decoding, Routing"], ans:0, exp:"A protocol has three elements — Syntax (format), Semantics (meaning), and Timing (speed matching)."},
-                    {t:'mcq', diff:'easy', q:"Which device operates at Layer 1 (Physical Layer) and simply regenerates signals?", options:["Switch","Bridge","Hub","Router"], ans:2, exp:"A Hub operates at Layer 1. It just regenerates and broadcasts bits on all ports."},
-                    {t:'tf', diff:'easy', q:"A router operates at the Network Layer (Layer 3) of the OSI model.", ans:true, exp:"TRUE. A router inspects the IP header (Layer 3) to make forwarding decisions."},
-                    {t:'fib', diff:'easy', q:"The three elements of a protocol are: Syntax, ________, and Timing.", ans:"Semantics", exp:"Protocol = Syntax + Semantics + Timing. Remember SST."},
-                    {t:'mcq', diff:'med', q:"In circuit switching, before data transfer begins:", options:["Packets are independently routed","A dedicated path is established end-to-end","Store-and-forward is used","Virtual IDs used"], ans:1, exp:"Circuit switching requires a dedicated path established in the setup phase."},
-                    {t:'sa', diff:'hard', q:"What was the primary contribution of ARPANET to modern networking?", ans:"Packet Switching", exp:"ARPANET (1969) pioneered store-and-forward packet switching, the foundation of the internet."}
+                    { t: 'mcq', diff: 'easy', q: "Which layer of the OSI model is responsible for routing packets across multiple networks?", options: ["Data Link Layer", "Network Layer", "Transport Layer", "Session Layer"], ans: 1, exp: "The Network Layer (Layer 3) handles logical addressing and routing — deciding the path a packet takes." },
+                    { t: 'mcq', diff: 'easy', q: "What does 'protocol' consist of? Choose the three key elements.", options: ["Syntax, Semantics, Timing", "Speed, Size, Security", "Hardware, Software, Firmware", "Encoding, Decoding, Routing"], ans: 0, exp: "A protocol has three elements — Syntax (format), Semantics (meaning), and Timing (speed matching)." },
+                    { t: 'mcq', diff: 'easy', q: "Which device operates at Layer 1 (Physical Layer) and simply regenerates signals?", options: ["Switch", "Bridge", "Hub", "Router"], ans: 2, exp: "A Hub operates at Layer 1. It just regenerates and broadcasts bits on all ports." },
+                    { t: 'tf', diff: 'easy', q: "A router operates at the Network Layer (Layer 3) of the OSI model.", ans: true, exp: "TRUE. A router inspects the IP header (Layer 3) to make forwarding decisions." },
+                    { t: 'fib', diff: 'easy', q: "The three elements of a protocol are: Syntax, ________, and Timing.", ans: "Semantics", exp: "Protocol = Syntax + Semantics + Timing. Remember SST." },
+                    { t: 'mcq', diff: 'med', q: "In circuit switching, before data transfer begins:", options: ["Packets are independently routed", "A dedicated path is established end-to-end", "Store-and-forward is used", "Virtual IDs used"], ans: 1, exp: "Circuit switching requires a dedicated path established in the setup phase." },
+                    { t: 'sa', diff: 'hard', q: "What was the primary contribution of ARPANET to modern networking?", ans: "Packet Switching", exp: "ARPANET (1969) pioneered store-and-forward packet switching, the foundation of the internet." }
                 ]
             },
             {
@@ -187,9 +1576,9 @@
                 notes: "cn_week2_notes.html", slides: "Week-02.pdf",
                 topics: ["DNS Hierarchy", "FTP Active/Passive", "HTTP Status Codes", "MIME"],
                 questions: [
-                    {t:'mcq',q:"DNS record type that maps hostname to IPv4 address?", options:["AAAA","NS","MX","A"], ans:3, exp:"A record = hostname → IPv4. AAAA = hostname → IPv6."},
-                    {t:'tf',q:"HTTP is a stateless protocol.", ans:true, exp:"TRUE. Each request is independent. Cookies manage state."},
-                    {t:'fib',q:"HTTP status code for 'Not Found' is ________.", ans:"404", exp:"404 means the resource does not exist."}
+                    { t: 'mcq', q: "DNS record type that maps hostname to IPv4 address?", options: ["AAAA", "NS", "MX", "A"], ans: 3, exp: "A record = hostname → IPv4. AAAA = hostname → IPv6." },
+                    { t: 'tf', q: "HTTP is a stateless protocol.", ans: true, exp: "TRUE. Each request is independent. Cookies manage state." },
+                    { t: 'fib', q: "HTTP status code for 'Not Found' is ________.", ans: "404", exp: "404 means the resource does not exist." }
                 ]
             },
             {
@@ -198,8 +1587,8 @@
                 notes: "cn_week3_notes.html", slides: "Week-03.pdf",
                 topics: ["Stop-and-Wait", "Go-Back-N", "Selective Repeat", "Piggybacking"],
                 questions: [
-                    {t:'mcq',q:"In GBN with 3-bit seq numbers, max window size is:", options:["8","7","4","6"], ans:1, exp:"GBN: W <= 2^n - 1. So 8-1=7."},
-                    {t:'tf',q:"TCP 3WHS exchange SYN bits in the first 2 messages.", ans:true, exp:"TRUE. SYN, then SYN+ACK."}
+                    { t: 'mcq', q: "In GBN with 3-bit seq numbers, max window size is:", options: ["8", "7", "4", "6"], ans: 1, exp: "GBN: W <= 2^n - 1. So 8-1=7." },
+                    { t: 'tf', q: "TCP 3WHS exchange SYN bits in the first 2 messages.", ans: true, exp: "TRUE. SYN, then SYN+ACK." }
                 ]
             },
             {
@@ -208,8 +1597,8 @@
                 notes: "cn_week4_notes.html", slides: "Week-04.pdf",
                 topics: ["BDP formula", "AIMD Fairness", "Congestion Collapse", "TCP Flags"],
                 questions: [
-                    {t:'mcq',q:"AIMD stands for:", options:["Additive Increase Multiplicative Decrease","Auto Increase Max Decrease","Adaptive Internet Mgmt","Additive Increase Max Drop"], ans:0, exp:"AIMD is the core congestion control mechanism."},
-                    {t:'num',q:"If TCP HLEN is 6, what is the header size in bytes?", ans:"24", exp:"6 * 4 = 24 bytes."}
+                    { t: 'mcq', q: "AIMD stands for:", options: ["Additive Increase Multiplicative Decrease", "Auto Increase Max Decrease", "Adaptive Internet Mgmt", "Additive Increase Max Drop"], ans: 0, exp: "AIMD is the core congestion control mechanism." },
+                    { t: 'num', q: "If TCP HLEN is 6, what is the header size in bytes?", ans: "24", exp: "6 * 4 = 24 bytes." }
                 ]
             },
             {
@@ -218,8 +1607,8 @@
                 notes: "cn_week5_notes.html", slides: "Week-05.pdf",
                 topics: ["Fast Retransmit", "Karn's Algorithm", "Jacobson's RTO", "Nagle Algorithm"],
                 questions: [
-                    {t:'mcq',q:"TCP Reno's response to 3 DupACKs?", options:["Drop to 1 MSS","Fast Recovery to ssthresh","Half ssthresh, stay at cwnd","Timeout"], ans:1, exp:"Reno enters Fast Recovery, skipping the slow start restart if possible."},
-                    {t:'tf',q:"Nagle's algorithm buffers small segments until an ACK arrives.", ans:true, exp:"TRUE. This reduces the number of tiny segments."}
+                    { t: 'mcq', q: "TCP Reno's response to 3 DupACKs?", options: ["Drop to 1 MSS", "Fast Recovery to ssthresh", "Half ssthresh, stay at cwnd", "Timeout"], ans: 1, exp: "Reno enters Fast Recovery, skipping the slow start restart if possible." },
+                    { t: 'tf', q: "Nagle's algorithm buffers small segments until an ACK arrives.", ans: true, exp: "TRUE. This reduces the number of tiny segments." }
                 ]
             },
             {
@@ -228,8 +1617,8 @@
                 notes: "cn_week6_notes.html", slides: "Week-06.pdf",
                 topics: ["IP Header IHL", "TTL Logic", "LPM", "PAT"],
                 questions: [
-                    {t:'num',q:"Usable hosts in /26 subnet?", ans:"62", exp:"2^6 - 2 = 62."},
-                    {t:'fib',q:"Field in IP header that prevents infinite loops is ________.", ans:"TTL", exp:"Time To Live is decremented at each hop."}
+                    { t: 'num', q: "Usable hosts in /26 subnet?", ans: "62", exp: "2^6 - 2 = 62." },
+                    { t: 'fib', q: "Field in IP header that prevents infinite loops is ________.", ans: "TTL", exp: "Time To Live is decremented at each hop." }
                 ]
             },
             {
@@ -238,7 +1627,7 @@
                 notes: "cn_week7_notes.html", slides: "Week-07.pdf",
                 topics: ["Bellman-Ford", "Dijkstra", "RIP", "OSPF"],
                 questions: [
-                    {t:'mcq',q:"Which routing algorithm suffers from 'Count to Infinity'?",options:["Dijkstra","Bellman-Ford","BGP","Static"],ans:1,exp:"Distance Vector algorithms like Bellman-Ford have slow convergence for 'bad news'."}
+                    { t: 'mcq', q: "Which routing algorithm suffers from 'Count to Infinity'?", options: ["Dijkstra", "Bellman-Ford", "BGP", "Static"], ans: 1, exp: "Distance Vector algorithms like Bellman-Ford have slow convergence for 'bad news'." }
                 ]
             },
             {
@@ -247,7 +1636,7 @@
                 notes: "cn_week8_notes.html", slides: "Week-08.pdf",
                 topics: ["Socket Pairs", "UDP Header", "TCP Checksum", "State Diagram"],
                 questions: [
-                    {t:'fib',q:"Size of UDP header in bytes is ________.",ans:"8",exp:"Source, Dest, Length, Checksum (2 bytes each)."}
+                    { t: 'fib', q: "Size of UDP header in bytes is ________.", ans: "8", exp: "Source, Dest, Length, Checksum (2 bytes each)." }
                 ]
             },
             {
@@ -256,7 +1645,7 @@
                 notes: "cn_week9_notes.html", slides: "Week-09.pdf",
                 topics: ["Lookup Engine", "Shared Memory Fabric", "Crossbar Fabric", "OpenFlow"],
                 questions: [
-                    {t:'mcq',q:"Which switching fabric has NO contention for different outputs?",options:["Bus","Shared Memory","Crossbar","Multistage"],ans:2,exp:"Crossbar fabrics allow multiple paths as long as outputs differ."}
+                    { t: 'mcq', q: "Which switching fabric has NO contention for different outputs?", options: ["Bus", "Shared Memory", "Crossbar", "Multistage"], ans: 2, exp: "Crossbar fabrics allow multiple paths as long as outputs differ." }
                 ]
             },
             {
@@ -265,7 +1654,7 @@
                 notes: "cn_week10_notes.html", slides: "Week-10.pdf",
                 topics: ["Bit/Byte Stuffing", "ALOHA Efficiency", "CSMA/CD", "Parity/CRC"],
                 questions: [
-                    {t:'tf',q:"Pure ALOHA efficiency is exactly 18.4%.",ans:true,exp:"TRUE. Peak efficiency is 1/(2e)."}
+                    { t: 'tf', q: "Pure ALOHA efficiency is exactly 18.4%.", ans: true, exp: "TRUE. Peak efficiency is 1/(2e)." }
                 ]
             },
             {
@@ -274,7 +1663,7 @@
                 notes: "cn_week11_notes.html", slides: "Week-11.pdf",
                 topics: ["ARP Mapping", "DHCP DORA", "STP loop prevention", "Tagged VLANs"],
                 questions: [
-                    {t:'mcq',q:"DHCP message for server to offer IP?",options:["Discover","Offer","Request","ACK"],ans:1,exp:"Offer is the 2nd step in DORA."}
+                    { t: 'mcq', q: "DHCP message for server to offer IP?", options: ["Discover", "Offer", "Request", "ACK"], ans: 1, exp: "Offer is the 2nd step in DORA." }
                 ]
             },
             {
@@ -283,85 +1672,290 @@
                 notes: "cn_week12_notes.html", slides: "Week-12.pdf",
                 topics: ["Nyquist/Shannon", "Manchester Encoding", "QAM", "RSA/Firewalls"],
                 questions: [
-                    {t:'fib',q:"Manchester encoding transition happens at ________ of bit.",ans:"middle",exp:"Mid-bit transition for synchronization."}
+                    { t: 'fib', q: "Manchester encoding transition happens at ________ of bit.", ans: "middle", exp: "Mid-bit transition for synchronization." }
                 ]
             }
         ];
 
+        // ═══════════════════════════════════════
+        //  STATE
+        // ═══════════════════════════════════════
         let state = {
-            currentWeek: 0,
+            currentWeek: -1, // -1 = home view
+            expandedWeek: -1,
             completedWeeks: JSON.parse(localStorage.getItem('cn_completed')) || [],
+            quizzesTaken: parseInt(localStorage.getItem('cn_quizzes') || '0'),
             quizActive: false, quizIndex: 0, quizScore: 0, quizFinished: false
         };
 
-        const saveState = () => { localStorage.setItem('cn_completed', JSON.stringify(state.completedWeeks)); updateNavStats(); };
-        const updateNavStats = () => { 
-            const count = state.completedWeeks.length;
-            document.getElementById('completedCount').innerText = `${count}/12`;
-            document.getElementById('globalProgress').innerText = `${Math.round((count/12)*100)}%`;
+        const saveState = () => {
+            localStorage.setItem('cn_completed', JSON.stringify(state.completedWeeks));
+            localStorage.setItem('cn_quizzes', state.quizzesTaken.toString());
+            updateAllStats();
         };
 
+        // ═══════════════════════════════════════
+        //  UI UPDATES
+        // ═══════════════════════════════════════
+        const updateAllStats = () => {
+            const count = state.completedWeeks.length;
+            const percent = Math.round((count / 12) * 100);
+
+            // Nav stats
+            document.getElementById('completedCount').innerText = `${count}/12`;
+            document.getElementById('globalProgress').innerText = `${percent}%`;
+
+            // Hero progress
+            document.getElementById('progressPercent').innerText = `${percent}%`;
+            document.getElementById('progressBar').style.width = `${percent}%`;
+
+            // Stat cards
+            document.getElementById('statCompleted').innerText = count;
+            document.getElementById('statRemaining').innerText = 12 - count;
+            document.getElementById('statQuizzes').innerText = state.quizzesTaken;
+        };
+
+        // ═══════════════════════════════════════
+        //  SIDEBAR
+        // ═══════════════════════════════════════
         const renderSidebar = () => {
             document.getElementById('sidebarMenu').innerHTML = WEEKS_DATA.map((w, i) => `
-                <div class="side-item ${state.currentWeek === i ? 'active' : ''} ${state.completedWeeks.includes(w.id) ? 'done' : ''}" onclick="switchWeek(${i})">
-                    <span>Week ${w.id}</span> <div class="dot"></div>
+                <div class="side-item ${state.expandedWeek === i ? 'active' : ''} ${state.completedWeeks.includes(w.id) ? 'done' : ''}" onclick="expandWeek(${i}); closeSidebar();">
+                    <div class="side-item-left">
+                        <span class="side-num">${String(w.id).padStart(2, '0')}</span>
+                        <span>Week ${w.id}</span>
+                    </div>
+                    <div class="dot"></div>
                 </div>`).join('');
         };
 
-        const renderWeek = () => {
-            const w = WEEKS_DATA[state.currentWeek];
-            document.getElementById('weekContent').innerHTML = `
-                <div class="badge">Module ${w.id}</div>
-                <h1 class="title">${w.title}</h1>
-                <p class="subtitle">${w.desc}</p>
-                <div class="res-grid">
-                    <a href="${w.notes}" target="_blank" class="res-item"><div class="res-icon notes">📄</div><div class="res-info"><h4>Notes</h4><p>Key Concepts</p></div></a>
-                    <a href="${w.slides}" target="_blank" class="res-item"><div class="res-icon slides">📊</div><div class="res-info"><h4>Slides</h4><p>Official PDF</p></div></a>
-                </div>
-                <div class="card topics-card"><h3 style="margin-bottom:20px;">Syllabus Topics</h3><ul class="topics-list">${w.topics.map(t => `<li class="topic-item">${t}</li>`).join('')}</ul></div>
-                <div style="display:flex; gap:16px;">
-                    <button class="btn btn-primary" onclick="startQuiz()">🚀 Start Quiz</button>
-                    <button class="btn btn-outline" onclick="toggleComplete()">${state.completedWeeks.includes(w.id) ? '✓ Completed' : 'Mark as Done'}</button>
+        // ═══════════════════════════════════════
+        //  SIDEBAR TOGGLE (mobile)
+        // ═══════════════════════════════════════
+        const toggleSidebar = () => {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const btn = document.getElementById('hamburgerBtn');
+            const isOpen = sidebar.classList.contains('open');
+            if (isOpen) { closeSidebar(); } else {
+                sidebar.classList.add('open');
+                overlay.classList.add('visible');
+                btn.classList.add('active');
+            }
+        };
+        const closeSidebar = () => {
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('sidebarOverlay').classList.remove('visible');
+            document.getElementById('hamburgerBtn').classList.remove('active');
+        };
+
+        // ═══════════════════════════════════════
+        //  WEEK CARDS RENDERING
+        // ═══════════════════════════════════════
+        const renderWeeksGrid = () => {
+            const grid = document.getElementById('weeksGrid');
+            grid.innerHTML = WEEKS_DATA.map((w, i) => {
+                const isDone = state.completedWeeks.includes(w.id);
+                const isExpanded = state.expandedWeek === i;
+                const hasNotes = w.notes ? true : false;
+                const hasSlides = w.slides ? true : false;
+                const isAvailable = hasNotes || hasSlides;
+
+                let statusBadge = '';
+                let numberClass = 'available';
+                let cardClass = '';
+                let fillClass = 'none';
+
+                if (isDone) {
+                    statusBadge = '<span class="week-status-badge badge-completed">✓ Done</span>';
+                    numberClass = 'done';
+                    cardClass = 'completed';
+                    fillClass = 'done';
+                } else if (isAvailable) {
+                    statusBadge = '<span class="week-status-badge badge-available">Ready</span>';
+                    numberClass = 'available';
+                    fillClass = 'partial';
+                } else {
+                    statusBadge = '<span class="week-status-badge badge-unavailable">Coming Soon</span>';
+                    numberClass = 'unavailable';
+                    cardClass = 'not-available';
+                    fillClass = 'none';
+                }
+
+                const topicsHtml = w.topics.map(t => `<li class="topic-tag">${t}</li>`).join('');
+
+                let resourcesHtml = '';
+                if (isAvailable) {
+                    resourcesHtml = `<div class="res-grid">`;
+                    if (hasNotes) {
+                        resourcesHtml += `<a href="${w.notes}" target="_blank" class="res-item" id="week${w.id}-notes">
+                            <div class="res-icon notes">📄</div>
+                            <div class="res-info"><h4>Study Notes</h4><p>Exam-ready key concepts</p></div>
+                        </a>`;
+                    } else {
+                        resourcesHtml += `<div class="res-item disabled">
+                            <div class="res-icon notes">📄</div>
+                            <div class="res-info"><h4>Notes</h4><p>Not available yet</p></div>
+                        </div>`;
+                    }
+                    if (hasSlides) {
+                        resourcesHtml += `<a href="${w.slides}" target="_blank" class="res-item" id="week${w.id}-slides">
+                            <div class="res-icon slides">📊</div>
+                            <div class="res-info"><h4>Lecture Slides</h4><p>Official PDF slides</p></div>
+                        </a>`;
+                    } else {
+                        resourcesHtml += `<div class="res-item disabled">
+                            <div class="res-icon slides">📊</div>
+                            <div class="res-info"><h4>Slides</h4><p>Not available yet</p></div>
+                        </div>`;
+                    }
+                    resourcesHtml += `</div>`;
+                } else {
+                    resourcesHtml = `<div class="not-available-msg">
+                        <span class="na-icon">🚧</span>
+                        <span>Content for this week is being prepared. Check back soon!</span>
+                    </div>`;
+                }
+
+                const quizBtn = (w.questions && w.questions.length > 0)
+                    ? `<button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); startQuiz(${i});">🚀 Start Quiz (${w.questions.length} Qs)</button>`
+                    : `<button class="btn btn-outline btn-sm" disabled style="opacity:0.4;">No Quiz Yet</button>`;
+
+                const completeBtn = isDone
+                    ? `<button class="btn btn-green btn-sm" onclick="event.stopPropagation(); toggleComplete(${i});">✓ Completed</button>`
+                    : `<button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); toggleComplete(${i});">Mark Done</button>`;
+
+                return `
+                <div class="week-card ${cardClass} ${isExpanded ? 'expanded' : ''}" id="weekCard${i}" onclick="expandWeek(${i})">
+                    <div class="week-header">
+                        <div class="week-number ${numberClass}">W${w.id}</div>
+                        <div class="week-info">
+                            <div class="week-title-row">
+                                <span class="week-name">${w.title}</span>
+                                ${statusBadge}
+                            </div>
+                            <div class="week-desc">${w.desc}</div>
+                        </div>
+                        <div class="week-mini-progress"><div class="week-mini-fill ${fillClass}"></div></div>
+                        <div class="week-arrow">▼</div>
+                    </div>
+                    <div class="week-body">
+                        <div class="week-body-inner">
+                            ${resourcesHtml}
+                            <div class="topics-section">
+                                <div class="topics-label">Key Topics</div>
+                                <ul class="topics-list">${topicsHtml}</ul>
+                            </div>
+                            <div class="week-actions">
+                                ${quizBtn}
+                                ${completeBtn}
+                            </div>
+                        </div>
+                    </div>
                 </div>`;
+            }).join('');
+
             renderSidebar();
         };
 
-        const switchWeek = (i) => { state.currentWeek = i; state.quizActive = false; document.body.className = "view-syllabus"; renderWeek(); window.scrollTo(0,0); };
-        const goHome = () => switchWeek(0);
-        const toggleComplete = () => {
-            const id = WEEKS_DATA[state.currentWeek].id;
-            state.completedWeeks = state.completedWeeks.includes(id) ? state.completedWeeks.filter(wid => wid !== id) : [...state.completedWeeks, id];
-            saveState(); renderWeek();
+        // ═══════════════════════════════════════
+        //  EXPAND / COLLAPSE WEEK
+        // ═══════════════════════════════════════
+        const expandWeek = (i) => {
+            if (state.expandedWeek === i) {
+                state.expandedWeek = -1;
+            } else {
+                state.expandedWeek = i;
+            }
+            renderWeeksGrid();
+            // Scroll to the expanded card
+            if (state.expandedWeek >= 0) {
+                setTimeout(() => {
+                    const card = document.getElementById(`weekCard${state.expandedWeek}`);
+                    if (card) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            }
         };
 
-        const startQuiz = () => { state.quizActive = true; state.quizIndex = 0; state.quizScore = 0; state.quizFinished = false; document.body.className = "view-quiz"; renderQuiz(); };
+        // ═══════════════════════════════════════
+        //  TOGGLE COMPLETE
+        // ═══════════════════════════════════════
+        const toggleComplete = (i) => {
+            const id = WEEKS_DATA[i].id;
+            if (state.completedWeeks.includes(id)) {
+                state.completedWeeks = state.completedWeeks.filter(wid => wid !== id);
+            } else {
+                state.completedWeeks.push(id);
+            }
+            saveState();
+            renderWeeksGrid();
+        };
+
+        // ═══════════════════════════════════════
+        //  NAVIGATION
+        // ═══════════════════════════════════════
+        const goHome = () => {
+            state.quizActive = false;
+            document.body.className = 'view-syllabus';
+            window.scrollTo(0, 0);
+        };
+
+        const showAllWeeks = () => {
+            goHome();
+            closeSidebar();
+        };
+
+        const scrollToWeeks = () => {
+            closeSidebar();
+            const grid = document.getElementById('weeksGrid');
+            if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        };
+
+        // ═══════════════════════════════════════
+        //  QUIZ SYSTEM
+        // ═══════════════════════════════════════
+        const startQuiz = (weekIndex) => {
+            state.currentWeek = weekIndex;
+            state.quizActive = true;
+            state.quizIndex = 0;
+            state.quizScore = 0;
+            state.quizFinished = false;
+            state.quizzesTaken++;
+            saveState();
+            document.body.className = 'view-quiz';
+            renderQuiz();
+            window.scrollTo(0, 0);
+        };
 
         const renderQuiz = () => {
             const w = WEEKS_DATA[state.currentWeek], q = w.questions[state.quizIndex], container = document.getElementById('quizCard');
-            if(state.quizFinished) {
+            if (state.quizFinished) {
                 const percent = Math.round((state.quizScore / w.questions.length) * 100);
-                container.innerHTML = `<div class="score-view"><div class="score-circle">${percent}%</div><h2>Week ${w.id} Done!</h2><p style="color:var(--text-dim);">Score: ${state.quizScore}/${w.questions.length}</p><div style="margin-top:40px; display:flex; gap:16px; justify-content:center;"><button class="btn btn-primary" onclick="switchWeek(${state.currentWeek})">Finish</button><button class="btn btn-outline" onclick="startQuiz()">Retry</button></div></div>`;
-                if(percent >= 80 && !state.completedWeeks.includes(w.id)) toggleComplete(); return;
+                container.innerHTML = `<div class="score-view"><div class="score-circle">${percent}%</div><h2>Week ${w.id} Done!</h2><p style="color:var(--text-dim);">Score: ${state.quizScore}/${w.questions.length}</p><div style="margin-top:40px; display:flex; gap:16px; justify-content:center; flex-wrap:wrap;"><button class="btn btn-primary" onclick="goHome()">Finish</button><button class="btn btn-outline" onclick="startQuiz(${state.currentWeek})">Retry</button></div></div>`;
+                if (percent >= 80 && !state.completedWeeks.includes(w.id)) toggleComplete(state.currentWeek);
+                return;
             }
             let optionsHtml = ''; const type = q.t || 'mcq';
             if (type === 'mcq') optionsHtml = `<div class="options-list">${q.options.map((opt, i) => `<button class="option-btn" onclick="checkAnswer(${i})">${opt}</button>`).join('')}</div>`;
             else if (type === 'tf') optionsHtml = `<div class="options-list" style="grid-template-columns: 1fr 1fr; display: grid;"><button class="option-btn" onclick="checkAnswer(true)">True</button><button class="option-btn" onclick="checkAnswer(false)">False</button></div>`;
             else if (type === 'fib' || type === 'num') optionsHtml = `<input type="text" id="quizInput" class="quiz-input" placeholder="Answer..."><button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="checkWrittenAnswer()">Check</button>`;
             else if (type === 'sa') optionsHtml = `<textarea id="quizInput" class="quiz-input quiz-textarea" placeholder="Recall answer..."></textarea><button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="checkWrittenAnswer(true)">Reveal</button>`;
-            container.innerHTML = `<div class="quiz-header"><span class="quiz-count">Q ${state.quizIndex + 1}/${w.questions.length} [${type.toUpperCase()}]</span><span class="quiz-close" onclick="switchWeek(${state.currentWeek})">✕</span></div><div class="q-text">${q.q}</div>${optionsHtml}<div class="feedback-box" id="feedback"><div class="fb-status" id="fbStatus">Correct!</div><div class="fb-explanation" id="fbExp">${q.explanation || q.exp || ''}</div><button class="btn btn-primary" style="margin-top:24px; width:100%; justify-content:center;" onclick="nextQuestion()">Next</button></div>`;
+            container.innerHTML = `<div class="quiz-header"><span class="quiz-count">Q ${state.quizIndex + 1}/${w.questions.length} [${type.toUpperCase()}]</span><span class="quiz-close" onclick="goHome()">✕</span></div><div class="q-text">${q.q}</div>${optionsHtml}<div class="feedback-box" id="feedback"><div class="fb-status" id="fbStatus">Correct!</div><div class="fb-explanation" id="fbExp">${q.explanation || q.exp || ''}</div><button class="btn btn-primary" style="margin-top:24px; width:100%; justify-content:center;" onclick="nextQuestion()">Next</button></div>`;
         };
 
         const checkAnswer = (val) => {
             const q = WEEKS_DATA[state.currentWeek].questions[state.quizIndex], type = q.t || 'mcq', correct = q.ans !== undefined ? q.ans : q.correct;
             const btns = document.querySelectorAll('.option-btn'); let isCorrect = false;
-            if (type === 'mcq') { btns.forEach((btn, idx) => { btn.classList.add('disabled'); if(idx === correct) btn.classList.add('correct'); else if(idx === val) btn.classList.add('wrong'); }); isCorrect = (val === correct); }
+            if (type === 'mcq') { btns.forEach((btn, idx) => { btn.classList.add('disabled'); if (idx === correct) btn.classList.add('correct'); else if (idx === val) btn.classList.add('wrong'); }); isCorrect = (val === correct); }
             else if (type === 'tf') { btns.forEach(btn => { btn.classList.add('disabled'); const btnVal = btn.innerText.toLowerCase() === 'true'; if (btnVal === correct) btn.classList.add('correct'); else if (btnVal === val) btn.classList.add('wrong'); }); isCorrect = (val === correct); }
-            if(isCorrect) state.quizScore++; showFeedback(isCorrect);
+            if (isCorrect) state.quizScore++;
+            showFeedback(isCorrect);
         };
 
         const checkWrittenAnswer = (revealOnly = false) => {
             const q = WEEKS_DATA[state.currentWeek].questions[state.quizIndex], input = document.getElementById('quizInput'), userVal = input.value.trim().toLowerCase(), correct = (q.ans !== undefined ? q.ans : q.correct).toString().toLowerCase();
-            let isCorrect = false; if (!revealOnly) { isCorrect = (userVal === correct); if (isCorrect) state.quizScore++; input.style.borderColor = isCorrect ? 'var(--green)' : 'var(--red)'; } else isCorrect = true;
+            let isCorrect = false;
+            if (!revealOnly) { isCorrect = (userVal === correct); if (isCorrect) state.quizScore++; input.style.borderColor = isCorrect ? 'var(--green)' : 'var(--red)'; } else isCorrect = true;
             input.disabled = true; showFeedback(isCorrect, revealOnly);
         };
 
@@ -374,10 +1968,17 @@
 
         const nextQuestion = () => {
             const w = WEEKS_DATA[state.currentWeek]; state.quizIndex++;
-            if(state.quizIndex >= w.questions.length) state.quizFinished = true; renderQuiz();
+            if (state.quizIndex >= w.questions.length) state.quizFinished = true; renderQuiz();
         };
 
-        window.onload = () => { updateNavStats(); renderWeek(); };
+        // ═══════════════════════════════════════
+        //  INIT
+        // ═══════════════════════════════════════
+        window.onload = () => {
+            updateAllStats();
+            renderWeeksGrid();
+        };
     </script>
 </body>
+
 </html>
