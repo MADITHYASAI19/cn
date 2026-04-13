@@ -66,6 +66,7 @@ h2.sh{font-size:18px;font-weight:500;color:var(--color-text-primary);margin:1.5r
   <button class="tab" onclick="show('tcpconn')">TCP Connection Est.</button>
   <button class="tab" onclick="show('tcprel')">TCP Release &amp; States</button>
   <button class="tab" onclick="show('rev')">Super Revision</button>
+  <button class="tab" onclick="show('advanced')">Advanced</button>
 </div>
 
 <!-- ═══════════════ TAB 1: BDP & BUFFERS ═══════════════ -->
@@ -591,6 +592,231 @@ h2.sh{font-size:18px;font-weight:500;color:var(--color-text-primary);margin:1.5r
       <li>Sender window: Always min(cwnd, rwnd). Memorise this formula</li>
     </ul>
   </div>
+</div>
+
+<!-- ═══════════════ TAB 8: ADVANCED TOPICS ═══════════════ -->
+<div id="advanced" class="sec">
+    <div class="ttl">Advanced Transport Layer Concepts — 100% Completion <span class="bdg"
+            style="background:#FCEBEB;color:#791F1F">IIT-Level</span></div>
+
+    <!-- 🔴 TOPIC 1 -->
+    <div class="bx bred">
+        <h3>Delayed Duplicate Problem (VERY IMPORTANT)</h3>
+        <p>In packet switching networks, packets may be delayed due to congestion, leading to duplicate delivery.</p>
+        <ul>
+            <li>Server may receive same request twice</li>
+            <li>Cannot distinguish:
+                <ul>
+                    <li>New request</li>
+                    <li>Old delayed duplicate</li>
+                </ul>
+            </li>
+            <li>Occurs due to retransmission & buffering</li>
+        </ul>
+    </div>
+
+    <!-- 🔴 TOPIC 2 -->
+    <div class="bx bpur">
+        <h3>Sequence Number Mechanism</h3>
+        <ul>
+            <li>Each byte/segment is assigned a unique sequence number</li>
+            <li>Used for:
+                <ul>
+                    <li>Ordering data</li>
+                    <li>Detecting duplicates</li>
+                    <li>Ensuring reliability</li>
+                </ul>
+            </li>
+            <li>Receiver identifies duplicates using sequence numbers</li>
+        </ul>
+    </div>
+
+    <!-- 🔴 TOPIC 3 -->
+    <div class="bx bamb">
+        <h3>Forbidden Region Concept</h3>
+        <ul>
+            <li>Each packet has lifetime = T</li>
+            <li>Same sequence number must NOT repeat within T</li>
+            <li>If reused → confusion between old & new packets</li>
+        </ul>
+    </div>
+
+    <!-- 🔴 TOPIC 4 -->
+    <div class="bx bteal">
+        <h3>Initial Sequence Number Selection</h3>
+        <ul>
+            <li>Must avoid overlap with old sequence numbers</li>
+            <li>Methods:
+                <ul>
+                    <li>Wait for time T</li>
+                    <li>Use higher sequence number</li>
+                </ul>
+            </li>
+            <li>TCP uses clock-based mechanism</li>
+        </ul>
+    </div>
+
+    <!-- 🔴 TOPIC 5 -->
+    <div class="bx bred">
+        <h3>Packet Switching Network Issues</h3>
+        <ul>
+            <li>Packet loss (buffer overflow)</li>
+            <li>Packet corruption</li>
+            <li>Delay (congestion)</li>
+            <li>Duplicate packets</li>
+        </ul>
+    </div>
+
+    <!-- 🔴 TOPIC 6 -->
+    <div class="bx bbl">
+        <h3>Why Simple Handshake Fails?</h3>
+        <ul>
+            <li>Packets may be delayed</li>
+            <li>Duplicate messages confuse server</li>
+            <li>Client crash creates ambiguity</li>
+        </ul>
+    </div>
+
+    <!-- 🔴 TOPIC 7 -->
+    <div class="bx bgn">
+        <h3>Reliable Data Transfer (RDT)</h3>
+        <ul>
+            <li>Network layer → Unreliable</li>
+            <li>Transport layer → Reliable</li>
+            <li>Mechanisms:
+                <ul>
+                    <li>ACK (Acknowledgement)</li>
+                    <li>Retransmission</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <!-- 🔴 TOPIC 8 -->
+    <div class="bx bpur">
+        <h3>End-to-End vs Hop-by-Hop Flow Control</h3>
+
+        <div class="flow">
+            <div class="fbox">10 Mbps</div>
+            <div class="farr">→</div>
+            <div class="fbox">5 Mbps</div>
+            <div class="farr">→</div>
+            <div class="fbox">3 Mbps</div>
+            <div class="farr">→</div>
+            <div class="fbox">1 Mbps</div>
+        </div>
+
+        <ul>
+            <li>Data Link → hop-by-hop</li>
+            <li>Transport → end-to-end</li>
+            <li>Final speed = bottleneck = 1 Mbps</li>
+        </ul>
+    </div>
+
+    <!-- 🔴 TOPIC 9 -->
+    <div class="bx bamb">
+        <h3>Correctness vs Performance Trade-off</h3>
+        <ul>
+            <li>Fully correct → complex & slow</li>
+            <li>Optimized → fast but may fail in rare cases</li>
+        </ul>
+    </div>
+
+    <!-- 🔴 TOPIC 10 -->
+    <div class="bx bred">
+        <h3>Sequence Number Rate Problem</h3>
+        <ul>
+            <li>Too fast → overlap with old packets</li>
+            <li>Too slow → reuse issue</li>
+            <li>Must increase at controlled rate</li>
+        </ul>
+    </div>
+
+    <!-- 🔴 TOPIC 11 -->
+    <div class="bx bteal">
+        <h3>Port Numbers & Process-to-Process Communication</h3>
+        <ul>
+            <li>IP address → identifies machine</li>
+            <li>Port number → identifies application</li>
+            <li>Combination = communication endpoint</li>
+        </ul>
+    </div>
+
+    <!-- 🔴 TOPIC 12 -->
+    <div class="bx bbl">
+        <h3>Logical Connection Identification</h3>
+        <ul>
+            <li>Connection identified by:</li>
+            <ul>
+                <li>Source IP</li>
+                <li>Destination IP</li>
+                <li>Source Port</li>
+                <li>Destination Port</li>
+                <li>Sequence Numbers</li>
+            </ul>
+        </ul>
+    </div>
+
+    <!-- 🔴 TOPIC 13 -->
+    <div class="bx bgn">
+        <h3>3-Way Handshake (TCP)</h3>
+        <div class="flow">
+            <div class="fbox">SYN</div>
+            <div class="farr">→</div>
+            <div class="fbox">SYN + ACK</div>
+            <div class="farr">→</div>
+            <div class="fbox">ACK</div>
+        </div>
+        <ul>
+            <li>Establishes reliable connection</li>
+            <li>Ensures both sides are ready</li>
+        </ul>
+    </div>
+
+    <!-- 🔴 TOPIC 14 -->
+    <div class="bx bred">
+        <h3>SYN Flood Attack</h3>
+        <ul>
+            <li>Attacker sends many SYN requests</li>
+            <li>Server allocates resources</li>
+            <li>Leads to Denial of Service (DoS)</li>
+        </ul>
+    </div>
+
+    <!-- 🔴 SUMMARY -->
+    <div class="bx bgn">
+        <h3>Final Summary</h3>
+        <ul>
+            <li>Transport layer ensures reliability</li>
+            <li>Sequence numbers prevent duplicates</li>
+            <li>Flow control prevents overflow</li>
+            <li>TCP ensures robust communication</li>
+        </ul>
+    </div>
+
+    <!-- MCQ -->
+    <h2 class="sh">MCQs — Advanced Concepts</h2>
+
+    <div class="mcq">
+        <div class="mcq-q">Q1. Delayed duplicate problem occurs due to:</div>
+        <div class="opts">
+            <button class="opt">A) Fast network</button>
+            <button class="opt ok">B) Packet delay and retransmission</button>
+            <button class="opt">C) Wrong IP address</button>
+            <button class="opt">D) High bandwidth</button>
+        </div>
+    </div>
+
+    <div class="mcq">
+        <div class="mcq-q">Q2. Forbidden region prevents:</div>
+        <div class="opts">
+            <button class="opt">A) Packet loss</button>
+            <button class="opt ok">B) Sequence number overlap</button>
+            <button class="opt">C) Congestion</button>
+            <button class="opt">D) Delay</button>
+        </div>
+    </div>
+
 </div>
 </div>
 
