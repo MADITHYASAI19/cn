@@ -66,7 +66,8 @@ h2.sh{font-size:18px;font-weight:500;color:var(--color-text-primary);margin:1.5r
   <button class="tab" onclick="show('udp')">UDP &amp; QUIC</button>
   <button class="tab" onclick="show('sock')">Socket Programming</button>
   <button class="tab" onclick="show('rev')">Super Revision</button>
-  <button class="tab" onclick="show(\'doubtsView\')">💭 Doubts Hub</button>
+  <button class="tab" onclick="show('advanced_full')">Final</button>
+  <button class="tab" onclick="show('doubtsView')">💭 Doubts Hub</button>
 </div>
 
 <!-- ═══════════════ TAB 1: TCP FLOW CONTROL ═══════════════ -->
@@ -517,6 +518,170 @@ h2.sh{font-size:18px;font-weight:500;color:var(--color-text-primary);margin:1.5r
     </ul>
   </div>
 </div>
+
+<div id="advanced_full" class="sec">
+  <div class="ttl">Advanced Completion — TCP Deep Concepts 
+    <span class="bdg" style="background:#FCEBEB;color:#791F1F">100% Coverage</span>
+  </div>
+
+  <!-- 🔴 TCP FLOW CONTROL DEEP -->
+  <div class="bx bbl">
+    <h3>TCP Sliding Window — Internal Working</h3>
+    <ul>
+      <li>TCP uses Go-Back-N ARQ principle</li>
+      <li>Sender stores unacknowledged data in buffer</li>
+      <li>On timeout → retransmit entire window</li>
+    </ul>
+  </div>
+
+  <!-- 🔴 RECEIVER WINDOW LOGIC -->
+  <div class="bx bpur">
+    <h3>Receiver Window Advertisement</h3>
+    <ul>
+      <li>Receiver sends available buffer size</li>
+      <li>Window = remaining buffer space</li>
+      <li>Window = 0 → sender blocked</li>
+      <li>Window update resumes transmission</li>
+    </ul>
+  </div>
+
+  <!-- 🔴 DELAYED ACK -->
+  <div class="bx bamb">
+    <h3>Delayed Acknowledgement</h3>
+    <ul>
+      <li>ACK delayed up to 500 ms</li>
+      <li>Combines multiple packets into one ACK</li>
+      <li>Reduces overhead</li>
+    </ul>
+  </div>
+
+  <!-- 🔴 NAGLE -->
+  <div class="bx bteal">
+    <h3>Nagle's Algorithm</h3>
+    <ul>
+      <li>Send first packet immediately</li>
+      <li>Buffer remaining small packets</li>
+      <li>Send after ACK received</li>
+      <li>Prevents small packet flooding</li>
+    </ul>
+  </div>
+
+  <!-- 🔴 NAGLE + DELAYED ACK -->
+  <div class="bx bred">
+    <h3>Nagle + Delayed ACK Problem</h3>
+    <ul>
+      <li>Sender waits for ACK</li>
+      <li>Receiver delays ACK</li>
+      <li>Result → 500ms delay (starvation)</li>
+    </ul>
+  </div>
+
+  <!-- 🔴 SILLY WINDOW -->
+  <div class="bx bpur">
+    <h3>Silly Window Syndrome</h3>
+    <ul>
+      <li>Receiver advertises very small window</li>
+      <li>Sender sends tiny segments</li>
+      <li>High overhead, poor efficiency</li>
+    </ul>
+  </div>
+
+  <!-- 🔴 CLARK -->
+  <div class="bx bgn">
+    <h3>Clark's Solution</h3>
+    <ul>
+      <li>Do NOT advertise small window</li>
+      <li>Wait until sufficient buffer available</li>
+      <li>Prevents tiny packet transmission</li>
+    </ul>
+  </div>
+
+  <!-- 🔴 PSH -->
+  <div class="bx bbl">
+    <h3>PSH Flag (Push)</h3>
+    <ul>
+      <li>Forces immediate data transmission</li>
+      <li>Bypasses buffering delay</li>
+      <li>Used in real-time applications</li>
+    </ul>
+  </div>
+
+  <!-- 🔴 CONGESTION CONTROL -->
+  <div class="bx bred">
+    <h3>TCP Congestion Control (AIMD)</h3>
+    <ul>
+      <li>Increase rate gradually (Additive Increase)</li>
+      <li>Decrease rate rapidly on loss (Multiplicative Decrease)</li>
+      <li>Packet loss = congestion signal</li>
+    </ul>
+  </div>
+
+  <!-- 🔴 WINDOW LOGIC -->
+  <div class="bx bamb">
+    <h3>Sender Window Formula</h3>
+    <ul>
+      <li>Effective Window = min(receiver window, congestion window)</li>
+      <li>Ensures both:
+        <ul>
+          <li>Receiver safety</li>
+          <li>Network stability</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <!-- 🔴 UDP -->
+  <div class="bx bteal">
+    <h3>UDP Protocol</h3>
+    <ul>
+      <li>Connectionless</li>
+      <li>No reliability</li>
+      <li>No congestion control</li>
+      <li>Fast and lightweight</li>
+    </ul>
+  </div>
+
+  <!-- 🔴 QUIC -->
+  <div class="bx bpur">
+    <h3>QUIC Protocol</h3>
+    <ul>
+      <li>Runs over UDP</li>
+      <li>Provides TCP-like reliability</li>
+      <li>Faster connection setup</li>
+    </ul>
+  </div>
+
+  <!-- 🔴 SOCKET -->
+  <div class="bx bgn">
+    <h3>Socket Programming Basics</h3>
+    <ul>
+      <li>Socket = communication endpoint</li>
+      <li>Used for process-to-process communication</li>
+      <li>Functions:
+        <ul>
+          <li>socket()</li>
+          <li>bind()</li>
+          <li>listen()</li>
+          <li>connect()</li>
+          <li>accept()</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <!-- 🔴 SUMMARY -->
+  <div class="bx bgn">
+    <h3>Final Completion Summary</h3>
+    <ul>
+      <li>Flow control → prevents overflow</li>
+      <li>Congestion control → prevents network collapse</li>
+      <li>TCP → reliable</li>
+      <li>UDP → fast</li>
+      <li>Sockets → real implementation</li>
+    </ul>
+  </div>
+</div>
+
 </div>
 
 
