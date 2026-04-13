@@ -373,6 +373,7 @@
         <button class="tab" onclick="show('rel')">Connection Release</button>
         <button class="tab" onclick="show('flow')">Flow Control & ARQ</button>
         <button class="tab" onclick="show('rev')">Super Revision</button>
+        <button class="tab" onclick="show('advanced')">Advanced Topics</button>
     </div>
 
     <!-- ───────── TAB 1: TRANSPORT LAYER ───────── -->
@@ -1462,6 +1463,158 @@
                 <li>Connection Release: Know asymmetric vs symmetric, Two-Army Problem analogy, and timer-based solution
                 </li>
                 <li>ARQ/Flow Control: Know Stop-and-Wait (1 bit, 1 frame) vs Sliding Window (W frames, pipelined)</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ───────── TAB 7: ADVANCED TOPICS ───────── -->
+    <div id="advanced" class="sec">
+        <div class="ttl">Advanced Topics — Transport Layer Completion <span class="bdg"
+                style="background:#FCEBEB;color:#791F1F">IIT-Level</span></div>
+
+        <!-- 🔴 DELAYED DUPLICATE -->
+        <div class="bx bred">
+            <h3>Delayed Duplicate Problem (CRITICAL)</h3>
+            <p>In packet switching networks, packets can be delayed, duplicated, or reordered. This creates confusion during connection establishment.</p>
+            <ul>
+                <li>Server may receive SAME connection request twice</li>
+                <li>Cannot distinguish:
+                    <ul>
+                        <li>New request ❓</li>
+                        <li>Delayed duplicate ❓</li>
+                    </ul>
+                </li>
+                <li>Occurs due to:
+                    <ul>
+                        <li>Network congestion</li>
+                        <li>Retransmissions</li>
+                        <li>Buffer delays</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 🔴 SEQUENCE NUMBERS -->
+        <div class="bx bpur">
+            <h3>Sequence Number Concept</h3>
+            <p>Each byte/segment is assigned a unique sequence number to ensure proper ordering and duplicate detection.</p>
+            <ul>
+                <li>Helps detect duplicate packets</li>
+                <li>Ensures correct ordering</li>
+                <li>Used in reliability and flow control</li>
+            </ul>
+        </div>
+
+        <!-- 🔴 FORBIDDEN REGION -->
+        <div class="bx bamb">
+            <h3>Forbidden Region Concept</h3>
+            <p>Sequence numbers must not overlap between old and new connections.</p>
+            <ul>
+                <li>Each packet has lifetime = T</li>
+                <li>Within time T, same sequence number must NOT repeat</li>
+                <li>Overlap → confusion between old and new packets</li>
+            </ul>
+        </div>
+
+        <!-- 🔴 INITIAL SEQUENCE NUMBER -->
+        <div class="bx bteal">
+            <h3>Initial Sequence Number Selection</h3>
+            <ul>
+                <li>Must avoid reuse of old sequence numbers</li>
+                <li>Two solutions:
+                    <ul>
+                        <li>Wait for time T</li>
+                        <li>Use higher sequence number</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 🔴 NETWORK PROBLEMS -->
+        <div class="bx bred">
+            <h3>Problems in Packet Switching Network</h3>
+            <ul>
+                <li>Packet Loss (buffer overflow)</li>
+                <li>Packet Corruption</li>
+                <li>Arbitrary Delay</li>
+                <li>Duplicate Packets</li>
+            </ul>
+        </div>
+
+        <!-- 🔴 HANDSHAKE LIMITATION -->
+        <div class="bx bbl">
+            <h3>Why Simple Handshake Fails?</h3>
+            <ul>
+                <li>Packets can be delayed</li>
+                <li>Duplicate requests confuse server</li>
+                <li>Client crash scenario creates ambiguity</li>
+            </ul>
+        </div>
+
+        <!-- 🔴 RELIABLE DATA TRANSFER -->
+        <div class="bx bgn">
+            <h3>Reliable Data Transfer (RDT)</h3>
+            <ul>
+                <li>Network layer → Unreliable</li>
+                <li>Transport layer → Reliable</li>
+                <li>Uses:
+                    <ul>
+                        <li>Acknowledgement (ACK)</li>
+                        <li>Retransmission</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 🔴 FLOW CONTROL LOGIC -->
+        <div class="bx bpur">
+            <h3>End-to-End vs Hop-by-Hop Flow Control</h3>
+            <ul>
+                <li>Data Link Layer → Hop-by-hop</li>
+                <li>Transport Layer → End-to-end</li>
+                <li>Sender must match receiver capacity</li>
+            </ul>
+
+            <div class="flow">
+                <div class="fbox">10 Mbps</div>
+                <div class="farr">→</div>
+                <div class="fbox">5 Mbps</div>
+                <div class="farr">→</div>
+                <div class="fbox">3 Mbps</div>
+                <div class="farr">→</div>
+                <div class="fbox">1 Mbps</div>
+            </div>
+
+            <p><strong>Effective rate = 1 Mbps (bottleneck)</strong></p>
+        </div>
+
+        <!-- 🔴 CORRECTNESS VS PERFORMANCE -->
+        <div class="bx bamb">
+            <h3>Correctness vs Performance Trade-off</h3>
+            <ul>
+                <li>Fully correct protocol → complex & slow</li>
+                <li>Optimized protocol → faster but may fail in rare cases</li>
+            </ul>
+        </div>
+
+        <!-- 🔴 SEQUENCE NUMBER RATE -->
+        <div class="bx bred">
+            <h3>Sequence Number Rate Problems</h3>
+            <ul>
+                <li>Too fast → overlap with old packets</li>
+                <li>Too slow → reuse issues</li>
+                <li>Must increase at controlled rate</li>
+            </ul>
+        </div>
+
+        <!-- 🔴 SUMMARY -->
+        <div class="bx bgn">
+            <h3>Final Summary</h3>
+            <ul>
+                <li>Transport layer solves unreliability</li>
+                <li>Sequence numbers prevent confusion</li>
+                <li>Flow control prevents overflow</li>
+                <li>Protocols balance correctness & performance</li>
             </ul>
         </div>
     </div>
