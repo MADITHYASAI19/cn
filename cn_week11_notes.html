@@ -792,6 +792,9 @@ h2.section-head { font-size: 18px; font-weight: 500; color: var(--color-text-pri
 </div>
 </div>
 
+
+<!-- Doubts View -->
+<div id="doubtsView" class="sec" style="margin-top:2rem;"></div>
 <script>
 function show(id) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -812,3 +815,7 @@ function answer(qid, chosen, correct, explanation) {
   exp.classList.add('visible');
 }
 </script>
+
+<!-- Doubts Tracking System -->
+<link rel="stylesheet" href="doubts.css">
+<script src="doubts.js"></script>

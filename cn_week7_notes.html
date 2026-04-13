@@ -350,7 +350,8 @@
         <button class="tab" onclick="show('sched')">Scheduling</button>
         <button class="tab" onclick="show('intserv')">IntServ &amp; DiffServ</button>
         <button class="tab" onclick="show('rev')">Super Revision</button>
-    </div>
+  <button class="tab" onclick="show(\'doubtsView\')">💭 Doubts Hub</button>
+</div>
 
     <!-- ═══════════════ TAB 1: QoS INTRO ═══════════════ -->
     <div id="intro" class="sec on">
@@ -1337,6 +1338,9 @@
     </div>
 </div>
 
+
+<!-- Doubts View -->
+<div id="doubtsView" class="sec" style="margin-top:2rem;"></div>
 <script>
     function show(id) {
         document.querySelectorAll('.sec').forEach(s => s.classList.remove('on'));
@@ -1356,3 +1360,6 @@
         exp.classList.add('show');
     }
 </script>
+<!-- Doubts Tracking System -->
+<link rel="stylesheet" href="doubts.css">
+<script src="doubts.js"></script>

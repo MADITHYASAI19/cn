@@ -912,12 +912,16 @@
             flex-shrink: 0;
         }
 
-        /* ── QUIZ MODE ── */
-        .view-syllabus .quiz-view {
+        /* ── VIEW MODES ── */
+        .view-syllabus .quiz-view, .view-syllabus .doubts-view {
             display: none;
         }
 
-        .view-quiz .syllabus-view {
+        .view-quiz .syllabus-view, .view-quiz .doubts-view {
+            display: none;
+        }
+
+        .view-doubts .syllabus-view, .view-doubts .quiz-view {
             display: none;
         }
 
@@ -1450,6 +1454,7 @@
             <div class="logo-text">IIT-K Master <span>Hub</span></div>
         </div>
         <div class="nav-right">
+            <button class="btn btn-outline btn-sm" onclick="showDoubtsView()" style="border-radius:99px; margin-right: 12px">💬 Doubts Hub</button>
             <div class="nav-stats">
                 <div class="stat">
                     <span class="stat-val" id="globalProgress">0%</span>
@@ -1531,6 +1536,10 @@
             <div class="quiz-view" id="quizView">
                 <div class="quiz-card" id="quizCard"></div>
             </div>
+
+            <div class="doubts-view" id="doubtsView" style="margin-top: 32px;">
+                <!-- Rendered by doubts.js -->
+            </div>
         </main>
     </div>
 
@@ -1540,9 +1549,9 @@
             <span class="bottom-btn-icon">🏠</span>
             Home
         </button>
-        <button class="bottom-btn" onclick="scrollToWeeks()">
-            <span class="bottom-btn-icon">📋</span>
-            Weeks
+        <button class="bottom-btn" onclick="showDoubtsView()">
+            <span class="bottom-btn-icon">💭</span>
+            Doubts
         </button>
         <button class="bottom-btn" onclick="toggleSidebar()">
             <span class="bottom-btn-icon">📑</span>
@@ -1900,6 +1909,13 @@
             window.scrollTo(0, 0);
         };
 
+        const showDoubtsView = () => {
+            state.quizActive = false;
+            document.body.className = 'view-doubts';
+            if(window.renderDoubtsHub) window.renderDoubtsHub();
+            window.scrollTo(0, 0);
+        };
+
         const showAllWeeks = () => {
             goHome();
             closeSidebar();
@@ -1977,8 +1993,17 @@
         window.onload = () => {
             updateAllStats();
             renderWeeksGrid();
+
+            // Support direct navigation to doubts
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('view') === 'doubts') {
+                showDoubtsView();
+            }
         };
     </script>
+
+<link rel="stylesheet" href="doubts.css">
+<script src="doubts.js"></script>
 </body>
 
 </html>

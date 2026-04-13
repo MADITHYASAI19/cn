@@ -72,6 +72,7 @@ h2.sh{font-size:18px;font-weight:500;color:var(--color-text-primary);margin:1.5r
   <button class="tab" onclick="show('telnet')">Telnet</button>
   <button class="tab" onclick="show('smtp')">SMTP & SNMP</button>
   <button class="tab" onclick="show('rev')">Super Revision</button>
+  <button class="tab" onclick="show(\'doubtsView\')">💭 Doubts Hub</button>
 </div>
 
 <div id="dns" class="sec on">
@@ -654,6 +655,9 @@ h2.sh{font-size:18px;font-weight:500;color:var(--color-text-primary);margin:1.5r
 </div>
 </div>
 
+
+<!-- Doubts View -->
+<div id="doubtsView" class="sec" style="margin-top:2rem;"></div>
 <script>
 function show(id){
   document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
@@ -673,3 +677,7 @@ function ans(qid,chosen,correct,explanation){
   exp.classList.add('show');
 }
 </script>
+
+<!-- Doubts Tracking System -->
+<link rel="stylesheet" href="doubts.css">
+<script src="doubts.js"></script>

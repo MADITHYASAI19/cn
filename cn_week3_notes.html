@@ -374,7 +374,8 @@
         <button class="tab" onclick="show('flow')">Flow Control & ARQ</button>
         <button class="tab" onclick="show('rev')">Super Revision</button>
         <button class="tab" onclick="show('advanced')">Advanced Topics</button>
-    </div>
+  <button class="tab" onclick="show(\'doubtsView\')">💭 Doubts Hub</button>
+</div>
 
     <!-- ───────── TAB 1: TRANSPORT LAYER ───────── -->
     <div id="tl" class="sec on">
@@ -1620,6 +1621,9 @@
     </div>
 </div>
 
+
+<!-- Doubts View -->
+<div id="doubtsView" class="sec" style="margin-top:2rem;"></div>
 <script>
     function show(id) {
         document.querySelectorAll('.sec').forEach(s => s.classList.remove('on'));
@@ -1639,3 +1643,6 @@
         exp.classList.add('show');
     }
 </script>
+<!-- Doubts Tracking System -->
+<link rel="stylesheet" href="doubts.css">
+<script src="doubts.js"></script>
